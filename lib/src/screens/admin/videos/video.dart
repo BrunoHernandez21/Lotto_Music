@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lotto_music/src/widgets/text.dart';
 
 import '../../../helpers/variables_globales.dart';
+import '../../../models/videos.dart';
 import '../grupos/appbar.dart';
 
 class Video extends StatelessWidget {
@@ -19,8 +20,12 @@ class Video extends StatelessWidget {
           physics: BouncingScrollPhysics(),
           child: Column(children: [
             Container(
-              color: Colors.amber,
               height: Medidas.size.width * .5625,
+              width: double.infinity,
+              child: Image.network(
+                Developer.videos[2].image,
+                fit: BoxFit.cover,
+              ),
             ),
             SizedBox(height: 4),
             Align(
@@ -32,30 +37,12 @@ class Video extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: Row(
                   children: destacados(
-                [
-                  "asdasd",
-                  "asdasd",
-                  "asdasd",
-                  "asdasd",
-                  "asdasd",
-                  "asdasd",
-                  "asdasd",
-                  "asdasd",
-                ],
+                Developer.videos,
                 context,
               )),
             ),
             ...iterable(
-              [
-                "asdasd",
-                "asdasd",
-                "asdasd",
-                "asdasd",
-                "asdasd",
-                "asdasd",
-                "asdasd",
-                "asdasd",
-              ],
+              Developer.videos,
               context,
             ),
           ]),
@@ -64,17 +51,20 @@ class Video extends StatelessWidget {
     );
   }
 
-  List<Widget> destacados(List<String> b, BuildContext context) {
+  List<Widget> destacados(List<Video_Model> b, BuildContext context) {
     List<Widget> a = [];
-    b.forEach((element) {
+    b.forEach((v) {
       a.add(Container(
         height: Medidas.size.width * .28,
         width: Medidas.size.width * .28,
         margin: EdgeInsets.all(8),
-        decoration: BoxDecoration(
-            color: Colors.amber, borderRadius: BorderRadius.circular(6)),
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(6)),
         child: GestureDetector(
-          child: Stack(),
+          child: Image.network(
+            v.image,
+            fit: BoxFit.fill,
+          ),
           onTap: () {
             Navigator.pushNamed(context, Video.routeName);
           },
@@ -84,9 +74,9 @@ class Video extends StatelessWidget {
     return a;
   }
 
-  List<Widget> iterable(List<String> b, BuildContext context) {
+  List<Widget> iterable(List<Video_Model> b, BuildContext context) {
     List<Widget> a = [];
-    b.forEach((element) {
+    b.forEach((v) {
       a.add(SizedBox(
         height: Medidas.size.width * .3,
         child: GestureDetector(
@@ -97,8 +87,12 @@ class Video extends StatelessWidget {
                 height: Medidas.size.width * .240,
                 width: Medidas.size.width * .360,
                 decoration: BoxDecoration(
-                    color: Colors.amber,
-                    borderRadius: BorderRadius.circular(10)),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Image.network(
+                  v.image,
+                  fit: BoxFit.cover,
+                ),
               ),
               SizedBox(
                 width: 6,
@@ -111,8 +105,8 @@ class Video extends StatelessWidget {
                     SizedBox(
                       height: 5,
                     ),
-                    Textos.titulo(texto: element, align: TextAlign.left),
-                    Textos.tituloGrey(texto: element),
+                    Textos.titulo(texto: v.name, align: TextAlign.left),
+                    Textos.tituloGrey(texto: v.name),
                   ],
                 ),
               )

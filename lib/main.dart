@@ -24,7 +24,7 @@ void main() async {
   final theme = await PreferencesApp.theme;
   final locale = await PreferencesApp.locale;
   final acount = await AcountLocalSave.loadLoginResponse();
-  final isLogin = await AcountLocalSave.isLogin;
+  final isLogin = false; //await AcountLocalSave.isLogin;
 
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {

@@ -40,7 +40,7 @@ class Recovery extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 5, bottom: 20),
                   child: Textos.tituloGrey(
-                    texto: "Proporciona tu telefonop",
+                    texto: "Proporciona tu telefono",
                   ),
                 ),
                 Padding(

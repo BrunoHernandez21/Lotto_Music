@@ -6,6 +6,7 @@ import 'package:lotto_music/src/screens/admin/videos/video.dart';
 import 'package:lotto_music/src/widgets/text.dart';
 
 import '../../../helpers/variables_globales.dart';
+import '../../../models/videos.dart';
 import '../grupos/appbar.dart';
 
 class Videos extends StatelessWidget {
@@ -24,16 +25,7 @@ class Videos extends StatelessWidget {
               child: SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
                 child: Column(
-                  children: iterable([
-                    "Video musical de maluma",
-                    "Video musical de Riana",
-                    "Video musical de Guns and Roces",
-                    "Video musical de Pink Floy",
-                    "Video musical de coldplay",
-                    "Video musical de Dua Lipa",
-                    "Video musical de Cristian Nodal",
-                    "Video musical de Intocable",
-                  ], context),
+                  children: iterable(Developer.videos, context),
                 ),
               ),
             ),
@@ -43,9 +35,9 @@ class Videos extends StatelessWidget {
     );
   }
 
-  List<Widget> iterable(List<String> b, BuildContext context) {
+  List<Widget> iterable(List<Video_Model> b, BuildContext context) {
     List<Widget> a = [];
-    b.forEach((element) {
+    b.forEach((v) {
       a.add(SizedBox(
         height: Medidas.size.width * .3,
         child: GestureDetector(
@@ -56,8 +48,12 @@ class Videos extends StatelessWidget {
                 height: Medidas.size.width * .240,
                 width: Medidas.size.width * .360,
                 decoration: BoxDecoration(
-                    color: Colors.amber,
-                    borderRadius: BorderRadius.circular(10)),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Image.network(
+                  v.image,
+                  fit: BoxFit.cover,
+                ),
               ),
               SizedBox(
                 width: 6,
@@ -70,8 +66,8 @@ class Videos extends StatelessWidget {
                     SizedBox(
                       height: 5,
                     ),
-                    Textos.titulo(texto: element, align: TextAlign.left),
-                    Textos.tituloGrey(texto: element),
+                    Textos.titulo(texto: v.name, align: TextAlign.left),
+                    Textos.tituloGrey(texto: v.name),
                   ],
                 ),
               )

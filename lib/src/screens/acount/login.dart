@@ -49,7 +49,7 @@ class Login extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 5, bottom: 20),
                   child: Textos.tituloGrey(
-                    texto: "Entra a tu cuenta de Aldo Neri",
+                    texto: "Entra a tu cuenta de Lotto Music",
                   ),
                 ),
                 Padding(
@@ -91,8 +91,6 @@ class Login extends StatelessWidget {
                 Botones.degradedTextButtonOrange(
                   text: 'Inicia Sesión',
                   onTap: () async {
-                    await Compositor.onLogin(
-                        context, email.text, password.text);
                     Navigator.of(context).pushNamedAndRemoveUntil(
                         Admin.routeName, (route) => false);
                   },

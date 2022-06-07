@@ -48,7 +48,7 @@ class Register extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 5, bottom: 20),
                     child: Textos.tituloGrey(
-                      texto: "Crea tu cuenta de Aldo Neri",
+                      texto: "Crea tu cuenta de Lotto Music",
                     ),
                   ),
                   Padding(
@@ -95,13 +95,6 @@ class Register extends StatelessWidget {
                   Botones.degradedTextButtonOrange(
                     text: 'Registrate',
                     onTap: () {
-                      Compositor.onRegister(
-                        context: context,
-                        email: email.text,
-                        lastname: '',
-                        name: nombre.text,
-                        password: telefono.text,
-                      );
                       Navigator.of(context)
                           .pushNamed(RegisterConfirm.routeName);
                     },
