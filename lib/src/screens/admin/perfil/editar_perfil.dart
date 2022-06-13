@@ -1,11 +1,10 @@
-import 'package:lotto_music/src/widgets/bacground.dart';
 import 'package:lotto_music/src/widgets/botones.dart';
 import 'package:lotto_music/src/widgets/inputs_text.dart';
 import 'package:lotto_music/src/widgets/text.dart';
 import 'package:flutter/material.dart';
 
 import '../../../helpers/variables_globales.dart';
-import '../../../widgets/bacground.dart';
+
 import '../../../widgets/text.dart';
 
 class EditarPerfil extends StatelessWidget {
@@ -33,7 +32,7 @@ class EditarPerfil extends StatelessWidget {
                     child: Stack(
                       children: [
                         CircleAvatar(
-                          child: Text('BZ'),
+                          child: const Text('BZ'),
                           radius: Medidas.size.width * .18,
                         ),
                         Align(
@@ -41,7 +40,7 @@ class EditarPerfil extends StatelessWidget {
                           child: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30),
-                              gradient: LinearGradient(
+                              gradient: const LinearGradient(
                                 colors: [
                                   Color(0xFFF3B640),
                                   Color(0xFFF98245),

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:lotto_music/src/screens/admin/clock/clock.dart';
 import 'package:lotto_music/src/screens/admin/videos/video.dart';
 import 'package:lotto_music/src/screens/admin/videos/videos.dart';
 
@@ -43,6 +44,7 @@ class Ruts {
     Video.routeName: (_) => const Video(),
     Notify.routeName: (_) => const Notify(),
     SearchVideos.routeName: (_) => const SearchVideos(),
+    Clock.routeName: (_) => const Clock(),
   };
 
   static get rutas {

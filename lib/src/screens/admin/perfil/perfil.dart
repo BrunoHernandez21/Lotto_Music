@@ -1,12 +1,10 @@
 import 'package:lotto_music/src/helpers/new_icons.dart';
 import 'package:lotto_music/src/helpers/variables_globales.dart';
-import 'package:lotto_music/src/screens/admin/perfil/acerdade.dart';
 import 'package:lotto_music/src/screens/admin/perfil/ayuda.dart';
 import 'package:lotto_music/src/screens/admin/perfil/editar_perfil.dart';
 import 'package:lotto_music/src/screens/admin/perfil/informacionlegal.dart';
 import 'package:flutter/material.dart';
 
-import '../../../widgets/bacground.dart';
 import '../../../widgets/text.dart';
 import 'ajustes/ajustes.dart';
 import 'appbar.dart';
@@ -27,7 +25,7 @@ class Perfil extends StatelessWidget {
               width: Medidas.size.width * .4,
               padding: const EdgeInsets.only(bottom: 20),
               child: CircleAvatar(
-                child: Text('BZ'),
+                child: const Text('BZ'),
                 radius: Medidas.size.width * .15,
               ),
             ),
@@ -47,7 +45,7 @@ class Perfil extends StatelessWidget {
                 Navigator.pushNamed(context, EditarPerfil.routeName);
               },
             ),
-            TemeApp(),
+            const TemeApp(),
             ListTile(
               title: Textos.tituloGrey(texto: 'Temas'),
               leading: const Icon(Icons.settings),

@@ -16,8 +16,8 @@ class _TemeAppState extends State<TemeApp> {
     final blocShader = BlocProvider.of<ShaderpreferencesBloc>(context);
 
     return ListTile(
-      title: Text("Dark Theme"),
-      leading: Icon(Icons.color_lens),
+      title: const Text("Dark Theme"),
+      leading: const Icon(Icons.color_lens),
       trailing: Switch(
         value: blocShader.state.themeData.backgroundColor ==
             ThemeData.dark().backgroundColor,

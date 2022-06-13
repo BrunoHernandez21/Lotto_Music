@@ -15,28 +15,28 @@ class AppbarVideos extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
+          const SizedBox(
             width: 15,
           ),
           Image.asset(Assets.logo, height: 30),
-          SizedBox(
+          const SizedBox(
             width: 5,
           ),
           Textos.parrafoGrey(texto: "Lotto Music"),
-          Expanded(child: SizedBox()),
+          const Expanded(child: SizedBox()),
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: () {
               Navigator.pushNamed(context, SearchVideos.routeName);
             },
           ),
           IconButton(
-            icon: Icon(Icons.notifications),
+            icon: const Icon(Icons.notifications),
             onPressed: () {
               Navigator.pushNamed(context, Notify.routeName);
             },
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
         ],

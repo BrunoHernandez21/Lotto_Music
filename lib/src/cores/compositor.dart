@@ -31,8 +31,6 @@ class Compositor {
       blocShader.add(OnChageTheme(themeData: myTheme));
       return true;
     }
-
-    return true;
   }
 
   ///////////////////////////////////////////////

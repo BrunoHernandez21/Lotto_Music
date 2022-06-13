@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../widgets/bacground.dart';
 import '../../../../widgets/text.dart';
 import 'billetera.dart';
 import 'direccion.dart';

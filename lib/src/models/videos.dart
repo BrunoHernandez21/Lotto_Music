@@ -4,8 +4,8 @@
 
 import 'dart:convert';
 
-class Video_Model {
-  Video_Model({
+class VideoModel {
+  VideoModel({
     this.id,
     required this.image,
     required this.name,
@@ -17,25 +17,25 @@ class Video_Model {
   String name;
   String link;
 
-  Video_Model copyWith({
+  VideoModel copyWith({
     String? id,
     String? image,
     String? name,
     String? link,
   }) =>
-      Video_Model(
+      VideoModel(
         id: id ?? this.id,
         image: image ?? this.image,
         name: name ?? this.name,
         link: link ?? this.link,
       );
 
-  factory Video_Model.fromJson(String str) =>
-      Video_Model.fromMap(json.decode(str));
+  factory VideoModel.fromJson(String str) =>
+      VideoModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory Video_Model.fromMap(Map<String, dynamic> json) => Video_Model(
+  factory VideoModel.fromMap(Map<String, dynamic> json) => VideoModel(
         id: json["id"],
         image: json["image"],
         name: json["name"],

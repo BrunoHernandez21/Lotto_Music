@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:lotto_music/src/screens/admin/videos/video.dart';
 import 'package:lotto_music/src/widgets/text.dart';
 
 import '../../../helpers/variables_globales.dart';
@@ -15,7 +14,7 @@ class Grupos extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -50,7 +49,7 @@ class Grupos extends StatelessWidget {
   ) {
     final a = Random();
     List<Widget> r = [];
-    list.forEach((element) {
+    for (var element in list) {
       r.add(
         Container(
           clipBehavior: Clip.antiAlias,
@@ -90,7 +89,7 @@ class Grupos extends StatelessWidget {
           ),
         ),
       );
-    });
+    }
     return r;
   }
 }

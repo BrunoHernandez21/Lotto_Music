@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:lotto_music/src/screens/admin/Videos/appbar.dart';
 import 'package:lotto_music/src/screens/admin/videos/video.dart';
@@ -7,7 +5,6 @@ import 'package:lotto_music/src/widgets/text.dart';
 
 import '../../../helpers/variables_globales.dart';
 import '../../../models/videos.dart';
-import '../grupos/appbar.dart';
 
 class Videos extends StatelessWidget {
   static const routeName = 'videos';
@@ -20,10 +17,10 @@ class Videos extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            AppbarVideos(),
+            const AppbarVideos(),
             Expanded(
               child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 child: Column(
                   children: iterable(Developer.videos, context),
                 ),
@@ -35,16 +32,16 @@ class Videos extends StatelessWidget {
     );
   }
 
-  List<Widget> iterable(List<Video_Model> b, BuildContext context) {
+  List<Widget> iterable(List<VideoModel> b, BuildContext context) {
     List<Widget> a = [];
-    b.forEach((v) {
+    for (var v in b) {
       a.add(SizedBox(
         height: Medidas.size.width * .3,
         child: GestureDetector(
           child: Row(
             children: [
               Container(
-                margin: EdgeInsets.only(left: 10),
+                margin: const EdgeInsets.only(left: 10),
                 height: Medidas.size.width * .240,
                 width: Medidas.size.width * .360,
                 decoration: BoxDecoration(
@@ -55,7 +52,7 @@ class Videos extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 6,
               ),
               Flexible(
@@ -63,7 +60,7 @@ class Videos extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Textos.titulo(texto: v.name, align: TextAlign.left),
@@ -78,7 +75,7 @@ class Videos extends StatelessWidget {
           },
         ),
       ));
-    });
+    }
     return a;
   }
 }

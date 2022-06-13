@@ -3,7 +3,7 @@ part of 'curso_bloc.dart';
 @immutable
 class CursoState {
   final bool isBuy;
-  CursoState({
+  const CursoState({
     this.isBuy = false,
   });
 

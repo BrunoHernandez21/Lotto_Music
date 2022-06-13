@@ -3,9 +3,9 @@ import 'package:lotto_music/src/screens/acount/recovery.dart';
 import 'package:lotto_music/src/screens/acount/register.dart';
 
 import '../../bloc/shaderPreferences/shaderpreferences_temp.dart';
-import '../../cores/compositor.dart';
+
 import '../../helpers/variables_globales.dart';
-import '../../services/acount_services.dart';
+
 import '../../widgets/botones.dart';
 import '../../widgets/chec_box.dart';
 import '../../widgets/inputs_text.dart';

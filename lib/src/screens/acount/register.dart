@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lotto_music/src/screens/acount/register_confirm.dart';
 
-import '../../cores/compositor.dart';
 import '../../helpers/variables_globales.dart';
 import '../../widgets/botones.dart';
 import '../../widgets/inputs_text.dart';
