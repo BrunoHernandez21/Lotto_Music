@@ -10,9 +10,7 @@ import 'package:lotto_music/src/cores/acount.dart';
 import 'package:lotto_music/src/cores/preferences_app.dart';
 import 'package:lotto_music/src/helpers/ruts_screens.dart';
 import 'package:lotto_music/src/models/login_response.dart';
-
-import 'package:lotto_music/src/screens/acount/root.dart';
-import 'package:lotto_music/src/screens/admin/admin.dart';
+import 'package:lotto_music/src/screens/admin.dart';
 
 import 'generated/l10n.dart';
 
@@ -65,7 +63,6 @@ class Appstate extends StatelessWidget {
           return MyApp(
             locale: state.idioma,
             theme: state.themeData,
-            isLogin: BlocProvider.of<AcountBloc>(context).state.isLogin,
           );
         },
       ),
@@ -77,23 +74,21 @@ class Appstate extends StatelessWidget {
 class MyApp extends StatelessWidget {
   final ThemeData theme;
   final Locale locale;
-  final bool isLogin;
 
-  const MyApp(
-      {Key? key,
-      required this.theme,
-      required this.locale,
-      required this.isLogin})
-      : super(key: key);
+  const MyApp({
+    Key? key,
+    required this.theme,
+    required this.locale,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Neri',
+      title: 'Lotto Music',
       debugShowCheckedModeBanner: false,
       theme: theme,
       locale: locale,
       routes: Ruts.rutas,
-      initialRoute: isLogin ? Admin.routeName : RootPage.routeName,
+      initialRoute: Admin.routeName,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

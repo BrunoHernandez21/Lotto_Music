@@ -1,51 +1,81 @@
 // To parse this JSON data, do
 //
-//     final categorys = categorysFromMap(jsonString);
+//     final planModel = planModelFromMap(jsonString);
 
 import 'dart:convert';
 
-class VideoModel {
-  VideoModel({
-    this.id,
-    required this.image,
-    required this.name,
-    required this.link,
+class VideosModel {
+  VideosModel({
+    this.id = 0,
+    this.activo = true,
+    this.artista = "",
+    this.canal = "",
+    this.fechaVideo,
+    this.idVideo = "",
+    this.titulo = "",
+    this.urlVideo = "",
+    this.thumblary = "",
   });
 
-  String? id;
-  String image;
-  String name;
-  String link;
+  int id;
+  bool activo;
+  String artista;
+  String canal;
+  DateTime? fechaVideo;
+  String idVideo;
+  String titulo;
+  String urlVideo;
+  String thumblary;
 
-  VideoModel copyWith({
-    String? id,
-    String? image,
-    String? name,
-    String? link,
+  VideosModel copyWith({
+    int? id,
+    bool? activo,
+    String? artista,
+    String? canal,
+    DateTime? fechaVideo,
+    String? idVideo,
+    String? titulo,
+    String? urlVideo,
+    String? thumblary,
   }) =>
-      VideoModel(
+      VideosModel(
         id: id ?? this.id,
-        image: image ?? this.image,
-        name: name ?? this.name,
-        link: link ?? this.link,
+        activo: activo ?? this.activo,
+        artista: artista ?? this.artista,
+        canal: canal ?? this.canal,
+        fechaVideo: fechaVideo ?? this.fechaVideo,
+        idVideo: idVideo ?? this.idVideo,
+        titulo: titulo ?? this.titulo,
+        urlVideo: urlVideo ?? this.urlVideo,
+        thumblary: thumblary ?? this.thumblary,
       );
 
-  factory VideoModel.fromJson(String str) =>
-      VideoModel.fromMap(json.decode(str));
+  factory VideosModel.fromJson(String str) =>
+      VideosModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory VideoModel.fromMap(Map<String, dynamic> json) => VideoModel(
+  factory VideosModel.fromMap(Map<String, dynamic> json) => VideosModel(
         id: json["id"],
-        image: json["image"],
-        name: json["name"],
-        link: json["link"],
+        activo: json["activo"],
+        artista: json["Artista"],
+        canal: json["Canal"],
+        fechaVideo: DateTime.parse(json["Fecha_video"]),
+        idVideo: json["Id_video"],
+        titulo: json["Titulo"],
+        urlVideo: json["Url_video"],
+        thumblary: json["thumblary"],
       );
 
   Map<String, dynamic> toMap() => {
         "id": id,
-        "image": image,
-        "name": name,
-        "link": link,
+        "activo": activo,
+        "Artista": artista,
+        "Canal": canal,
+        "Fecha_video": fechaVideo?.toIso8601String(),
+        "Id_video": idVideo,
+        "Titulo": titulo,
+        "Url_video": urlVideo,
+        "thumblary": thumblary,
       };
 }

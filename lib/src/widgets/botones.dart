@@ -26,6 +26,29 @@ class Botones {
         minSize: Medidas.size.height * .06,
       );
 
+  static Widget solidTextButton({
+    required String text,
+    required void Function() onTap,
+    required Color? fontColor,
+    Color borderColor = Colors.transparent,
+    required Color backColor,
+  }) =>
+      _Solido(
+        body: Text(
+          text,
+          style: TextStyle(
+              color: fontColor ?? Colors.black,
+              fontFamily: FontsFamily.roboto,
+              fontSize: 16,
+              fontWeight: FontWeight.w800),
+        ),
+        onTap: onTap,
+        backgroundColor: backColor,
+        borderColor: borderColor,
+        maxSize: Medidas.size.height * .08,
+        minSize: Medidas.size.height * .06,
+      );
+
   //////////////////////////////////////////////
   static Widget solidnWhitSvg({
     required String svgAsset,
@@ -46,7 +69,7 @@ class Botones {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
-                child: Textos.parrafoGrey(texto: titulo),
+                child: Textos.parrafoMED(texto: titulo),
               ),
             ],
           ),
@@ -77,6 +100,32 @@ class Botones {
         border: false,
         borderColor: const Color(0xFFFA8046),
         colors: const [Color(0xFFFA8046), Color(0xFFF7A742)],
+        maxSize: Medidas.size.height * .08,
+        minSize: Medidas.size.height * .06,
+      );
+
+  ///////////////////////////////////////////
+  static Widget degradedTextButton({
+    required String text,
+    Color textColor = Colors.white,
+    required List<Color> colors,
+    Color bordercolor = const Color(0xFFFA8046),
+    required void Function() onTap,
+  }) =>
+      _Degradado(
+        body: Text(
+          text,
+          style: TextStyle(
+            color: textColor,
+            fontFamily: FontsFamily.roboto,
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        onTap: onTap,
+        border: false,
+        borderColor: bordercolor,
+        colors: colors,
         maxSize: Medidas.size.height * .08,
         minSize: Medidas.size.height * .06,
       );
@@ -192,7 +241,6 @@ class _Degradado extends StatelessWidget {
     );
     return Container(
       alignment: Alignment.center,
-      margin: const EdgeInsets.only(top: 13.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
         border: border
@@ -205,8 +253,8 @@ class _Degradado extends StatelessWidget {
             : null,
         gradient: LinearGradient(
           colors: colors,
-          begin: FractionalOffset.topCenter,
-          end: FractionalOffset.bottomCenter,
+          begin: FractionalOffset.centerLeft,
+          end: FractionalOffset.centerRight,
         ),
       ),
       child: ElevatedButton(

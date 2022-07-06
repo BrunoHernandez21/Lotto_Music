@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lotto_music/src/cores/compositor.dart';
 import 'package:lotto_music/src/screens/acount/register_confirm.dart';
 
 import '../../helpers/variables_globales.dart';
@@ -9,9 +10,9 @@ import '../../widgets/text.dart';
 class Register extends StatelessWidget {
   static const routeName = '/register';
   final TextEditingController nombre = TextEditingController();
+  final TextEditingController phone = TextEditingController();
+  final TextEditingController password = TextEditingController();
   final TextEditingController email = TextEditingController();
-  final TextEditingController fecha = TextEditingController();
-  final TextEditingController telefono = TextEditingController();
 
   Register({Key? key}) : super(key: key);
 
@@ -40,13 +41,13 @@ class Register extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Textos.tituloNaranja(
+                    child: Textos.tituloMAX(
                       texto: "Registro",
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 5, bottom: 20),
-                    child: Textos.tituloGrey(
+                    child: Textos.tituloMED(
                       texto: "Crea tu cuenta de Lotto Music",
                     ),
                   ),
@@ -54,15 +55,15 @@ class Register extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 5),
                     child: InputsText.classic(
                         controller: nombre,
-                        hintText: "Nombre y Apellido",
+                        hintText: "Nombre",
                         textType: TextInputType.name),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5),
                     child: InputsText.classic(
-                        controller: fecha,
-                        hintText: "Fecha de Nacimiento",
-                        textType: TextInputType.datetime),
+                        controller: phone,
+                        hintText: "Telefono",
+                        textType: TextInputType.number),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5),
@@ -70,22 +71,21 @@ class Register extends StatelessWidget {
                         controller: email,
                         hintText: 'Correo Eléctronico',
                         textType: TextInputType.emailAddress,
-                        icon: const Icon(Icons.mail_outline)),
+                        icon: const Icon(Icons.email)),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5),
                     child: InputsText.box(
-                        controller: telefono,
-                        hintText: 'Telefono',
-                        textType: TextInputType.phone,
-                        icon: const Icon(Icons.phone_outlined)),
+                        controller: password,
+                        hintText: 'Contraseña',
+                        textType: TextInputType.visiblePassword,
+                        icon: const Icon(Icons.password)),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5),
                     child: Textos.parrafoHiper(
-                      texto: 'Al suscribirse usted aceota nuestros ',
-                      hipertext:
-                          'terminos y condiciones y politica de privacidad',
+                      texto: 'Al suscribirse usted acepta nuestros ',
+                      hipertext: 'terminos y condiciones',
                       onTap: () {
                         Navigator.of(context).pop();
                       },
@@ -94,54 +94,20 @@ class Register extends StatelessWidget {
                   Botones.degradedTextButtonOrange(
                     text: 'Registrate',
                     onTap: () {
+                      Compositor.onRegister(
+                        context: context,
+                        email: email.text,
+                        password: password.text,
+                        phone: phone.text,
+                        name: nombre.text,
+                      );
                       Navigator.of(context)
                           .pushNamed(RegisterConfirm.routeName);
                     },
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Row(
-                      children: [
-                        const Expanded(
-                          child: Divider(
-                            color: Colors.grey,
-                            height: 20,
-                            indent: 10,
-                            endIndent: 10,
-                          ),
-                        ),
-                        Textos.parrafoGrey(texto: 'O Continúa con'),
-                        const Expanded(
-                          child: Divider(
-                            color: Colors.grey,
-                            height: 20,
-                            indent: 10,
-                            endIndent: 10,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Botones.solidnWhitSvg(
-                            titulo: 'Google',
-                            svgAsset: Assets.svgGoogle,
-                            onTap: () {
-                              Navigator.of(context).pop();
-                            }),
-                        Botones.solidnWhitSvg(
-                            titulo: 'Facebook',
-                            svgAsset: Assets.svgFacebook,
-                            onTap: () {
-                              Navigator.of(context).pop();
-                            }),
-                      ],
-                    ),
-                  ),
+                  const SizedBox(
+                    height: 30,
+                  )
                 ],
               ),
             ),

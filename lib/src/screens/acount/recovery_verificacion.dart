@@ -4,7 +4,7 @@ import '../../helpers/variables_globales.dart';
 import '../../widgets/botones.dart';
 import '../../widgets/inputs_text.dart';
 import '../../widgets/text.dart';
-import '../admin/perfil/ajustes/new_password.dart';
+import '../perfil/ajustes/new_password.dart';
 
 class RecoveryVerificacion extends StatelessWidget {
   static const routeName = '/login/recovery/verificacion';
@@ -34,7 +34,7 @@ class RecoveryVerificacion extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Textos.tituloNaranja(
+                  child: Textos.tituloMAX(
                     texto: "Escribe tu códico",
                   ),
                 ),
@@ -72,7 +72,7 @@ class RecoveryVerificacion extends StatelessWidget {
                 ),
                 Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Textos.parrafoGrey(
+                    child: Textos.tituloMED(
                         texto:
                             'Este codigo caducara en 10 minutos despues de recibir este mensaje. Si no recibes un mensaje.')),
                 Padding(

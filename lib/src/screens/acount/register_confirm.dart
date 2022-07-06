@@ -32,13 +32,13 @@ class RegisterConfirm extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Textos.tituloNaranja(
+                  child: Textos.tituloMAX(
                     texto: "Tu cuenta se creo con exito",
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 5, bottom: 20),
-                  child: Textos.tituloGrey(
+                  child: Textos.tituloMED(
                     align: TextAlign.center,
                     texto:
                         "Te enviaremos un link a tu correo para confirmar tu email",

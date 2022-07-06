@@ -10,27 +10,26 @@ class Compositor {
   ///
   static Future<bool> onChagengeTheme(BuildContext context) async {
     final blocShader = BlocProvider.of<ShaderpreferencesBloc>(context);
+    ThemeData myTheme;
     if (blocShader.state.themeData.backgroundColor !=
         ThemeData.dark().backgroundColor) {
-      ThemeData myTheme = ThemeData.dark().copyWith(
+      myTheme = ThemeData.dark().copyWith(
         backgroundColor: ThemeData.dark().backgroundColor,
         appBarTheme: ThemeData.dark().appBarTheme.copyWith(
               backgroundColor: Colors.transparent,
               elevation: 0,
             ),
       );
-      blocShader.add(OnChageTheme(themeData: myTheme));
-      return true;
     } else {
-      ThemeData myTheme = ThemeData.light().copyWith(
+      myTheme = ThemeData.light().copyWith(
           backgroundColor: Colores.background,
           appBarTheme: ThemeData.light().appBarTheme.copyWith(
                 backgroundColor: Colors.transparent,
                 elevation: 0,
               ));
-      blocShader.add(OnChageTheme(themeData: myTheme));
-      return true;
     }
+    blocShader.add(OnChageTheme(themeData: myTheme));
+    return true;
   }
 
   ///////////////////////////////////////////////
@@ -60,7 +59,7 @@ class Compositor {
     required BuildContext context,
     required String email,
     required String password,
-    required String lastname,
+    required String phone,
     required String name,
   }) async {
     final acountB = BlocProvider.of<AcountBloc>(context);
@@ -68,12 +67,20 @@ class Compositor {
       email: email,
       password: password,
       context: context,
-      lastname: lastname,
+      lastname: phone,
       name: name,
     );
   }
 
   static Future<bool> onLogOut(BuildContext context) async {
+    return true;
+  }
+
+  static Future<bool> onRecovery(BuildContext context) async {
+    return true;
+  }
+
+  static Future<bool> onChangePassword(BuildContext context) async {
     return true;
   }
 
@@ -88,6 +95,16 @@ class Compositor {
   }
 
   ///////////////////////////////////////////////
-  ///Cursos Controller
+  ///music Controllers
+  static Future<bool> loadVideosPrincipales(BuildContext context) async {
+    return true;
+  }
 
+  static Future<bool> loadVideosPorCategoria(BuildContext context) async {
+    return true;
+  }
+
+  static Future<bool> loadVideosEventos(BuildContext context) async {
+    return true;
+  }
 }

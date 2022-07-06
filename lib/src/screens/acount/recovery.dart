@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lotto_music/src/screens/acount/recovery_verificacion.dart';
+import 'package:lotto_music/src/cores/compositor.dart';
 
 import '../../helpers/variables_globales.dart';
 import '../../widgets/botones.dart';
@@ -33,33 +33,35 @@ class Recovery extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Textos.tituloNaranja(
+                  child: Textos.tituloMAX(
                     texto: "Olvide mi Contraseña",
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 5, bottom: 20),
-                  child: Textos.tituloGrey(
-                    texto: "Proporciona tu telefono",
+                  child: Textos.tituloMED(
+                    texto: "Proporciona tu Correo",
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5),
                   child: InputsText.classic(
-                    hintText: '(+52)',
+                    hintText: 'example@example.com',
                     textType: TextInputType.emailAddress,
                   ),
                 ),
                 Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5),
-                    child: Textos.parrafoGrey(
-                        texto:
-                            'Te enviaremos un código para verificar tu numero')),
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: Textos.parrafoMED(
+                      texto:
+                          'Te enviaremos un correo para con tu nueva contraseña'),
+                ),
                 Botones.degradedTextButtonOrange(
                   text: 'Enviar',
-                  onTap: () {
-                    Navigator.of(context)
-                        .pushNamed(RecoveryVerificacion.routeName);
+                  onTap: () async {
+                    if (await Compositor.onRecovery(context)) {
+                      Navigator.of(context).pop();
+                    }
                   },
                 ),
               ],

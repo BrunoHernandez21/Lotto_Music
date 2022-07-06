@@ -1,26 +1,27 @@
 import 'package:flutter/cupertino.dart';
-import 'package:lotto_music/src/screens/admin/clock/clock.dart';
-import 'package:lotto_music/src/screens/admin/videos/video.dart';
-import 'package:lotto_music/src/screens/admin/videos/videos.dart';
 
 import '../screens/acount/login.dart';
-import '../screens/acount/recovery_verificacion.dart';
-import '../screens/admin/admin.dart';
-import '../screens/admin/notify/notify.dart';
-import '../screens/admin/perfil/acerdade.dart';
-import '../screens/admin/perfil/ajustes/ajustes.dart';
-import '../screens/admin/perfil/ajustes/billetera.dart';
-import '../screens/admin/perfil/ajustes/direccion.dart';
-import '../screens/admin/perfil/ajustes/new_password.dart';
-import '../screens/admin/perfil/ajustes/password_confirm.dart';
 import '../screens/acount/recovery.dart';
+import '../screens/acount/recovery_verificacion.dart';
 import '../screens/acount/register.dart';
 import '../screens/acount/register_confirm.dart';
 import '../screens/acount/root.dart';
-import '../screens/admin/perfil/ayuda.dart';
-import '../screens/admin/perfil/editar_perfil.dart';
-import '../screens/admin/perfil/informacionlegal.dart';
-import '../screens/admin/search/search.dart';
+import '../screens/admin.dart';
+import '../screens/clock/clock.dart';
+import '../screens/notify/notify.dart';
+import '../screens/perfil/acerdade.dart';
+import '../screens/perfil/ajustes/ajustes.dart';
+import '../screens/perfil/ajustes/ajustes_usuario.dart';
+import '../screens/perfil/ajustes/billetera.dart';
+import '../screens/perfil/ajustes/direccion.dart';
+import '../screens/perfil/ajustes/new_password.dart';
+import '../screens/perfil/ajustes/password_confirm.dart';
+import '../screens/perfil/editar_perfil.dart';
+import '../screens/perfil/historial_compras.dart';
+import '../screens/perfil/tarjetas.dart';
+import '../screens/search/search.dart';
+import '../screens/videos/video.dart';
+import '../screens/videos/videos.dart';
 
 class Ruts {
   static final Map<String, WidgetBuilder> _rutas = {
@@ -36,8 +37,8 @@ class Ruts {
     AcercaDe.routeName: (_) => const AcercaDe(),
     Ajustes.routeName: (_) => const Ajustes(),
     EditarPerfil.routeName: (_) => const EditarPerfil(),
-    Ayuda.routeName: (_) => const Ayuda(),
-    InformacionLegal.routeName: (_) => const InformacionLegal(),
+    HistorialCompras.routeName: (_) => const HistorialCompras(),
+    Tarjetas.routeName: (_) => const Tarjetas(),
     Direccion.routeName: (_) => const Direccion(),
     Billetera.routeName: (_) => const Billetera(),
     Videos.routeName: (_) => const Videos(),
@@ -45,6 +46,7 @@ class Ruts {
     Notify.routeName: (_) => const Notify(),
     SearchVideos.routeName: (_) => const SearchVideos(),
     Clock.routeName: (_) => const Clock(),
+    AjustesUsuario.routeName: (_) => const AjustesUsuario(),
   };
 
   static get rutas {

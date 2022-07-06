@@ -25,66 +25,105 @@ class Textos {
         fontSize: fontSize,
         fontHiperSize: fontHiperSize,
       );
-  static Widget parrafo({
+  static Widget texto({
     required String texto,
     TextAlign? align,
     int? renglones,
+    Color? color,
+    double? size,
   }) =>
-      _Base(
-        color: const Color(0xFF000000),
-        size: 14,
-        text: texto,
-        aling: align,
-        renglones: renglones,
-      );
-  static Widget parrafoGrey({
-    required String texto,
-    TextAlign? align,
-    int? renglones,
-  }) =>
-      _Base(
-        color: const Color(0xFFADB0B3),
-        size: 14,
-        text: texto,
-        aling: align,
-        renglones: renglones,
-      );
-  static Widget parrafoNaranja({
-    required String texto,
-    TextAlign? align,
-    int? renglones,
-  }) =>
-      _Base(
-        color: const Color(0xFFF2BC3F),
-        size: 19,
-        text: texto,
-        aling: align,
-        renglones: renglones,
-      );
-  static Widget titulo(
-          {required String texto,
-          Color? color,
-          TextAlign? align,
-          int renglones = 1}) =>
       _Base(
         color: color ?? Colors.black,
+        size: size ?? 14,
         text: texto,
-        size: 16,
         aling: align,
         renglones: renglones,
       );
-  static Widget tituloNaranja({required String texto, TextAlign? align}) =>
+
+  static Widget parrafoMIN({
+    required String texto,
+    TextAlign? align,
+    int? renglones,
+    Color? color,
+    double? size,
+  }) =>
       _Base(
-        color: const Color(0xFFF2BC3F),
-        size: 26,
+        color: color ?? const Color(0xFFADB0B3),
+        size: size ?? 12,
         text: texto,
         aling: align,
+        renglones: renglones,
       );
-  static Widget tituloGrey(
-          {required String texto, TextAlign? align, int renglones = 1}) =>
+
+  static Widget parrafoMED({
+    required String texto,
+    TextAlign? align,
+    int? renglones,
+    Color? color,
+    double? size,
+  }) =>
       _Base(
-        color: const Color(0xFFADB0B3),
-        size: 19,
+        color: color ?? const Color(0xFFADB0B3),
+        size: size ?? 14,
+        text: texto,
+        aling: align,
+        renglones: renglones,
+      );
+  static Widget parrafoMAX({
+    required String texto,
+    TextAlign? align,
+    int? renglones,
+    Color? color,
+    double? size,
+  }) =>
+      _Base(
+        color: color ?? const Color(0xFFADB0B3),
+        size: size ?? 16,
+        text: texto,
+        aling: align,
+        renglones: renglones,
+      );
+
+  static Widget tituloMIN({
+    required String texto,
+    TextAlign? align,
+    int? renglones,
+    Color? color,
+    double? size,
+  }) =>
+      _Base(
+        color: color ?? const Color(0xFFADB0B3),
+        size: size ?? 18,
+        text: texto,
+        aling: align,
+        renglones: renglones,
+      );
+
+  static Widget tituloMED({
+    required String texto,
+    TextAlign? align,
+    int? renglones,
+    Color? color,
+    double? size,
+  }) =>
+      _Base(
+        color: color ?? const Color(0xFFADB0B3),
+        size: size ?? 22,
+        text: texto,
+        aling: align,
+        renglones: renglones,
+      );
+
+  static Widget tituloMAX({
+    required String texto,
+    TextAlign? align,
+    int? renglones,
+    Color? color,
+    double? size,
+  }) =>
+      _Base(
+        color: color ?? const Color(0xFFF2BC3F),
+        size: size ?? 24,
         text: texto,
         aling: align,
         renglones: renglones,

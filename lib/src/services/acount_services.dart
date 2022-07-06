@@ -4,17 +4,11 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 import '../helpers/variables_globales.dart';
-import '../models/acoun_response.dart';
+import '../models/users.dart';
 import '../models/login_response.dart';
 
 class AcountServices {
-  static const String _register = URL.base + 'signup';
-  static const String _login = URL.base + "login";
-  static const String _userdata = URL.base + "userdata";
-  static const String _uploadUserImage = URL.base + "upload_user_image";
-  static const String _updateUserdata = URL.base + "update_userdata";
-  static const String _updatePassword = URL.base + "update_password";
-  static const String _forgotPassword = URL.base + "forgot_password";
+  static const String _login = URL.auth + "login";
 
   static Future<LoginResponse?> login({
     required String email,
@@ -61,7 +55,7 @@ class AcountServices {
   static Future<void> logout() async {}
 
   static Future<void> updateUserData({
-    required AcountResponse user,
+    required User user,
     required String token,
   }) async {}
 

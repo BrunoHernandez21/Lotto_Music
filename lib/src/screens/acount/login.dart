@@ -10,7 +10,7 @@ import '../../widgets/botones.dart';
 import '../../widgets/chec_box.dart';
 import '../../widgets/inputs_text.dart';
 import '../../widgets/text.dart';
-import '../admin/admin.dart';
+import '../admin.dart';
 
 class Login extends StatelessWidget {
   static const routeName = '/login';
@@ -42,13 +42,13 @@ class Login extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Textos.tituloNaranja(
+                  child: Textos.tituloMAX(
                     texto: "Inicia Sesión",
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 5, bottom: 20),
-                  child: Textos.tituloGrey(
+                  child: Textos.tituloMED(
                     texto: "Entra a tu cuenta de Lotto Music",
                   ),
                 ),
@@ -71,7 +71,7 @@ class Login extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5),
                   child: MyCheckBoxTitle(
-                    title: Textos.parrafoGrey(texto: 'Recuerdame'),
+                    title: Textos.parrafoMED(texto: 'Recuerdame'),
                     value: ShaderPreferencesTemp.recuerdame,
                     onChnange: (a) {
                       ShaderPreferencesTemp.recuerdame = a;
@@ -107,7 +107,7 @@ class Login extends StatelessWidget {
                           endIndent: 10,
                         ),
                       ),
-                      Textos.parrafoGrey(texto: 'O Continúa con'),
+                      Textos.parrafoMED(texto: 'O Continúa con'),
                       const Expanded(
                         child: Divider(
                           color: Colors.grey,
@@ -116,26 +116,6 @@ class Login extends StatelessWidget {
                           endIndent: 10,
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Botones.solidnWhitSvg(
-                          titulo: 'Google',
-                          svgAsset: Assets.svgGoogle,
-                          onTap: () {
-                            Navigator.of(context).pop();
-                          }),
-                      Botones.solidnWhitSvg(
-                          titulo: 'Facebook',
-                          svgAsset: Assets.svgFacebook,
-                          onTap: () {
-                            Navigator.of(context).pop();
-                          }),
                     ],
                   ),
                 ),
@@ -151,6 +131,9 @@ class Login extends StatelessWidget {
                     },
                   ),
                 ),
+                const SizedBox(
+                  height: 20,
+                )
               ],
             ),
           ),
