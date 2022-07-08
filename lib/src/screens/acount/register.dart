@@ -71,7 +71,10 @@ class Register extends StatelessWidget {
                         controller: email,
                         hintText: 'Correo Eléctronico',
                         textType: TextInputType.emailAddress,
-                        icon: const Icon(Icons.email)),
+                        icon: const Icon(
+                          Icons.email,
+                          color: Color.fromARGB(255, 163, 159, 159),
+                        )),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5),
@@ -79,7 +82,11 @@ class Register extends StatelessWidget {
                         controller: password,
                         hintText: 'Contraseña',
                         textType: TextInputType.visiblePassword,
-                        icon: const Icon(Icons.password)),
+                        obscure: true,
+                        icon: const Icon(
+                          Icons.password,
+                          color: Color.fromARGB(255, 163, 159, 159),
+                        )),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5),
@@ -93,16 +100,17 @@ class Register extends StatelessWidget {
                   ),
                   Botones.degradedTextButtonOrange(
                     text: 'Registrate',
-                    onTap: () {
-                      Compositor.onRegister(
+                    onTap: () async {
+                      if (await Compositor.onRegister(
                         context: context,
                         email: email.text,
                         password: password.text,
                         phone: phone.text,
                         name: nombre.text,
-                      );
-                      Navigator.of(context)
-                          .pushNamed(RegisterConfirm.routeName);
+                      )) {
+                        Navigator.of(context)
+                            .pushNamed(RegisterConfirm.routeName);
+                      }
                     },
                   ),
                   const SizedBox(

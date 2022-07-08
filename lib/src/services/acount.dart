@@ -38,27 +38,28 @@ class AcountServices {
     }
   }
 
-  static Future<User?> singup({
+  static Future<UserModel?> singup({
     required String email,
     required String password,
     required String name,
-    required String lastname,
+    required String phone,
   }) async {
-    try {
-      final urI = Uri.parse(_singup);
-      final resp = await http.get(
-        urI,
-        headers: {
-          "Content-Type": "application/json",
+    final urI = Uri.parse(_singup);
+    final resp = await http.post(
+      urI,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: json.encode(
+        {
           "email": email,
           "password": password,
+          "nombre": name,
+          "telefono": phone,
         },
-      );
-
-      return userFromJson(resp.body);
-    } catch (e) {
-      return null;
-    }
+      ),
+    );
+    return UserModel.fromJson(resp.body);
   }
 
   static Future<String> update({
@@ -138,23 +139,19 @@ class AcountServices {
     }
   }
 
-  static Future<String> forguetpassword({
+  static Future<String?> forguetpassword({
     required String email,
   }) async {
-    try {
-      final urI = Uri.parse(_forgetpassword);
-      final resp = await http.get(
-        urI,
+    final urI = Uri.parse(_forgetpassword);
+    final resp = await http.put(urI,
         headers: {
           "Content-Type": "application/json",
-          "email": email,
         },
-      );
-
-      return resp.body;
-    } catch (e) {
-      return "";
-    }
+        body: json.encode({
+          "email": email,
+        }));
+    final out = json.decode(resp.body);
+    return out["mensaje"];
   }
 
   static Future<LoginResponse?> updateToken({required String token}) async {

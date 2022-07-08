@@ -8,8 +8,9 @@ import '../../widgets/text.dart';
 
 class Recovery extends StatelessWidget {
   static const routeName = '/login/recovery';
+  final TextEditingController controller = TextEditingController();
 
-  const Recovery({Key? key}) : super(key: key);
+  Recovery({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     Medidas.size = MediaQuery.of(context).size;
@@ -46,6 +47,7 @@ class Recovery extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5),
                   child: InputsText.classic(
+                    controller: controller,
                     hintText: 'example@example.com',
                     textType: TextInputType.emailAddress,
                   ),
@@ -59,7 +61,7 @@ class Recovery extends StatelessWidget {
                 Botones.degradedTextButtonOrange(
                   text: 'Enviar',
                   onTap: () async {
-                    if (await Compositor.onRecovery(context)) {
+                    if (await Compositor.onRecovery(context, controller.text)) {
                       Navigator.of(context).pop();
                     }
                   },

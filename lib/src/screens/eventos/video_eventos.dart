@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/cores/compositor.dart';
+import 'package:lotto_music/src/screens/videos/video.dart';
 
 import '../../bloc/videos_event/videos_event_bloc.dart';
 import '../../helpers/variables_globales.dart';
@@ -10,7 +11,6 @@ import '../../widgets/digital_clock.dart';
 import '../../widgets/svg_nosignal.dart';
 import '../../widgets/text.dart';
 import '../utils/clock.dart';
-import '../utils/historial_eventos.dart';
 import '../utils/winner.dart';
 
 class VideosEventos extends StatelessWidget {
@@ -51,7 +51,8 @@ class VideosEventos extends StatelessWidget {
               body: const Icon(Icons.history),
               colors: const [Color(0xffFFBBBB), Color(0xffA9F1DF)],
               onTap: () {
-                Navigator.of(context).pushNamed(HistorialEventos.routeName);
+                Compositor.onLoadCategorias(context: context);
+                //Navigator.of(context).pushNamed(HistorialEventos.routeName);
               },
             ),
           ),
@@ -98,13 +99,23 @@ class ListVideosPaginacion extends StatefulWidget {
 
 class _ListVideosPaginacionState extends State<ListVideosPaginacion> {
   final ScrollController controller = ScrollController();
-
+  bool isLoad = false;
   @override
   void initState() {
     super.initState();
     controller.addListener(() async {
+      final vEB = BlocProvider.of<VideosEventBloc>(context);
       if (controller.position.pixels >
-          controller.position.maxScrollExtent * .8) {}
+          controller.position.maxScrollExtent * .8) {
+        if (vEB.state.pag > vEB.state.pags) {
+          return;
+        }
+        if (!isLoad) {
+          isLoad = true;
+          await Compositor.onLoadVideosEventos(context: context);
+          isLoad = false;
+        }
+      }
     });
     if (BlocProvider.of<VideosEventBloc>(context).state.listado == null) {
       Compositor.onLoadInitVideosEventos(context);
@@ -134,6 +145,7 @@ class _ListVideosPaginacionState extends State<ListVideosPaginacion> {
               Compositor.onLoadInitVideosEventos(context);
             },
             child: ListView.separated(
+                controller: controller,
                 physics: const BouncingScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics()),
                 itemCount: state.listado?.length ?? 0,
@@ -180,7 +192,7 @@ class _ListVideosPaginacionState extends State<ListVideosPaginacion> {
                 children: [
                   Textos.parrafoMED(texto: v.video.titulo ?? "", renglones: 2),
                   Textos.parrafoMIN(texto: v.video.artista ?? "", renglones: 1),
-                  Expanded(child: SizedBox()),
+                  const Expanded(child: SizedBox()),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -197,7 +209,7 @@ class _ListVideosPaginacionState extends State<ListVideosPaginacion> {
         ),
       ),
       onTap: () {
-        //TODO
+        Navigator.of(context).pushNamed(Video.routeName);
       },
     );
   }

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../helpers/variables_globales.dart';
 import '../../widgets/text.dart';
 import '../utils/clock.dart';
-import '../search/search.dart';
 
 class AppbarInicio extends StatelessWidget {
   const AppbarInicio({Key? key}) : super(key: key);

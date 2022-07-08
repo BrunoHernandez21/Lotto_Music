@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 
 import '../screens/acount/login.dart';
 import '../screens/acount/recovery.dart';
-import '../screens/acount/recovery_verificacion.dart';
 import '../screens/acount/register.dart';
 import '../screens/acount/register_confirm.dart';
 import '../screens/acount/root.dart';
@@ -29,8 +28,7 @@ class Ruts {
   static final Map<String, WidgetBuilder> _rutas = {
     RootPage.routeName: (_) => const RootPage(),
     Login.routeName: (_) => Login(),
-    Recovery.routeName: (_) => const Recovery(),
-    RecoveryVerificacion.routeName: (_) => const RecoveryVerificacion(),
+    Recovery.routeName: (_) => Recovery(),
     Register.routeName: (_) => Register(),
     Admin.routeName: (_) => const Admin(),
     NewPassword.routeName: (_) => const NewPassword(),

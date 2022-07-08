@@ -184,12 +184,16 @@ class _InputTextState extends State<_InputText> {
       }
     }
     return Container(
-      color: Colors.white,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(4),
+        color: Colors.white,
+      ),
       child: TextField(
         enabled: widget.editable,
         obscureText: isOscure,
         controller: widget.controller,
         keyboardType: widget.textType,
+        style: TextStyle(color: Colors.grey.shade700),
         decoration: InputDecoration(
           suffixIcon: widget.obscure
               ? (isOscure
@@ -221,7 +225,7 @@ class _InputTextState extends State<_InputText> {
             borderRadius: BorderRadius.circular(5),
             borderSide: const BorderSide(
               width: 1.5,
-              color: Colors.blueAccent,
+              color: Color.fromARGB(255, 0, 238, 255),
             ),
           ),
         ),

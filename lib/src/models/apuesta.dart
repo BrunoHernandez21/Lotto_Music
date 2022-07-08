@@ -3,6 +3,7 @@
 //     final apuestaModel = apuestaModelFromMap(jsonString);
 
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 class ApuestaModel {
   ApuestaModel({
@@ -70,7 +71,9 @@ class ApuestaModel {
   Map<String, dynamic> toMap() => {
         "id": id,
         "activo": activo,
-        "fecha": fecha?.toIso8601String(),
+        "fecha": fecha == null
+            ? null
+            : DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(fecha!),
         "vistas": vistas,
         "usuario_id": usuarioId,
         "apuesta_id": apuestaId,

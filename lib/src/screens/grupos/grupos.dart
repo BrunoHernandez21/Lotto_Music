@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'appbar.dart';
-import '../eventos/categorias.dart';
 import 'videos.dart';
 
 class Grupos extends StatelessWidget {
@@ -17,7 +16,5 @@ class Grupos extends StatelessWidget {
         ],
       )),
     );
-
-    ;
   }
 }

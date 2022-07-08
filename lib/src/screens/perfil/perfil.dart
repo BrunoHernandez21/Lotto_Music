@@ -10,6 +10,7 @@ import 'package:lotto_music/src/screens/perfil/tarjetas.dart';
 import 'package:lotto_music/src/widgets/botones.dart';
 
 import '../../bloc/acount/acount_bloc.dart';
+import '../../bloc/user/user_bloc.dart';
 import '../../widgets/text.dart';
 import 'acerdade.dart';
 import 'ajustes/ajustes.dart';
@@ -48,91 +49,91 @@ class BodyLogin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Column(
-        children: [
-          Container(
-            width: Medidas.size.width * .4,
-            padding: const EdgeInsets.only(bottom: 20),
-            child: CircleAvatar(
-              child: const Text('BZ'),
-              radius: Medidas.size.width * .15,
-            ),
+    return BlocBuilder<UserBloc, UserState>(
+      builder: (context, state) {
+        return SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            children: bodyLogin(context, state),
           ),
-          Textos.tituloMED(texto: "Hola" + ("")),
-          Textos.parrafoMED(texto: ""),
-          const SizedBox(
-            height: 30,
-          ),
-          ListTile(
-            title: Textos.tituloMIN(
-              texto: 'Editar perfil',
-              color: const Color(0xFFADB0B3),
-            ),
-            leading: const Icon(Icons.account_box),
-            trailing: const Icon(
-              Icons.arrow_forward_ios_sharp,
-              size: 17,
-            ),
-            onTap: () {
-              Navigator.pushNamed(context, AjustesUsuario.routeName);
-            },
-          ),
-          ListTile(
-            title: Textos.tituloMIN(texto: 'Configuracion'),
-            leading: const Icon(Icons.settings),
-            trailing: const Icon(
-              Icons.arrow_forward_ios_sharp,
-              size: 17,
-            ),
-            onTap: () {
-              Navigator.pushNamed(context, Ajustes.routeName);
-            },
-          ),
-          ListTile(
-            title: Textos.tituloMIN(texto: 'Tarjetas'),
-            leading: const Icon(Icons.credit_card),
-            trailing: const Icon(
-              Icons.arrow_forward_ios_sharp,
-              size: 17,
-            ),
-            onTap: () {
-              Navigator.pushNamed(context, Tarjetas.routeName);
-            },
-          ),
-          ListTile(
-            title: Textos.tituloMIN(texto: 'Historial de compra'),
-            leading: const Icon(Icons.history_edu),
-            trailing: const Icon(
-              Icons.arrow_forward_ios_sharp,
-              size: 17,
-            ),
-            onTap: () {
-              Navigator.pushNamed(context, HistorialCompras.routeName);
-            },
-          ),
-          ListTile(
-            title: Textos.tituloMIN(texto: 'Acerca de'),
-            leading: const Icon(NewIcons.escudo),
-            trailing: const Icon(
-              Icons.arrow_forward_ios_sharp,
-              size: 17,
-            ),
-            onTap: () {
-              Navigator.pushNamed(context, AcercaDe.routeName);
-            },
-          ),
-          ListTile(
-            title: Textos.tituloMIN(texto: 'Cerra sesión'),
-            leading: const Icon(Icons.logout),
-            onTap: () {
-              Compositor.onLogOut(context);
-            },
-          ),
-        ],
-      ),
+        );
+      },
     );
+  }
+
+  List<Widget> bodyLogin(BuildContext context, UserState state) {
+    return [
+      Textos.tituloMED(texto: "Hola" + ("")),
+      Textos.parrafoMED(texto: ""),
+      const SizedBox(
+        height: 30,
+      ),
+      ListTile(
+        title: Textos.tituloMIN(
+          texto: 'Editar perfil',
+          color: const Color(0xFFADB0B3),
+        ),
+        leading: const Icon(Icons.account_box),
+        trailing: const Icon(
+          Icons.arrow_forward_ios_sharp,
+          size: 17,
+        ),
+        onTap: () {
+          Navigator.pushNamed(context, AjustesUsuario.routeName);
+        },
+      ),
+      ListTile(
+        title: Textos.tituloMIN(texto: 'Configuracion'),
+        leading: const Icon(Icons.settings),
+        trailing: const Icon(
+          Icons.arrow_forward_ios_sharp,
+          size: 17,
+        ),
+        onTap: () {
+          Navigator.pushNamed(context, Ajustes.routeName);
+        },
+      ),
+      ListTile(
+        title: Textos.tituloMIN(texto: 'Tarjetas'),
+        leading: const Icon(Icons.credit_card),
+        trailing: const Icon(
+          Icons.arrow_forward_ios_sharp,
+          size: 17,
+        ),
+        onTap: () {
+          Navigator.pushNamed(context, Tarjetas.routeName);
+        },
+      ),
+      ListTile(
+        title: Textos.tituloMIN(texto: 'Historial de compra'),
+        leading: const Icon(Icons.history_edu),
+        trailing: const Icon(
+          Icons.arrow_forward_ios_sharp,
+          size: 17,
+        ),
+        onTap: () {
+          Navigator.pushNamed(context, HistorialCompras.routeName);
+        },
+      ),
+      ListTile(
+        title: Textos.tituloMIN(texto: 'Acerca de'),
+        leading: const Icon(NewIcons.escudo),
+        trailing: const Icon(
+          Icons.arrow_forward_ios_sharp,
+          size: 17,
+        ),
+        onTap: () {
+          Navigator.pushNamed(context, AcercaDe.routeName);
+        },
+      ),
+      ListTile(
+        title: Textos.tituloMIN(texto: 'Cerra sesión'),
+        leading: const Icon(Icons.logout),
+        onTap: () {
+          Compositor.onLogOut(context);
+        },
+      ),
+    ];
   }
 }
 

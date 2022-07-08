@@ -12,6 +12,8 @@ import '../bloc/planes/planes_bloc.dart';
 import '../bloc/videos_event/videos_event_bloc.dart';
 import '../helpers/variables_globales.dart';
 import '../models/carrito.dart';
+import '../models/grupos.dart';
+import '../models/users.dart';
 import '../services/videos.dart';
 import '../widgets/dialogs_alert.dart';
 import 'acount.dart';
@@ -100,21 +102,35 @@ class Compositor {
     }
   }
 
-  static void onRegister({
+  static Future<bool> onRegister({
     required BuildContext context,
     required String email,
     required String password,
     required String phone,
     required String name,
   }) async {
-    final acountB = BlocProvider.of<AcountBloc>(context);
-    acountB.register(
-      email: email,
-      password: password,
-      context: context,
-      lastname: phone,
-      name: name,
+    final UserModel? user = await AcountServices.singup(
+      email: email.trim(),
+      password: password.trim(),
+      name: name.trim(),
+      phone: phone.trim(),
     );
+    if (user == null) {
+      await DialogAlert.ok(
+        context: context,
+        text: "No hay coneccion con el servidor",
+      );
+      return false;
+    }
+    if (user.mensaje != null) {
+      DialogAlert.ok(
+        context: context,
+        text: user.mensaje ?? "",
+      );
+      return false;
+    }
+
+    return true;
   }
 
   static Future<bool> onLogOut(BuildContext context) async {
@@ -125,8 +141,29 @@ class Compositor {
     return true;
   }
 
-  static Future<bool> onRecovery(BuildContext context) async {
-    return true;
+  static Future<bool> onRecovery(BuildContext context, String email) async {
+    final String? resp = await AcountServices.forguetpassword(
+      email: email.trim(),
+    );
+    if (resp == null) {
+      await DialogAlert.ok(
+        context: context,
+        text: "No hay coneccion con el servidor",
+      );
+      return false;
+    }
+    if (resp == "Se a enviado un correo a su cuenta") {
+      await DialogAlert.ok(
+        context: context,
+        text: resp,
+      );
+      return true;
+    }
+    await DialogAlert.ok(
+      context: context,
+      text: resp,
+    );
+    return false;
   }
 
   static Future<bool> onChangePassword(BuildContext context) async {
@@ -205,30 +242,79 @@ class Compositor {
 
   ///////////////////////////////////////////////
   ///music Controllers
-  static Future<bool> loadVideosPrincipales(BuildContext context) async {
-    return true;
+  static Future<List<String>?> onLoadCategorias(
+      {required BuildContext context}) async {
+    final GruposModel? grupos = await VideoService.listarGrupos();
+    if (grupos == null) {
+      return null;
+    }
+    if (grupos.mensaje == null) {
+      return grupos.grupos;
+    }
+    return [];
   }
 
-  static Future<bool> loadVideosPorCategoria(BuildContext context) async {
-    return true;
-  }
-
-  static Future<bool> onLoadVideosEventos(
-      {required BuildContext context, required int pag}) async {
+  static Future<bool> onLoadVideosCategoria(
+      {required BuildContext context}) async {
     final vEB = BlocProvider.of<VideosEventBloc>(context);
-    final resp = await VideoService.listarEventos(pag: pag + 1);
+    final resp = await VideoService.listarEventos(pag: vEB.state.pag + 1);
     if (resp == null) {
       return false;
     }
     if (resp.mensaje == null) {
+      if (vEB.state.pag >= resp.pag) {
+        return true;
+      }
       vEB.add(OnLoadVideosEvent(listado: resp.items ?? [], pag: resp.pag));
+      return true;
+    }
+    return false;
+  }
+
+  static Future<bool> onLoadInitVideosCategoria(BuildContext context) async {
+    final vEB = BlocProvider.of<VideosEventBloc>(context);
+    if (vEB.state.pag > vEB.state.pags) {
+      return true;
+    }
+    final resp = await VideoService.listarEventos(pag: 1);
+    if (resp == null) {
+      return false;
+    }
+    if (resp.mensaje == null) {
+      vEB.add(OnInitVideosEvent(
+        listado: resp.items ?? [],
+        pag: resp.pag,
+        count: resp.totals,
+        pags: resp.pags,
+        sizePage: resp.sizePage,
+      ));
       return true;
     }
     return true;
   }
 
+  static Future<bool> onLoadVideosEventos(
+      {required BuildContext context}) async {
+    final vEB = BlocProvider.of<VideosEventBloc>(context);
+    final resp = await VideoService.listarEventos(pag: vEB.state.pag + 1);
+    if (resp == null) {
+      return false;
+    }
+    if (resp.mensaje == null) {
+      if (vEB.state.pag >= resp.pag) {
+        return true;
+      }
+      vEB.add(OnLoadVideosEvent(listado: resp.items ?? [], pag: resp.pag));
+      return true;
+    }
+    return false;
+  }
+
   static Future<bool> onLoadInitVideosEventos(BuildContext context) async {
     final vEB = BlocProvider.of<VideosEventBloc>(context);
+    if (vEB.state.pag > vEB.state.pags) {
+      return true;
+    }
     final resp = await VideoService.listarEventos(pag: 1);
     if (resp == null) {
       return false;

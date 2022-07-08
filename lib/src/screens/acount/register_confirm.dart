@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lotto_music/src/screens/admin.dart';
 
 import '../../helpers/variables_globales.dart';
 import '../../widgets/botones.dart';
@@ -40,8 +41,7 @@ class RegisterConfirm extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 5, bottom: 20),
                   child: Textos.tituloMED(
                     align: TextAlign.center,
-                    texto:
-                        "Te enviaremos un link a tu correo para confirmar tu email",
+                    texto: "Por favor continua para iniciar Sesión",
                   ),
                 ),
                 Padding(
@@ -50,7 +50,8 @@ class RegisterConfirm extends StatelessWidget {
                     text: 'Inicia Sesión',
                     onTap: () {
                       Navigator.of(context).pushNamedAndRemoveUntil(
-                          Login.routeName, (route) => false);
+                          Admin.routeName, (route) => false);
+                      Navigator.of(context).pushNamed(Login.routeName);
                     },
                   ),
                 ),

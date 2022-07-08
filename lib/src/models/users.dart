@@ -1,34 +1,36 @@
 // To parse this JSON data, do
 //
-//     final user = userFromJson(jsonString);
+//     final userModel = userModelFromMap(jsonString);
 
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
-User userFromJson(String str) => User.fromJson(json.decode(str));
-String userToJson(User data) => json.encode(data.toJson());
-
-class User {
-  User({
+class UserModel {
+  UserModel({
     this.id = 0,
     this.activo = true,
-    this.apellidom = "",
-    this.apellidop = "",
+    this.apellidom,
+    this.apellidop,
     this.email = "",
     this.fechaNacimiento,
-    this.nombre = "",
-    this.telefono = "",
+    this.nombre,
+    this.password = "",
+    this.telefono,
+    this.mensaje,
   });
 
   int id;
   bool activo;
-  String apellidom;
-  String apellidop;
+  String? apellidom;
+  String? apellidop;
   String email;
   DateTime? fechaNacimiento;
-  String nombre;
-  String telefono;
+  String? nombre;
+  String password;
+  String? telefono;
+  String? mensaje;
 
-  User copyWith({
+  UserModel copyWith({
     int? id,
     bool? activo,
     String? apellidom,
@@ -38,8 +40,9 @@ class User {
     String? nombre,
     String? password,
     String? telefono,
+    String? mensaje,
   }) =>
-      User(
+      UserModel(
         id: id ?? this.id,
         activo: activo ?? this.activo,
         apellidom: apellidom ?? this.apellidom,
@@ -47,28 +50,43 @@ class User {
         email: email ?? this.email,
         fechaNacimiento: fechaNacimiento ?? this.fechaNacimiento,
         nombre: nombre ?? this.nombre,
+        password: password ?? this.password,
         telefono: telefono ?? this.telefono,
+        mensaje: mensaje ?? this.mensaje,
       );
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
-        id: json["id"],
-        activo: json["activo"],
+  factory UserModel.fromJson(String str) => UserModel.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory UserModel.fromMap(Map<String, dynamic> json) => UserModel(
+        id: json["id"] ?? 0,
+        activo: json["activo"] ?? false,
         apellidom: json["apellidom"],
         apellidop: json["apellidop"],
-        email: json["email"],
-        fechaNacimiento: DateTime.parse(json["fecha_nacimiento"]),
+        email: json["email"] ?? "",
+        fechaNacimiento: json["fecha_nacimiento"] == null
+            ? null
+            : DateTime.parse(json["fecha_nacimiento"]),
         nombre: json["nombre"],
+        password: json["password"] ?? "",
         telefono: json["telefono"],
+        mensaje: json["mensaje"],
       );
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toMap() => {
         "id": id,
         "activo": activo,
         "apellidom": apellidom,
         "apellidop": apellidop,
         "email": email,
-        "fecha_nacimiento": fechaNacimiento?.toIso8601String(),
+        "fecha_nacimiento": fechaNacimiento == null
+            ? null
+            : DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+                .format(fechaNacimiento!),
         "nombre": nombre,
+        "password": password,
         "telefono": telefono,
+        "mensaje": mensaje,
       };
 }

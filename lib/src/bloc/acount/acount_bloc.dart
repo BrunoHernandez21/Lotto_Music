@@ -1,10 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:lotto_music/src/models/users.dart';
 
 import '../../cores/acount.dart';
 import '../../models/login_response.dart';
-import '../../services/acount.dart';
 import '../../widgets/dialogs_alert.dart';
 
 part 'acount_event.dart';
@@ -33,28 +31,6 @@ class AcountBloc extends Bloc<AcountEvent, AcountState> {
     AcountLocalSave.saveLoginResponse(acount: acount);
 
     return acount;
-  }
-
-  Future<User?> register({
-    required String email,
-    required String password,
-    required String name,
-    required String lastname,
-    required BuildContext context,
-  }) async {
-    showDialog(
-      context: context,
-      builder: (context) => DialogAlert.loading(context),
-      barrierDismissible: false,
-    );
-    final resp = await AcountServices.singup(
-      email: email.trim(),
-      password: password.trim(),
-      name: name.trim(),
-      lastname: lastname.trim(),
-    );
-    Navigator.of(context).pop();
-    return resp;
   }
 
   Future<bool> recovery({
