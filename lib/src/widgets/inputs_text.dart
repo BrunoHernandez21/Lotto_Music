@@ -78,12 +78,17 @@ class _InputTextBoxState extends State<_InputTextBox> {
       }
     }
     return Container(
-      color: Colors.white,
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(3),
+        color: Colors.white,
+      ),
       child: TextField(
         enabled: widget.editable,
         obscureText: isOscure,
         controller: widget.controller,
         keyboardType: widget.textType,
+        style: TextStyle(color: Colors.grey.shade800),
         decoration: InputDecoration(
           prefixIcon: widget.icon != null
               ? Container(
@@ -100,14 +105,20 @@ class _InputTextBoxState extends State<_InputTextBox> {
           suffixIcon: widget.obscure
               ? (isOscure
                   ? IconButton(
-                      icon: const Icon(Icons.visibility_off),
+                      icon: const Icon(
+                        Icons.visibility_off,
+                        color: Color.fromARGB(255, 192, 189, 189),
+                      ),
                       onPressed: () {
                         isOscure = !isOscure;
                         setState(() {});
                       },
                     )
                   : IconButton(
-                      icon: const Icon(Icons.visibility),
+                      icon: const Icon(
+                        Icons.visibility,
+                        color: Color.fromARGB(255, 95, 94, 94),
+                      ),
                       onPressed: () {
                         isOscure = !isOscure;
                         setState(() {});
@@ -126,8 +137,8 @@ class _InputTextBoxState extends State<_InputTextBox> {
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(3),
             borderSide: const BorderSide(
-              width: 1.5,
-              color: Colors.blueAccent,
+              width: 2,
+              color: Color.fromARGB(255, 0, 255, 255),
             ),
           ),
         ),

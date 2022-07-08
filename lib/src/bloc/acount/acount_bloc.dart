@@ -1,9 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:lotto_music/src/models/users.dart';
 
 import '../../cores/acount.dart';
 import '../../models/login_response.dart';
-import '../../services/acount_services.dart';
+import '../../services/acount.dart';
 import '../../widgets/dialogs_alert.dart';
 
 part 'acount_event.dart';
@@ -16,47 +17,25 @@ class AcountBloc extends Bloc<AcountEvent, AcountState> {
           isLogin: isLogin,
         )) {
     on<OnLogin>((event, emit) =>
-        emit(AcountState(acount: event.acount, isLogin: true)));
+        emit(AcountState(acount: event.response, isLogin: true)));
     on<OnLogout>((event, emit) =>
         emit(AcountState(acount: event.acount, isLogin: false)));
     on<OnUpdateAcount>(
         (event, emit) => emit(state.copyWith(acount: state.acount)));
   }
 
-  ////////////////////////////////////////////////////logearse
-  Future<bool?> login(
-      String email, String password, BuildContext context) async {
-    showDialog(
-      context: context,
-      builder: (context) => DialogAlert.loading(context),
-      barrierDismissible: false,
-    );
-    final acount = await AcountServices.login(
-      email: email.trim(),
-      password: password.trim(),
-    );
-
-    Navigator.of(context).pop();
-    if (acount != null) {
-      add(OnLogin(acount: acount, isLogin: true));
-      AcountLocalSave.saveisLogin(true);
-      AcountLocalSave.saveLoginResponse(acount: acount);
-    } else {
-      return false;
-    }
-    return true;
-  }
-
   //////////////////////////////////////////////////Cerrar secion
   Future<LoginResponse> logout() async {
     add(OnLogout());
     AcountLocalSave.saveisLogin(false);
-    AcountLocalSave.saveLoginResponse(acount: LoginResponse(validity: 0));
+    final acount =
+        LoginResponse(accessToken: "", expiresIn: null, tokenType: "");
+    AcountLocalSave.saveLoginResponse(acount: acount);
 
-    return LoginResponse(validity: 0);
+    return acount;
   }
 
-  Future<bool> register({
+  Future<User?> register({
     required String email,
     required String password,
     required String name,
@@ -68,7 +47,7 @@ class AcountBloc extends Bloc<AcountEvent, AcountState> {
       builder: (context) => DialogAlert.loading(context),
       barrierDismissible: false,
     );
-    final resp = await AcountServices.register(
+    final resp = await AcountServices.singup(
       email: email.trim(),
       password: password.trim(),
       name: name.trim(),

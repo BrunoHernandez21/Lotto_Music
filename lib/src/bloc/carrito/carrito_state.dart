@@ -1,6 +1,9 @@
 part of 'carrito_bloc.dart';
 
 @immutable
-abstract class CarritoState {}
-
-class CarritoInitial extends CarritoState {}
+class CarritoState {
+  final List<Ordenes>? ordenes;
+  const CarritoState({
+    this.ordenes,
+  });
+}

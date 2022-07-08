@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import '../helpers/variables_globales.dart';
 import '../models/login_response.dart';
 
-class ServiceAuth {
+class EventoService {
   static const String _listar = URL.evento + "listar";
 
   static Future<LoginResponse?> activos() async {

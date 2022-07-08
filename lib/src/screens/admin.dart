@@ -20,7 +20,43 @@ class Admin extends StatefulWidget {
   State<Admin> createState() => _AdminState();
 }
 
-class _AdminState extends State<Admin> with TickerProviderStateMixin {
+class _AdminState extends State<Admin> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    Compositor.checkToken(context);
+
+    WidgetsBinding.instance.addObserver(this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.resumed) {
+      Compositor.checkToken(context);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const _BodyAdmin();
+  }
+}
+
+class _BodyAdmin extends StatefulWidget {
+  const _BodyAdmin({Key? key}) : super(key: key);
+
+  @override
+  State<_BodyAdmin> createState() => _BodyAdminState();
+}
+
+class _BodyAdminState extends State<_BodyAdmin> with TickerProviderStateMixin {
   late final TabController controller;
 
   @override
@@ -33,7 +69,6 @@ class _AdminState extends State<Admin> with TickerProviderStateMixin {
   @override
   void dispose() {
     controller.dispose();
-
     super.dispose();
   }
 

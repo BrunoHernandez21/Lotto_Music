@@ -6,7 +6,7 @@ import '../models/videos.dart';
 import '../screens/videos/video.dart';
 
 class ListVideos extends StatefulWidget {
-  final Future<List<VideosModel>> Function() loadVideos;
+  final Future<List<VideoModel>> Function() loadVideos;
   const ListVideos({
     Key? key,
     required this.loadVideos,
@@ -17,7 +17,7 @@ class ListVideos extends StatefulWidget {
 }
 
 class _ListVideosState extends State<ListVideos> {
-  List<VideosModel> videos = [];
+  List<VideoModel> videos = [];
   @override
   void initState() {
     widget.loadVideos().then((videos) {
@@ -62,7 +62,7 @@ class _ListVideosState extends State<ListVideos> {
     return a;
   }
 
-  Widget bodyTarjeta(VideosModel v) {
+  Widget bodyTarjeta(VideoModel v) {
     return SizedBox(
       height: Medidas.size.width * .240,
       child: Row(
@@ -76,20 +76,24 @@ class _ListVideosState extends State<ListVideos> {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Image.network(
-              v.thumblary,
+              v.thumblary ?? "",
               fit: BoxFit.cover,
             ),
           ),
           const SizedBox(
             width: 6,
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Textos.tituloMIN(texto: v.titulo, renglones: 2),
-              Textos.parrafoMED(texto: v.artista, renglones: 1),
-            ],
+          SizedBox(
+            width: Medidas.size.width * .4,
+            height: Medidas.size.width * .240,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Textos.tituloMIN(texto: v.titulo ?? "", renglones: 2),
+                Textos.parrafoMED(texto: v.artista ?? "", renglones: 1),
+              ],
+            ),
           )
         ],
       ),

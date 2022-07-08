@@ -3,6 +3,7 @@
 //     final carritoModel = carritoModelFromMap(jsonString);
 
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 class CarritoModel {
   CarritoModel({
@@ -11,10 +12,11 @@ class CarritoModel {
     this.cantidad = 1,
     this.amount = 0,
     this.fechaOrden,
-    this.idCharges = "",
+    this.idCharges,
     this.ordenStatus = "",
     this.idPlan = 0,
     this.usuarioId = 0,
+    this.mensaje,
   });
 
   int id;
@@ -22,8 +24,9 @@ class CarritoModel {
   int cantidad;
   int amount;
   DateTime? fechaOrden;
-  String idCharges;
+  String? idCharges;
   String ordenStatus;
+  String? mensaje;
   int idPlan;
   int usuarioId;
 
@@ -35,11 +38,13 @@ class CarritoModel {
     DateTime? fechaOrden,
     String? idCharges,
     String? ordenStatus,
+    String? mensaje,
     int? idPlan,
     int? usuarioId,
   }) =>
       CarritoModel(
         id: id ?? this.id,
+        mensaje: mensaje ?? this.mensaje,
         activa: activa ?? this.activa,
         cantidad: cantidad ?? this.cantidad,
         amount: amount ?? this.amount,
@@ -56,23 +61,29 @@ class CarritoModel {
   String toJson() => json.encode(toMap());
 
   factory CarritoModel.fromMap(Map<String, dynamic> json) => CarritoModel(
-        id: json["id"],
-        activa: json["activa"],
-        cantidad: json["cantidad"],
-        amount: json["amount"],
-        fechaOrden: DateTime.parse(json["fecha_orden"]),
+        id: json["id"] ?? 0,
+        mensaje: json["mensaje"],
+        activa: json["activa"] ?? false,
+        cantidad: json["cantidad"] ?? 0,
+        amount: json["amount"] ?? 0,
+        fechaOrden: json["fecha_orden"] == null
+            ? null
+            : DateTime.parse(json["fecha_orden"]),
         idCharges: json["id_charges"],
-        ordenStatus: json["orden_status"],
-        idPlan: json["id_plan"],
-        usuarioId: json["usuario_id"],
+        ordenStatus: json["orden_status"] ?? "",
+        idPlan: json["id_plan"] ?? 0,
+        usuarioId: json["usuario_id"] ?? 0,
       );
 
   Map<String, dynamic> toMap() => {
         "id": id,
+        "mensaje": mensaje,
         "activa": activa,
         "cantidad": cantidad,
         "amount": amount,
-        "fecha_orden": fechaOrden?.toIso8601String(),
+        "fecha_orden": fechaOrden == null
+            ? null
+            : DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(fechaOrden!),
         "id_charges": idCharges,
         "orden_status": ordenStatus,
         "id_plan": idPlan,

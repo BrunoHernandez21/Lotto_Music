@@ -8,19 +8,11 @@ class VideosApuestas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: ListVideos(
-                loadVideos: () async {
-                  return Developer.videos;
-                },
-              ),
-            ),
-          ],
-        ),
+    return Expanded(
+      child: ListVideos(
+        loadVideos: () async {
+          return Developer.videos;
+        },
       ),
     );
   }

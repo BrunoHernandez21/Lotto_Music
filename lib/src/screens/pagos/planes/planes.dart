@@ -1,20 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lotto_music/src/cores/compositor.dart';
 import 'package:lotto_music/src/helpers/variables_globales.dart';
 import 'package:lotto_music/src/models/plan.dart';
 import 'package:lotto_music/src/widgets/botones.dart';
+import 'package:lotto_music/src/widgets/dialogs_alert.dart';
 import 'package:lotto_music/src/widgets/text.dart';
+
+import '../../../bloc/planes/planes_bloc.dart';
+import '../../../models/carrito.dart';
+import '../../../widgets/svg_nosignal.dart';
 
 class Planes extends StatelessWidget {
   const Planes({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        physics: const BouncingScrollPhysics(),
-        itemCount: Developer.planes.length,
-        itemBuilder: (context, index) {
-          return _TarjetaPlanes(plan: Developer.planes[index]);
-        });
+    if (BlocProvider.of<PlanesBloc>(context).state.planes == null) {
+      Compositor.onLoadPlanes(context);
+    }
+    return BlocBuilder<PlanesBloc, PlanesState>(
+      builder: (context, state) {
+        if (state.planes == null) {
+          return RefreshIndicator(
+              onRefresh: () async {
+                Compositor.onLoadPlanes(context);
+              },
+              child: const NoSignal());
+        }
+        return RefreshIndicator(
+          onRefresh: () async {
+            Compositor.onLoadPlanes(context);
+          },
+          child: ListView.builder(
+              physics: const BouncingScrollPhysics(),
+              itemCount: state.planes?.length ?? 0,
+              itemBuilder: (context, index) {
+                return _TarjetaPlanes(plan: state.planes![index]);
+              }),
+        );
+      },
+    );
   }
 }
 
@@ -121,7 +147,23 @@ class __TarjetaPlanesState extends State<_TarjetaPlanes> {
               child: Botones.degradedTextButton(
                 text: "Agregar al Carrito",
                 colors: const [Color(0xffea8d8d), Color(0xffa890fe)],
-                onTap: () {},
+                onTap: () async {
+                  final resp = await Compositor.onAddCarrito(
+                    context: context,
+                    orden: CarritoModel(
+                      amount: cantidad * widget.plan.precio,
+                      cantidad: cantidad,
+                      fechaOrden: DateTime.now(),
+                      idPlan: widget.plan.id,
+                    ),
+                  );
+                  if (resp != null) {
+                    DialogAlert.ok(
+                      context: context,
+                      text: resp,
+                    );
+                  }
+                },
               ),
             ),
           )

@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import '../helpers/variables_globales.dart';
 import '../models/login_response.dart';
 
-class ServiceAuth {
+class CompraService {
   static const String _listar = URL.compra + "listar";
 
   static Future<LoginResponse?> checkout() async {

@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lotto_music/src/cores/compositor.dart';
 import 'package:lotto_music/src/helpers/new_icons.dart';
 import 'package:lotto_music/src/helpers/variables_globales.dart';
 import 'package:lotto_music/src/models/login_response.dart';
@@ -59,8 +60,8 @@ class BodyLogin extends StatelessWidget {
               radius: Medidas.size.width * .15,
             ),
           ),
-          Textos.tituloMED(texto: "Hola" + (acount.firstName ?? "")),
-          Textos.parrafoMED(texto: acount.email ?? ""),
+          Textos.tituloMED(texto: "Hola" + ("")),
+          Textos.parrafoMED(texto: ""),
           const SizedBox(
             height: 30,
           ),
@@ -91,7 +92,7 @@ class BodyLogin extends StatelessWidget {
           ),
           ListTile(
             title: Textos.tituloMIN(texto: 'Tarjetas'),
-            leading: const Icon(NewIcons.escudo),
+            leading: const Icon(Icons.credit_card),
             trailing: const Icon(
               Icons.arrow_forward_ios_sharp,
               size: 17,
@@ -102,7 +103,7 @@ class BodyLogin extends StatelessWidget {
           ),
           ListTile(
             title: Textos.tituloMIN(texto: 'Historial de compra'),
-            leading: const Icon(NewIcons.escudo),
+            leading: const Icon(Icons.history_edu),
             trailing: const Icon(
               Icons.arrow_forward_ios_sharp,
               size: 17,
@@ -120,6 +121,13 @@ class BodyLogin extends StatelessWidget {
             ),
             onTap: () {
               Navigator.pushNamed(context, AcercaDe.routeName);
+            },
+          ),
+          ListTile(
+            title: Textos.tituloMIN(texto: 'Cerra sesión'),
+            leading: const Icon(Icons.logout),
+            onTap: () {
+              Compositor.onLogOut(context);
             },
           ),
         ],

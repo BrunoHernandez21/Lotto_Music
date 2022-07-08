@@ -47,7 +47,7 @@ class AjustesUsuario extends StatelessWidget {
               ),
               const Divider(color: Colors.grey, height: 10),
               ListTile(
-                title: Textos.tituloMIN(texto: 'Telefono de contacto'),
+                title: Textos.tituloMIN(texto: 'Billetera'),
                 trailing: const Icon(
                   Icons.arrow_forward_ios_sharp,
                   size: 17,

@@ -4,13 +4,16 @@ part of 'acount_bloc.dart';
 abstract class AcountEvent {}
 
 class OnLogin extends AcountEvent {
-  final LoginResponse acount;
-  final bool isLogin;
-  OnLogin({required this.acount, this.isLogin = true});
+  final LoginResponse response;
+  OnLogin({required this.response});
 }
 
 class OnLogout extends AcountEvent {
-  final LoginResponse acount = LoginResponse(validity: 0);
+  final LoginResponse acount = LoginResponse(
+    accessToken: "",
+    expiresIn: null,
+    tokenType: "",
+  );
   final bool isLogin = false;
 }
 

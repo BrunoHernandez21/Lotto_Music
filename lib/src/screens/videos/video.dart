@@ -22,7 +22,7 @@ class Video extends StatelessWidget {
               height: Medidas.size.width * .5625,
               width: double.infinity,
               child: Image.network(
-                Developer.videos[2].thumblary,
+                Developer.videos[2].thumblary ?? "",
                 fit: BoxFit.cover,
               ),
             ),
@@ -61,7 +61,7 @@ class Video extends StatelessWidget {
     );
   }
 
-  List<Widget> destacados(List<VideosModel> b, BuildContext context) {
+  List<Widget> destacados(List<VideoModel> b, BuildContext context) {
     List<Widget> a = [];
     for (var v in b) {
       a.add(Container(
@@ -72,7 +72,7 @@ class Video extends StatelessWidget {
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(6)),
         child: GestureDetector(
           child: Image.network(
-            v.thumblary,
+            v.thumblary ?? "",
             fit: BoxFit.fill,
           ),
           onTap: () {
@@ -84,7 +84,7 @@ class Video extends StatelessWidget {
     return a;
   }
 
-  List<Widget> iterable(List<VideosModel> b, BuildContext context) {
+  List<Widget> iterable(List<VideoModel> b, BuildContext context) {
     List<Widget> a = [];
     for (var v in b) {
       a.add(SizedBox(
@@ -100,7 +100,7 @@ class Video extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Image.network(
-                  v.thumblary,
+                  v.thumblary ?? "",
                   fit: BoxFit.cover,
                 ),
               ),
@@ -115,8 +115,9 @@ class Video extends StatelessWidget {
                     const SizedBox(
                       height: 5,
                     ),
-                    Textos.tituloMIN(texto: v.titulo, align: TextAlign.left),
-                    Textos.parrafoMED(texto: v.titulo),
+                    Textos.tituloMIN(
+                        texto: v.titulo ?? "", align: TextAlign.left),
+                    Textos.parrafoMED(texto: v.titulo ?? ""),
                   ],
                 ),
               )

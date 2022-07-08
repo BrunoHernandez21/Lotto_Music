@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final eventoModel = eventoModelFromMap(jsonString);
-
 import 'dart:convert';
 
 class EventoModel {

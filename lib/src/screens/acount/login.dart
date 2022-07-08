@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lotto_music/src/cores/compositor.dart';
 import 'package:lotto_music/src/screens/acount/recovery.dart';
 import 'package:lotto_music/src/screens/acount/register.dart';
 
@@ -10,7 +11,6 @@ import '../../widgets/botones.dart';
 import '../../widgets/chec_box.dart';
 import '../../widgets/inputs_text.dart';
 import '../../widgets/text.dart';
-import '../admin.dart';
 
 class Login extends StatelessWidget {
   static const routeName = '/login';
@@ -57,15 +57,23 @@ class Login extends StatelessWidget {
                   child: InputsText.box(
                       hintText: 'Tu correo',
                       textType: TextInputType.emailAddress,
-                      icon: const Icon(Icons.mail_outline)),
+                      controller: email,
+                      icon: const Icon(
+                        Icons.mail_outline,
+                        color: Color.fromARGB(255, 192, 189, 189),
+                      )),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5),
                   child: InputsText.box(
                     hintText: 'Tu contraseña',
                     textType: TextInputType.visiblePassword,
+                    controller: password,
                     obscure: true,
-                    icon: const Icon(Icons.lock),
+                    icon: const Icon(
+                      Icons.lock,
+                      color: Color.fromARGB(255, 192, 189, 189),
+                    ),
                   ),
                 ),
                 Padding(
@@ -91,8 +99,11 @@ class Login extends StatelessWidget {
                 Botones.degradedTextButtonOrange(
                   text: 'Inicia Sesión',
                   onTap: () async {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        Admin.routeName, (route) => false);
+                    Compositor.onLogin(
+                      context,
+                      email.text,
+                      password.text,
+                    );
                   },
                 ),
                 Padding(

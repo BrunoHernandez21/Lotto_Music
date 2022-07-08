@@ -1,14 +1,15 @@
 // ignore: unused_import
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:lotto_music/src/models/plan.dart';
 
 import '../helpers/variables_globales.dart';
 import '../models/login_response.dart';
 
-class ServiceAuth {
-  static const String _listar = URL.plan + "listar";
+class PlanService {
+  static const String _listar = URL.plan + "/planes";
 
-  static Future<LoginResponse?> listar() async {
+  static Future<PlanesResponse?> load() async {
     try {
       final urI = Uri.parse(_listar);
       final resp = await http.get(
@@ -18,7 +19,7 @@ class ServiceAuth {
         },
       );
 
-      return LoginResponse.fromJson(resp.body);
+      return PlanesResponse.fromJson(resp.body);
     } catch (e) {
       return null;
     }

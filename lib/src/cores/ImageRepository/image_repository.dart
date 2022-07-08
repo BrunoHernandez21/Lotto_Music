@@ -30,8 +30,9 @@ class ImageRepository {
     if (images == null) await _loadInitData();
 
     if (images![name] == null) {
-      final token = BlocProvider.of<AcountBloc>(context).state.acount.token;
-      final bits = await CloudService.downloadImage(token ?? '');
+      final token =
+          BlocProvider.of<AcountBloc>(context).state.acount.accessToken;
+      final bits = await CloudService.downloadImage(token);
       if (bits == null) return null;
       await Repository.saveImage(name, bits);
       images!.addAll({name: DateTime.now().toString()});

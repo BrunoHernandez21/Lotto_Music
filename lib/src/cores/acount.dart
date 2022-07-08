@@ -6,9 +6,7 @@ import '../models/login_response.dart';
 class AcountLocalSave {
   /////////////////user/////////////////////////////////////////////////
 
-  static Future<void> saveLoginResponse({
-    required LoginResponse acount,
-  }) async {
+  static Future<void> saveLoginResponse({required LoginResponse acount}) async {
     Repository.saveString(BaseDeDatos.loginResponse, acount.toJson());
   }
 
