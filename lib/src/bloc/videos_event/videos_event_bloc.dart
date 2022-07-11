@@ -11,7 +11,12 @@ class VideosEventBloc extends Bloc<VideosEventEvent, VideosEventState> {
   VideosEventBloc()
       : super(
           const VideosEventState(
-              count: 0, listado: null, pag: 0, pags: 0, sizePage: 10),
+            count: 0,
+            listado: null,
+            pag: 0,
+            pags: 0,
+            sizePage: 10,
+          ),
         ) {
     on<OnLoadVideosEvent>((event, emit) {
       final List<Item> listup = state.listado ?? [];

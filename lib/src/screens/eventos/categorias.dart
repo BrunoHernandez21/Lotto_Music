@@ -6,7 +6,7 @@ import 'package:lotto_music/src/cores/compositor.dart';
 
 import '../../helpers/variables_globales.dart';
 import '../../widgets/text.dart';
-import '../videos/videos.dart';
+import 'videos_categorias.dart';
 
 class Categorias extends StatefulWidget {
   const Categorias({Key? key}) : super(key: key);
@@ -117,12 +117,19 @@ class _CategoriasState extends State<Categorias> {
                   elevation: MaterialStateProperty.all(0),
                   backgroundColor:
                       MaterialStateProperty.all(Colors.transparent)),
-              onPressed: () {
-                Navigator.of(context).pushNamed(Videos.routeName);
+              onPressed: () async {
+                await Compositor.onCategoriaS(
+                  context: context,
+                  categoria: element,
+                );
+                Navigator.of(context).pushNamed(VideosCategoria.routeName);
               },
               onLongPress: () {},
               child: Center(
-                child: Textos.tituloMIN(texto: element, color: Colors.white),
+                child: Textos.tituloMIN(
+                  texto: element,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),

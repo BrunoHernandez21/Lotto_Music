@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/bloc/carrito/carrito_bloc.dart';
 import 'package:lotto_music/src/bloc/shaderPreferences/shaderpreferences_bloc.dart';
+import 'package:lotto_music/src/bloc/video_event/video_event_bloc.dart';
+import 'package:lotto_music/src/bloc/videos_categoria/videos_categoria_bloc.dart';
 import 'package:lotto_music/src/models/login_response.dart';
 import 'package:lotto_music/src/services/acount.dart';
 import 'package:lotto_music/src/services/carrito.dart';
@@ -12,6 +14,7 @@ import '../bloc/planes/planes_bloc.dart';
 import '../bloc/videos_event/videos_event_bloc.dart';
 import '../helpers/variables_globales.dart';
 import '../models/carrito.dart';
+import '../models/evento_video.dart';
 import '../models/grupos.dart';
 import '../models/users.dart';
 import '../services/videos.dart';
@@ -256,8 +259,11 @@ class Compositor {
 
   static Future<bool> onLoadVideosCategoria(
       {required BuildContext context}) async {
-    final vEB = BlocProvider.of<VideosEventBloc>(context);
-    final resp = await VideoService.listarEventos(pag: vEB.state.pag + 1);
+    final vEB = BlocProvider.of<VideosCategoriaBloc>(context);
+    final resp = await VideoService.listarVideosCategoria(
+      pag: vEB.state.pag + 1,
+      categoria: vEB.state.categoria,
+    );
     if (resp == null) {
       return false;
     }
@@ -265,23 +271,24 @@ class Compositor {
       if (vEB.state.pag >= resp.pag) {
         return true;
       }
-      vEB.add(OnLoadVideosEvent(listado: resp.items ?? [], pag: resp.pag));
+      vEB.add(OnLoadVideosCategoria(listado: resp.items ?? [], pag: resp.pag));
       return true;
     }
     return false;
   }
 
   static Future<bool> onLoadInitVideosCategoria(BuildContext context) async {
-    final vEB = BlocProvider.of<VideosEventBloc>(context);
+    final vEB = BlocProvider.of<VideosCategoriaBloc>(context);
     if (vEB.state.pag > vEB.state.pags) {
       return true;
     }
-    final resp = await VideoService.listarEventos(pag: 1);
+    final resp = await VideoService.listarVideosCategoria(
+        pag: 1, categoria: vEB.state.categoria);
     if (resp == null) {
       return false;
     }
     if (resp.mensaje == null) {
-      vEB.add(OnInitVideosEvent(
+      vEB.add(OnInitVideosCategoria(
         listado: resp.items ?? [],
         pag: resp.pag,
         count: resp.totals,
@@ -293,8 +300,18 @@ class Compositor {
     return true;
   }
 
-  static Future<bool> onLoadVideosEventos(
-      {required BuildContext context}) async {
+  static Future<bool> onCategoriaS({
+    required BuildContext context,
+    required String categoria,
+  }) async {
+    final vEB = BlocProvider.of<VideosCategoriaBloc>(context);
+    vEB.add(OnSelectCategoria(categoria: categoria));
+    return true;
+  }
+
+  static Future<bool> onLoadVideosEventos({
+    required BuildContext context,
+  }) async {
     final vEB = BlocProvider.of<VideosEventBloc>(context);
     final resp = await VideoService.listarEventos(pag: vEB.state.pag + 1);
     if (resp == null) {
@@ -329,6 +346,15 @@ class Compositor {
       ));
       return true;
     }
+    return true;
+  }
+
+  static Future<bool> onSlectVideoEvento({
+    required BuildContext context,
+    required Item item,
+  }) async {
+    final vB = BlocProvider.of<VideoEventBloc>(context);
+    vB.add(OnSelectVideoEvent(eventoVideo: item));
     return true;
   }
 }

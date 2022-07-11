@@ -6,6 +6,8 @@ import '../screens/acount/register.dart';
 import '../screens/acount/register_confirm.dart';
 import '../screens/acount/root.dart';
 import '../screens/admin.dart';
+import '../screens/eventos/video/video_evento.dart';
+import '../screens/eventos/videos_categorias.dart';
 import '../screens/utils/clock.dart';
 import '../screens/utils/historial_eventos.dart';
 import '../screens/utils/notify.dart';
@@ -49,6 +51,8 @@ class Ruts {
     AjustesUsuario.routeName: (_) => const AjustesUsuario(),
     Winner.routeName: (_) => const Winner(),
     HistorialEventos.routeName: (_) => const HistorialEventos(),
+    VideosCategoria.routeName: (_) => const VideosCategoria(),
+    VideoEvento.routeName: (_) => const VideoEvento(),
   };
 
   static get rutas {

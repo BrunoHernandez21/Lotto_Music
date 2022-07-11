@@ -26,4 +26,14 @@ class VideoService {
     final out = GruposModel.fromJson(resp.body);
     return out;
   }
+
+  static Future<VideoEventModel?> listarVideosCategoria(
+      {required int pag, required String categoria}) async {
+    final urI = Uri.parse(_grupos + "/" + pag.toString() + "/10/" + categoria);
+    final resp = await http.get(
+      urI,
+    );
+    final out = VideoEventModel.fromJson(resp.body);
+    return out;
+  }
 }
