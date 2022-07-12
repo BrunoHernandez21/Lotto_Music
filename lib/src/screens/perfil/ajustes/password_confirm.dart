@@ -31,14 +31,14 @@ class PasswordConfirm extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Textos.tituloMED(
+                  child: Textos.tituloMAX(
                     align: TextAlign.center,
                     texto: "¡Se cambio la contraseña con exito!",
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 5, bottom: 20),
-                  child: Textos.tituloMED(
+                  child: Textos.tituloMIN(
                     align: TextAlign.center,
                     texto:
                         "Se ha cambiado correctamente la contraseña. Utilice la nueva contraseña cuando inicie sesión",
@@ -47,7 +47,7 @@ class PasswordConfirm extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 30.0),
                   child: Botones.degradedTextButtonOrange(
-                    text: 'Inicia Sesión',
+                    text: 'Volver a inicio',
                     onTap: () {
                       Navigator.of(context).popUntil((route) => route.isFirst);
                       // Navigator.of(context).pushNamedAndRemoveUntil(

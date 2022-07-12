@@ -3,10 +3,12 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../helpers/variables_globales.dart';
+import '../models/historial_event_user.dart';
 import '../models/login_response.dart';
 
 class ApuestaService {
   static const String _listar = URL.apuesta + "listar";
+  static const String _histoyry = URL.apuesta + "/apuesta";
 
   static Future<LoginResponse?> listar() async {
     try {
@@ -79,5 +81,20 @@ class ApuestaService {
     } catch (e) {
       return null;
     }
+  }
+
+  static Future<HistorialEventosUsuario?> listarHistory({
+    required int pag,
+    required String token,
+  }) async {
+    final urI = Uri.parse(_histoyry + "/" + pag.toString() + "/10");
+    final resp = await http.get(
+      urI,
+      headers: {
+        "Authorization": "Bearer " + token,
+      },
+    );
+    final out = HistorialEventosUsuario.fromJson(resp.body);
+    return out;
   }
 }

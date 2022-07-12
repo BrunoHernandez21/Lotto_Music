@@ -1,6 +1,15 @@
 part of 'user_bloc.dart';
 
 @immutable
-abstract class UserState {}
+class UserState {
+  final UserModel? user;
+  const UserState({
+    this.user,
+  });
 
-class UserInitial extends UserState {}
+  UserState copyWhit(UserModel? user) {
+    return UserState(
+      user: user ?? this.user,
+    );
+  }
+}

@@ -24,7 +24,6 @@ class _AdminState extends State<Admin> with WidgetsBindingObserver {
   @override
   void initState() {
     Compositor.checkToken(context);
-
     WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
@@ -62,7 +61,6 @@ class _BodyAdminState extends State<_BodyAdmin> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    Compositor.onInitApp(context);
     controller = TabController(length: 4, initialIndex: 1, vsync: this);
   }
 

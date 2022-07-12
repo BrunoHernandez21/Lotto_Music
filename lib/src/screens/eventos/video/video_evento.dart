@@ -48,13 +48,11 @@ class _VideoEventoState extends State<VideoEvento> {
                         alignment: Alignment.centerLeft,
                         child: ListTile(
                           title: Textos.tituloMIN(
-                            texto: "Guns and Roces - Novemver Rain",
+                            texto: state.eventoVideo.video.titulo ?? "",
                             color: Colors.black,
                           ),
                           subtitle: Textos.parrafoMED(
-                              texto: "7.7M de vistas * hace 10 meses"
-                                  "\n"
-                                  "Comentarios 4329"),
+                              texto: state.eventoVideo.video.artista ?? ""),
                         )),
                   ],
                 ),

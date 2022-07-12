@@ -62,26 +62,43 @@ class AcountServices {
     return UserModel.fromJson(resp.body);
   }
 
-  static Future<String> update({
-    required String email,
-    required String password,
-    required String name,
-    required String lastname,
+  static Future<UserModel?> update({
+    required UserModel user,
+    required String token,
   }) async {
     try {
       final urI = Uri.parse(_update);
+      final resp = await http.put(
+        urI,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + token,
+        },
+        body: user.toJson(),
+      );
+
+      return UserModel.fromJson(resp.body);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<UserModel?> info({
+    required String token,
+  }) async {
+    try {
+      final urI = Uri.parse(_info);
       final resp = await http.get(
         urI,
         headers: {
           "Content-Type": "application/json",
-          "email": email,
-          "password": password,
+          "Authorization": "Bearer " + token,
         },
       );
 
-      return resp.body;
+      return UserModel.fromJson(resp.body);
     } catch (e) {
-      return "";
+      return null;
     }
   }
 
@@ -101,41 +118,24 @@ class AcountServices {
     }
   }
 
-  static Future<String> info({
+  static Future<UserModel?> changepassword({
+    required String password,
     required String token,
   }) async {
     try {
-      final urI = Uri.parse(_info);
-      final resp = await http.get(
-        urI,
-        headers: {
-          "Content-Type": "application/json",
-          "email": token,
-        },
-      );
-
-      return resp.body;
-    } catch (e) {
-      return "";
-    }
-  }
-
-  static Future<String> changepassword({
-    required String password,
-  }) async {
-    try {
       final urI = Uri.parse(_changepassword);
-      final resp = await http.get(
-        urI,
-        headers: {
-          "Content-Type": "application/json",
-          "password": password,
-        },
-      );
+      final resp = await http.put(urI,
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token,
+          },
+          body: json.encode({
+            "password": password,
+          }));
 
-      return resp.body;
+      return UserModel.fromJson(resp.body);
     } catch (e) {
-      return "";
+      return null;
     }
   }
 

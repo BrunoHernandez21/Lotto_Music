@@ -49,12 +49,21 @@ class BodyLogin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (BlocProvider.of<UserBloc>(context).state.user == null) {
+      Compositor.onLoadUser(context);
+    }
     return BlocBuilder<UserBloc, UserState>(
       builder: (context, state) {
-        return SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            children: bodyLogin(context, state),
+        return RefreshIndicator(
+          onRefresh: () async {
+            Compositor.onLoadUser(context);
+          },
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
+            child: Column(
+              children: bodyLogin(context, state),
+            ),
           ),
         );
       },
@@ -63,8 +72,8 @@ class BodyLogin extends StatelessWidget {
 
   List<Widget> bodyLogin(BuildContext context, UserState state) {
     return [
-      Textos.tituloMED(texto: "Hola" + ("")),
-      Textos.parrafoMED(texto: ""),
+      Textos.tituloMED(
+          texto: "Hola " + (state.user?.nombre ?? "Nuevo Usuario")),
       const SizedBox(
         height: 30,
       ),

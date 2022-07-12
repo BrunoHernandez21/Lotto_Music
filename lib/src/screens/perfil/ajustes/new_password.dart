@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:lotto_music/src/cores/compositor.dart';
 
 import 'package:lotto_music/src/screens/perfil/ajustes/password_confirm.dart';
+import 'package:lotto_music/src/widgets/dialogs_alert.dart';
 import '../../../helpers/variables_globales.dart';
 import '../../../widgets/botones.dart';
 import '../../../widgets/inputs_text.dart';
 import '../../../widgets/text.dart';
 
-class NewPassword extends StatelessWidget {
+class NewPassword extends StatefulWidget {
   static String routeName = 'newPassword';
   const NewPassword({Key? key}) : super(key: key);
+
+  @override
+  State<NewPassword> createState() => _NewPasswordState();
+}
+
+class _NewPasswordState extends State<NewPassword> {
+  final TextEditingController pcontroller = TextEditingController();
+  final TextEditingController scontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +58,7 @@ class NewPassword extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5),
                   child: InputsText.classic(
+                    controller: scontroller,
                     hintText: 'xxxxxxxxxx',
                     textType: TextInputType.visiblePassword,
                     obscure: true,
@@ -65,6 +76,7 @@ class NewPassword extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5),
                   child: InputsText.classic(
+                    controller: pcontroller,
                     hintText: 'xxxxxxxxxx',
                     textType: TextInputType.visiblePassword,
                     obscure: true,
@@ -75,9 +87,28 @@ class NewPassword extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: Botones.degradedTextButtonOrange(
                     text: 'Cambiar Contraseña',
-                    onTap: () {
-                      Navigator.of(context)
-                          .pushNamed(PasswordConfirm.routeName);
+                    onTap: () async {
+                      if (pcontroller.text.length < 4) {
+                        DialogAlert.ok(
+                          context: context,
+                          text: "la contraseña debe ser mayor a 4 caratecter",
+                        );
+                        return;
+                      }
+                      if (pcontroller.text != scontroller.text) {
+                        DialogAlert.ok(
+                          context: context,
+                          text: "la contraseña no es igual",
+                        );
+                        return;
+                      }
+                      if (await Compositor.onChangePassword(
+                        context: context,
+                        password: pcontroller.text,
+                      )) {
+                        Navigator.of(context)
+                            .pushNamed(PasswordConfirm.routeName);
+                      }
                     },
                   ),
                 ),

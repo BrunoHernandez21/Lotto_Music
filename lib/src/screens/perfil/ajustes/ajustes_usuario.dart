@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:lotto_music/src/screens/perfil/ajustes/billetera.dart';
 
 import '../../../widgets/text.dart';
 import '../editar_perfil.dart';
-import 'direccion.dart';
 import 'new_password.dart';
 
 class AjustesUsuario extends StatelessWidget {
@@ -53,7 +53,7 @@ class AjustesUsuario extends StatelessWidget {
                   size: 17,
                 ),
                 onTap: () {
-                  Navigator.of(context).pushNamed(Direccion.routeName);
+                  Navigator.of(context).pushNamed(Billetera.routeName);
                 },
               ),
               const Divider(color: Colors.grey, height: 10),

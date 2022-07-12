@@ -10,6 +10,7 @@ import '../../widgets/digital_clock.dart';
 import '../../widgets/svg_nosignal.dart';
 import '../../widgets/text.dart';
 import '../utils/clock.dart';
+import '../utils/historial_eventos.dart';
 import '../utils/winner.dart';
 import 'video/video_evento.dart';
 
@@ -51,8 +52,7 @@ class VideosEventos extends StatelessWidget {
               body: const Icon(Icons.history),
               colors: const [Color(0xffFFBBBB), Color(0xffA9F1DF)],
               onTap: () {
-                Compositor.onLoadCategorias(context: context);
-                //Navigator.of(context).pushNamed(HistorialEventos.routeName);
+                Navigator.of(context).pushNamed(HistorialEventos.routeName);
               },
             ),
           ),

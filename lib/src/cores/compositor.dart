@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/bloc/carrito/carrito_bloc.dart';
 import 'package:lotto_music/src/bloc/shaderPreferences/shaderpreferences_bloc.dart';
+import 'package:lotto_music/src/bloc/user/user_bloc.dart';
 import 'package:lotto_music/src/bloc/video_event/video_event_bloc.dart';
 import 'package:lotto_music/src/bloc/videos_categoria/videos_categoria_bloc.dart';
 import 'package:lotto_music/src/models/login_response.dart';
 import 'package:lotto_music/src/services/acount.dart';
 import 'package:lotto_music/src/services/carrito.dart';
+import 'package:lotto_music/src/services/compra.dart';
 import 'package:lotto_music/src/services/plan.dart';
 
 import '../bloc/acount/acount_bloc.dart';
@@ -14,9 +16,15 @@ import '../bloc/planes/planes_bloc.dart';
 import '../bloc/videos_event/videos_event_bloc.dart';
 import '../helpers/variables_globales.dart';
 import '../models/carrito.dart';
+import '../models/cartera.dart';
 import '../models/evento_video.dart';
+import '../models/ganador.dart';
 import '../models/grupos.dart';
+import '../models/historial_compra.dart';
+import '../models/historial_event_user.dart';
 import '../models/users.dart';
+import '../services/apuestas.dart';
+import '../services/utility.dart';
 import '../services/videos.dart';
 import '../widgets/dialogs_alert.dart';
 import 'acount.dart';
@@ -45,20 +53,6 @@ class Compositor {
               ));
     }
     blocShader.add(OnChageTheme(themeData: myTheme));
-    return true;
-  }
-
-  ///////////////////////////////////////////////
-  ///Sistem Controller
-  static Future<bool> onInitApp(BuildContext context) async {
-    return true;
-  }
-
-  static Future<bool> onCloseApp(BuildContext context) async {
-    return true;
-  }
-
-  static Future<bool> onSuspendApp(BuildContext context) async {
     return true;
   }
 
@@ -169,10 +163,6 @@ class Compositor {
     return false;
   }
 
-  static Future<bool> onChangePassword(BuildContext context) async {
-    return true;
-  }
-
   static Future<bool> checkToken(BuildContext context) async {
     final acountB = BlocProvider.of<AcountBloc>(context);
     final resp = await AcountServices.updateToken(
@@ -183,6 +173,64 @@ class Compositor {
     }
     if (resp.mensaje != null) {
       acountB.add(OnLogout());
+      return false;
+    }
+    return true;
+  }
+
+  static Future<bool> onLoadUser(BuildContext context) async {
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    final userB = BlocProvider.of<UserBloc>(context);
+    final resp = await AcountServices.info(
+      token: acountB.state.acount.accessToken,
+    );
+    if (resp == null) {
+      return false;
+    }
+    if (resp.mensaje == null) {
+      userB.add(OnLoadUser(
+        user: resp,
+      ));
+      return false;
+    }
+    return true;
+  }
+
+  static Future<bool> onChangePassword(
+      {required BuildContext context, required String password}) async {
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    final userB = BlocProvider.of<UserBloc>(context);
+    final resp = await AcountServices.changepassword(
+      token: acountB.state.acount.accessToken,
+      password: password,
+    );
+    if (resp == null) {
+      return false;
+    }
+    if (resp.mensaje == null) {
+      userB.add(OnLoadUser(
+        user: resp,
+      ));
+      return false;
+    }
+    return true;
+  }
+
+  static Future<bool> onUpdateUser(
+      {required BuildContext context, required UserModel user}) async {
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    final userB = BlocProvider.of<UserBloc>(context);
+    final resp = await AcountServices.update(
+      user: user,
+      token: acountB.state.acount.accessToken,
+    );
+    if (resp == null) {
+      return false;
+    }
+    if (resp.mensaje == null) {
+      userB.add(OnLoadUser(
+        user: resp,
+      ));
       return false;
     }
     return true;
@@ -356,5 +404,94 @@ class Compositor {
     final vB = BlocProvider.of<VideoEventBloc>(context);
     vB.add(OnSelectVideoEvent(eventoVideo: item));
     return true;
+  }
+
+  static Future<HistorialEventosUsuario?> onLoadHistorialEventos({
+    required BuildContext context,
+    required int pag,
+  }) async {
+    final vEB = BlocProvider.of<VideosEventBloc>(context);
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    if (vEB.state.pag > vEB.state.pags) {
+      return null;
+    }
+    final resp = await ApuestaService.listarHistory(
+      pag: pag,
+      token: acountB.state.acount.accessToken,
+    );
+    return resp;
+  }
+
+  static Future<HistorialEventosUsuario?> onIinitHistorialEventos(
+      BuildContext context) async {
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    final resp = await ApuestaService.listarHistory(
+      pag: 1,
+      token: acountB.state.acount.accessToken,
+    );
+    return resp;
+  }
+
+  static Future<HistorialCompraModel?> onLoadHistorialCompra({
+    required BuildContext context,
+    required int pag,
+  }) async {
+    final vEB = BlocProvider.of<VideosEventBloc>(context);
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    if (vEB.state.pag > vEB.state.pags) {
+      return null;
+    }
+    final resp = await CompraService.listarHistorial(
+      pag: pag,
+      token: acountB.state.acount.accessToken,
+    );
+    print(resp?.toJson());
+    return resp;
+  }
+
+  static Future<HistorialCompraModel?> onIinitHistorialCompra(
+      BuildContext context) async {
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    final resp = await CompraService.listarHistorial(
+      pag: 1,
+      token: acountB.state.acount.accessToken,
+    );
+    return resp;
+  }
+
+  static Future<GanadorModel?> onLoadWiner({
+    required BuildContext context,
+    required int pag,
+  }) async {
+    final vEB = BlocProvider.of<VideosEventBloc>(context);
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    if (vEB.state.pag > vEB.state.pags) {
+      return null;
+    }
+    final resp = await UtilityService.wins(
+      pag: pag,
+      token: acountB.state.acount.accessToken,
+    );
+    return resp;
+  }
+
+  static Future<GanadorModel?> onIinitWiner(BuildContext context) async {
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    final resp = await UtilityService.wins(
+      pag: 1,
+      token: acountB.state.acount.accessToken,
+    );
+    return resp;
+  }
+
+  static Future<Cartera?> onLoadCartera({
+    required BuildContext context,
+  }) async {
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    final resp = await UtilityService.cartera(
+      token: acountB.state.acount.accessToken,
+    );
+
+    return resp?.cartera;
   }
 }
