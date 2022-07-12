@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../helpers/variables_globales.dart';
 import '../../widgets/text.dart';
+import '../provedores_video/search/search.dart';
 import '../utils/notify.dart';
-import '../search/search.dart';
 
 class AppbarCarrito extends StatelessWidget {
   const AppbarCarrito({Key? key}) : super(key: key);

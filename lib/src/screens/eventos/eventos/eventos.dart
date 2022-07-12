@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'appbar.dart';
-import 'categorias.dart';
+import '../appbar.dart';
+import '../categorias/categorias.dart';
 import 'video_eventos.dart';
 
 class Eventos extends StatelessWidget {

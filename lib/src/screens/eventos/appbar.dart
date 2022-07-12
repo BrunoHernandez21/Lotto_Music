@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../helpers/variables_globales.dart';
 import '../../widgets/text.dart';
 import '../utils/clock.dart';
-import '../search/search.dart';
+import 'search_video/search_video_event.dart';
 
 class AppbarEventos extends StatelessWidget {
   const AppbarEventos({Key? key}) : super(key: key);
@@ -27,7 +27,7 @@ class AppbarEventos extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {
-              Navigator.pushNamed(context, SearchVideos.routeName);
+              Navigator.pushNamed(context, SearchVideosEvent.routeName);
             },
           ),
           IconButton(

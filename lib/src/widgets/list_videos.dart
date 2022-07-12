@@ -3,7 +3,7 @@ import 'package:lotto_music/src/widgets/text.dart';
 
 import '../helpers/variables_globales.dart';
 import '../models/videos.dart';
-import '../screens/videos/video.dart';
+import '../screens/provedores_video/video/video.dart';
 
 class ListVideos extends StatefulWidget {
   final Future<List<VideoModel>> Function() loadVideos;

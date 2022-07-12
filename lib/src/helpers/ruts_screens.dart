@@ -6,8 +6,12 @@ import '../screens/acount/register.dart';
 import '../screens/acount/register_confirm.dart';
 import '../screens/acount/root.dart';
 import '../screens/admin.dart';
+import '../screens/eventos/search_video/search_video_event.dart';
 import '../screens/eventos/video/video_evento.dart';
-import '../screens/eventos/videos_categorias.dart';
+import '../screens/eventos/categorias/videos_categorias.dart';
+import '../screens/provedores_video/search/search.dart';
+import '../screens/provedores_video/video/video.dart';
+import '../screens/provedores_video/videos/videos.dart';
 import '../screens/utils/clock.dart';
 import '../screens/utils/historial_eventos.dart';
 import '../screens/utils/notify.dart';
@@ -21,10 +25,7 @@ import '../screens/perfil/ajustes/password_confirm.dart';
 import '../screens/perfil/editar_perfil.dart';
 import '../screens/perfil/historial_compras.dart';
 import '../screens/perfil/tarjetas.dart';
-import '../screens/search/search.dart';
 import '../screens/utils/winner.dart';
-import '../screens/videos/video.dart';
-import '../screens/videos/videos.dart';
 
 class Ruts {
   static final Map<String, WidgetBuilder> _rutas = {
@@ -46,6 +47,7 @@ class Ruts {
     Videos.routeName: (_) => const Videos(),
     Video.routeName: (_) => const Video(),
     Notify.routeName: (_) => const Notify(),
+    SearchVideosEvent.routeName: (_) => const SearchVideosEvent(),
     SearchVideos.routeName: (_) => const SearchVideos(),
     Clock.routeName: (_) => const Clock(),
     AjustesUsuario.routeName: (_) => const AjustesUsuario(),

@@ -1,51 +1,110 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lotto_music/src/bloc/videos_categoria/videos_categoria_bloc.dart';
 import 'package:lotto_music/src/cores/compositor.dart';
-import 'package:lotto_music/src/screens/eventos/video/video_evento.dart';
 
-import '../../helpers/variables_globales.dart';
-import '../../models/evento_video.dart';
-import '../../widgets/svg_nosignal.dart';
-import '../../widgets/text.dart';
-import 'appbar.dart';
+import '../../../bloc/videos_event/videos_event_bloc.dart';
+import '../../../helpers/variables_globales.dart';
+import '../../../models/evento_video.dart';
+import '../../../widgets/botones.dart';
+import '../../../widgets/digital_clock.dart';
+import '../../../widgets/svg_nosignal.dart';
+import '../../../widgets/text.dart';
+import '../../utils/clock.dart';
+import '../../utils/historial_eventos.dart';
+import '../../utils/winner.dart';
+import '../video/video_evento.dart';
 
-class VideosCategoria extends StatelessWidget {
-  static const routeName = "videoscategoria";
-  const VideosCategoria({Key? key}) : super(key: key);
+class VideosEventos extends StatelessWidget {
+  const VideosEventos({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: const [
-            AppbarEventos(),
-            Expanded(
-              child: _ListVideosPaginacion(),
+    return Column(
+      children: [
+        const SizedBox(
+          height: 10,
+        ),
+        SizedBox(
+          height: Medidas.size.height * .07,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: lessbar(context),
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        const Expanded(
+          child: ListVideosPaginacion(),
+        ),
+      ],
+    );
+  }
+
+  List<Widget> lessbar(BuildContext context) {
+    return [
+      SizedBox(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: SizedBox(
+            width: Medidas.size.width * .2,
+            child: Botones.degradedButton(
+              body: const Icon(Icons.history),
+              colors: const [Color(0xffFFBBBB), Color(0xffA9F1DF)],
+              onTap: () {
+                Navigator.of(context).pushNamed(HistorialEventos.routeName);
+              },
             ),
-          ],
+          ),
         ),
       ),
-    );
+      SizedBox(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: SizedBox(
+            width: Medidas.size.width * .4,
+            child: Botones.degradedButton(
+                body: const DefaultDigitalClock(),
+                colors: const [Color(0xffA9F1DF), Color(0xffA9F1DF)],
+                onTap: () {
+                  Navigator.of(context).pushNamed(Clock.routeName);
+                }),
+          ),
+        ),
+      ),
+      SizedBox(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: SizedBox(
+            width: Medidas.size.width * .2,
+            child: Botones.degradedButton(
+                body: const Icon(Icons.analytics),
+                colors: const [Color(0xffA9F1DF), Color(0xffFFBBBB)],
+                onTap: () {
+                  Navigator.of(context).pushNamed(Winner.routeName);
+                }),
+          ),
+        ),
+      ),
+    ];
   }
 }
 
-class _ListVideosPaginacion extends StatefulWidget {
-  const _ListVideosPaginacion({Key? key}) : super(key: key);
+class ListVideosPaginacion extends StatefulWidget {
+  const ListVideosPaginacion({Key? key}) : super(key: key);
 
   @override
-  State<_ListVideosPaginacion> createState() => _ListVideosPaginacionState();
+  State<ListVideosPaginacion> createState() => _ListVideosPaginacionState();
 }
 
-class _ListVideosPaginacionState extends State<_ListVideosPaginacion> {
+class _ListVideosPaginacionState extends State<ListVideosPaginacion> {
   final ScrollController controller = ScrollController();
   bool isLoad = false;
   @override
   void initState() {
     super.initState();
     controller.addListener(() async {
-      final vEB = BlocProvider.of<VideosCategoriaBloc>(context);
+      final vEB = BlocProvider.of<VideosEventBloc>(context);
       if (controller.position.pixels >
           controller.position.maxScrollExtent * .8) {
         if (vEB.state.pag > vEB.state.pags) {
@@ -53,13 +112,13 @@ class _ListVideosPaginacionState extends State<_ListVideosPaginacion> {
         }
         if (!isLoad) {
           isLoad = true;
-          await Compositor.onLoadCategorias(context: context);
+          await Compositor.onLoadVideosEventos(context: context);
           isLoad = false;
         }
       }
     });
-    if (BlocProvider.of<VideosCategoriaBloc>(context).state.listado == null) {
-      Compositor.onLoadInitVideosCategoria(context);
+    if (BlocProvider.of<VideosEventBloc>(context).state.listado == null) {
+      Compositor.onLoadInitVideosEventos(context);
     }
   }
 
@@ -71,21 +130,19 @@ class _ListVideosPaginacionState extends State<_ListVideosPaginacion> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<VideosCategoriaBloc, VideosCategoriaState>(
+    return BlocBuilder<VideosEventBloc, VideosEventState>(
       builder: (context, state) {
         if (state.listado == null) {
           return RefreshIndicator(
             onRefresh: () async {
-              Compositor.onLoadInitVideosCategoria(context);
+              Compositor.onLoadInitVideosEventos(context);
             },
             child: const NoSignal(),
           );
         }
         return RefreshIndicator(
             onRefresh: () async {
-              Compositor.onLoadCategorias(
-                context: context,
-              );
+              Compositor.onLoadInitVideosEventos(context);
             },
             child: ListView.separated(
                 controller: controller,

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lotto_music/src/cores/compositor.dart';
 
-import '../../helpers/variables_globales.dart';
-import '../../widgets/text.dart';
+import '../../../helpers/variables_globales.dart';
+import '../../../widgets/text.dart';
 import 'videos_categorias.dart';
 
 class Categorias extends StatefulWidget {

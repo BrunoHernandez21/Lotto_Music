@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lotto_music/src/helpers/variables_globales.dart';
 
-import '../../widgets/list_videos.dart';
+import '../../../widgets/list_videos.dart';
 import 'appbar.dart';
 
 class Videos extends StatelessWidget {

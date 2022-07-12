@@ -3,13 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:lotto_music/src/cores/compositor.dart';
 import 'package:lotto_music/src/screens/pagos/pagos.dart';
+import 'package:lotto_music/src/screens/provedores_video/provedores_video.dart';
 
 import '../bloc/shaderPreferences/shaderpreferences_bloc.dart';
 import '../helpers/new_icons.dart';
 import '../helpers/variables_globales.dart';
-import 'grupos/grupos.dart';
 import 'perfil/perfil.dart';
-import 'eventos/eventos.dart';
+import 'eventos/eventos/eventos.dart';
 
 class Admin extends StatefulWidget {
   static const routeName = 'Admin';
@@ -86,7 +86,7 @@ class _BodyAdminState extends State<_BodyAdmin> with TickerProviderStateMixin {
                   controller: controller,
                   physics: const BouncingScrollPhysics(),
                   children: <Widget>[
-                    const Grupos(),
+                    const ProvedoresVideo(),
                     const Eventos(),
                     Perfil(controller: controller),
                     const Pagos(),

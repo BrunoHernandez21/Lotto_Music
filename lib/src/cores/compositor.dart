@@ -445,7 +445,6 @@ class Compositor {
       pag: pag,
       token: acountB.state.acount.accessToken,
     );
-    print(resp?.toJson());
     return resp;
   }
 

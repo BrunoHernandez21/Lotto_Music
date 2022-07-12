@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lotto_music/src/widgets/text.dart';
 
-import '../../helpers/variables_globales.dart';
-import '../../models/videos.dart';
-import 'appbar.dart';
+import '../../../helpers/variables_globales.dart';
+import '../../../models/videos.dart';
+import '../videos/appbar.dart';
 
 class Video extends StatelessWidget {
   static const routeName = 'video';
