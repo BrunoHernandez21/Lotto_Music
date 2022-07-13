@@ -11,7 +11,7 @@ class YoutubeModel {
     this.nextPageToken,
     this.regionCode,
     this.pageInfo,
-    this.items,
+    this.itemsyt,
   });
 
   String? kind;
@@ -19,7 +19,7 @@ class YoutubeModel {
   String? nextPageToken;
   String? regionCode;
   PageInfo? pageInfo;
-  List<Item>? items;
+  List<ItemYT>? itemsyt;
 
   YoutubeModel copyWith({
     String? kind,
@@ -27,7 +27,7 @@ class YoutubeModel {
     String? nextPageToken,
     String? regionCode,
     PageInfo? pageInfo,
-    List<Item>? items,
+    List<ItemYT>? itemsyt,
   }) =>
       YoutubeModel(
         kind: kind ?? this.kind,
@@ -35,7 +35,7 @@ class YoutubeModel {
         nextPageToken: nextPageToken ?? this.nextPageToken,
         regionCode: regionCode ?? this.regionCode,
         pageInfo: pageInfo ?? this.pageInfo,
-        items: items ?? this.items,
+        itemsyt: itemsyt ?? this.itemsyt,
       );
 
   factory YoutubeModel.fromJson(String str) =>
@@ -49,7 +49,9 @@ class YoutubeModel {
         nextPageToken: json["nextPageToken"],
         regionCode: json["regionCode"],
         pageInfo: PageInfo.fromMap(json["pageInfo"]),
-        items: List<Item>.from(json["items"].map((x) => Item.fromMap(x))),
+        itemsyt: json["items"] == null
+            ? null
+            : List<ItemYT>.from(json["items"].map((x) => ItemYT.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
@@ -58,12 +60,12 @@ class YoutubeModel {
         "nextPageToken": nextPageToken,
         "regionCode": regionCode,
         "pageInfo": pageInfo?.toMap(),
-        "items": List<dynamic>.from(items?.map((x) => x.toMap()) ?? []),
+        "items": List<dynamic>.from(itemsyt?.map((x) => x.toMap()) ?? []),
       };
 }
 
-class Item {
-  Item({
+class ItemYT {
+  ItemYT({
     this.kind,
     this.etag,
     this.id,
@@ -75,24 +77,24 @@ class Item {
   Id? id;
   Snippet? snippet;
 
-  Item copyWith({
+  ItemYT copyWith({
     String? kind,
     String? etag,
     Id? id,
     Snippet? snippet,
   }) =>
-      Item(
+      ItemYT(
         kind: kind ?? this.kind,
         etag: etag ?? this.etag,
         id: id ?? this.id,
         snippet: snippet ?? this.snippet,
       );
 
-  factory Item.fromJson(String str) => Item.fromMap(json.decode(str));
+  factory ItemYT.fromJson(String str) => ItemYT.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory Item.fromMap(Map<String, dynamic> json) => Item(
+  factory ItemYT.fromMap(Map<String, dynamic> json) => ItemYT(
         kind: json["kind"],
         etag: json["etag"],
         id: Id.fromMap(json["id"]),

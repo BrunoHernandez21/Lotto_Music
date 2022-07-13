@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class SearchVideos extends StatelessWidget {
-  static const routeName = 'searchVideos';
-  const SearchVideos({Key? key}) : super(key: key);
+class SearchVideosYT extends StatelessWidget {
+  static const routeName = 'searchVideosYT';
+  const SearchVideosYT({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

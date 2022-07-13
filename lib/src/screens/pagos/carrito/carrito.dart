@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:lotto_music/src/cores/compositor.dart';
 import 'package:lotto_music/src/helpers/variables_globales.dart';
 
@@ -55,7 +56,7 @@ class TarjetaCarrito extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const styleBorder = BorderSide(
-      color: Color(0xff591da9),
+      color: Color(0xffbf930d),
       style: BorderStyle.solid,
       width: 4,
     );
@@ -107,7 +108,7 @@ class TarjetaCarrito extends StatelessWidget {
               child: Botones.degradedTextButton(
                 text: "Comprar",
                 colors: const [Color(0xffea8d8d), Color(0xffa890fe)],
-                onTap: () {},
+                onTap: () async {},
               ),
             ),
           )

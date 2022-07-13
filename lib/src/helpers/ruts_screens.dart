@@ -11,7 +11,6 @@ import '../screens/eventos/video/video_evento.dart';
 import '../screens/eventos/categorias/videos_categorias.dart';
 import '../screens/provedores_video/search/search.dart';
 import '../screens/provedores_video/video/video.dart';
-import '../screens/provedores_video/videos/videos.dart';
 import '../screens/utils/clock.dart';
 import '../screens/utils/historial_eventos.dart';
 import '../screens/utils/notify.dart';
@@ -44,11 +43,10 @@ class Ruts {
     Tarjetas.routeName: (_) => const Tarjetas(),
     Direccion.routeName: (_) => const Direccion(),
     Billetera.routeName: (_) => const Billetera(),
-    Videos.routeName: (_) => const Videos(),
     Video.routeName: (_) => const Video(),
     Notify.routeName: (_) => const Notify(),
     SearchVideosEvent.routeName: (_) => const SearchVideosEvent(),
-    SearchVideos.routeName: (_) => const SearchVideos(),
+    SearchVideosYT.routeName: (_) => const SearchVideosYT(),
     Clock.routeName: (_) => const Clock(),
     AjustesUsuario.routeName: (_) => const AjustesUsuario(),
     Winner.routeName: (_) => const Winner(),

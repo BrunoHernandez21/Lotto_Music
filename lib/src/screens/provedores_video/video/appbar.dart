@@ -2,19 +2,24 @@ import 'package:flutter/material.dart';
 
 import '../../../helpers/variables_globales.dart';
 import '../../../widgets/text.dart';
-import '../../eventos/search_video/search_video_event.dart';
-import '../../utils/notify.dart';
+import '../search/search.dart';
 
-class AppbarVideos extends StatelessWidget {
-  const AppbarVideos({Key? key}) : super(key: key);
+class AppbarVideosYT extends StatelessWidget {
+  const AppbarVideosYT({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const SizedBox(
-          width: 15,
+        IconButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            size: 20,
+          ),
         ),
         Image.asset(Assets.logo, height: 30),
         const SizedBox(
@@ -25,13 +30,7 @@ class AppbarVideos extends StatelessWidget {
         IconButton(
           icon: const Icon(Icons.search),
           onPressed: () {
-            Navigator.pushNamed(context, SearchVideosEvent.routeName);
-          },
-        ),
-        IconButton(
-          icon: const Icon(Icons.notifications),
-          onPressed: () {
-            Navigator.pushNamed(context, Notify.routeName);
+            Navigator.pushNamed(context, SearchVideosYT.routeName);
           },
         ),
         const SizedBox(

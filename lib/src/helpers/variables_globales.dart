@@ -43,6 +43,7 @@ class Assets {
 
   static const String svgGoogle = 'assets/svg/logos/google.svg';
   static const String svgFacebook = 'assets/svg/logos/facebook.svg';
+  static const String svgvideo = 'assets/svg/imagenes/video.svg';
 }
 
 class Medidas {
@@ -51,6 +52,10 @@ class Medidas {
 
 class URL {
   static const String _base = "http://187.213.77.165:25565/api/";
+  static const String _baseYT = "https://www.googleapis.com/youtube/v3";
+  static const String _ytKey = "key=AIzaSyDJGZnO3AZ2fkYOctsTClRVuShJWRMpCt8";
+  static const String searchYT = _baseYT + "/search?" + _ytKey;
+
   static const String auth = _base + "auth";
   static const String videos = _base + "videos";
   static const String compra = _base + "compra";

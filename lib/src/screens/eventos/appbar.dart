@@ -25,12 +25,6 @@ class AppbarEventos extends StatelessWidget {
           Textos.parrafoMED(texto: "Eventos"),
           const Expanded(child: SizedBox()),
           IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              Navigator.pushNamed(context, SearchVideosEvent.routeName);
-            },
-          ),
-          IconButton(
             icon: const Icon(Icons.notifications),
             onPressed: () {
               Navigator.pushNamed(context, Clock.routeName);

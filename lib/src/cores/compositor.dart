@@ -4,15 +4,19 @@ import 'package:lotto_music/src/bloc/carrito/carrito_bloc.dart';
 import 'package:lotto_music/src/bloc/shaderPreferences/shaderpreferences_bloc.dart';
 import 'package:lotto_music/src/bloc/user/user_bloc.dart';
 import 'package:lotto_music/src/bloc/video_event/video_event_bloc.dart';
+import 'package:lotto_music/src/bloc/videos/videos_bloc.dart';
 import 'package:lotto_music/src/bloc/videos_categoria/videos_categoria_bloc.dart';
 import 'package:lotto_music/src/models/login_response.dart';
+import 'package:lotto_music/src/models/youtube.dart';
 import 'package:lotto_music/src/services/acount.dart';
 import 'package:lotto_music/src/services/carrito.dart';
 import 'package:lotto_music/src/services/compra.dart';
 import 'package:lotto_music/src/services/plan.dart';
+import 'package:lotto_music/src/services/yt.dart';
 
 import '../bloc/acount/acount_bloc.dart';
 import '../bloc/planes/planes_bloc.dart';
+import '../bloc/video/video_bloc.dart';
 import '../bloc/videos_event/videos_event_bloc.dart';
 import '../helpers/variables_globales.dart';
 import '../models/carrito.dart';
@@ -57,7 +61,7 @@ class Compositor {
   }
 
   ///////////////////////////////////////////////
-  ///Acount Controller
+  /////////     ////// Acount Controller
   static Future<bool> onLogin(
     BuildContext context,
     String email,
@@ -237,7 +241,7 @@ class Compositor {
   }
 
   ///////////////////////////////////////////////
-  ///Buy Controller
+  //////    /////////Buy Controller
   static Future<bool> onloadCarrito(BuildContext context) async {
     final acountB = BlocProvider.of<AcountBloc>(context);
     final planB = BlocProvider.of<CarritoBloc>(context);
@@ -273,10 +277,12 @@ class Compositor {
     return resp.mensaje;
   }
 
+  /// compra
   static Future<bool> onBuy(BuildContext context) async {
     return true;
   }
 
+  /// Categorias
   static Future<bool> onLoadPlanes(BuildContext context) async {
     final planB = BlocProvider.of<PlanesBloc>(context);
     final response = await PlanService.load();
@@ -292,7 +298,10 @@ class Compositor {
   }
 
   ///////////////////////////////////////////////
-  ///music Controllers
+  /// /////// Peticiones Relacionadas a Videos
+
+  ///////
+  /// Categorias
   static Future<List<String>?> onLoadCategorias(
       {required BuildContext context}) async {
     final GruposModel? grupos = await VideoService.listarGrupos();
@@ -327,9 +336,7 @@ class Compositor {
 
   static Future<bool> onLoadInitVideosCategoria(BuildContext context) async {
     final vEB = BlocProvider.of<VideosCategoriaBloc>(context);
-    if (vEB.state.pag > vEB.state.pags) {
-      return true;
-    }
+
     final resp = await VideoService.listarVideosCategoria(
         pag: 1, categoria: vEB.state.categoria);
     if (resp == null) {
@@ -348,6 +355,7 @@ class Compositor {
     return true;
   }
 
+/////// Seleccion de la caegoria de videos de evento ///////
   static Future<bool> onCategoriaS({
     required BuildContext context,
     required String categoria,
@@ -357,6 +365,7 @@ class Compositor {
     return true;
   }
 
+/////// videos de evento
   static Future<bool> onLoadVideosEventos({
     required BuildContext context,
   }) async {
@@ -377,9 +386,7 @@ class Compositor {
 
   static Future<bool> onLoadInitVideosEventos(BuildContext context) async {
     final vEB = BlocProvider.of<VideosEventBloc>(context);
-    if (vEB.state.pag > vEB.state.pags) {
-      return true;
-    }
+
     final resp = await VideoService.listarEventos(pag: 1);
     if (resp == null) {
       return false;
@@ -397,6 +404,13 @@ class Compositor {
     return true;
   }
 
+  static Future<List<Item>?> onLoadEventosTemp(
+      {required BuildContext context}) async {
+    final resp = await VideoService.listarEventos(pag: 1);
+    return resp?.items;
+  }
+
+////////////// seleccionar video para reprocir (evento) ///////
   static Future<bool> onSlectVideoEvento({
     required BuildContext context,
     required Item item,
@@ -406,6 +420,7 @@ class Compositor {
     return true;
   }
 
+  /////// historial de eventos
   static Future<HistorialEventosUsuario?> onLoadHistorialEventos({
     required BuildContext context,
     required int pag,
@@ -432,6 +447,7 @@ class Compositor {
     return resp;
   }
 
+  /////// historial de compras
   static Future<HistorialCompraModel?> onLoadHistorialCompra({
     required BuildContext context,
     required int pag,
@@ -458,6 +474,7 @@ class Compositor {
     return resp;
   }
 
+  /////// winer
   static Future<GanadorModel?> onLoadWiner({
     required BuildContext context,
     required int pag,
@@ -483,6 +500,48 @@ class Compositor {
     return resp;
   }
 
+  ////////////////////////////////////////////
+  ///////////////   youtube
+  static Future<void> onLoadPrincipalYT({
+    required BuildContext context,
+  }) async {
+    final ytB = BlocProvider.of<VideosBloc>(context);
+    final resp = await YTService.top();
+    if (resp != null) {
+      ytB.add(OnInitVideosYT(yt: resp));
+    }
+    return;
+  }
+
+  static Future<List<ItemYT>?> onLoadRelacionadosYT({
+    required BuildContext context,
+  }) async {
+    final resp = await YTService.top();
+    return resp?.itemsyt;
+  }
+
+  static Future<Cartera?> onLoadSearchYT({
+    required BuildContext context,
+  }) async {
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    final resp = await UtilityService.cartera(
+      token: acountB.state.acount.accessToken,
+    );
+
+    return resp?.cartera;
+  }
+
+  static Future<bool> onSelectYT({
+    required BuildContext context,
+    required ItemYT item,
+  }) async {
+    final ytB = BlocProvider.of<VideoBloc>(context);
+    ytB.add(OnSelectVideoYT(item: item));
+    return true;
+  }
+
+///////////////////////////////////////////////
+////      Cartera
   static Future<Cartera?> onLoadCartera({
     required BuildContext context,
   }) async {

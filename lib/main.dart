@@ -19,6 +19,7 @@ import 'package:lotto_music/src/models/login_response.dart';
 import 'package:lotto_music/src/screens/admin.dart';
 
 import 'generated/l10n.dart';
+import 'src/bloc/video/video_bloc.dart';
 import 'src/bloc/videos_categoria/videos_categoria_bloc.dart';
 
 void main() async {
@@ -74,11 +75,12 @@ class Appstate extends StatelessWidget {
         ),
         BlocProvider(create: (context) => CarritoBloc()),
         BlocProvider(create: (context) => PlanesBloc()),
-        BlocProvider(create: (context) => VideosBloc()),
         BlocProvider(create: (context) => UserBloc()),
-        BlocProvider(create: (context) => VideosEventBloc()),
         BlocProvider(create: (context) => VideosCategoriaBloc()),
+        BlocProvider(create: (context) => VideosEventBloc()),
         BlocProvider(create: (context) => VideoEventBloc()),
+        BlocProvider(create: (context) => VideosBloc()),
+        BlocProvider(create: (context) => VideoBloc()),
       ],
       child: BlocBuilder<ShaderpreferencesBloc, ShaderpreferencesState>(
         builder: (context, state) {

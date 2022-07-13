@@ -1,134 +1,179 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:lotto_music/src/widgets/text.dart';
-
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import '../../../bloc/video/video_bloc.dart';
+import '../../../cores/compositor.dart';
 import '../../../helpers/variables_globales.dart';
-import '../../../models/videos.dart';
-import '../videos/appbar.dart';
+import '../../../models/youtube.dart';
+import 'appbar.dart';
 
-class Video extends StatelessWidget {
-  static const routeName = 'video';
+class Video extends StatefulWidget {
+  static const routeName = 'videoYT';
 
   const Video({Key? key}) : super(key: key);
 
   @override
+  State<Video> createState() => _VideoState();
+}
+
+class _VideoState extends State<Video> {
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(children: [
-            const AppbarVideos(),
-            SizedBox(
-              height: Medidas.size.width * .5625,
-              width: double.infinity,
-              child: Image.network(
-                Developer.videos[2].thumblary ?? "",
-                fit: BoxFit.cover,
-              ),
-            ),
-            Align(
-                alignment: Alignment.centerLeft,
-                child: ListTile(
-                  title: Textos.tituloMIN(
-                    texto: "Guns and Roces - Novemver Rain",
-                    color: Colors.black,
+    return BlocBuilder<VideoBloc, VideoState>(
+      builder: (context, state) {
+        final _controller = YoutubePlayerController(
+          initialVideoId: state.eventoVideo?.id?.videoId ?? "dO1rMeYnOmM",
+          flags: const YoutubePlayerFlags(
+            hideThumbnail: true,
+            mute: false,
+            autoPlay: true,
+            disableDragSeek: false,
+            loop: false,
+            isLive: false,
+            forceHD: false,
+            enableCaption: true,
+          ),
+        );
+        return YoutubePlayerBuilder(
+          player: YoutubePlayer(
+            thumbnail: Container(),
+            controller: _controller,
+          ),
+          builder: (context, player) {
+            return Scaffold(
+              body: SafeArea(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    children: [
+                      const AppbarVideosYT(),
+                      player,
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: ListTile(
+                            title: Textos.tituloMIN(
+                              texto: state.eventoVideo?.snippet?.title ?? "",
+                              color: Colors.black,
+                            ),
+                            subtitle: Textos.parrafoMED(
+                              texto: state.eventoVideo?.snippet?.channelTitle ??
+                                  "",
+                            ),
+                          )),
+                      const _ListaVideosYT(),
+                    ],
                   ),
-                  subtitle: Textos.parrafoMED(
-                      texto: "7.7M de vistas * hace 10 meses"
-                          "\n"
-                          "Comentarios 4329"),
-                )),
-            Divider(
-              color: Colors.grey.shade300,
-              thickness: 1.5,
-            ),
-            SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                  children: destacados(
-                Developer.videos,
-                context,
-              )),
-            ),
-            ...iterable(
-              Developer.videos,
-              context,
-            ),
-          ]),
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+}
+
+class _ListaVideosYT extends StatefulWidget {
+  const _ListaVideosYT({Key? key}) : super(key: key);
+
+  @override
+  State<_ListaVideosYT> createState() => __ListaVideosYTState();
+}
+
+class __ListaVideosYTState extends State<_ListaVideosYT> {
+  List<ItemYT>? iterable;
+
+  @override
+  void initState() {
+    Compositor.onLoadRelacionadosYT(context: context).then((value) {
+      iterable = value;
+      setState(() {});
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: cuerpo(context),
+    );
+  }
+
+  List<Widget> cuerpo(BuildContext context) {
+    List<Widget> a = [];
+    final List<ItemYT> items = iterable ?? [];
+
+    for (var v in items) {
+      a.add(Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SizedBox(
+          height: Medidas.size.width * .240,
+          child: GestureDetector(
+            child: bodyTarjeta(v),
+            onTap: () async {
+              await Compositor.onSelectYT(context: context, item: v);
+              Navigator.popAndPushNamed(context, Video.routeName);
+            },
+          ),
         ),
+      ));
+    }
+
+    return a;
+  }
+
+  Widget bodyTarjeta(ItemYT v) {
+    return SizedBox(
+      height: Medidas.size.width * .240,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+              width: Medidas.size.width * .360,
+              height: Medidas.size.width * .240,
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: imagen(v.snippet?.thumbnails?.thumbnailsDefault?.url)),
+          const SizedBox(
+            width: 6,
+          ),
+          SizedBox(
+            width: Medidas.size.width * .4,
+            height: Medidas.size.width * .240,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Textos.parrafoMED(
+                  texto: v.snippet?.title ?? "",
+                  renglones: 2,
+                ),
+                Textos.parrafoMIN(
+                  texto: v.snippet?.channelTitle ?? "",
+                  renglones: 1,
+                ),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
 
-  List<Widget> destacados(List<VideoModel> b, BuildContext context) {
-    List<Widget> a = [];
-    for (var v in b) {
-      a.add(Container(
-        height: Medidas.size.width * .28,
-        width: Medidas.size.width * .28,
-        margin: const EdgeInsets.all(8),
-        clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(6)),
-        child: GestureDetector(
-          child: Image.network(
-            v.thumblary ?? "",
-            fit: BoxFit.fill,
-          ),
-          onTap: () {
-            Navigator.pushNamed(context, Video.routeName);
-          },
-        ),
-      ));
-    }
-    return a;
-  }
-
-  List<Widget> iterable(List<VideoModel> b, BuildContext context) {
-    List<Widget> a = [];
-    for (var v in b) {
-      a.add(SizedBox(
-        height: Medidas.size.width * .3,
-        child: GestureDetector(
-          child: Row(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(left: 10),
-                height: Medidas.size.width * .240,
-                width: Medidas.size.width * .360,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Image.network(
-                  v.thumblary ?? "",
-                  fit: BoxFit.cover,
-                ),
-              ),
-              const SizedBox(
-                width: 6,
-              ),
-              Flexible(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Textos.tituloMIN(
-                        texto: v.titulo ?? "", align: TextAlign.left),
-                    Textos.parrafoMED(texto: v.titulo ?? ""),
-                  ],
-                ),
-              )
-            ],
-          ),
-          onTap: () {
-            Navigator.pushNamed(context, Video.routeName);
-          },
-        ),
-      ));
-    }
-    return a;
+  Widget imagen(String? url) {
+    return Image.network(
+      url ?? "",
+      errorBuilder: (context, error, stackTrace) {
+        return SvgPicture.asset(
+          Assets.svgvideo,
+          fit: BoxFit.cover,
+        );
+      },
+      fit: BoxFit.cover,
+    );
   }
 }

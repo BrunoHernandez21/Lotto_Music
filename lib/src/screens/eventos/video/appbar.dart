@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../helpers/variables_globales.dart';
 import '../../../widgets/text.dart';
-import '../../utils/notify.dart';
 import '../search_video/search_video_event.dart';
 
 class AppbarVideosEvento extends StatelessWidget {
@@ -26,12 +25,6 @@ class AppbarVideosEvento extends StatelessWidget {
           icon: const Icon(Icons.search),
           onPressed: () {
             Navigator.pushNamed(context, SearchVideosEvent.routeName);
-          },
-        ),
-        IconButton(
-          icon: const Icon(Icons.notifications),
-          onPressed: () {
-            Navigator.pushNamed(context, Notify.routeName);
           },
         ),
         const SizedBox(

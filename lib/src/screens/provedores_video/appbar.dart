@@ -21,7 +21,7 @@ class AppbarInicio extends StatelessWidget {
           const SizedBox(
             width: 5,
           ),
-          Textos.parrafoMED(texto: "Videos Populares"),
+          Textos.parrafoMED(texto: "Videos en tendencia"),
           const Expanded(child: SizedBox()),
           IconButton(
             icon: const Icon(Icons.notifications),

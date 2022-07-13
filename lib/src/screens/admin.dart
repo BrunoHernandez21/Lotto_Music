@@ -9,7 +9,7 @@ import '../bloc/shaderPreferences/shaderpreferences_bloc.dart';
 import '../helpers/new_icons.dart';
 import '../helpers/variables_globales.dart';
 import 'perfil/perfil.dart';
-import 'eventos/eventos/eventos.dart';
+import 'eventos/eventos.dart';
 
 class Admin extends StatefulWidget {
   static const routeName = 'Admin';

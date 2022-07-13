@@ -18,7 +18,7 @@ class VideosCategoriaBloc
           sizePage: 10,
         )) {
     on<OnLoadVideosCategoria>((event, emit) {
-      final List<Item> listup = state.listado ?? [];
+      List<Item> listup = state.listado ?? [];
       listup.addAll(event.listado);
       emit(state.copyWith(
         listado: listup,

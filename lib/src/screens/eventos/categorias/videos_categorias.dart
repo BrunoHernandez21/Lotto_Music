@@ -83,9 +83,7 @@ class _ListVideosPaginacionState extends State<_ListVideosPaginacion> {
         }
         return RefreshIndicator(
             onRefresh: () async {
-              Compositor.onLoadCategorias(
-                context: context,
-              );
+              Compositor.onLoadInitVideosCategoria(context);
             },
             child: ListView.separated(
                 controller: controller,

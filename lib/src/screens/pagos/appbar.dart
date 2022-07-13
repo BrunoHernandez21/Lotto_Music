@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../helpers/variables_globales.dart';
 import '../../widgets/text.dart';
-import '../provedores_video/search/search.dart';
+import '../eventos/search_video/search_video_event.dart';
 import '../utils/notify.dart';
 
 class AppbarCarrito extends StatelessWidget {
@@ -27,7 +27,7 @@ class AppbarCarrito extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {
-              Navigator.pushNamed(context, SearchVideos.routeName);
+              Navigator.pushNamed(context, SearchVideosEvent.routeName);
             },
           ),
           IconButton(

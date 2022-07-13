@@ -54,7 +54,7 @@ class _TarjetaPlanes extends StatefulWidget {
 
 class __TarjetaPlanesState extends State<_TarjetaPlanes> {
   final styleBorder = const BorderSide(
-    color: Color(0xff591da9),
+    color: Color(0xffc4302b),
     style: BorderStyle.solid,
     width: 4,
   );
@@ -146,7 +146,7 @@ class __TarjetaPlanesState extends State<_TarjetaPlanes> {
               width: Medidas.size.width * .5,
               child: Botones.degradedTextButton(
                 text: "Agregar al Carrito",
-                colors: const [Color(0xffea8d8d), Color(0xffa890fe)],
+                colors: const [Color(0xffff0000), Color(0xffff0000)],
                 onTap: () async {
                   final resp = await Compositor.onAddCarrito(
                     context: context,
