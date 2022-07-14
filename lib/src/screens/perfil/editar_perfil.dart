@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/cores/compositor.dart';
+import 'package:lotto_music/src/helpers/variables_globales.dart';
 import 'package:lotto_music/src/models/users.dart';
 import 'package:lotto_music/src/widgets/botones.dart';
 import 'package:lotto_music/src/widgets/inputs_text.dart';
@@ -18,22 +19,23 @@ class EditarPerfil extends StatefulWidget {
 }
 
 class _EditarPerfilState extends State<EditarPerfil> {
-  final TextEditingController controlNombre = TextEditingController();
-  final TextEditingController controlNumero = TextEditingController();
-  final TextEditingController controlApellidoM = TextEditingController();
-  final TextEditingController controlApellidoP = TextEditingController();
-  final TextEditingController controlFecha = TextEditingController();
+  final controlNombre = TextEditingController();
+  final controlNumero = TextEditingController();
+  final controlApellidoM = TextEditingController();
+  final controlApellidoP = TextEditingController();
+  final controlFecha = TextEditingController();
+  DateTime? nacimiento;
 
   @override
   void initState() {
     final estado = BlocProvider.of<UserBloc>(context).state;
+    nacimiento = estado.user?.fechaNacimiento;
 
     controlNombre.text = estado.user?.nombre ?? "";
     controlNumero.text = estado.user?.telefono ?? "";
     controlApellidoM.text = estado.user?.apellidom ?? "";
     controlApellidoP.text = estado.user?.apellidop ?? "";
-    controlFecha.text =
-        estado.user?.fechaNacimiento?.toIso8601String().substring(0, 10) ?? "";
+    controlFecha.text = nacimiento?.toIso8601String().substring(0, 10) ?? "";
 
     super.initState();
   }
@@ -57,6 +59,11 @@ class _EditarPerfilState extends State<EditarPerfil> {
                       parent: AlwaysScrollableScrollPhysics()),
                   child: Column(
                     children: [
+                      Textos.tituloMAX(texto: "Actalice sus datos"),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Textos.parrafoMAX(texto: "Nombre"),
+                      ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10.0),
                         child: InputsText.classic(
@@ -64,12 +71,21 @@ class _EditarPerfilState extends State<EditarPerfil> {
                           hintText: 'Nombre',
                         ),
                       ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Textos.parrafoMAX(texto: "Telefono"),
+                      ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10.0),
                         child: InputsText.classic(
                           controller: controlNumero,
+                          textType: TextInputType.number,
                           hintText: 'Telefono',
                         ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Textos.parrafoMAX(texto: "Apellido Paterno"),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10.0),
@@ -78,6 +94,10 @@ class _EditarPerfilState extends State<EditarPerfil> {
                           hintText: 'Apellido Paterno',
                         ),
                       ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Textos.parrafoMAX(texto: "Apellido Materno"),
+                      ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10.0),
                         child: InputsText.classic(
@@ -85,14 +105,46 @@ class _EditarPerfilState extends State<EditarPerfil> {
                           hintText: 'Apellido Materno',
                         ),
                       ),
-                      /*//TODO: DATAPIKER
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10.0),
-                        child: InputsText.classic(
-                          controller: controlFecha,
-                          hintText: 'Fecha de Nacimiento',
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Textos.parrafoMAX(texto: "Fecha"),
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(
+                          top: 10,
+                          bottom: 10,
+                          right: Medidas.size.width * .45,
                         ),
-                      ),*/
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        height: 55,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: TextField(
+                          controller: controlFecha,
+                          enableInteractiveSelection: false,
+                          style: const TextStyle(
+                            color: Color.fromARGB(255, 85, 82, 82),
+                            fontSize: 17,
+                          ),
+                          decoration: const InputDecoration(
+                            hintText: "Fecha",
+                            suffixIcon: Icon(
+                              Icons.calendar_month,
+                              color: Colors.blue,
+                            ),
+                          ),
+                          onTap: () {
+                            FocusScope.of(context).requestFocus(FocusNode());
+                            _selectDate(context);
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 60,
+                      ),
                       Botones.degradedTextButtonOrange(
                           text: 'Guardar Cambios',
                           onTap: () {
@@ -113,5 +165,20 @@ class _EditarPerfilState extends State<EditarPerfil> {
             },
           ),
         ));
+  }
+
+  _selectDate(
+    BuildContext context,
+  ) async {
+    DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now().add(const Duration(days: -6570)),
+        firstDate: DateTime(1950),
+        lastDate: DateTime.now());
+    if (picked != null) {
+      nacimiento = picked;
+      controlFecha.text = nacimiento?.toIso8601String().substring(0, 10) ?? "";
+      setState(() {});
+    }
   }
 }

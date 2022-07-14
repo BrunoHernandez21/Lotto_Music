@@ -11,11 +11,15 @@ class VideoService {
   static const String _grupos = URL.videos + "/grupos";
   static Future<VideoEventModel?> listarEventos({required int pag}) async {
     final urI = Uri.parse(_eventosPage + "/" + pag.toString() + "/10");
-    final resp = await http.get(
-      urI,
-    );
-    final out = VideoEventModel.fromJson(resp.body);
-    return out;
+    try {
+      final resp = await http.get(
+        urI,
+      );
+      final out = VideoEventModel.fromJson(resp.body);
+      return out;
+    } catch (e) {
+      return null;
+    }
   }
 
   static Future<GruposModel?> listarGrupos() async {
@@ -30,10 +34,14 @@ class VideoService {
   static Future<VideoEventModel?> listarVideosCategoria(
       {required int pag, required String categoria}) async {
     final urI = Uri.parse(_grupos + "/" + pag.toString() + "/10/" + categoria);
-    final resp = await http.get(
-      urI,
-    );
-    final out = VideoEventModel.fromJson(resp.body);
-    return out;
+    try {
+      final resp = await http.get(
+        urI,
+      );
+      final out = VideoEventModel.fromJson(resp.body);
+      return out;
+    } catch (e) {
+      return null;
+    }
   }
 }

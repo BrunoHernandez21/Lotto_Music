@@ -9,8 +9,9 @@ import '../models/login_response.dart';
 
 class CarritoService {
   static const String _listar = URL.carrito + "/carrito";
-  static const String _crear = URL.carrito + "/carrito";
+  static const String _carro = URL.carrito + "/carrito";
   static const String _load = URL.carrito + "/carrito/plan";
+
   static Future<CarritoResponse?> load({
     required String token,
   }) async {
@@ -33,7 +34,7 @@ class CarritoService {
     required String token,
     required String body,
   }) async {
-    final urI = Uri.parse(_crear);
+    final urI = Uri.parse(_carro);
     final resp = await http.post(
       urI,
       headers: {
@@ -66,18 +67,25 @@ class CarritoService {
     }
   }
 
-  static Future<LoginResponse?> eliminar({required String token}) async {
+  static Future<String?> eliminar(
+      {required String token, required int id}) async {
     try {
-      final urI = Uri.parse(_listar);
-      final resp = await http.get(
+      final urI = Uri.parse(_carro + "/" + id.toString());
+      final resp = await http.delete(
         urI,
         headers: {
-          "Content-Type": "application/json",
           "Authorization": "Bearer " + token,
         },
       );
+      final deco = json.decode(resp.body);
+      if (deco["mensaje"] == null) {
+        return "Error de conexion";
+      }
+      if (deco["mensaje"].runtimeType == String) {
+        return deco["mensaje"];
+      }
 
-      return LoginResponse.fromJson(resp.body);
+      return null;
     } catch (e) {
       return null;
     }

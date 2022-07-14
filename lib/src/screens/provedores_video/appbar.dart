@@ -10,7 +10,7 @@ class AppbarInicio extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: Medidas.size.height * .08,
+      height: 45,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

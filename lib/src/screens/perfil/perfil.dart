@@ -12,7 +12,7 @@ import 'package:lotto_music/src/widgets/botones.dart';
 import '../../bloc/acount/acount_bloc.dart';
 import '../../bloc/user/user_bloc.dart';
 import '../../widgets/text.dart';
-import 'acerdade.dart';
+import 'acerda_de.dart';
 import 'ajustes/ajustes.dart';
 import 'ajustes/ajustes_usuario.dart';
 import 'appbar.dart';

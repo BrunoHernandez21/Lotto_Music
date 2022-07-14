@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart';
 
-import '../../helpers/variables_globales.dart';
-import '../../widgets/text.dart';
-import '../utils/notify.dart';
+import '../../../helpers/variables_globales.dart';
+import '../../../widgets/text.dart';
 
-class AppbarCarrito extends StatelessWidget {
-  const AppbarCarrito({Key? key}) : super(key: key);
+class AppbarSearchYT extends StatelessWidget {
+  const AppbarSearchYT({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 60,
+      height: 45,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              size: 18,
+            ),
+          ),
           const SizedBox(
             width: 15,
           ),
@@ -21,14 +29,8 @@ class AppbarCarrito extends StatelessWidget {
           const SizedBox(
             width: 5,
           ),
-          Textos.parrafoMED(texto: "Lotto Music"),
+          Textos.parrafoMED(texto: "Busquedas Youtube"),
           const Expanded(child: SizedBox()),
-          IconButton(
-            icon: const Icon(Icons.notifications),
-            onPressed: () {
-              Navigator.pushNamed(context, Notify.routeName);
-            },
-          ),
           const SizedBox(
             width: 10,
           ),

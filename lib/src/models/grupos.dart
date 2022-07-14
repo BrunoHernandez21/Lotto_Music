@@ -28,7 +28,9 @@ class GruposModel {
   String toJson() => json.encode(toMap());
 
   factory GruposModel.fromMap(Map<String, dynamic> json) => GruposModel(
-        grupos: List<String>.from(json["grupos"].map((x) => x)),
+        grupos: json["grupos"] == null
+            ? null
+            : List<String>.from(json["grupos"].map((x) => x)),
         mensaje: json["mensaje"],
       );
 

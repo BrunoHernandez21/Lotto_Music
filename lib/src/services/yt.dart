@@ -9,9 +9,9 @@ class YTService {
   static const String _tops = URL.searchYT +
       "&type=video&part=snippet&chart=mostPopular&regionCode=MX&safeSearch=none&maxResults=10&videoEmbeddable=true";
   static const String _relative =
-      URL.searchYT + "&type=video&part=snippet&relatedToVideoId=";
+      URL.searchYT + "&type=video&maxResults=10&part=snippet&relatedToVideoId=";
   static const String _search =
-      URL.searchYT + "&type=video&part=snippet&maxResults=10&q=";
+      URL.searchYT + "&type=video&maxResults=10&part=snippet&maxResults=10&q=";
 /////////////////////////////
   /// separador
   static Future<YoutubeModel?> top() async {
@@ -38,6 +38,17 @@ class YTService {
       urI,
     );
     final out = YoutubeModel.fromJson(resp.body);
+    if (out.itemsyt?.isNotEmpty ?? false) {
+      List<ItemYT> corrector = [];
+      out.itemsyt?.forEach((element) {
+        if (element.snippet != null) {
+          corrector.add(element);
+        }
+      });
+      out.itemsyt = corrector;
+      return out;
+    }
+
     return out;
   }
 }

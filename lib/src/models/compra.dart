@@ -17,9 +17,9 @@ class CompraModel {
   int id;
   int cantidad;
   int amount;
-  DateTime? fechaCompra;
   int usuarioId;
   int planId;
+  DateTime? fechaCompra;
 
   CompraModel copyWith({
     int? id,

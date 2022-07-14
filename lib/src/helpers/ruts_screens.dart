@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:lotto_music/src/screens/eventos/adivina/adivina.dart';
 
 import '../screens/acount/login.dart';
 import '../screens/acount/recovery.dart';
@@ -6,7 +7,7 @@ import '../screens/acount/register.dart';
 import '../screens/acount/register_confirm.dart';
 import '../screens/acount/root.dart';
 import '../screens/admin.dart';
-import '../screens/eventos/search_video/search_video_event.dart';
+import '../screens/eventos/estadisticas/estadisticas.dart';
 import '../screens/eventos/video/video_evento.dart';
 import '../screens/eventos/categorias/videos_categorias.dart';
 import '../screens/provedores_video/search/search.dart';
@@ -14,7 +15,7 @@ import '../screens/provedores_video/video/video.dart';
 import '../screens/utils/clock.dart';
 import '../screens/utils/historial_eventos.dart';
 import '../screens/utils/notify.dart';
-import '../screens/perfil/acerdade.dart';
+import '../screens/perfil/acerda_de.dart';
 import '../screens/perfil/ajustes/ajustes.dart';
 import '../screens/perfil/ajustes/ajustes_usuario.dart';
 import '../screens/perfil/ajustes/billetera.dart';
@@ -45,7 +46,6 @@ class Ruts {
     Billetera.routeName: (_) => const Billetera(),
     Video.routeName: (_) => const Video(),
     Notify.routeName: (_) => const Notify(),
-    SearchVideosEvent.routeName: (_) => const SearchVideosEvent(),
     SearchVideosYT.routeName: (_) => const SearchVideosYT(),
     Clock.routeName: (_) => const Clock(),
     AjustesUsuario.routeName: (_) => const AjustesUsuario(),
@@ -53,6 +53,8 @@ class Ruts {
     HistorialEventos.routeName: (_) => const HistorialEventos(),
     VideosCategoria.routeName: (_) => const VideosCategoria(),
     VideoEvento.routeName: (_) => const VideoEvento(),
+    Adivina.routeName: (_) => const Adivina(),
+    Estadisticas.routeName: (_) => const Estadisticas(),
   };
 
   static get rutas {

@@ -36,6 +36,7 @@ dependencies:
   vector_math: ^2.1.2
   youtube_player_flutter: ^8.1.0
   flutter_stripe: ^3.3.0
+  easy_debounce: ^2.0.2+1
 
 
 
@@ -95,13 +96,7 @@ flutter:
         - asset: assets/fonts/Montserrat/Montserrat-SemiBoldItalic.ttf
           style: italic
           weight: 500
-    - family: Merriweather
-      fonts:
-        - asset: assets/fonts/Merriweather/Merriweather-Regular.ttf
-        - asset: assets/fonts/Merriweather/Merriweather-Bold.ttf
-          weight: 500
-        - asset: assets/fonts/Merriweather/Merriweather-Italic.ttf
-          style: italic
+
     - family:  NewIcons
       fonts:
         - asset: assets/icons/fonts/NewIcons.ttf

@@ -42,41 +42,54 @@ class _VideoState extends State<Video> {
             controller: _controller,
           ),
           builder: (context, player) {
-            return Scaffold(
-              body: SafeArea(
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Column(
-                    children: [
-                      const AppbarVideosYT(),
-                      player,
-                      Align(
-                          alignment: Alignment.centerLeft,
-                          child: ListTile(
-                            title: Textos.tituloMIN(
-                              texto: state.eventoVideo?.snippet?.title ?? "",
-                              color: Colors.black,
-                            ),
-                            subtitle: Textos.parrafoMED(
-                              texto: state.eventoVideo?.snippet?.channelTitle ??
-                                  "",
-                            ),
-                          )),
-                      const _ListaVideosYT(),
-                    ],
-                  ),
-                ),
-              ),
-            );
+            return _bodyWidget(player, state);
           },
         );
       },
     );
   }
+
+  Scaffold _bodyWidget(Widget player, VideoState state) {
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: [
+            const AppbarVideosYT(),
+            Expanded(
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  children: [
+                    player,
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: ListTile(
+                          title: Textos.tituloMIN(
+                            texto: state.eventoVideo?.snippet?.title ?? "",
+                            color: Colors.black,
+                          ),
+                          subtitle: Textos.parrafoMED(
+                            texto:
+                                state.eventoVideo?.snippet?.channelTitle ?? "",
+                          ),
+                        )),
+                    _ListaVideosYT(
+                      videID: state.eventoVideo?.id?.videoId,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class _ListaVideosYT extends StatefulWidget {
-  const _ListaVideosYT({Key? key}) : super(key: key);
+  final String? videID;
+  const _ListaVideosYT({Key? key, required this.videID}) : super(key: key);
 
   @override
   State<_ListaVideosYT> createState() => __ListaVideosYTState();
@@ -87,7 +100,8 @@ class __ListaVideosYTState extends State<_ListaVideosYT> {
 
   @override
   void initState() {
-    Compositor.onLoadRelacionadosYT(context: context).then((value) {
+    Compositor.onLoadRelacionadosYT(context: context, relaionado: widget.videID)
+        .then((value) {
       iterable = value;
       setState(() {});
     });

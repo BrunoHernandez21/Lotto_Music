@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../helpers/variables_globales.dart';
 import '../../widgets/text.dart';
 import '../utils/clock.dart';
-import 'search_video/search_video_event.dart';
 
 class AppbarEventos extends StatelessWidget {
   const AppbarEventos({Key? key}) : super(key: key);
@@ -11,7 +10,7 @@ class AppbarEventos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: Medidas.size.height * .08,
+      height: 45,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

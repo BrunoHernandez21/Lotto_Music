@@ -16,7 +16,7 @@ class VideoEventModel {
       required this.totals,
       this.mensaje});
 
-  List<Item>? items;
+  List<ItemEvent>? items;
   int pag;
   int pags;
   int sizePage;
@@ -24,7 +24,7 @@ class VideoEventModel {
   String? mensaje;
 
   VideoEventModel copyWith({
-    List<Item>? items,
+    List<ItemEvent>? items,
     int? pag,
     int? pags,
     int? sizePage,
@@ -46,7 +46,8 @@ class VideoEventModel {
   String toJson() => json.encode(toMap());
 
   factory VideoEventModel.fromMap(Map<String, dynamic> json) => VideoEventModel(
-        items: List<Item>.from(json["items"].map((x) => Item.fromMap(x))),
+        items: List<ItemEvent>.from(
+            json["items"].map((x) => ItemEvent.fromMap(x))),
         pag: json["pag"],
         mensaje: json["mensaje"],
         pags: json["pags"],
@@ -64,8 +65,8 @@ class VideoEventModel {
       };
 }
 
-class Item {
-  Item({
+class ItemEvent {
+  ItemEvent({
     required this.evento,
     required this.video,
   });
@@ -73,20 +74,20 @@ class Item {
   EventoModel evento;
   VideoModel video;
 
-  Item copyWith({
+  ItemEvent copyWith({
     EventoModel? evento,
     VideoModel? video,
   }) =>
-      Item(
+      ItemEvent(
         evento: evento ?? this.evento,
         video: video ?? this.video,
       );
 
-  factory Item.fromJson(String str) => Item.fromMap(json.decode(str));
+  factory ItemEvent.fromJson(String str) => ItemEvent.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory Item.fromMap(Map<String, dynamic> json) => Item(
+  factory ItemEvent.fromMap(Map<String, dynamic> json) => ItemEvent(
         evento: EventoModel.fromMap(json["evento"]),
         video: VideoModel.fromMap(json["video"]),
       );

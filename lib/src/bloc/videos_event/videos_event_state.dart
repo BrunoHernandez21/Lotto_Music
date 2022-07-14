@@ -13,13 +13,13 @@ class VideosEventState {
   final int pags;
   final int sizePage;
   final int count;
-  final List<Item>? listado;
+  final List<ItemEvent>? listado;
   VideosEventState copyWith({
     int? pag,
     int? pags,
     int? sizePage,
     int? count,
-    List<Item>? listado,
+    List<ItemEvent>? listado,
   }) =>
       VideosEventState(
         listado: listado ?? this.listado,

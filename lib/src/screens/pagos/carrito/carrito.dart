@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:lotto_music/src/cores/compositor.dart';
 import 'package:lotto_music/src/helpers/variables_globales.dart';
 
@@ -63,8 +62,10 @@ class TarjetaCarrito extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       margin: EdgeInsets.symmetric(
-          horizontal: Medidas.size.width * .05, vertical: 20),
-      padding: const EdgeInsets.all(10),
+        horizontal: Medidas.size.width * .05,
+        vertical: 20,
+      ),
+      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         border: const Border(
@@ -74,44 +75,72 @@ class TarjetaCarrito extends StatelessWidget {
           top: styleBorder,
         ),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: Stack(
         children: [
-          Center(
-            child: Textos.tituloMED(
-              texto: carrito.plane.nombre,
-              color: const Color(0xff1eae98),
-            ),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          Textos.parrafoMED(
-            texto: "Cantidad = " + carrito.orden.cantidad.toString(),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Center(
-            child: Textos.tituloMED(
-              texto: "\$" + carrito.orden.amount.toString() + "MX c/u",
-              color: const Color(0xfffca51f),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Center(
-            child: SizedBox(
-              width: Medidas.size.width * .5,
-              child: Botones.degradedTextButton(
-                text: "Comprar",
-                colors: const [Color(0xffea8d8d), Color(0xffa890fe)],
-                onTap: () async {},
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Center(
+                child: Textos.tituloMED(
+                  texto: carrito.plane.nombre,
+                  color: const Color(0xff1eae98),
+                ),
               ),
+              const SizedBox(
+                height: 30,
+              ),
+              Textos.parrafoMED(
+                texto: "Cantidad = " + carrito.orden.cantidad.toString(),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Center(
+                child: Textos.tituloMED(
+                  texto: "\$" + carrito.orden.amount.toString() + "MX",
+                  color: const Color(0xfffca51f),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Center(
+                child: SizedBox(
+                  width: Medidas.size.width * .5,
+                  child: Botones.degradedTextButton(
+                    text: "Comprar",
+                    colors: const [Color(0xffea8d8d), Color(0xffa890fe)],
+                    onTap: () async {},
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+            ],
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: GestureDetector(
+              child: Container(
+                width: 30,
+                decoration: const BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      topRight: Radius.circular(15),
+                    )),
+                child: const Icon(
+                  Icons.remove,
+                  color: Colors.white,
+                ),
+              ),
+              onTap: () async {
+                Compositor.onDeleteCarrito(context, carrito);
+              },
             ),
-          )
+          ),
         ],
       ),
     );

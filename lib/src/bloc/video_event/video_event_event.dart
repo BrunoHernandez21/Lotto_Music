@@ -4,7 +4,7 @@ part of 'video_event_bloc.dart';
 abstract class VideoEventEvent {}
 
 class OnSelectVideoEvent extends VideoEventEvent {
-  final Item eventoVideo;
+  final ItemEvent eventoVideo;
   OnSelectVideoEvent({
     required this.eventoVideo,
   });

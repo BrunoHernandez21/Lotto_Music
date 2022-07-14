@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/cores/compositor.dart';
 
 import '../../../bloc/videos_event/videos_event_bloc.dart';
+import '../../../helpers/rutinas.dart';
 import '../../../helpers/variables_globales.dart';
 import '../../../models/evento_video.dart';
 import '../../../widgets/botones.dart';
@@ -161,7 +162,7 @@ class _ListVideosPaginacionState extends State<ListVideosPaginacion> {
     );
   }
 
-  Widget bodyTarjeta(Item v) {
+  Widget bodyTarjeta(ItemEvent v) {
     return GestureDetector(
       child: SizedBox(
         height: Medidas.size.width * .240,
@@ -193,15 +194,13 @@ class _ListVideosPaginacionState extends State<ListVideosPaginacion> {
                   Textos.parrafoMED(texto: v.video.titulo ?? "", renglones: 2),
                   Textos.parrafoMIN(texto: v.video.artista ?? "", renglones: 1),
                   const Expanded(child: SizedBox()),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Textos.parrafoMED(
-                          texto: v.evento.fechahoraapuesta
-                              .toString()
-                              .substring(11, 16))
-                    ],
-                  )
+                  Textos.parrafoMED(
+                    texto: "Hora " +
+                        v.evento.fechahoraapuesta.toString().substring(11, 16),
+                  ),
+                  Textos.parrafoMED(
+                    texto: comprobador(v.evento.fechahoraapuesta),
+                  ),
                 ],
               ),
             )

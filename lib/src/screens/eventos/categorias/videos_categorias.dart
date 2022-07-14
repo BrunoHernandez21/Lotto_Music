@@ -102,7 +102,7 @@ class _ListVideosPaginacionState extends State<_ListVideosPaginacion> {
     );
   }
 
-  Widget bodyTarjeta(Item v) {
+  Widget bodyTarjeta(ItemEvent v) {
     return GestureDetector(
       child: SizedBox(
         height: Medidas.size.width * .240,

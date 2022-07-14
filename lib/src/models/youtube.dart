@@ -98,7 +98,8 @@ class ItemYT {
         kind: json["kind"],
         etag: json["etag"],
         id: Id.fromMap(json["id"]),
-        snippet: Snippet.fromMap(json["snippet"]),
+        snippet:
+            json["snippet"] == null ? null : Snippet.fromMap(json["snippet"]),
       );
 
   Map<String, dynamic> toMap() => {

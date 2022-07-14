@@ -20,6 +20,7 @@ import '../bloc/video/video_bloc.dart';
 import '../bloc/videos_event/videos_event_bloc.dart';
 import '../helpers/variables_globales.dart';
 import '../models/carrito.dart';
+import '../models/carrito_plan.dart';
 import '../models/cartera.dart';
 import '../models/evento_video.dart';
 import '../models/ganador.dart';
@@ -119,7 +120,7 @@ class Compositor {
     if (user == null) {
       await DialogAlert.ok(
         context: context,
-        text: "No hay coneccion con el servidor",
+        text: "No hay conexión con el servidor",
       );
       return false;
     }
@@ -149,7 +150,7 @@ class Compositor {
     if (resp == null) {
       await DialogAlert.ok(
         context: context,
-        text: "No hay coneccion con el servidor",
+        text: "No hay conexión con el servidor",
       );
       return false;
     }
@@ -275,6 +276,34 @@ class Compositor {
       return null;
     }
     return resp.mensaje;
+  }
+
+  /// Categorias
+  static Future<bool> onDeleteCarrito(
+      BuildContext context, Ordenes orden) async {
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    final planB = BlocProvider.of<CarritoBloc>(context);
+    final resp = await CarritoService.eliminar(
+        token: acountB.state.acount.accessToken, id: orden.orden.id);
+    if (resp == null) {
+      DialogAlert.ok(
+        context: context,
+        text: "Error de conexion",
+      );
+      return false;
+    }
+    if (resp == "Eliminado Satisfactoriamente") {
+      try {
+        final newOrden = planB.state.ordenes;
+        newOrden!.remove(orden);
+        planB.add(OnLoadCarrito(ordenes: newOrden));
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   /// compra
@@ -404,7 +433,7 @@ class Compositor {
     return true;
   }
 
-  static Future<List<Item>?> onLoadEventosTemp(
+  static Future<List<ItemEvent>?> onLoadEventosTemp(
       {required BuildContext context}) async {
     final resp = await VideoService.listarEventos(pag: 1);
     return resp?.items;
@@ -413,7 +442,7 @@ class Compositor {
 ////////////// seleccionar video para reprocir (evento) ///////
   static Future<bool> onSlectVideoEvento({
     required BuildContext context,
-    required Item item,
+    required ItemEvent item,
   }) async {
     final vB = BlocProvider.of<VideoEventBloc>(context);
     vB.add(OnSelectVideoEvent(eventoVideo: item));
@@ -515,20 +544,24 @@ class Compositor {
 
   static Future<List<ItemYT>?> onLoadRelacionadosYT({
     required BuildContext context,
+    required String? relaionado,
   }) async {
-    final resp = await YTService.top();
+    if (relaionado == null) {
+      final resp = await YTService.top();
+      return resp?.itemsyt;
+    }
+    final resp = await YTService.relative(
+      ytID: relaionado,
+    );
     return resp?.itemsyt;
   }
 
-  static Future<Cartera?> onLoadSearchYT({
-    required BuildContext context,
-  }) async {
-    final acountB = BlocProvider.of<AcountBloc>(context);
-    final resp = await UtilityService.cartera(
-      token: acountB.state.acount.accessToken,
+  static Future<List<ItemYT>?> onSearchYT(
+      {required BuildContext context, required String busqueda}) async {
+    final resp = await YTService.busqueda(
+      query: busqueda,
     );
-
-    return resp?.cartera;
+    return resp?.itemsyt;
   }
 
   static Future<bool> onSelectYT({

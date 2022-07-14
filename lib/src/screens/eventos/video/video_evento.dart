@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lotto_music/src/models/evento_video.dart';
+import 'package:lotto_music/src/screens/eventos/adivina/adivina.dart';
+import 'package:lotto_music/src/widgets/botones.dart';
 import 'package:lotto_music/src/widgets/text.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../../../bloc/video_event/video_event_bloc.dart';
 import '../../../cores/compositor.dart';
+import '../../../helpers/rutinas.dart';
 import '../../../helpers/variables_globales.dart';
 import 'appbar.dart';
 
@@ -38,37 +41,101 @@ class _VideoEventoState extends State<VideoEvento> {
         );
         return YoutubePlayerBuilder(
           player: YoutubePlayer(
-            thumbnail: Container(),
+            thumbnail: const SizedBox(),
             controller: _controller,
           ),
           builder: (context, player) {
             return Scaffold(
               body: SafeArea(
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Column(
-                    children: [
-                      const AppbarVideosEvento(),
-                      player,
-                      Align(
-                          alignment: Alignment.centerLeft,
-                          child: ListTile(
-                            title: Textos.tituloMIN(
-                              texto: state.eventoVideo.video.titulo ?? "",
-                              color: Colors.black,
-                            ),
-                            subtitle: Textos.parrafoMED(
-                                texto: state.eventoVideo.video.artista ?? ""),
-                          )),
-                      const _ListaVideosEvent(),
-                    ],
-                  ),
+                child: Column(
+                  children: [
+                    const AppbarVideosEvento(),
+                    _bodyVideo(player, state),
+                  ],
                 ),
               ),
             );
           },
         );
       },
+    );
+  }
+
+  Widget _bodyVideo(Widget player, VideoEventState state) {
+    return Expanded(
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          children: [
+            player,
+            Align(
+                alignment: Alignment.centerLeft,
+                child: ListTile(
+                  title: Textos.tituloMED(
+                    texto: state.eventoVideo.video.titulo ?? "",
+                    color: const Color.fromARGB(255, 201, 174, 56),
+                  ),
+                  subtitle: Textos.parrafoMAX(
+                      texto: state.eventoVideo.video.artista ?? ""),
+                )),
+            Container(
+              alignment: Alignment.centerLeft,
+              margin: const EdgeInsets.only(left: 15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Textos.parrafoMAX(
+                    texto: "Hora " +
+                        state.eventoVideo.evento.fechahoraapuesta
+                            .toString()
+                            .substring(11, 16),
+                  ),
+                  Textos.parrafoMAX(
+                    texto: comprobador(
+                      state.eventoVideo.evento.fechahoraapuesta,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: SizedBox(
+                height: 80,
+                width: Medidas.size.width * .9,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: 150,
+                      child: Botones.solidTextButton(
+                        text: "Participa",
+                        onTap: () {
+                          Navigator.of(context).pushNamed(Adivina.routeName);
+                        },
+                        fontColor: const Color.fromARGB(255, 255, 255, 255),
+                        backColor: const Color.fromARGB(255, 46, 161, 50),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 150,
+                      child: Botones.solidTextButton(
+                        text: "Estadisticas",
+                        fontColor: const Color.fromARGB(255, 255, 255, 255),
+                        backColor: const Color.fromARGB(255, 196, 30, 18),
+                        onTap: () {
+                          Navigator.of(context).pushNamed(Adivina.routeName);
+                        },
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            const _ListaVideosEvent(),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -81,7 +148,7 @@ class _ListaVideosEvent extends StatefulWidget {
 }
 
 class _ListaVideosState extends State<_ListaVideosEvent> {
-  List<Item>? iterable;
+  List<ItemEvent>? iterable;
 
   @override
   void initState() {
@@ -101,7 +168,7 @@ class _ListaVideosState extends State<_ListaVideosEvent> {
 
   List<Widget> cuerpo(BuildContext context) {
     List<Widget> a = [];
-    final List<Item> items = iterable ?? [];
+    final List<ItemEvent> items = iterable ?? [];
 
     for (var v in items) {
       a.add(Padding(
@@ -122,7 +189,7 @@ class _ListaVideosState extends State<_ListaVideosEvent> {
     return a;
   }
 
-  Widget bodyTarjeta(Item v) {
+  Widget bodyTarjeta(ItemEvent v) {
     return SizedBox(
       height: Medidas.size.width * .240,
       child: Row(
@@ -153,6 +220,14 @@ class _ListaVideosState extends State<_ListaVideosEvent> {
                 Textos.parrafoMIN(
                   texto: v.video.artista ?? "",
                   renglones: 1,
+                ),
+                const Expanded(child: SizedBox()),
+                Textos.parrafoMED(
+                  texto: "Hora " +
+                      v.evento.fechahoraapuesta.toString().substring(11, 16),
+                ),
+                Textos.parrafoMED(
+                  texto: comprobador(v.evento.fechahoraapuesta),
                 ),
               ],
             ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../cores/compositor.dart';
 import '../../helpers/variables_globales.dart';
+import '../../models/compra.dart';
 import '../../models/historial_compra.dart';
 import '../../widgets/text.dart';
 
@@ -105,7 +106,7 @@ class _HistorialComprasState extends State<HistorialCompras> {
 }
 
 class _Tarjeta extends StatelessWidget {
-  final Compra compra;
+  final CompraModel compra;
   const _Tarjeta({Key? key, required this.compra}) : super(key: key);
 
   @override

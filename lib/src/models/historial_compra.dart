@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:lotto_music/src/models/compra.dart';
+
 class HistorialCompraModel {
   HistorialCompraModel({
     this.compras,
@@ -14,7 +16,7 @@ class HistorialCompraModel {
     this.mensjae,
   });
 
-  List<Compra>? compras;
+  List<CompraModel>? compras;
   int pag;
   int pags;
   int sizePage;
@@ -22,7 +24,7 @@ class HistorialCompraModel {
   String? mensjae;
 
   HistorialCompraModel copyWith({
-    List<Compra>? compras,
+    List<CompraModel>? compras,
     int? pag,
     int? pags,
     int? sizePage,
@@ -47,7 +49,8 @@ class HistorialCompraModel {
       HistorialCompraModel(
         compras: json["compras"] == null
             ? null
-            : List<Compra>.from(json["compras"].map((x) => Compra.fromMap(x))),
+            : List<CompraModel>.from(
+                json["compras"].map((x) => CompraModel.fromMap(x))),
         pag: json["pag"],
         pags: json["pags"],
         sizePage: json["sizePage"],
@@ -62,64 +65,5 @@ class HistorialCompraModel {
         "sizePage": sizePage,
         "totals": totals,
         "mensjae": mensjae,
-      };
-}
-
-class Compra {
-  Compra({
-    this.id = 0,
-    this.cantidad = 0,
-    this.amount = 0,
-    this.usuarioId = 0,
-    this.planId = 0,
-    this.fechaCompra,
-  });
-
-  int id;
-  int cantidad;
-  int amount;
-  int usuarioId;
-  int planId;
-  DateTime? fechaCompra;
-
-  Compra copyWith({
-    int? id,
-    int? cantidad,
-    int? amount,
-    int? usuarioId,
-    int? planId,
-    DateTime? fechaCompra,
-  }) =>
-      Compra(
-        id: id ?? this.id,
-        cantidad: cantidad ?? this.cantidad,
-        amount: amount ?? this.amount,
-        usuarioId: usuarioId ?? this.usuarioId,
-        planId: planId ?? this.planId,
-        fechaCompra: fechaCompra ?? this.fechaCompra,
-      );
-
-  factory Compra.fromJson(String str) => Compra.fromMap(json.decode(str));
-
-  String toJson() => json.encode(toMap());
-
-  factory Compra.fromMap(Map<String, dynamic> json) => Compra(
-        id: json["id"],
-        cantidad: json["cantidad"],
-        amount: json["amount"],
-        usuarioId: json["usuario_id"],
-        planId: json["plan_id"],
-        fechaCompra: json["fecha_compra"] == null
-            ? null
-            : DateTime.parse(json["fecha_compra"]),
-      );
-
-  Map<String, dynamic> toMap() => {
-        "id": id,
-        "cantidad": cantidad,
-        "amount": amount,
-        "usuario_id": usuarioId,
-        "plan_id": planId,
-        "fecha_compra": fechaCompra?.toIso8601String(),
       };
 }

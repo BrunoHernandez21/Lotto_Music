@@ -18,7 +18,7 @@ class NoSignal extends StatelessWidget {
           SizedBox(
             height: Medidas.size.height * .1,
           ),
-          Textos.tituloMAX(texto: "Sin coneccion al Servidor"),
+          Textos.tituloMAX(texto: "Sin conexión al Servidor"),
           SvgPicture.asset(
             "assets/svg/imagenes/explorer.svg",
             height: Medidas.size.height * .5,

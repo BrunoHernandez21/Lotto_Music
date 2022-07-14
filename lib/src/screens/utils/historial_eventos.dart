@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../cores/compositor.dart';
 import '../../helpers/variables_globales.dart';
 import '../../models/historial_event_user.dart';
+import '../../models/usuario_evento.dart';
 import '../../widgets/text.dart';
 
 class HistorialEventos extends StatefulWidget {

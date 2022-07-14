@@ -19,7 +19,7 @@ class VideosEventBloc extends Bloc<VideosEventEvent, VideosEventState> {
           ),
         ) {
     on<OnLoadVideosEvent>((event, emit) {
-      final List<Item> listup = state.listado ?? [];
+      final List<ItemEvent> listup = state.listado ?? [];
       listup.addAll(event.listado);
       emit(state.copyWith(
         listado: listup,

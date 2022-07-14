@@ -11,7 +11,7 @@ part 'video_event_state.dart';
 class VideoEventBloc extends Bloc<VideoEventEvent, VideoEventState> {
   VideoEventBloc()
       : super(VideoEventState(
-            eventoVideo: Item(
+            eventoVideo: ItemEvent(
           evento: EventoModel(),
           video: VideoModel(),
         ))) {

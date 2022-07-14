@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/cores/compositor.dart';
 import 'package:lotto_music/src/helpers/variables_globales.dart';
-import 'package:lotto_music/src/models/plan.dart';
 import 'package:lotto_music/src/widgets/botones.dart';
-import 'package:lotto_music/src/widgets/dialogs_alert.dart';
 import 'package:lotto_music/src/widgets/text.dart';
 
 import '../../../bloc/planes/planes_bloc.dart';
 import '../../../models/carrito.dart';
+import '../../../models/plan.dart';
 import '../../../widgets/svg_nosignal.dart';
 
 class Planes extends StatelessWidget {
@@ -148,7 +147,7 @@ class __TarjetaPlanesState extends State<_TarjetaPlanes> {
                 text: "Agregar al Carrito",
                 colors: const [Color(0xffff0000), Color(0xffff0000)],
                 onTap: () async {
-                  final resp = await Compositor.onAddCarrito(
+                  await Compositor.onAddCarrito(
                     context: context,
                     orden: CarritoModel(
                       amount: cantidad * widget.plan.precio,
@@ -157,12 +156,6 @@ class __TarjetaPlanesState extends State<_TarjetaPlanes> {
                       idPlan: widget.plan.id,
                     ),
                   );
-                  if (resp != null) {
-                    DialogAlert.ok(
-                      context: context,
-                      text: resp,
-                    );
-                  }
                 },
               ),
             ),

@@ -4,7 +4,7 @@ part of 'videos_event_bloc.dart';
 abstract class VideosEventEvent {}
 
 class OnInitVideosEvent extends VideosEventEvent {
-  final List<Item>? listado;
+  final List<ItemEvent>? listado;
   final int pag;
   final int pags;
   final int sizePage;
@@ -19,7 +19,7 @@ class OnInitVideosEvent extends VideosEventEvent {
 }
 
 class OnLoadVideosEvent extends VideosEventEvent {
-  final List<Item> listado;
+  final List<ItemEvent> listado;
   final int pag;
   OnLoadVideosEvent({
     required this.listado,

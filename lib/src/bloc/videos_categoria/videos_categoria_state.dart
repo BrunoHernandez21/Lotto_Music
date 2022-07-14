@@ -15,14 +15,14 @@ class VideosCategoriaState {
   final int sizePage;
   final int count;
   final String categoria;
-  final List<Item>? listado;
+  final List<ItemEvent>? listado;
   VideosCategoriaState copyWith({
     int? pag,
     int? pags,
     int? sizePage,
     int? count,
     String? categoria,
-    List<Item>? listado,
+    List<ItemEvent>? listado,
   }) =>
       VideosCategoriaState(
         listado: listado ?? this.listado,

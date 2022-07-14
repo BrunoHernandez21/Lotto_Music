@@ -1,7 +1,7 @@
 // ignore: unused_import
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:lotto_music/src/models/plan.dart';
+import 'package:lotto_music/src/models/plan_response.dart';
 
 import '../helpers/variables_globales.dart';
 import '../models/login_response.dart';
