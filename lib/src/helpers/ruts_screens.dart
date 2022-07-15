@@ -53,7 +53,7 @@ class Ruts {
     HistorialEventos.routeName: (_) => const HistorialEventos(),
     VideosCategoria.routeName: (_) => const VideosCategoria(),
     VideoEvento.routeName: (_) => const VideoEvento(),
-    Adivina.routeName: (_) => const Adivina(),
+    Adivina.routeName: (_) => Adivina(),
     Estadisticas.routeName: (_) => const Estadisticas(),
   };
 

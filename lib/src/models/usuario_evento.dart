@@ -16,10 +16,10 @@ class UserEventModel {
   int id;
   bool activo;
   int cantidad;
-  int comentarios;
-  int likes;
-  int vistas;
-  int dislikes;
+  int? comentarios;
+  int? likes;
+  int? vistas;
+  int? dislikes;
   int usuarioId;
   int apuestaId;
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lotto_music/src/widgets/text.dart';
 
 class Estadisticas extends StatelessWidget {
   static const String routeName = "estadisticas";
@@ -6,6 +7,16 @@ class Estadisticas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(),
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          children: [
+            Textos.tituloMAX(texto: "Estadisticas"),
+          ],
+        ),
+      ),
+    );
   }
 }

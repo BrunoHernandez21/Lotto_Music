@@ -111,7 +111,13 @@ class TarjetaCarrito extends StatelessWidget {
                   child: Botones.degradedTextButton(
                     text: "Comprar",
                     colors: const [Color(0xffea8d8d), Color(0xffa890fe)],
-                    onTap: () async {},
+                    onTap: () async {
+                      await Compositor.onBuyCarrito(
+                        context: context,
+                        ids: [carrito.orden.id],
+                      );
+                      Compositor.onloadCarrito(context);
+                    },
                   ),
                 ),
               ),

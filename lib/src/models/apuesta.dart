@@ -3,53 +3,55 @@
 //     final apuestaModel = apuestaModelFromMap(jsonString);
 
 import 'dart:convert';
-import 'package:intl/intl.dart';
 
 class ApuestaModel {
   ApuestaModel({
     this.id = 0,
-    this.activo = true,
-    this.fecha,
-    this.vistas = 0,
-    this.usuarioId = 0,
-    this.apuestaId = 0,
+    this.activo = false,
+    this.cantidad = 0,
     this.comentarios = 0,
     this.likes = 0,
+    this.vistas = 0,
     this.dislikes = 0,
+    this.usuarioId = 0,
+    this.apuestaId = 0,
+    this.mensaje,
   });
 
   int id;
   bool activo;
-  DateTime? fecha;
-  int vistas;
-  int usuarioId;
-  int apuestaId;
+  int cantidad;
   int comentarios;
   int likes;
+  int vistas;
   int dislikes;
+  int usuarioId;
+  int apuestaId;
+  String? mensaje;
 
   ApuestaModel copyWith({
     int? id,
     bool? activo,
-    DateTime? fecha,
-    int? vistas,
-    int? usuarioId,
-    int? apuestaId,
+    int? cantidad,
     int? comentarios,
     int? likes,
+    int? vistas,
     int? dislikes,
+    int? usuarioId,
+    int? apuestaId,
+    String? mensaje,
   }) =>
       ApuestaModel(
-        id: id ?? this.id,
-        activo: activo ?? this.activo,
-        fecha: fecha ?? this.fecha,
-        vistas: vistas ?? this.vistas,
-        usuarioId: usuarioId ?? this.usuarioId,
-        apuestaId: apuestaId ?? this.apuestaId,
-        comentarios: comentarios ?? this.comentarios,
-        likes: likes ?? this.likes,
-        dislikes: dislikes ?? this.dislikes,
-      );
+          id: id ?? this.id,
+          activo: activo ?? this.activo,
+          cantidad: cantidad ?? this.cantidad,
+          comentarios: comentarios ?? this.comentarios,
+          likes: likes ?? this.likes,
+          vistas: vistas ?? this.vistas,
+          dislikes: dislikes ?? this.dislikes,
+          usuarioId: usuarioId ?? this.usuarioId,
+          apuestaId: apuestaId ?? this.apuestaId,
+          mensaje: mensaje ?? this.mensaje);
 
   factory ApuestaModel.fromJson(String str) =>
       ApuestaModel.fromMap(json.decode(str));
@@ -57,28 +59,28 @@ class ApuestaModel {
   String toJson() => json.encode(toMap());
 
   factory ApuestaModel.fromMap(Map<String, dynamic> json) => ApuestaModel(
-        id: json["id"],
-        activo: json["activo"],
-        fecha: DateTime.parse(json["fecha"]),
-        vistas: json["vistas"],
-        usuarioId: json["usuario_id"],
-        apuestaId: json["apuesta_id"],
-        comentarios: json["comentarios"],
-        likes: json["likes"],
-        dislikes: json["dislikes"],
+        id: json["id"] ?? 0,
+        activo: json["activo"] ?? false,
+        cantidad: json["cantidad"] ?? 0,
+        comentarios: json["comentarios"] ?? 0,
+        likes: json["likes"] ?? 0,
+        vistas: json["vistas"] ?? 0,
+        dislikes: json["dislikes"] ?? 0,
+        usuarioId: json["usuario_id"] ?? 0,
+        apuestaId: json["apuesta_id"] ?? 0,
+        mensaje: json["mensaje"],
       );
 
   Map<String, dynamic> toMap() => {
         "id": id,
         "activo": activo,
-        "fecha": fecha == null
-            ? null
-            : DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(fecha!),
-        "vistas": vistas,
-        "usuario_id": usuarioId,
-        "apuesta_id": apuestaId,
+        "cantidad": cantidad,
         "comentarios": comentarios,
         "likes": likes,
+        "vistas": vistas,
         "dislikes": dislikes,
+        "usuario_id": usuarioId,
+        "apuesta_id": apuestaId,
+        "mensaje": mensaje,
       };
 }

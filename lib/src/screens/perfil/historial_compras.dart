@@ -136,8 +136,8 @@ class _Tarjeta extends StatelessWidget {
           if (compra.fechaCompra != null)
             espace(
               Textos.tituloMIN(
-                texto: "likes: " +
-                    (compra.fechaCompra?.toString().substring(0, 24) ?? ""),
+                texto: "Fecha de adquisicion: " +
+                    (compra.fechaCompra?.toString().substring(0, 10) ?? ""),
               ),
             ),
           if (compra.cantidad != 0)

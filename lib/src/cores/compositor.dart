@@ -6,6 +6,7 @@ import 'package:lotto_music/src/bloc/user/user_bloc.dart';
 import 'package:lotto_music/src/bloc/video_event/video_event_bloc.dart';
 import 'package:lotto_music/src/bloc/videos/videos_bloc.dart';
 import 'package:lotto_music/src/bloc/videos_categoria/videos_categoria_bloc.dart';
+import 'package:lotto_music/src/models/apuesta.dart';
 import 'package:lotto_music/src/models/login_response.dart';
 import 'package:lotto_music/src/models/youtube.dart';
 import 'package:lotto_music/src/services/acount.dart';
@@ -246,8 +247,9 @@ class Compositor {
   static Future<bool> onloadCarrito(BuildContext context) async {
     final acountB = BlocProvider.of<AcountBloc>(context);
     final planB = BlocProvider.of<CarritoBloc>(context);
-    final response =
-        await CarritoService.load(token: acountB.state.acount.accessToken);
+    final response = await CarritoService.load(
+      token: acountB.state.acount.accessToken,
+    );
 
     if (response == null) {
       return false;
@@ -278,7 +280,6 @@ class Compositor {
     return resp.mensaje;
   }
 
-  /// Categorias
   static Future<bool> onDeleteCarrito(
       BuildContext context, Ordenes orden) async {
     final acountB = BlocProvider.of<AcountBloc>(context);
@@ -307,8 +308,19 @@ class Compositor {
   }
 
   /// compra
-  static Future<bool> onBuy(BuildContext context) async {
-    return true;
+  static Future<bool> onBuyCarrito({
+    required BuildContext context,
+    required List<int> ids,
+  }) async {
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    final resp = await CompraService.checkout(
+      compras: ids,
+      token: acountB.state.acount.accessToken,
+    );
+    if (resp == "correcto") {
+      return true;
+    }
+    return false;
   }
 
   /// Categorias
@@ -323,6 +335,47 @@ class Compositor {
       return true;
     }
 
+    return true;
+  }
+
+  static Future<bool?> onBuyIntent({
+    required BuildContext context,
+    required ItemEvent evento,
+    required int aproximacion,
+    required int cantidad,
+  }) async {
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    final apuesta = ApuestaModel(
+      apuestaId: evento.evento.id,
+      cantidad: cantidad,
+    );
+    if (evento.evento.tipoApuestaId == 1) {
+      apuesta.vistas = aproximacion;
+    }
+    if (evento.evento.tipoApuestaId == 2) {
+      apuesta.likes = aproximacion;
+    }
+    if (evento.evento.tipoApuestaId == 3) {
+      apuesta.comentarios = aproximacion;
+    }
+    if (evento.evento.tipoApuestaId == 4) {
+      apuesta.dislikes = aproximacion;
+    }
+    if (evento.evento.tipoApuestaId == 5) {
+      //TODO: en espera de tik toc
+      apuesta.vistas = aproximacion;
+    }
+
+    if (evento.evento.tipoApuestaId == 5) {
+      apuesta.vistas = aproximacion;
+    }
+    final resp = await ApuestaService.crear(
+      apuesta: apuesta,
+      token: acountB.state.acount.accessToken,
+    );
+    if (resp?.mensaje != null) {
+      return false;
+    }
     return true;
   }
 
@@ -354,7 +407,7 @@ class Compositor {
       return false;
     }
     if (resp.mensaje == null) {
-      if (vEB.state.pag >= resp.pag) {
+      if (vEB.state.pag > resp.pag) {
         return true;
       }
       vEB.add(OnLoadVideosCategoria(listado: resp.items ?? [], pag: resp.pag));
@@ -367,7 +420,9 @@ class Compositor {
     final vEB = BlocProvider.of<VideosCategoriaBloc>(context);
 
     final resp = await VideoService.listarVideosCategoria(
-        pag: 1, categoria: vEB.state.categoria);
+      pag: 1,
+      categoria: vEB.state.categoria,
+    );
     if (resp == null) {
       return false;
     }
@@ -390,7 +445,9 @@ class Compositor {
     required String categoria,
   }) async {
     final vEB = BlocProvider.of<VideosCategoriaBloc>(context);
-    vEB.add(OnSelectCategoria(categoria: categoria));
+    vEB.add(OnSelectCategoria(
+      categoria: categoria,
+    ));
     return true;
   }
 
@@ -403,11 +460,19 @@ class Compositor {
     if (resp == null) {
       return false;
     }
+    if (resp.pag > resp.pags) {
+      return false;
+    }
     if (resp.mensaje == null) {
-      if (vEB.state.pag >= resp.pag) {
+      if (vEB.state.pag > resp.pag) {
         return true;
       }
-      vEB.add(OnLoadVideosEvent(listado: resp.items ?? [], pag: resp.pag));
+      vEB.add(
+        OnLoadVideosEvent(
+          listado: resp.items ?? [],
+          pag: resp.pag,
+        ),
+      );
       return true;
     }
     return false;
@@ -449,7 +514,7 @@ class Compositor {
     return true;
   }
 
-  /////// historial de eventos
+  /////// historial de Apuestas
   static Future<HistorialEventosUsuario?> onLoadHistorialEventos({
     required BuildContext context,
     required int pag,

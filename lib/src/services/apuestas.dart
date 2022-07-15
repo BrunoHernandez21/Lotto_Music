@@ -1,6 +1,7 @@
 // ignore: unused_import
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:lotto_music/src/models/apuesta.dart';
 
 import '../helpers/variables_globales.dart';
 import '../models/historial_event_user.dart';
@@ -8,7 +9,7 @@ import '../models/login_response.dart';
 
 class ApuestaService {
   static const String _listar = URL.apuesta + "listar";
-  static const String _histoyry = URL.apuesta + "/apuesta";
+  static const String _apuesta = URL.apuesta + "/apuesta";
 
   static Future<LoginResponse?> listar() async {
     try {
@@ -26,20 +27,22 @@ class ApuestaService {
     }
   }
 
-  static Future<LoginResponse?> crear({
-    required String email,
-    required String password,
+  static Future<ApuestaModel?> crear({
+    required String token,
+    required ApuestaModel apuesta,
   }) async {
     try {
-      final urI = Uri.parse(_listar);
-      final resp = await http.get(
+      final urI = Uri.parse(_apuesta);
+      final resp = await http.post(
         urI,
         headers: {
           "Content-Type": "application/json",
+          "Authorization": "Bearer " + token,
         },
+        body: apuesta.toJson(),
       );
 
-      return LoginResponse.fromJson(resp.body);
+      return ApuestaModel.fromJson(resp.body);
     } catch (e) {
       return null;
     }
@@ -87,7 +90,7 @@ class ApuestaService {
     required int pag,
     required String token,
   }) async {
-    final urI = Uri.parse(_histoyry + "/" + pag.toString() + "/10");
+    final urI = Uri.parse(_apuesta + "/" + pag.toString() + "/10");
     final resp = await http.get(
       urI,
       headers: {

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lotto_music/src/models/evento_video.dart';
 import 'package:lotto_music/src/screens/eventos/adivina/adivina.dart';
+import 'package:lotto_music/src/screens/eventos/estadisticas/estadisticas.dart';
 import 'package:lotto_music/src/widgets/botones.dart';
 import 'package:lotto_music/src/widgets/text.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -22,11 +23,22 @@ class VideoEvento extends StatefulWidget {
 }
 
 class _VideoEventoState extends State<VideoEvento> {
+  YoutubePlayerController controller = YoutubePlayerController(
+    initialVideoId: "dO1rMeYnOmM",
+    flags: const YoutubePlayerFlags(),
+  );
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<VideoEventBloc, VideoEventState>(
       builder: (context, state) {
-        final _controller = YoutubePlayerController(
+        controller = YoutubePlayerController(
           initialVideoId: state.eventoVideo.video.idVideo ?? "dO1rMeYnOmM",
           flags: const YoutubePlayerFlags(
             hideThumbnail: true,
@@ -42,7 +54,7 @@ class _VideoEventoState extends State<VideoEvento> {
         return YoutubePlayerBuilder(
           player: YoutubePlayer(
             thumbnail: const SizedBox(),
-            controller: _controller,
+            controller: controller,
           ),
           builder: (context, player) {
             return Scaffold(
@@ -111,6 +123,7 @@ class _VideoEventoState extends State<VideoEvento> {
                       child: Botones.solidTextButton(
                         text: "Participa",
                         onTap: () {
+                          controller.pause();
                           Navigator.of(context).pushNamed(Adivina.routeName);
                         },
                         fontColor: const Color.fromARGB(255, 255, 255, 255),
@@ -123,8 +136,10 @@ class _VideoEventoState extends State<VideoEvento> {
                         text: "Estadisticas",
                         fontColor: const Color.fromARGB(255, 255, 255, 255),
                         backColor: const Color.fromARGB(255, 196, 30, 18),
-                        onTap: () {
-                          Navigator.of(context).pushNamed(Adivina.routeName);
+                        onTap: () async {
+                          controller.pause();
+                          await Navigator.of(context)
+                              .pushNamed(Estadisticas.routeName);
                         },
                       ),
                     )

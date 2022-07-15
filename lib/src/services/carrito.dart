@@ -5,10 +5,8 @@ import 'package:http/http.dart' as http;
 import '../helpers/variables_globales.dart';
 import '../models/carrito.dart';
 import '../models/carrito_plan.dart';
-import '../models/login_response.dart';
 
 class CarritoService {
-  static const String _listar = URL.carrito + "/carrito";
   static const String _carro = URL.carrito + "/carrito";
   static const String _load = URL.carrito + "/carrito/plan";
 
@@ -48,25 +46,6 @@ class CarritoService {
     return out;
   }
 
-  static Future<LoginResponse?> listar({
-    required String email,
-    required String password,
-  }) async {
-    try {
-      final urI = Uri.parse(_listar);
-      final resp = await http.get(
-        urI,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      );
-
-      return LoginResponse.fromJson(resp.body);
-    } catch (e) {
-      return null;
-    }
-  }
-
   static Future<String?> eliminar(
       {required String token, required int id}) async {
     try {
@@ -86,25 +65,6 @@ class CarritoService {
       }
 
       return null;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  static Future<LoginResponse?> editar({
-    required String email,
-    required String password,
-  }) async {
-    try {
-      final urI = Uri.parse(_listar);
-      final resp = await http.get(
-        urI,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      );
-
-      return LoginResponse.fromJson(resp.body);
     } catch (e) {
       return null;
     }

@@ -47,8 +47,8 @@ class CompraModel {
         id: json["id"],
         cantidad: json["cantidad"],
         amount: json["amount"],
-        fechaCompra: DateTime.parse(json["Fecha_compra"]),
-        usuarioId: json["Usuario_id"],
+        fechaCompra: DateTime.parse(json["fecha_compra"]),
+        usuarioId: json["usuario_id"],
         planId: json["plan_id"],
       );
 
@@ -56,8 +56,8 @@ class CompraModel {
         "id": id,
         "cantidad": cantidad,
         "amount": amount,
-        "Fecha_compra": fechaCompra?.toIso8601String(),
-        "Usuario_id": usuarioId,
+        "fecha_compra": fechaCompra?.toIso8601String(),
+        "usuario_id": usuarioId,
         "plan_id": planId,
       };
 }

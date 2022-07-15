@@ -47,10 +47,8 @@ class HistorialCompraModel {
 
   factory HistorialCompraModel.fromMap(Map<String, dynamic> json) =>
       HistorialCompraModel(
-        compras: json["compras"] == null
-            ? null
-            : List<CompraModel>.from(
-                json["compras"].map((x) => CompraModel.fromMap(x))),
+        compras: List<CompraModel>.from(
+            json["compras"].map((x) => CompraModel.fromMap(x))),
         pag: json["pag"],
         pags: json["pags"],
         sizePage: json["sizePage"],
