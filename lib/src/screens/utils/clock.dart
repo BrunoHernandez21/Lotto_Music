@@ -1,38 +1,125 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lotto_music/src/helpers/rutinas.dart';
 import 'package:lotto_music/src/helpers/variables_globales.dart';
 import 'package:lotto_music/src/widgets/text.dart';
 
+import '../../bloc/videos_event/videos_event_bloc.dart';
 import '../../widgets/digital_clock.dart';
-import 'oclock.dart';
+import '../../widgets/oclock.dart';
 
-class Clock extends StatefulWidget {
+class Clock extends StatelessWidget {
   static const String routeName = "clock";
+
   const Clock({Key? key}) : super(key: key);
 
   @override
-  State<Clock> createState() => _ClockState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 31, 49, 95),
+      body: Stack(children: [
+        BlocBuilder<VideosEventBloc, VideosEventState>(
+          builder: (context, state) {
+            final select = Rutinas.firstWhere(state.listado);
+            return SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 25,
+                      width: double.infinity,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: IconButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            icon: const Icon(
+                              Icons.arrow_back_ios,
+                              size: 18,
+                            )),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 50,
+                      width: double.infinity,
+                    ),
+                    Textos.tituloMED(
+                      texto: "Tiempo Restante",
+                      color: Colors.white,
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    _ClockController(
+                        toEvent: select?.evento.fechahoraapuesta?.minute ?? 0),
+                    const SizedBox(height: 15),
+                    Textos.tituloMAX(
+                        texto: "\$" +
+                            (select?.evento.precio.toString() ?? "") +
+                            " mx"),
+                    const SizedBox(height: 15),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: Medidas.size.width * .409,
+                          height: Medidas.size.width * .23,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          clipBehavior: Clip.antiAlias,
+                          child: Image.network(
+                            select?.video.thumblary ??
+                                "https://t3.ftcdn.net/jpg/04/34/72/82/360_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg",
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        SizedBox(
+                          height: Medidas.size.width * .23,
+                          width: Medidas.size.width * .5,
+                          child: ListTile(
+                              title: Textos.tituloMED(
+                                texto: select?.video.titulo ?? "",
+                                color: Colors.white,
+                              ),
+                              subtitle: Textos.parrafoMED(
+                                  texto: select?.video.artista ?? "")),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ]),
+    );
+  }
 }
 
-class _ClockState extends State<Clock> {
-  DateTime initValue = DateTime(0);
-  DateTime i = DateTime(0);
-  bool isLive = true;
+class _ClockController extends StatefulWidget {
+  final int toEvent;
+  const _ClockController({Key? key, required this.toEvent}) : super(key: key);
+
+  @override
+  State<_ClockController> createState() => __ClockControllerState();
+}
+
+class __ClockControllerState extends State<_ClockController> {
+  DateTime i = DateTime.now();
   late final Timer a;
   @override
   void initState() {
-    initValue = DateTime(1, 1, 1, 0, 2, 0);
-    i = initValue;
     a = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (i.hour <= 0 && i.minute <= 0 && i.second <= 0) {
-        isLive = false;
-        timer.cancel();
-        setState(() {});
-      } else {
-        i = i.add(const Duration(seconds: -1));
-        setState(() {});
-      }
+      i = i.add(const Duration(seconds: 1));
+      setState(() {});
     });
 
     super.initState();
@@ -46,72 +133,18 @@ class _ClockState extends State<Clock> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 31, 49, 95),
-      body: Stack(children: [
-        Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Textos.tituloMED(
-                texto: "Tiempo Restante",
-                color: Colors.white,
-              ),
-              const SizedBox(height: 15),
-              DigitalClock(tiempo: i),
-              const SizedBox(height: 15),
-              CustomPaint(
-                painter: ShapesPainter(
-                  time: DateTime(
-                    1,
-                    1,
-                    0,
-                    11 - i.hour,
-                    59 - i.minute,
-                    60 - i.second,
-                  ),
-                  isPaint: false,
-                ),
-                child: SizedBox(
-                  height: Medidas.size.width * .6,
-                  width: Medidas.size.width * .6,
-                ),
-              ),
-              const SizedBox(height: 15),
-              Textos.tituloMAX(texto: "\$30,000 mxn"),
-              const SizedBox(height: 15),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    width: Medidas.size.width * .409,
-                    height: Medidas.size.width * .23,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    clipBehavior: Clip.antiAlias,
-                    child: Image.network(
-                      "https://www.menudospeques.net/images/musica/adele_Rolling_in_the_deep.jpg",
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  SizedBox(
-                    height: Medidas.size.width * .23,
-                    width: Medidas.size.width * .5,
-                    child: ListTile(
-                        title: Textos.tituloMED(
-                          texto: "Rolling in the deep",
-                          color: Colors.white,
-                        ),
-                        subtitle: Textos.parrafoMED(texto: "Adele")),
-                  )
-                ],
-              )
-            ],
+    return Column(
+      children: [
+        DigitalClock(tiempo: i),
+        const SizedBox(height: 15),
+        CustomPaint(
+          painter: ShapesPainter(time: i, isPaint: false, minuto: 30),
+          child: SizedBox(
+            height: Medidas.size.width * .6,
+            width: Medidas.size.width * .6,
           ),
         ),
-      ]),
+      ],
     );
   }
 }

@@ -206,7 +206,7 @@ class _CardVideo extends StatelessWidget {
                     v.evento.fechahoraapuesta.toString().substring(11, 16),
               ),
               Textos.tituloMED(
-                texto: comprobador(v.evento.fechahoraapuesta),
+                texto: Rutinas.comprobador(v.evento.fechahoraapuesta),
               ),
             ],
           ),

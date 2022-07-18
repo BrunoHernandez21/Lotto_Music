@@ -103,7 +103,7 @@ class _VideoEventoState extends State<VideoEvento> {
                             .substring(11, 16),
                   ),
                   Textos.parrafoMAX(
-                    texto: comprobador(
+                    texto: Rutinas.comprobador(
                       state.eventoVideo.evento.fechahoraapuesta,
                     ),
                   ),
@@ -242,7 +242,7 @@ class _ListaVideosState extends State<_ListaVideosEvent> {
                       v.evento.fechahoraapuesta.toString().substring(11, 16),
                 ),
                 Textos.parrafoMED(
-                  texto: comprobador(v.evento.fechahoraapuesta),
+                  texto: Rutinas.comprobador(v.evento.fechahoraapuesta),
                 ),
               ],
             ),

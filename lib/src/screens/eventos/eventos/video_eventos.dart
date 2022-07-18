@@ -199,7 +199,7 @@ class _ListVideosPaginacionState extends State<ListVideosPaginacion> {
                         v.evento.fechahoraapuesta.toString().substring(11, 16),
                   ),
                   Textos.parrafoMED(
-                    texto: comprobador(v.evento.fechahoraapuesta),
+                    texto: Rutinas.comprobador(v.evento.fechahoraapuesta),
                   ),
                 ],
               ),

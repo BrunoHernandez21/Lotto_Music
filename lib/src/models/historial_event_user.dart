@@ -48,12 +48,14 @@ class HistorialEventosUsuario {
   factory HistorialEventosUsuario.fromMap(Map<String, dynamic> json) =>
       HistorialEventosUsuario(
         mensaje: json["mensaje"],
-        pag: json["pag"],
-        pags: json["pags"],
-        sizePage: json["sizePage"],
-        totals: json["totals"],
-        userEvent: List<UserEventModel>.from(
-            json["userEvent"].map((x) => UserEventModel.fromMap(x))),
+        pag: json["pag"] ?? 0,
+        pags: json["pags"] ?? 0,
+        sizePage: json["sizePage"] ?? 0,
+        totals: json["totals"] ?? 0,
+        userEvent: json["userEvent"] == null
+            ? null
+            : List<UserEventModel>.from(
+                json["userEvent"].map((x) => UserEventModel.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
