@@ -79,51 +79,53 @@ class _BodyAdminState extends State<_BodyAdmin> with TickerProviderStateMixin {
         return Scaffold(
           extendBody: true,
           resizeToAvoidBottomInset: false,
-          body: Column(
-            children: [
-              Expanded(
-                child: TabBarView(
-                  controller: controller,
-                  physics: const BouncingScrollPhysics(),
-                  children: <Widget>[
-                    const ProvedoresVideo(),
-                    const Eventos(),
-                    Perfil(controller: controller),
-                    const Pagos(),
-                  ],
+          body: SafeArea(
+            child: Column(
+              children: [
+                Expanded(
+                  child: TabBarView(
+                    controller: controller,
+                    physics: const BouncingScrollPhysics(),
+                    children: <Widget>[
+                      const ProvedoresVideo(),
+                      const Eventos(),
+                      Perfil(controller: controller),
+                      const Pagos(),
+                    ],
+                  ),
                 ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                color: BlocProvider.of<ShaderpreferencesBloc>(context)
-                    .state
-                    .themeData
-                    .backgroundColor,
-                height: 35,
-                width: double.infinity,
-                child: TabBar(
-                  controller: controller,
-                  labelColor: Colors.orange,
-                  unselectedLabelColor: Colors.grey,
-                  indicatorColor: Colors.orange,
-                  tabs: const <Widget>[
-                    Tab(
-                      icon: Icon(NewIcons.home2),
-                    ),
-                    Tab(
-                      height: 55,
-                      icon: Icon(Icons.gamepad_outlined),
-                    ),
-                    Tab(
-                      icon: Icon(Icons.person),
-                    ),
-                    Tab(
-                      icon: Icon(Icons.attach_money),
-                    ),
-                  ],
+                Container(
+                  alignment: Alignment.center,
+                  color: BlocProvider.of<ShaderpreferencesBloc>(context)
+                      .state
+                      .themeData
+                      .backgroundColor,
+                  height: 35,
+                  width: double.infinity,
+                  child: TabBar(
+                    controller: controller,
+                    labelColor: Colors.orange,
+                    unselectedLabelColor: Colors.grey,
+                    indicatorColor: Colors.orange,
+                    tabs: const <Widget>[
+                      Tab(
+                        icon: Icon(NewIcons.home2),
+                      ),
+                      Tab(
+                        height: 55,
+                        icon: Icon(Icons.gamepad_outlined),
+                      ),
+                      Tab(
+                        icon: Icon(Icons.person),
+                      ),
+                      Tab(
+                        icon: Icon(Icons.attach_money),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },

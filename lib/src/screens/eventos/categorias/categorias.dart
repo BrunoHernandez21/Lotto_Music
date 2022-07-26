@@ -98,7 +98,7 @@ class _CategoriasState extends State<Categorias> {
         Container(
           clipBehavior: Clip.antiAlias,
           margin: EdgeInsets.all(Medidas.size.width * .02),
-          width: Medidas.size.width * .46,
+          width: Medidas.size.width * .45,
           height: Medidas.size.width * .27,
           decoration: BoxDecoration(
             color: Colors.black.withOpacity(.6),
