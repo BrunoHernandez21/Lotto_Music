@@ -26,7 +26,6 @@ dependencies:
   flutter_svg: ^1.0.3
   #launcher
   flutter_rating_bar: ^4.0.0
-  
   flutter_image_compress: ^1.1.0
   flutter_countdown_timer: ^4.1.0
   vector_math: ^2.1.2
