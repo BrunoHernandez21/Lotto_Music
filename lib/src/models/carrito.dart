@@ -8,52 +8,51 @@ import 'package:intl/intl.dart';
 class CarritoModel {
   CarritoModel({
     this.id = 0,
-    this.activa = true,
+    this.activo = true,
     this.cantidad = 1,
-    this.amount = 0,
-    this.fechaOrden,
-    this.idCharges,
-    this.ordenStatus = "",
-    this.idPlan = 0,
+    this.totalLinea = 0,
+    this.precioUnitario,
+    this.descuento,
+    this.fechaCarrito,
+    this.planId = 0,
     this.usuarioId = 0,
     this.mensaje,
   });
 
   int id;
-  bool activa;
+  bool activo;
   int cantidad;
-  int amount;
-  DateTime? fechaOrden;
-  String? idCharges;
-  String ordenStatus;
-  String? mensaje;
-  int idPlan;
+  double totalLinea;
+  double? precioUnitario;
+  double? descuento;
+  DateTime? fechaCarrito;
+  int planId;
   int usuarioId;
+  String? mensaje;
 
   CarritoModel copyWith({
     int? id,
-    bool? activa,
+    bool? activo,
     int? cantidad,
-    int? amount,
-    DateTime? fechaOrden,
-    String? idCharges,
-    String? ordenStatus,
-    String? mensaje,
-    int? idPlan,
+    double? totalLinea,
+    double? precioUnitario,
+    double? descuento,
+    DateTime? fechaCarrito,
+    int? planId,
     int? usuarioId,
+    String? mensaje,
   }) =>
       CarritoModel(
-        id: id ?? this.id,
-        mensaje: mensaje ?? this.mensaje,
-        activa: activa ?? this.activa,
-        cantidad: cantidad ?? this.cantidad,
-        amount: amount ?? this.amount,
-        fechaOrden: fechaOrden ?? this.fechaOrden,
-        idCharges: idCharges ?? this.idCharges,
-        ordenStatus: ordenStatus ?? this.ordenStatus,
-        idPlan: idPlan ?? this.idPlan,
-        usuarioId: usuarioId ?? this.usuarioId,
-      );
+          id: id ?? this.id,
+          activo: activo ?? this.activo,
+          cantidad: cantidad ?? this.cantidad,
+          totalLinea: totalLinea ?? this.totalLinea,
+          precioUnitario: precioUnitario ?? this.precioUnitario,
+          descuento: descuento ?? this.descuento,
+          fechaCarrito: fechaCarrito ?? this.fechaCarrito,
+          planId: planId ?? this.planId,
+          usuarioId: usuarioId ?? this.usuarioId,
+          mensaje: mensaje ?? this.mensaje);
 
   factory CarritoModel.fromJson(String str) =>
       CarritoModel.fromMap(json.decode(str));
@@ -62,31 +61,31 @@ class CarritoModel {
 
   factory CarritoModel.fromMap(Map<String, dynamic> json) => CarritoModel(
         id: json["id"] ?? 0,
-        mensaje: json["mensaje"],
-        activa: json["activa"] ?? false,
+        activo: json["activo"] ?? false,
         cantidad: json["cantidad"] ?? 0,
-        amount: json["amount"] ?? 0,
-        fechaOrden: json["fecha_orden"] == null
+        totalLinea: json["total_linea"]?.toDouble() ?? 0,
+        precioUnitario: json["precio_unitario"]?.toDouble() ?? 0,
+        descuento: json["descuento"]?.toDouble(),
+        fechaCarrito: json["fecha_carrito"] == null
             ? null
-            : DateTime.parse(json["fecha_orden"]),
-        idCharges: json["id_charges"],
-        ordenStatus: json["orden_status"] ?? "",
-        idPlan: json["id_plan"] ?? 0,
+            : DateTime.parse(json["fecha_carrito"]),
+        planId: json["plan_id"] ?? 0,
         usuarioId: json["usuario_id"] ?? 0,
+        mensaje: json["mensaje"],
       );
 
   Map<String, dynamic> toMap() => {
         "id": id,
-        "mensaje": mensaje,
-        "activa": activa,
+        "activo": activo,
         "cantidad": cantidad,
-        "amount": amount,
-        "fecha_orden": fechaOrden == null
+        "total_linea": totalLinea,
+        "precio_unitario": precioUnitario,
+        "descuento": descuento,
+        "fecha_carrito": fechaCarrito == null
             ? null
-            : DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(fechaOrden!),
-        "id_charges": idCharges,
-        "orden_status": ordenStatus,
-        "id_plan": idPlan,
+            : DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(fechaCarrito!),
+        "plan_id": planId,
         "usuario_id": usuarioId,
+        "mensaje": mensaje,
       };
 }

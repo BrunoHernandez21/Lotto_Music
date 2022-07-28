@@ -1,9 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/cupertino.dart';
-import 'package:lotto_music/src/models/carrito.dart';
-
-import '../models/plan.dart';
 import '../models/videos.dart';
 
 class Colores {
@@ -35,9 +32,11 @@ class Variables {
 }
 
 class Assets {
-  static const String rootpage = "assets/background/root_page.png";
-  static const String bubbles = "assets/background/bubbles.png";
+  static const String emptyCart = "assets/svg/imagenes/empty_card.svg";
+  static const String refresh = "assets/svg/imagenes/refresh.svg";
+  static const String login = "assets/svg/imagenes/authentication.svg";
 
+  static const String rootpage = "assets/background/root_page.png";
   static const String logo = "assets/logo/logo.png";
   static const String logo2 = "assets/logo/logo2.png";
 
@@ -121,74 +120,5 @@ class Developer {
         urlVideo:
             "https://grupointocable.com/wp-content/uploads/ModusOperandiTour_CLT-scaled.jpg",
         titulo: "Intocable"),
-  ];
-
-  static final List<PlanModel> planes = [
-    PlanModel(
-      nombre: "Inicial",
-      acumuladoAlto8Am: 1,
-      acumuladoBajo8Pm: 1,
-      aproximacionAlta00Am: 1,
-      aproximacionBaja: 1,
-      oportunidades: 4,
-      precio: 50,
-      activo: true,
-      id: 0,
-    ),
-    PlanModel(
-      nombre: "Medio",
-      acumuladoAlto8Am: 1,
-      acumuladoBajo8Pm: 1,
-      aproximacionAlta00Am: 1,
-      aproximacionBaja: 1,
-      oportunidades: 4,
-      precio: 250,
-      activo: true,
-      id: 0,
-    ),
-    PlanModel(
-      nombre: "Alto",
-      acumuladoAlto8Am: 1,
-      acumuladoBajo8Pm: 1,
-      aproximacionAlta00Am: 1,
-      aproximacionBaja: 1,
-      oportunidades: 4,
-      precio: 1000,
-      activo: true,
-      id: 0,
-    )
-  ];
-
-  static final List<CarritoModel> carrito = [
-    CarritoModel(
-      id: 1,
-      activa: true,
-      amount: 150,
-      cantidad: 3,
-      idCharges: null,
-      idPlan: 1,
-      ordenStatus: "proceso",
-      usuarioId: 2,
-    ),
-    CarritoModel(
-      id: 2,
-      activa: true,
-      amount: 500,
-      cantidad: 2,
-      idCharges: null,
-      idPlan: 2,
-      ordenStatus: "proceso",
-      usuarioId: 2,
-    ),
-    CarritoModel(
-      id: 3,
-      activa: true,
-      amount: 2000,
-      cantidad: 2,
-      idCharges: null,
-      idPlan: 3,
-      ordenStatus: "proceso",
-      usuarioId: 2,
-    ),
   ];
 }

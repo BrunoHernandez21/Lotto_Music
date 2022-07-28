@@ -43,7 +43,7 @@ class Rutinas {
     int absTemp = 100000;
 
     event?.forEach((item) {
-      final fevent = item.evento.fechahoraapuesta;
+      final fevent = item.fechahoraevento;
 
       if (fevent != null) {
         final ahora = DateTime.now();
@@ -57,11 +57,11 @@ class Rutinas {
             evProx.clear();
             winMax.clear();
             evProx.add(item);
-            winMax.add(item.evento.acumulado);
+            winMax.add(item.acumulado ?? 0);
           }
           if (absEv == absTemp) {
             evProx.add(item);
-            winMax.add(item.evento.acumulado);
+            winMax.add(item.acumulado ?? 0);
           }
         }
       }
@@ -71,7 +71,7 @@ class Rutinas {
     }
     winMax.sort();
     final exit = evProx.firstWhere((element) {
-      return element.evento.acumulado == winMax.last;
+      return element.acumulado == winMax.last;
     });
     return exit;
   }

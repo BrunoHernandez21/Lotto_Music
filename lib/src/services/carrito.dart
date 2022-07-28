@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 import '../helpers/variables_globales.dart';
 import '../models/carrito.dart';
-import '../models/carrito_plan.dart';
+import '../models/carrito_response.dart';
 
 class CarritoService {
   static const String _carro = URL.carrito + "/carrito";
@@ -13,19 +13,16 @@ class CarritoService {
   static Future<CarritoResponse?> load({
     required String token,
   }) async {
-    try {
-      final urI = Uri.parse(_load);
-      final resp = await http.get(
-        urI,
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + token,
-        },
-      );
-      return CarritoResponse.fromJson(resp.body);
-    } catch (e) {
-      return null;
-    }
+    final urI = Uri.parse(_load);
+    final resp = await http.get(
+      urI,
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token,
+      },
+    );
+
+    return CarritoResponse.fromJson(resp.body);
   }
 
   static Future<CarritoModel?> create({

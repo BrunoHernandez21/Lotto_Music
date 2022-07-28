@@ -57,11 +57,11 @@ class Clock extends StatelessWidget {
                       height: 15,
                     ),
                     _ClockController(
-                        toEvent: select?.evento.fechahoraapuesta?.minute ?? 0),
+                        toEvent: select?.fechahoraevento?.minute ?? 0),
                     const SizedBox(height: 15),
                     Textos.tituloMAX(
                         texto: "\$" +
-                            (select?.evento.precio.toString() ?? "") +
+                            (select?.premioCash.toString() ?? "") +
                             " mx"),
                     const SizedBox(height: 15),
                     Row(
@@ -75,7 +75,7 @@ class Clock extends StatelessWidget {
                           ),
                           clipBehavior: Clip.antiAlias,
                           child: Image.network(
-                            select?.video.thumblary ??
+                            select?.thumblary ??
                                 "https://t3.ftcdn.net/jpg/04/34/72/82/360_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg",
                             fit: BoxFit.cover,
                           ),
@@ -85,11 +85,11 @@ class Clock extends StatelessWidget {
                           width: Medidas.size.width * .5,
                           child: ListTile(
                               title: Textos.tituloMED(
-                                texto: select?.video.titulo ?? "",
+                                texto: select?.titulo ?? "",
                                 color: Colors.white,
                               ),
                               subtitle: Textos.parrafoMED(
-                                  texto: select?.video.artista ?? "")),
+                                  texto: select?.artista ?? "")),
                         )
                       ],
                     )

@@ -117,7 +117,7 @@ class _ListVideosPaginacionState extends State<_ListVideosPaginacion> {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Image.network(
-                v.video.thumblary ?? "",
+                v.thumblary ?? "",
                 fit: BoxFit.cover,
               ),
             ),
@@ -131,16 +131,14 @@ class _ListVideosPaginacionState extends State<_ListVideosPaginacion> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Textos.parrafoMED(texto: v.video.titulo ?? "", renglones: 2),
-                  Textos.parrafoMIN(texto: v.video.artista ?? "", renglones: 1),
+                  Textos.parrafoMED(texto: v.titulo ?? "", renglones: 2),
+                  Textos.parrafoMIN(texto: v.artista ?? "", renglones: 1),
                   const Expanded(child: SizedBox()),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Textos.parrafoMED(
-                          texto: v.evento.fechahoraapuesta
-                              .toString()
-                              .substring(11, 16))
+                          texto: v.fechahoraevento.toString().substring(11, 16))
                     ],
                   )
                 ],

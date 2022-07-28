@@ -21,12 +21,12 @@ class UtilityService {
     return out;
   }
 
-  static Future<CarteraModel?> cartera({required String token}) async {
+  static Future<Cartera?> cartera({required String token}) async {
     final urI = Uri.parse(_cartera);
     final resp = await http.get(urI, headers: {
       "Authorization": "Bearer " + token,
     });
-    final out = CarteraModel.fromJson(resp.body);
+    final out = Cartera.fromJson(resp.body);
     return out;
   }
 

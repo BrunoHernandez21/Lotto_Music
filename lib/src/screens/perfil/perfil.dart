@@ -3,10 +3,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lotto_music/src/cores/compositor.dart';
 import 'package:lotto_music/src/helpers/new_icons.dart';
 import 'package:lotto_music/src/helpers/variables_globales.dart';
+import 'package:lotto_music/src/models/cartera.dart';
 import 'package:lotto_music/src/models/login_response.dart';
 import 'package:lotto_music/src/screens/acount/login.dart';
 import 'package:flutter/material.dart';
-import 'package:lotto_music/src/screens/perfil/tarjetas.dart';
+import 'package:lotto_music/src/screens/perfil/tarjetas/tarjetas.dart';
 import 'package:lotto_music/src/widgets/botones.dart';
 
 import '../../bloc/acount/acount_bloc.dart';
@@ -14,7 +15,7 @@ import '../../bloc/user/user_bloc.dart';
 import '../../widgets/text.dart';
 import 'acerda_de.dart';
 import 'ajustes/ajustes.dart';
-import 'ajustes/ajustes_usuario.dart';
+import 'editar_perfil/ajustes_usuario.dart';
 import 'appbar.dart';
 import 'historial_compras.dart';
 
@@ -72,10 +73,36 @@ class BodyLogin extends StatelessWidget {
 
   List<Widget> bodyLogin(BuildContext context, UserState state) {
     return [
+      const SizedBox(
+        height: 30,
+      ),
       Textos.tituloMED(
           texto: "Hola " + (state.user?.nombre ?? "Nuevo Usuario")),
       const SizedBox(
         height: 30,
+      ),
+      Container(
+        margin: const EdgeInsets.only(left: 15),
+        alignment: Alignment.centerLeft,
+        child: FutureBuilder(
+          future: Compositor.onLoadCartera(context: context),
+          initialData: null,
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            final data = snapshot.data;
+            int cash = 0;
+            if (data.runtimeType == Cartera) {
+              cash = snapshot.data.cash;
+            }
+            return Column(
+              children: [
+                Textos.tituloMIN(
+                  texto: "Cash = " + cash.toString(),
+                  color: Colors.yellow,
+                )
+              ],
+            );
+          },
+        ),
       ),
       ListTile(
         title: Textos.tituloMIN(
@@ -155,12 +182,18 @@ class BodyNoLogin extends StatelessWidget {
       physics: const BouncingScrollPhysics(),
       child: Column(
         children: [
+          const SizedBox(
+            height: 30,
+          ),
           SizedBox(
             width: Medidas.size.width * .8,
             height: Medidas.size.width * .8,
             child: SvgPicture.asset(
-              "assets/svg/imagenes/login.svg",
+              Assets.login,
             ),
+          ),
+          const SizedBox(
+            height: 50,
           ),
           SizedBox(
             width: Medidas.size.width * .5,

@@ -1,35 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lotto_music/src/bloc/suscripciones/suscripciones_bloc.dart';
 import 'package:lotto_music/src/cores/compositor.dart';
 import 'package:lotto_music/src/helpers/variables_globales.dart';
 import 'package:lotto_music/src/widgets/botones.dart';
 import 'package:lotto_music/src/widgets/text.dart';
 
-import '../../../bloc/planes/planes_bloc.dart';
 import '../../../models/carrito.dart';
 import '../../../models/plan.dart';
 import '../../../widgets/svg_nosignal.dart';
 
-class Planes extends StatelessWidget {
-  const Planes({Key? key}) : super(key: key);
+class Suscripciones extends StatelessWidget {
+  const Suscripciones({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (BlocProvider.of<PlanesBloc>(context).state.planes == null) {
-      Compositor.onLoadPlanes(context);
+    if (BlocProvider.of<SuscripcionesBloc>(context).state.planes == null) {
+      Compositor.onLoadSuscripciones(context);
     }
-    return BlocBuilder<PlanesBloc, PlanesState>(
+    return BlocBuilder<SuscripcionesBloc, SuscripcionesState>(
       builder: (context, state) {
         if (state.planes == null) {
           return RefreshIndicator(
               onRefresh: () async {
-                Compositor.onLoadPlanes(context);
+                Compositor.onLoadSuscripciones(context);
               },
               child: const NoSignal());
         }
         return RefreshIndicator(
           onRefresh: () async {
-            Compositor.onLoadPlanes(context);
+            Compositor.onLoadSuscripciones(context);
           },
           child: ListView.builder(
               physics: const BouncingScrollPhysics(),

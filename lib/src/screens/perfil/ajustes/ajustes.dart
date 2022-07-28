@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../widgets/text.dart';
-import '../editar_perfil.dart';
 import '../tema.dart';
 
 class Ajustes extends StatelessWidget {
@@ -31,9 +30,7 @@ class Ajustes extends StatelessWidget {
                   Icons.arrow_forward_ios_sharp,
                   size: 17,
                 ),
-                onTap: () {
-                  Navigator.pushNamed(context, EditarPerfil.routeName);
-                },
+                onTap: () {},
               ),
             ],
           ),

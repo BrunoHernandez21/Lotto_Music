@@ -2,8 +2,8 @@ part of 'carrito_bloc.dart';
 
 @immutable
 class CarritoState {
-  final List<Ordenes>? ordenes;
+  final List<ItemsCarrito>? itemsCarrito;
   const CarritoState({
-    this.ordenes,
+    this.itemsCarrito,
   });
 }

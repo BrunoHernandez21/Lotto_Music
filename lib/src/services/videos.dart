@@ -7,10 +7,11 @@ import '../models/evento_video.dart';
 import '../models/grupos.dart';
 
 class VideoService {
-  static const String _eventosPage = URL.videos + "/eventos";
+  static const String _eventosPage = URL.videos + "/eventos/";
   static const String _grupos = URL.videos + "/grupos";
+
   static Future<VideoEventModel?> listarEventos({required int pag}) async {
-    final urI = Uri.parse(_eventosPage + "/" + pag.toString() + "/10");
+    final urI = Uri.parse(_eventosPage + pag.toString() + "/10");
     try {
       final resp = await http.get(
         urI,

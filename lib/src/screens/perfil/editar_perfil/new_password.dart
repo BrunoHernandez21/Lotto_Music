@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:lotto_music/src/cores/compositor.dart';
 
-import 'package:lotto_music/src/screens/perfil/ajustes/password_confirm.dart';
 import 'package:lotto_music/src/widgets/dialogs_alert.dart';
 import '../../../helpers/variables_globales.dart';
 import '../../../widgets/botones.dart';
 import '../../../widgets/inputs_text.dart';
 import '../../../widgets/text.dart';
+import 'password_confirm.dart';
 
 class NewPassword extends StatefulWidget {
   static String routeName = 'newPassword';

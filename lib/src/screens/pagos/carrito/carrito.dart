@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:lotto_music/src/cores/compositor.dart';
 import 'package:lotto_music/src/helpers/variables_globales.dart';
+import 'package:lotto_music/src/screens/pagos/carrito/verificar_compra.dart';
 
 import '../../../bloc/carrito/carrito_bloc.dart';
-import '../../../models/carrito_plan.dart';
+import '../../../models/carrito_response.dart';
 import '../../../widgets/botones.dart';
 import '../../../widgets/svg_nosignal.dart';
 import '../../../widgets/text.dart';
@@ -14,12 +16,12 @@ class Carrito extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (BlocProvider.of<CarritoBloc>(context).state.ordenes == null) {
+    if (BlocProvider.of<CarritoBloc>(context).state.itemsCarrito == null) {
       Compositor.onloadCarrito(context);
     }
     return BlocBuilder<CarritoBloc, CarritoState>(
       builder: (context, state) {
-        if (state.ordenes == null) {
+        if (state.itemsCarrito == null) {
           return RefreshIndicator(
               onRefresh: () async {
                 Compositor.onloadCarrito(context);
@@ -30,23 +32,107 @@ class Carrito extends StatelessWidget {
           onRefresh: () async {
             Compositor.onloadCarrito(context);
           },
-          child: ListView.builder(
+          child: state.itemsCarrito?.isEmpty ?? true
+              ? emptyFunc()
+              : builderBody(
+                  state.itemsCarrito!,
+                  context,
+                ),
+        );
+      },
+    );
+  }
+
+  Widget emptyFunc() {
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(
+        parent: AlwaysScrollableScrollPhysics(),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const SizedBox(
+            height: 15,
+            width: double.infinity,
+          ),
+          Textos.tituloMAX(texto: "Parece que tu carrito esta vacio"),
+          Textos.tituloMIN(texto: 'agrega items al carrito'),
+          SizedBox(
+            height: Medidas.size.height * .1,
+          ),
+          SvgPicture.asset(
+            Assets.emptyCart,
+            height: Medidas.size.height * .4,
+            width: double.infinity,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget builderBody(List<ItemsCarrito> itemsCarrito, BuildContext context) {
+    double total = 0;
+    List<Widget> items = [];
+    for (var i in itemsCarrito) {
+      items.add(TarjetaCarrito(carrito: i));
+      total += i.totalLinea ?? 0;
+    }
+    return Column(
+      children: [
+        const SizedBox(
+          height: 15,
+        ),
+        Center(
+          child: Textos.tituloMAX(texto: "Items de compra"),
+        ),
+        const SizedBox(
+          height: 8,
+        ),
+        Center(
+          child: Textos.tituloMAX(
+            texto: "Total: " +
+                total.toString() +
+                " " +
+                (itemsCarrito.first.moneda ?? ""),
+          ),
+        ),
+        Expanded(
+          child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(
               parent: AlwaysScrollableScrollPhysics(),
             ),
-            itemCount: state.ordenes!.length,
-            itemBuilder: (context, index) {
-              return TarjetaCarrito(carrito: state.ordenes![index]);
-            },
+            child: Column(
+              children: [
+                ...items,
+              ],
+            ),
           ),
-        );
-      },
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Center(
+          child: SizedBox(
+            width: Medidas.size.width * .5,
+            child: Botones.degradedTextButton(
+              text: "Comprar",
+              colors: const [Color(0xffea8d8d), Color(0xffa890fe)],
+              onTap: () async {
+                Navigator.of(context).pushNamed(VerificarCompra.routeName);
+              },
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 30,
+        ),
+      ],
     );
   }
 }
 
 class TarjetaCarrito extends StatelessWidget {
-  final Ordenes carrito;
+  final ItemsCarrito carrito;
   const TarjetaCarrito({
     Key? key,
     required this.carrito,
@@ -54,101 +140,27 @@ class TarjetaCarrito extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const styleBorder = BorderSide(
-      color: Color(0xffbf930d),
-      style: BorderStyle.solid,
-      width: 4,
-    );
-    return Container(
-      alignment: Alignment.center,
-      margin: EdgeInsets.symmetric(
-        horizontal: Medidas.size.width * .05,
-        vertical: 20,
-      ),
-      clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        border: const Border(
-          bottom: styleBorder,
-          left: styleBorder,
-          right: styleBorder,
-          top: styleBorder,
+    return ListTile(
+        title: carrito.suscribcion
+            ? Text("Suscribción " + carrito.nombre)
+            : Text("Plan " + carrito.nombre),
+        subtitle: Text(
+          "Precio unitario " +
+              (carrito.precioUnitario == null
+                  ? ""
+                  : carrito.precioUnitario.toString()),
         ),
-      ),
-      child: Stack(
-        children: [
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Center(
-                child: Textos.tituloMED(
-                  texto: carrito.plane.nombre,
-                  color: const Color(0xff1eae98),
-                ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Textos.parrafoMED(
-                texto: "Cantidad = " + carrito.orden.cantidad.toString(),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Center(
-                child: Textos.tituloMED(
-                  texto: "\$" + carrito.orden.amount.toString() + "MX",
-                  color: const Color(0xfffca51f),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Center(
-                child: SizedBox(
-                  width: Medidas.size.width * .5,
-                  child: Botones.degradedTextButton(
-                    text: "Comprar",
-                    colors: const [Color(0xffea8d8d), Color(0xffa890fe)],
-                    onTap: () async {
-                      await Compositor.onBuyCarrito(
-                        context: context,
-                        ids: [carrito.orden.id],
-                      );
-                      Compositor.onloadCarrito(context);
-                    },
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-            ],
+        leading: IconButton(
+          icon: const Icon(
+            Icons.remove_circle,
+            color: Colors.red,
           ),
-          Align(
-            alignment: Alignment.topRight,
-            child: GestureDetector(
-              child: Container(
-                width: 30,
-                decoration: const BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      topRight: Radius.circular(15),
-                    )),
-                child: const Icon(
-                  Icons.remove,
-                  color: Colors.white,
-                ),
-              ),
-              onTap: () async {
-                Compositor.onDeleteCarrito(context, carrito);
-              },
-            ),
-          ),
-        ],
-      ),
-    );
+          onPressed: () {
+            Compositor.onDeleteCarrito(context, carrito);
+          },
+        ),
+        trailing: Text(
+          carrito.totalLinea.toString(),
+        ));
   }
 }

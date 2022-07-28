@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/bloc/carrito/carrito_bloc.dart';
 import 'package:lotto_music/src/bloc/shaderPreferences/shaderpreferences_bloc.dart';
+import 'package:lotto_music/src/bloc/suscripciones/suscripciones_bloc.dart';
 import 'package:lotto_music/src/bloc/user/user_bloc.dart';
 import 'package:lotto_music/src/bloc/video_event/video_event_bloc.dart';
 import 'package:lotto_music/src/bloc/videos/videos_bloc.dart';
@@ -21,7 +22,7 @@ import '../bloc/video/video_bloc.dart';
 import '../bloc/videos_event/videos_event_bloc.dart';
 import '../helpers/variables_globales.dart';
 import '../models/carrito.dart';
-import '../models/carrito_plan.dart';
+import '../models/carrito_response.dart';
 import '../models/cartera.dart';
 import '../models/evento_video.dart';
 import '../models/ganador.dart';
@@ -242,8 +243,8 @@ class Compositor {
     return true;
   }
 
-  ///////////////////////////////////////////////
-  //////    /////////Buy Controller
+  /// Buy Controller
+  /// Carga los items del carrito
   static Future<bool> onloadCarrito(BuildContext context) async {
     final acountB = BlocProvider.of<AcountBloc>(context);
     final planB = BlocProvider.of<CarritoBloc>(context);
@@ -255,7 +256,7 @@ class Compositor {
       return false;
     }
     if (response.mensaje == null) {
-      planB.add(OnLoadCarrito(ordenes: response.ordenes));
+      planB.add(OnLoadCarrito(itemsCarrito: response.itemsCarrito));
       return true;
     }
 
@@ -267,7 +268,7 @@ class Compositor {
     required CarritoModel orden,
   }) async {
     final acountB = BlocProvider.of<AcountBloc>(context);
-    final resp = await CarritoService.create(
+    final CarritoModel? resp = await CarritoService.create(
       token: acountB.state.acount.accessToken,
       body: orden.toJson(),
     );
@@ -281,11 +282,11 @@ class Compositor {
   }
 
   static Future<bool> onDeleteCarrito(
-      BuildContext context, Ordenes orden) async {
+      BuildContext context, ItemsCarrito itemsCarrito) async {
     final acountB = BlocProvider.of<AcountBloc>(context);
     final planB = BlocProvider.of<CarritoBloc>(context);
     final resp = await CarritoService.eliminar(
-        token: acountB.state.acount.accessToken, id: orden.orden.id);
+        token: acountB.state.acount.accessToken, id: itemsCarrito.id);
     if (resp == null) {
       DialogAlert.ok(
         context: context,
@@ -295,9 +296,9 @@ class Compositor {
     }
     if (resp == "Eliminado Satisfactoriamente") {
       try {
-        final newOrden = planB.state.ordenes;
-        newOrden!.remove(orden);
-        planB.add(OnLoadCarrito(ordenes: newOrden));
+        final newitem = planB.state.itemsCarrito;
+        newitem!.remove(itemsCarrito);
+        planB.add(OnLoadCarrito(itemsCarrito: newitem));
         return true;
       } catch (e) {
         return false;
@@ -310,11 +311,9 @@ class Compositor {
   /// compra
   static Future<bool> onBuyCarrito({
     required BuildContext context,
-    required List<int> ids,
   }) async {
     final acountB = BlocProvider.of<AcountBloc>(context);
     final resp = await CompraService.checkout(
-      compras: ids,
       token: acountB.state.acount.accessToken,
     );
     if (resp == "correcto") {
@@ -326,12 +325,27 @@ class Compositor {
   /// Categorias
   static Future<bool> onLoadPlanes(BuildContext context) async {
     final planB = BlocProvider.of<PlanesBloc>(context);
-    final response = await PlanService.load();
+    final response = await PlanService.loadPlan();
     if (response == null) {
       return false;
     }
     if (response.mensaje == null) {
       planB.add(OnLoadPlanes(planes: response.planes));
+      return true;
+    }
+
+    return true;
+  }
+
+  /// Categorias
+  static Future<bool> onLoadSuscripciones(BuildContext context) async {
+    final planB = BlocProvider.of<SuscripcionesBloc>(context);
+    final response = await PlanService.loadSuscripcion();
+    if (response == null) {
+      return false;
+    }
+    if (response.mensaje == null) {
+      planB.add(OnLoadSuscripciones(planes: response.planes));
       return true;
     }
 
@@ -346,29 +360,16 @@ class Compositor {
   }) async {
     final acountB = BlocProvider.of<AcountBloc>(context);
     final apuesta = ApuestaModel(
-      apuestaId: evento.evento.id,
+      apuestaId: evento.id ?? 0,
       cantidad: cantidad,
     );
-    if (evento.evento.tipoApuestaId == 1) {
-      apuesta.vistas = aproximacion;
-    }
-    if (evento.evento.tipoApuestaId == 2) {
-      apuesta.likes = aproximacion;
-    }
-    if (evento.evento.tipoApuestaId == 3) {
-      apuesta.comentarios = aproximacion;
-    }
-    if (evento.evento.tipoApuestaId == 4) {
-      apuesta.dislikes = aproximacion;
-    }
-    if (evento.evento.tipoApuestaId == 5) {
-      //TODO: en espera de tik toc
-      apuesta.vistas = aproximacion;
-    }
 
-    if (evento.evento.tipoApuestaId == 5) {
-      apuesta.vistas = aproximacion;
-    }
+    apuesta.vistas = aproximacion;
+    apuesta.likes = aproximacion;
+    apuesta.comentarios = aproximacion;
+    apuesta.dislikes = aproximacion;
+    apuesta.vistas = aproximacion;
+    apuesta.vistas = aproximacion;
     final resp = await ApuestaService.crear(
       apuesta: apuesta,
       token: acountB.state.acount.accessToken,
@@ -407,7 +408,7 @@ class Compositor {
       return false;
     }
     if (resp.mensaje == null) {
-      if (vEB.state.pag > resp.pag) {
+      if (vEB.state.pag > (resp.pag)) {
         return true;
       }
       vEB.add(OnLoadVideosCategoria(listado: resp.items ?? [], pag: resp.pag));
@@ -456,13 +457,14 @@ class Compositor {
     required BuildContext context,
   }) async {
     final vEB = BlocProvider.of<VideosEventBloc>(context);
+    if (vEB.state.pag + 1 > vEB.state.pags) {
+      return false;
+    }
     final resp = await VideoService.listarEventos(pag: vEB.state.pag + 1);
     if (resp == null) {
       return false;
     }
-    if (resp.pag > resp.pags) {
-      return false;
-    }
+
     if (resp.mensaje == null) {
       if (vEB.state.pag > resp.pag) {
         return true;
@@ -538,7 +540,7 @@ class Compositor {
       pag: 1,
       token: acountB.state.acount.accessToken,
     );
-    
+
     return resp;
   }
 
@@ -649,6 +651,6 @@ class Compositor {
       token: acountB.state.acount.accessToken,
     );
 
-    return resp?.cartera;
+    return resp;
   }
 }

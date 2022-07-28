@@ -8,28 +8,30 @@ class AppbarMiPerfil extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10.0),
-      child: SizedBox(
-        height: 50,
-        width: double.infinity,
-        child: Stack(
-          children: [
-            Padding(
-                padding: const EdgeInsets.only(left: 10.0),
-                child: IconButton(
-                  onPressed: () {
-                    controller?.animateTo(0);
-                  },
-                  icon: const Icon(Icons.arrow_back_ios),
-                )),
-            Center(
-              child: Textos.tituloMED(
-                texto: 'Mi Perfil',
+    return SizedBox(
+      height: 50,
+      width: double.infinity,
+      child: Stack(
+        children: [
+          Padding(
+              padding: const EdgeInsets.only(
+                left: 10.0,
               ),
+              child: IconButton(
+                onPressed: () {
+                  controller?.animateTo(0);
+                },
+                icon: const Icon(
+                  Icons.arrow_back_ios,
+                  size: 18,
+                ),
+              )),
+          Center(
+            child: Textos.tituloMED(
+              texto: 'Mi Perfil',
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

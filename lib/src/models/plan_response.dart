@@ -1,6 +1,6 @@
 // To parse this JSON data, do
 //
-//     final resp = respFromMap(jsonString);
+//     final planResponse = planResponseFromMap(jsonString);
 
 import 'dart:convert';
 
@@ -8,20 +8,20 @@ import 'package:lotto_music/src/models/plan.dart';
 
 class PlanesResponse {
   PlanesResponse({
+    this.planes,
     this.mensaje,
-    this.planes = const [],
   });
 
+  List<PlanModel>? planes;
   String? mensaje;
-  List<PlanModel> planes;
 
   PlanesResponse copyWith({
-    String? mensaje,
     List<PlanModel>? planes,
+    String? mensaje,
   }) =>
       PlanesResponse(
-        mensaje: mensaje ?? this.mensaje,
         planes: planes ?? this.planes,
+        mensaje: mensaje ?? this.mensaje,
       );
 
   factory PlanesResponse.fromJson(String str) =>
@@ -30,13 +30,13 @@ class PlanesResponse {
   String toJson() => json.encode(toMap());
 
   factory PlanesResponse.fromMap(Map<String, dynamic> json) => PlanesResponse(
-        mensaje: json["mensaje"],
         planes: List<PlanModel>.from(
             json["planes"].map((x) => PlanModel.fromMap(x))),
+        mensaje: json["mensaje"],
       );
 
   Map<String, dynamic> toMap() => {
+        "planes": List<dynamic>.from(planes?.map((x) => x.toMap()) ?? []),
         "mensaje": mensaje,
-        "planes": List<dynamic>.from(planes.map((x) => x.toMap())),
       };
 }

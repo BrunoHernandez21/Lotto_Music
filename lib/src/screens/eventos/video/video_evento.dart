@@ -39,7 +39,7 @@ class _VideoEventoState extends State<VideoEvento> {
     return BlocBuilder<VideoEventBloc, VideoEventState>(
       builder: (context, state) {
         controller = YoutubePlayerController(
-          initialVideoId: state.eventoVideo.video.idVideo ?? "dO1rMeYnOmM",
+          initialVideoId: state.eventoVideo.videoId ?? "dO1rMeYnOmM",
           flags: const YoutubePlayerFlags(
             hideThumbnail: true,
             mute: false,
@@ -84,11 +84,11 @@ class _VideoEventoState extends State<VideoEvento> {
                 alignment: Alignment.centerLeft,
                 child: ListTile(
                   title: Textos.tituloMED(
-                    texto: state.eventoVideo.video.titulo ?? "",
+                    texto: state.eventoVideo.titulo ?? "",
                     color: const Color.fromARGB(255, 201, 174, 56),
                   ),
-                  subtitle: Textos.parrafoMAX(
-                      texto: state.eventoVideo.video.artista ?? ""),
+                  subtitle:
+                      Textos.parrafoMAX(texto: state.eventoVideo.artista ?? ""),
                 )),
             Container(
               alignment: Alignment.centerLeft,
@@ -98,13 +98,13 @@ class _VideoEventoState extends State<VideoEvento> {
                 children: [
                   Textos.parrafoMAX(
                     texto: "Hora " +
-                        state.eventoVideo.evento.fechahoraapuesta
+                        state.eventoVideo.fechahoraevento
                             .toString()
                             .substring(11, 16),
                   ),
                   Textos.parrafoMAX(
                     texto: Rutinas.comprobador(
-                      state.eventoVideo.evento.fechahoraapuesta,
+                      state.eventoVideo.fechahoraevento,
                     ),
                   ),
                 ],
@@ -217,7 +217,7 @@ class _ListaVideosState extends State<_ListaVideosEvent> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: imagen(v.video.thumblary)),
+              child: imagen(v.thumblary)),
           const SizedBox(
             width: 6,
           ),
@@ -229,20 +229,20 @@ class _ListaVideosState extends State<_ListaVideosEvent> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Textos.parrafoMED(
-                  texto: v.video.titulo ?? "",
+                  texto: v.titulo ?? "",
                   renglones: 2,
                 ),
                 Textos.parrafoMIN(
-                  texto: v.video.artista ?? "",
+                  texto: v.artista ?? "",
                   renglones: 1,
                 ),
                 const Expanded(child: SizedBox()),
                 Textos.parrafoMED(
-                  texto: "Hora " +
-                      v.evento.fechahoraapuesta.toString().substring(11, 16),
+                  texto:
+                      "Hora " + v.fechahoraevento.toString().substring(11, 16),
                 ),
                 Textos.parrafoMED(
-                  texto: Rutinas.comprobador(v.evento.fechahoraapuesta),
+                  texto: Rutinas.comprobador(v.fechahoraevento),
                 ),
               ],
             ),

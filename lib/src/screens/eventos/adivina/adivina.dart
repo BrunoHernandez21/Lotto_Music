@@ -55,24 +55,14 @@ class Adivina extends StatelessWidget {
   Widget apuesta({required ItemEvent evento, required BuildContext context}) {
     Widget selector = const SizedBox();
 
-    if (evento.evento.tipoApuestaId == 1) {
-      selector = Textos.tituloMED(texto: "Vistas");
-    }
-    if (evento.evento.tipoApuestaId == 2) {
-      selector = Textos.tituloMED(texto: "Like");
-    }
-    if (evento.evento.tipoApuestaId == 3) {
-      selector = Textos.tituloMED(texto: "comentarios");
-    }
-    if (evento.evento.tipoApuestaId == 4) {
-      selector = Textos.tituloMED(texto: "No me gusta");
-    }
-    if (evento.evento.tipoApuestaId == 5) {
-      selector = Textos.tituloMED(texto: "Guardados");
-    }
-    if (evento.evento.tipoApuestaId == 6) {
-      selector = Textos.tituloMED(texto: "Compartidos");
-    }
+    selector = Textos.tituloMED(texto: "Vistas");
+    selector = Textos.tituloMED(texto: "Like");
+    selector = Textos.tituloMED(texto: "comentarios");
+    selector = Textos.tituloMED(texto: "No me gusta");
+
+    selector = Textos.tituloMED(texto: "Guardados");
+
+    selector = Textos.tituloMED(texto: "Compartidos");
 
     return Column(
       children: [
@@ -184,16 +174,16 @@ class _CardVideo extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
             ),
-            child: imagen(v.video.thumblary)),
+            child: imagen(v.thumblary)),
         const SizedBox(
           width: 6,
         ),
         Textos.tituloMAX(
-          texto: v.video.titulo ?? "",
+          texto: v.titulo ?? "",
           renglones: 2,
         ),
         Textos.tituloMED(
-          texto: v.video.artista ?? "",
+          texto: v.artista ?? "",
           renglones: 1,
         ),
         Padding(
@@ -202,11 +192,10 @@ class _CardVideo extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Textos.tituloMED(
-                texto: "Hora " +
-                    v.evento.fechahoraapuesta.toString().substring(11, 16),
+                texto: "Hora " + v.fechahoraevento.toString().substring(11, 16),
               ),
               Textos.tituloMED(
-                texto: Rutinas.comprobador(v.evento.fechahoraapuesta),
+                texto: Rutinas.comprobador(v.fechahoraevento),
               ),
             ],
           ),

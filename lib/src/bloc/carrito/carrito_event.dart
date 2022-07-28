@@ -4,6 +4,6 @@ part of 'carrito_bloc.dart';
 abstract class CarritoEvent {}
 
 class OnLoadCarrito extends CarritoEvent {
-  final List<Ordenes>? ordenes;
-  OnLoadCarrito({required this.ordenes});
+  final List<ItemsCarrito>? itemsCarrito;
+  OnLoadCarrito({required this.itemsCarrito});
 }

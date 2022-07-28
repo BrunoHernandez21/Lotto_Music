@@ -10,8 +10,9 @@ class Direccion extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        foregroundColor: Colors.black,
-        title: Textos.tituloMED(texto: 'Billetera'),
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
+        title: Textos.tituloMED(texto: 'Direcciones'),
         centerTitle: true,
       ),
     );

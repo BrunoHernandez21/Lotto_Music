@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lotto_music/src/screens/perfil/ajustes/billetera.dart';
 
 import '../../../widgets/text.dart';
 import '../editar_perfil.dart';
+import 'direccion.dart';
 import 'new_password.dart';
 
 class AjustesUsuario extends StatelessWidget {
@@ -18,11 +18,12 @@ class AjustesUsuario extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        title: Textos.tituloMIN(texto: 'Ajustes'),
+        title: Textos.tituloMIN(texto: 'Editar Perfil'),
         foregroundColor: Colors.black,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
               ListTile(
@@ -47,13 +48,13 @@ class AjustesUsuario extends StatelessWidget {
               ),
               const Divider(color: Colors.grey, height: 10),
               ListTile(
-                title: Textos.tituloMIN(texto: 'Billetera'),
+                title: Textos.tituloMIN(texto: 'Direcciones'),
                 trailing: const Icon(
                   Icons.arrow_forward_ios_sharp,
                   size: 17,
                 ),
                 onTap: () {
-                  Navigator.of(context).pushNamed(Billetera.routeName);
+                  Navigator.of(context).pushNamed(Direccion.routeName);
                 },
               ),
               const Divider(color: Colors.grey, height: 10),

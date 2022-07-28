@@ -17,10 +17,18 @@ class NoSignal extends StatelessWidget {
         children: [
           SizedBox(
             height: Medidas.size.height * .1,
+            width: double.infinity,
           ),
           Textos.tituloMAX(texto: "Sin conexión al Servidor"),
+          const SizedBox(
+            height: 10,
+          ),
+          Textos.tituloMIN(texto: "Deslice para actualizar"),
+          SizedBox(
+            height: Medidas.size.height * .1,
+          ),
           SvgPicture.asset(
-            "assets/svg/imagenes/explorer.svg",
+            Assets.refresh,
             height: Medidas.size.height * .5,
           ),
         ],
