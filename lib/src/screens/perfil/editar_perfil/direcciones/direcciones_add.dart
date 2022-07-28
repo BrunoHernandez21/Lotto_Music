@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../../widgets/text.dart';
+import '../../../../widgets/text.dart';
 
-class Direccion extends StatelessWidget {
-  static String routeName = 'direcciones';
-  const Direccion({Key? key}) : super(key: key);
+class DireccionADD extends StatelessWidget {
+  static String routeName = 'direccionesadd';
+  const DireccionADD({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

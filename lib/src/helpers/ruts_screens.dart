@@ -10,7 +10,8 @@ import '../screens/eventos/estadisticas/estadisticas.dart';
 import '../screens/eventos/video/video_evento.dart';
 import '../screens/eventos/categorias/videos_categorias.dart';
 import '../screens/pagos/carrito/verificar_compra.dart';
-import '../screens/perfil/editar_perfil/direccion.dart';
+import '../screens/perfil/editar_perfil/direcciones/direccion.dart';
+import '../screens/perfil/editar_perfil/direcciones/direcciones_add.dart';
 import '../screens/perfil/editar_perfil/new_password.dart';
 import '../screens/perfil/editar_perfil/password_confirm.dart';
 import '../screens/provedores_video/search/search.dart';
@@ -53,6 +54,7 @@ class Ruts {
     Adivina.routeName: (_) => Adivina(),
     Estadisticas.routeName: (_) => const Estadisticas(),
     VerificarCompra.routeName: (_) => const VerificarCompra(),
+    DireccionADD.routeName: (_) => const DireccionADD(),
   };
 
   static get rutas {
