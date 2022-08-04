@@ -9,61 +9,68 @@ import '../../../bloc/video_event/video_event_bloc.dart';
 import '../../../cores/compositor.dart';
 import '../../../helpers/rutinas.dart';
 import '../../../helpers/variables_globales.dart';
+import '../../../models/userevent.dart';
 import '../../../models/evento_video.dart';
 import '../../../widgets/digital_clock.dart';
 import '../../../widgets/text.dart';
 
-class Adivina extends StatelessWidget {
+class Adivina extends StatefulWidget {
   static const String routeName = "adivina";
-  Adivina({Key? key}) : super(key: key);
-  final controller = TextEditingController();
+  const Adivina({Key? key}) : super(key: key);
+
+  @override
+  State<Adivina> createState() => _AdivinaState();
+}
+
+class _AdivinaState extends State<Adivina> {
+  final controllerV = TextEditingController();
+  final controllerL = TextEditingController();
+  final controllerC = TextEditingController();
+  final controllerG = TextEditingController();
+  final controllerS = TextEditingController();
+
+  bool controlV = true;
+  bool controlL = true;
+  bool controlC = true;
+  bool controlG = true;
+  bool controlCo = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: BlocBuilder<VideoEventBloc, VideoEventState>(
-        builder: (context, state) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(
-                width: double.infinity,
-              ),
-              Textos.tituloMAX(texto: "Evento"),
-              Container(
-                padding: const EdgeInsets.all(8),
-                margin: const EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    gradient: const LinearGradient(colors: [
-                      Color.fromARGB(255, 5, 222, 230),
-                      Color.fromARGB(255, 3, 199, 101),
-                    ])),
-                child: const DefaultDigitalClock(),
-              ),
-              _CardVideo(v: state.eventoVideo),
-              apuesta(evento: state.eventoVideo, context: context),
-            ],
-          );
-        },
-      )),
+            builder: (context, state) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    width: double.infinity,
+                  ),
+                  Textos.tituloMAX(texto: "Evento"),
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    margin: const EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        gradient: const LinearGradient(colors: [
+                          Color.fromARGB(255, 5, 222, 230),
+                          Color.fromARGB(255, 3, 199, 101),
+                        ])),
+                    child: const DefaultDigitalClock(),
+                  ),
+                  _CardVideo(v: state.eventoVideo),
+                  apuesta(evento: state.eventoVideo, context: context),
+                ],
+              );
+            },
+          )),
     );
   }
 
   Widget apuesta({required ItemEvent evento, required BuildContext context}) {
-    Widget selector = const SizedBox();
-
-    selector = Textos.tituloMED(texto: "Vistas");
-    selector = Textos.tituloMED(texto: "Like");
-    selector = Textos.tituloMED(texto: "comentarios");
-    selector = Textos.tituloMED(texto: "No me gusta");
-
-    selector = Textos.tituloMED(texto: "Guardados");
-
-    selector = Textos.tituloMED(texto: "Compartidos");
-
     return Column(
       children: [
         const SizedBox(
@@ -73,82 +80,182 @@ class Adivina extends StatelessWidget {
         const SizedBox(
           height: 40,
         ),
-        selector,
         const SizedBox(
           height: 10,
         ),
+        Textos.tituloMED(texto: "Vistas"),
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            const SizedBox(
-              width: 15,
-            ),
+            Checkbox(
+                value: controlV,
+                fillColor: MaterialStateProperty.all(const Color(0xFF10CA20)),
+                onChanged: (s) {
+                  if (s != null) {
+                    controlV = s;
+                    setState(() {});
+                  }
+                }),
             SizedBox(
-              height: 45,
-              width: 160,
-              child: InputsText.classic(
-                  controller: controller,
+              width: Medidas.size.width * .6,
+              child: InputsText.box(
+                  maxLength: 20,
+                  controller: controllerV,
                   textType: TextInputType.number,
                   onChanged: (a) {
                     if (a.length >= 14) {
-                      controller.text = a.substring(0, 13);
+                      controllerV.text = a.substring(0, 13);
                     }
                   }),
             ),
-            const SizedBox(
-              width: 30,
-            ),
+          ],
+        ),
+        Textos.tituloMED(texto: "Like"),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Checkbox(
+                value: controlL,
+                fillColor: MaterialStateProperty.all(const Color(0xFF10CA20)),
+                onChanged: (s) {
+                  if (s != null) {
+                    controlL = s;
+                    setState(() {});
+                  }
+                }),
             SizedBox(
-              height: 45,
-              width: 110,
-              child: Botones.degradedTextButton(
-                text: "Participa",
-                colors: [
-                  const Color.fromARGB(255, 100, 74, 146),
-                  const Color.fromARGB(255, 69, 27, 143)
-                ],
-                onTap: () async {
-                  int intento = 0;
-                  String texto = controller.text;
-                  if (texto.isEmpty) {
-                    DialogAlert.ok(
-                      context: context,
-                      text: "La participacion vacia",
-                    );
-                    return;
-                  }
-                  try {
-                    texto = texto
-                        .replaceAll(",", "")
-                        .replaceAll(" ", "")
-                        .replaceAll("-", "")
-                        .replaceAll(".", "")
-                        .replaceAll("/", "")
-                        .replaceAll(",", "");
-                    intento = int.parse(texto);
-                  } catch (e) {
-                    DialogAlert.ok(
-                      context: context,
-                      text: "Solo numeros",
-                    );
-                  }
-                  if (await Compositor.onBuyIntent(
-                        context: context,
-                        evento: evento,
-                        aproximacion: intento,
-                        cantidad: 1,
-                      ) ??
-                      false) {
-                    DialogAlert.ok(
-                      context: context,
-                      text: "Compra realizada con exito",
-                    );
-                  }
-                },
-              ),
+              width: Medidas.size.width * .6,
+              child: InputsText.box(
+                  maxLength: 20,
+                  controller: controllerL,
+                  textType: TextInputType.number,
+                  onChanged: (a) {
+                    if (a.length >= 14) {
+                      controllerL.text = a.substring(0, 13);
+                    }
+                  }),
             ),
           ],
+        ),
+        Textos.tituloMED(texto: "comentarios"),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Checkbox(
+                value: controlC,
+                fillColor: MaterialStateProperty.all(const Color(0xFF10CA20)),
+                onChanged: (s) {
+                  if (s != null) {
+                    controlC = s;
+                    setState(() {});
+                  }
+                }),
+            SizedBox(
+              width: Medidas.size.width * .6,
+              child: InputsText.box(
+                  maxLength: 20,
+                  controller: controllerC,
+                  textType: TextInputType.number,
+                  onChanged: (a) {
+                    if (a.length >= 14) {
+                      controllerC.text = a.substring(0, 13);
+                    }
+                  }),
+            ),
+          ],
+        ),
+        Textos.tituloMED(texto: "Guardados"),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Checkbox(
+                value: controlG,
+                fillColor: MaterialStateProperty.all(const Color(0xFF10CA20)),
+                onChanged: (s) {
+                  if (s != null) {
+                    controlG = s;
+                    setState(() {});
+                  }
+                }),
+            SizedBox(
+              width: Medidas.size.width * .6,
+              child: InputsText.box(
+                  maxLength: 20,
+                  controller: controllerG,
+                  textType: TextInputType.number,
+                  onChanged: (a) {
+                    if (a.length >= 14) {
+                      controllerG.text = a.substring(0, 13);
+                    }
+                  }),
+            ),
+          ],
+        ),
+        Textos.tituloMED(texto: "Compartidos"),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Checkbox(
+                value: controlCo,
+                fillColor: MaterialStateProperty.all(const Color(0xFF10CA20)),
+                onChanged: (s) {
+                  if (s != null) {
+                    controlCo = s;
+                    setState(() {});
+                  }
+                }),
+            SizedBox(
+              width: Medidas.size.width * .6,
+              child: InputsText.box(
+                  maxLength: 20,
+                  controller: controllerS,
+                  textType: TextInputType.number,
+                  onChanged: (a) {}),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 30,
+        ),
+        SizedBox(
+          height: 60,
+          width: 160,
+          child: Botones.degradedTextButton(
+            text: "Participa",
+            colors: [
+              const Color.fromARGB(255, 100, 74, 146),
+              const Color.fromARGB(255, 69, 27, 143)
+            ],
+            onTap: () async {
+              final apuesta = UserEventModel(
+                eventoId: evento.id ?? 0,
+              );
+              apuesta.viewsCount = int.tryParse(controllerV.text) ?? 0;
+              apuesta.likeCount = int.tryParse(controllerL.text) ?? 0;
+              apuesta.commentsCount = int.tryParse(controllerC.text) ?? 0;
+              apuesta.sharedCount = int.tryParse(controllerS.text) ?? 0;
+              apuesta.savedCount = int.tryParse(controllerG.text) ?? 0;
+
+              if (await Compositor.onUserEventCreate(
+                    context: context,
+                    apuesta: apuesta,
+                  ) ??
+                  false) {
+                DialogAlert.ok(
+                  context: context,
+                  text: "Compra realizada con exito",
+                );
+              }
+            },
+          ),
+        ),
+        const SizedBox(
+          height: 60,
         ),
       ],
     );

@@ -15,8 +15,11 @@ class VideoService {
     try {
       final resp = await http.get(
         urI,
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
       );
-      final out = VideoEventModel.fromJson(resp.body);
+      final out = VideoEventModel.fromJson(utf8.decode(resp.bodyBytes));
       return out;
     } catch (e) {
       return null;

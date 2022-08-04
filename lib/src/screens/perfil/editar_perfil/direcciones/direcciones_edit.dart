@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:lotto_music/src/cores/compositor.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/helpers/variables_globales.dart';
 import 'package:lotto_music/src/widgets/botones.dart';
-import 'package:lotto_music/src/widgets/dialogs_alert.dart';
 import 'package:lotto_music/src/widgets/inputs_text.dart';
 
+import '../../../../bloc/direcciones/direcciones_bloc.dart';
+import '../../../../cores/compositor.dart';
 import '../../../../models/direcciones.dart';
+import '../../../../widgets/dialogs_alert.dart';
 import '../../../../widgets/drop_list.dart';
 import '../../../../widgets/text.dart';
 
-class DireccionAdd extends StatefulWidget {
-  static String routeName = 'direccionadd';
-  const DireccionAdd({Key? key}) : super(key: key);
+class DireccionEdit extends StatefulWidget {
+  static String routeName = 'direccionedit';
+  const DireccionEdit({Key? key}) : super(key: key);
 
   @override
-  State<DireccionAdd> createState() => _DireccionAddState();
+  State<DireccionEdit> createState() => _DireccionEditState();
 }
 
-class _DireccionAddState extends State<DireccionAdd> {
+class _DireccionEditState extends State<DireccionEdit> {
   final TextEditingController controlCalle = TextEditingController();
   final TextEditingController controlNumero = TextEditingController();
   final TextEditingController controlCP = TextEditingController();
@@ -34,11 +36,21 @@ class _DireccionAddState extends State<DireccionAdd> {
         title: Textos.tituloMED(texto: 'direccionedit'),
         centerTitle: true,
       ),
-      body: body(),
+      body: BlocBuilder<DireccionesBloc, DireccionesState>(
+        builder: (context, state) {
+          controlCalle.text = state.selected?.calle ?? "";
+          controlNumero.text = state.selected?.numero ?? "";
+          controlPais.text = state.selected?.pais ?? "";
+          controlCP.text = state.selected?.cp ?? "";
+          controlCiduad.text = state.selected?.ciudad ?? "";
+
+          return body(state.selected);
+        },
+      ),
     );
   }
 
-  Widget body() {
+  Widget body(DireccionesModel? selected) {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Padding(
@@ -129,7 +141,7 @@ class _DireccionAddState extends State<DireccionAdd> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 60),
               child: Botones.degradedTextButton(
-                text: "Crear Dirección",
+                text: "Guardar",
                 colors: [Colors.grey, Colors.grey],
                 onTap: () async {
                   final direct = DireccionesModel(
@@ -139,9 +151,10 @@ class _DireccionAddState extends State<DireccionAdd> {
                     numero: controlNumero.text,
                     pais: controlPais.text,
                     tipo: selectedTipe,
-                    id: 0,
+                    id: selected?.id ?? 0,
+                    usuarioId: 2,
                   );
-                  if (await Compositor.onCreateDirecciones(
+                  if (await Compositor.onUpdateDirecciones(
                     context: context,
                     direccion: direct,
                   )) {

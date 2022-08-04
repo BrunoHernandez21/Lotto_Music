@@ -163,57 +163,60 @@ class _ListVideosPaginacionState extends State<ListVideosPaginacion> {
   }
 
   Widget bodyTarjeta(ItemEvent v) {
-    return GestureDetector(
-      child: SizedBox(
-        height: Medidas.size.width * .240,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: Medidas.size.width * .360,
-              height: Medidas.size.width * .240,
-              clipBehavior: Clip.antiAlias,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GestureDetector(
+        child: SizedBox(
+          height: Medidas.size.width * .240,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: Medidas.size.width * .360,
+                height: Medidas.size.width * .240,
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Image.network(
+                  v.thumblary ?? "",
+                  fit: BoxFit.cover,
+                ),
               ),
-              child: Image.network(
-                v.thumblary ?? "",
-                fit: BoxFit.cover,
+              const SizedBox(
+                width: 6,
               ),
-            ),
-            const SizedBox(
-              width: 6,
-            ),
-            SizedBox(
-              height: Medidas.size.width * .240,
-              width: Medidas.size.width * .6,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Textos.parrafoMED(texto: v.titulo ?? "", renglones: 2),
-                  Textos.parrafoMIN(texto: v.artista ?? "", renglones: 1),
-                  const Expanded(child: SizedBox()),
-                  Textos.parrafoMED(
-                    texto: "Hora " +
-                        v.fechahoraevento.toString().substring(11, 16),
-                  ),
-                  Textos.parrafoMED(
-                    texto: Rutinas.comprobador(v.fechahoraevento),
-                  ),
-                ],
-              ),
-            )
-          ],
+              SizedBox(
+                height: Medidas.size.width * .240,
+                width: Medidas.size.width * .55,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Textos.parrafoMED(texto: v.titulo ?? "", renglones: 2),
+                    Textos.parrafoMIN(texto: v.artista ?? "", renglones: 1),
+                    const Expanded(child: SizedBox()),
+                    Textos.parrafoMED(
+                      texto: "Hora " +
+                          v.fechahoraevento.toString().substring(11, 16),
+                    ),
+                    Textos.parrafoMED(
+                      texto: Rutinas.comprobador(v.fechahoraevento),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
+        onTap: () {
+          Compositor.onSlectVideoEvento(
+            context: context,
+            item: v,
+          );
+          Navigator.of(context).pushNamed(VideoEvento.routeName);
+        },
       ),
-      onTap: () {
-        Compositor.onSlectVideoEvento(
-          context: context,
-          item: v,
-        );
-        Navigator.of(context).pushNamed(VideoEvento.routeName);
-      },
     );
   }
 }

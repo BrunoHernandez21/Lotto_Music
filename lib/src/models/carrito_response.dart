@@ -46,10 +46,11 @@ class ItemsCarrito {
     this.descuento,
     this.fechaCarrito,
     this.planId = 0,
-    this.cash = 0,
+    this.puntos = 0,
     this.nombre = "",
     this.precio = 0,
     this.moneda,
+    this.duracionDias = 0,
     this.suscribcion = false,
   });
 
@@ -60,10 +61,11 @@ class ItemsCarrito {
   double? descuento;
   DateTime? fechaCarrito;
   int planId;
-  int cash;
+  int puntos;
   String nombre;
   double precio;
   String? moneda;
+  int duracionDias;
   bool suscribcion;
 
   ItemsCarrito copyWith({
@@ -74,10 +76,11 @@ class ItemsCarrito {
     double? descuento,
     DateTime? fechaCarrito,
     int? planId,
-    int? cash,
+    int? puntos,
     String? nombre,
     double? precio,
     String? moneda,
+    int? duracionDias,
     bool? suscribcion,
   }) =>
       ItemsCarrito(
@@ -88,10 +91,11 @@ class ItemsCarrito {
         descuento: descuento ?? this.descuento,
         fechaCarrito: fechaCarrito ?? this.fechaCarrito,
         planId: planId ?? this.planId,
-        cash: cash ?? this.cash,
+        puntos: puntos ?? this.puntos,
         nombre: nombre ?? this.nombre,
         precio: precio ?? this.precio,
         moneda: moneda ?? this.moneda,
+        duracionDias: duracionDias ?? this.duracionDias,
         suscribcion: suscribcion ?? this.suscribcion,
       );
 
@@ -108,10 +112,11 @@ class ItemsCarrito {
         descuento: json["descuento"]?.toDouble(),
         fechaCarrito: DateTime.parse(json["fecha_carrito"]),
         planId: json["plan_id"],
-        cash: json["cash"],
+        puntos: json["puntos"],
         nombre: json["nombre"],
         precio: json["precio"]?.toDouble(),
         moneda: json["moneda"],
+        duracionDias: json["duracion_dias"],
         suscribcion: json["suscribcion"] ?? false,
       );
 
@@ -125,10 +130,11 @@ class ItemsCarrito {
             ? null
             : DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(fechaCarrito!),
         "plan_id": planId,
-        "cash": cash,
+        "puntos": puntos,
         "nombre": nombre,
         "precio": precio,
         "moneda": moneda,
+        "duracion_dias": duracionDias,
         "suscribcion": suscribcion,
       };
 }

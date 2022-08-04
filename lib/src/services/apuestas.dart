@@ -1,7 +1,8 @@
 // ignore: unused_import
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:lotto_music/src/models/apuesta.dart';
+import 'package:lotto_music/src/bloc/user/user_bloc.dart';
+import 'package:lotto_music/src/models/userevent.dart';
 
 import '../helpers/variables_globales.dart';
 import '../models/historial_event_user.dart';
@@ -27,9 +28,9 @@ class ApuestaService {
     }
   }
 
-  static Future<ApuestaModel?> crear({
+  static Future<UserEventModel?> crear({
     required String token,
-    required ApuestaModel apuesta,
+    required UserEventModel apuesta,
   }) async {
     try {
       final urI = Uri.parse(_apuesta);
@@ -42,45 +43,7 @@ class ApuestaService {
         body: apuesta.toJson(),
       );
 
-      return ApuestaModel.fromJson(resp.body);
-    } catch (e) {
-      return null;
-    }
-  }
-
-  static Future<LoginResponse?> activo({
-    required String email,
-    required String password,
-  }) async {
-    try {
-      final urI = Uri.parse(_listar);
-      final resp = await http.get(
-        urI,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      );
-
-      return LoginResponse.fromJson(resp.body);
-    } catch (e) {
-      return null;
-    }
-  }
-
-  static Future<LoginResponse?> activoPage({
-    required String email,
-    required String password,
-  }) async {
-    try {
-      final urI = Uri.parse(_listar);
-      final resp = await http.get(
-        urI,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      );
-
-      return LoginResponse.fromJson(resp.body);
+      return UserEventModel.fromJson(resp.body);
     } catch (e) {
       return null;
     }

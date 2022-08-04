@@ -17,7 +17,7 @@ class Variables {
   /*Direcciones internas de almacenamiento */
   static const String repoImage = "repoImage";
   /*Direccion de la app*/
-  static const _baseUrl = "http://187.213.79.204:25565";
+  static const _baseUrl = "http://187.213.46.53:25565";
 
   static const googleKey = "AIzaSyC8JmD8bqNROOddjeIlWX0uOYCnqNPC_0o";
 
@@ -29,6 +29,18 @@ class Variables {
   static const String plan = _baseUrl + "/api/plan";
   static const String suscribcion = _baseUrl + "/api/suscripcion";
   static const String videos = _baseUrl + "/api/videos";
+
+  static const List<String> estadosDireccion = [
+    "default",
+    "Casa",
+    "Cobrar recompensa",
+    "Otros",
+  ];
+
+  static const List<String> estadosTarjeta = [
+    "Credito",
+    "Debito",
+  ];
 }
 
 class Assets {
@@ -50,7 +62,7 @@ class Medidas {
 }
 
 class URL {
-  static const String _base = "http://187.213.77.165:25565/api/";
+  static const String _base = "http://187.213.46.53:25565/api/";
   static const String _baseYT = "https://www.googleapis.com/youtube/v3";
   static const String _ytKey = "key=AIzaSyDJGZnO3AZ2fkYOctsTClRVuShJWRMpCt8";
   static const String searchYT = _baseYT + "/search?" + _ytKey;

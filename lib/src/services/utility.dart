@@ -23,9 +23,12 @@ class UtilityService {
 
   static Future<Cartera?> cartera({required String token}) async {
     final urI = Uri.parse(_cartera);
-    final resp = await http.get(urI, headers: {
-      "Authorization": "Bearer " + token,
-    });
+    final resp = await http.get(
+      urI,
+      headers: {
+        "Authorization": "Bearer " + token,
+      },
+    );
     final out = Cartera.fromJson(resp.body);
     return out;
   }
@@ -35,10 +38,13 @@ class UtilityService {
     required String token,
   }) async {
     final urI = Uri.parse(_wins + "/" + pag.toString() + '/10');
-    final resp = await http.get(urI, headers: {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer " + token,
-    });
+    final resp = await http.get(
+      urI,
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token,
+      },
+    );
 
     final out = GanadorModel.fromJson(resp.body);
     return out;

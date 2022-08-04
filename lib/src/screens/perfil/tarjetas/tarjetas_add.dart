@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_brand.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
+import 'package:lotto_music/src/cores/compositor.dart';
+import 'package:lotto_music/src/models/tarjetas.dart';
+import 'package:lotto_music/src/widgets/text.dart';
+
+import '../../../helpers/variables_globales.dart';
+import '../../../widgets/chec_box.dart';
+import '../../../widgets/drop_list.dart';
 
 class TarjetasADD extends StatefulWidget {
-  static const String routeName = 'tarjetas';
+  static const String routeName = 'tarjetasadd';
   const TarjetasADD({Key? key}) : super(key: key);
 
   @override
@@ -11,26 +18,29 @@ class TarjetasADD extends StatefulWidget {
 }
 
 class _TarjetasState extends State<TarjetasADD> {
+  //Cart Dates
   String cardNumber = '';
   String expiryDate = '';
   String cardHolderName = '';
   String cvvCode = '';
+  String selectedTipe = '';
+  bool isDefaul = false;
+  //flowcontrol
   bool isCvvFocused = false;
   bool useGlassMorphism = false;
-  bool useBackgroundImage = false;
   OutlineInputBorder? border;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
+      ),
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            const SizedBox(
-              height: 30,
-            ),
             CreditCardWidget(
               glassmorphismConfig:
                   useGlassMorphism ? Glassmorphism.defaultConfig() : null,
@@ -43,14 +53,53 @@ class _TarjetasState extends State<TarjetasADD> {
               obscureCardCvv: true,
               isHolderNameVisible: true,
               cardBgColor: Colors.red,
-              backgroundImage: useBackgroundImage ? 'assets/card_bg.png' : null,
               isSwipeGestureEnabled: true,
               onCreditCardWidgetChange: (CreditCardBrand creditCardBrand) {},
             ),
             Expanded(
               child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
                 child: Column(
-                  children: <Widget>[
+                  children: [
+                    Textos.tituloMAX(texto: "Agrega una Tarjetas"),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        SizedBox(
+                          width: Medidas.size.width * .4,
+                          child: Column(
+                            children: [
+                              MyCheckBoxTitle(
+                                value: isDefaul,
+                                title:
+                                    Textos.parrafoMED(texto: "Predetarminada"),
+                                onChnange: (a) {
+                                  isDefaul = a;
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: Medidas.size.width * .4,
+                          child: Column(
+                            children: [
+                              Textos.tituloMIN(texto: "Tipo"),
+                              DropListButton(
+                                init: Variables.estadosTarjeta.first,
+                                items: Variables.estadosTarjeta,
+                                onChange: (sel) {
+                                  selectedTipe = sel ?? '';
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                     CreditCardForm(
                       formKey: formKey,
                       obscureCvv: true,
@@ -65,7 +114,7 @@ class _TarjetasState extends State<TarjetasADD> {
                       themeColor: Colors.blue,
                       textColor: Colors.white,
                       cardNumberDecoration: InputDecoration(
-                        labelText: 'Number',
+                        labelText: 'Numero',
                         hintText: 'XXXX XXXX XXXX XXXX',
                         hintStyle: const TextStyle(color: Colors.white),
                         labelStyle: const TextStyle(color: Colors.white),
@@ -77,7 +126,7 @@ class _TarjetasState extends State<TarjetasADD> {
                         labelStyle: const TextStyle(color: Colors.white),
                         focusedBorder: border,
                         enabledBorder: border,
-                        labelText: 'Expired Date',
+                        labelText: 'Fecha de expiracion',
                         hintText: 'XX/XX',
                       ),
                       cvvCodeDecoration: InputDecoration(
@@ -93,7 +142,7 @@ class _TarjetasState extends State<TarjetasADD> {
                         labelStyle: const TextStyle(color: Colors.white),
                         focusedBorder: border,
                         enabledBorder: border,
-                        labelText: 'Card Holder',
+                        labelText: 'Nombre del Propietario',
                       ),
                       onCreditCardModelChange: onCreditCardModelChange,
                     ),
@@ -113,7 +162,7 @@ class _TarjetasState extends State<TarjetasADD> {
                       child: Container(
                         margin: const EdgeInsets.all(12),
                         child: const Text(
-                          'Validate',
+                          'Guardar',
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'halter',
@@ -122,7 +171,27 @@ class _TarjetasState extends State<TarjetasADD> {
                           ),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () async {
+                        final tarjeta = TarjetaModel(
+                          activo: true,
+                          cvc: int.tryParse(cvvCode) ?? 0,
+                          expiryMonth:
+                              int.tryParse(expiryDate.substring(0, 2)) ?? 0,
+                          expiryYear:
+                              int.tryParse(expiryDate.substring(3, 5)) ?? 0,
+                          cardNumber: cardNumber,
+                          holderName: cardHolderName,
+                          defaultPayment: isDefaul,
+                          type: selectedTipe,
+                        );
+
+                        if (await Compositor.onCreateTarjetas(
+                          context: context,
+                          tarjeta: tarjeta,
+                        )) {
+                          Navigator.pop(context);
+                        }
+                      },
                     ),
                   ],
                 ),

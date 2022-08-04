@@ -6,9 +6,11 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/bloc/acount/acount_bloc.dart';
 import 'package:lotto_music/src/bloc/carrito/carrito_bloc.dart';
+import 'package:lotto_music/src/bloc/direcciones/direcciones_bloc.dart';
 import 'package:lotto_music/src/bloc/planes/planes_bloc.dart';
 import 'package:lotto_music/src/bloc/shaderPreferences/shaderpreferences_bloc.dart';
 import 'package:lotto_music/src/bloc/suscripciones/suscripciones_bloc.dart';
+import 'package:lotto_music/src/bloc/tarjetas/tarjetas_bloc.dart';
 import 'package:lotto_music/src/bloc/user/user_bloc.dart';
 import 'package:lotto_music/src/bloc/video_event/video_event_bloc.dart';
 import 'package:lotto_music/src/bloc/videos/videos_bloc.dart';
@@ -83,6 +85,8 @@ class Appstate extends StatelessWidget {
         BlocProvider(create: (context) => VideoEventBloc()),
         BlocProvider(create: (context) => VideosBloc()),
         BlocProvider(create: (context) => VideoBloc()),
+        BlocProvider(create: (context) => TarjetasBloc()),
+        BlocProvider(create: (context) => DireccionesBloc()),
       ],
       child: BlocBuilder<ShaderpreferencesBloc, ShaderpreferencesState>(
         builder: (context, state) {

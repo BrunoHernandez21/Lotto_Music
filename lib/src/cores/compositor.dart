@@ -3,20 +3,25 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/bloc/carrito/carrito_bloc.dart';
 import 'package:lotto_music/src/bloc/shaderPreferences/shaderpreferences_bloc.dart';
 import 'package:lotto_music/src/bloc/suscripciones/suscripciones_bloc.dart';
+import 'package:lotto_music/src/bloc/tarjetas/tarjetas_bloc.dart';
 import 'package:lotto_music/src/bloc/user/user_bloc.dart';
 import 'package:lotto_music/src/bloc/video_event/video_event_bloc.dart';
 import 'package:lotto_music/src/bloc/videos/videos_bloc.dart';
 import 'package:lotto_music/src/bloc/videos_categoria/videos_categoria_bloc.dart';
-import 'package:lotto_music/src/models/apuesta.dart';
+import 'package:lotto_music/src/models/userevent.dart';
 import 'package:lotto_music/src/models/login_response.dart';
+import 'package:lotto_music/src/models/tarjetas.dart';
+import 'package:lotto_music/src/models/tarjetas_response.dart';
 import 'package:lotto_music/src/models/youtube.dart';
 import 'package:lotto_music/src/services/acount.dart';
 import 'package:lotto_music/src/services/carrito.dart';
 import 'package:lotto_music/src/services/compra.dart';
+import 'package:lotto_music/src/services/direcciones.dart';
 import 'package:lotto_music/src/services/plan.dart';
 import 'package:lotto_music/src/services/yt.dart';
 
 import '../bloc/acount/acount_bloc.dart';
+import '../bloc/direcciones/direcciones_bloc.dart';
 import '../bloc/planes/planes_bloc.dart';
 import '../bloc/video/video_bloc.dart';
 import '../bloc/videos_event/videos_event_bloc.dart';
@@ -24,12 +29,15 @@ import '../helpers/variables_globales.dart';
 import '../models/carrito.dart';
 import '../models/carrito_response.dart';
 import '../models/cartera.dart';
+import '../models/direcciones.dart';
+import '../models/direcciones_response.dart';
 import '../models/evento_video.dart';
 import '../models/ganador.dart';
 import '../models/grupos.dart';
 import '../models/historial_compra.dart';
 import '../models/historial_event_user.dart';
 import '../models/users.dart';
+import '../services/Tarjetas.dart';
 import '../services/apuestas.dart';
 import '../services/utility.dart';
 import '../services/videos.dart';
@@ -243,6 +251,134 @@ class Compositor {
     return true;
   }
 
+  static Future<bool?> onLoadDirecciones(BuildContext context) async {
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    final direccionesB = BlocProvider.of<DireccionesBloc>(context);
+
+    final resp = await DireccionesServices.load(
+      token: acountB.state.acount.accessToken,
+    );
+
+    if (resp == null) {
+      direccionesB.add(
+        OnLoadDirecciones(
+          direcciones: DireccionesResponse(
+            direcciones: [],
+          ),
+        ),
+      );
+      return false;
+    } else {
+      direccionesB.add(
+        OnLoadDirecciones(direcciones: resp),
+      );
+      return true;
+    }
+  }
+
+  static Future<bool> onDeleteDirecciones({
+    required BuildContext context,
+    required int id,
+  }) async {
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    final direccionesB = BlocProvider.of<DireccionesBloc>(context);
+    final crea = await DireccionesServices.remove(
+        token: acountB.state.acount.accessToken, id: id);
+    if (crea != "eliminado correctamente") {
+      return false;
+    }
+
+    final resp = await DireccionesServices.load(
+      token: acountB.state.acount.accessToken,
+    );
+
+    if (resp == null) {
+      direccionesB.add(
+        OnLoadDirecciones(
+          direcciones: DireccionesResponse(
+            direcciones: [],
+          ),
+        ),
+      );
+      return false;
+    } else {
+      direccionesB.add(
+        OnLoadDirecciones(direcciones: resp),
+      );
+      return true;
+    }
+  }
+
+  static Future<bool> onUpdateDirecciones({
+    required BuildContext context,
+    required DireccionesModel direccion,
+  }) async {
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    final direccionesB = BlocProvider.of<DireccionesBloc>(context);
+    final crea = await DireccionesServices.update(
+      token: acountB.state.acount.accessToken,
+      direccion: direccion,
+    );
+    if (crea?.mensaje != null) {
+      return false;
+    }
+
+    final resp = await DireccionesServices.load(
+      token: acountB.state.acount.accessToken,
+    );
+
+    if (resp == null) {
+      direccionesB.add(
+        OnLoadDirecciones(
+          direcciones: DireccionesResponse(
+            direcciones: [],
+          ),
+        ),
+      );
+      return false;
+    } else {
+      direccionesB.add(
+        OnLoadDirecciones(direcciones: resp),
+      );
+      return true;
+    }
+  }
+
+  static Future<bool> onCreateDirecciones({
+    required BuildContext context,
+    required DireccionesModel direccion,
+  }) async {
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    final direccionesB = BlocProvider.of<DireccionesBloc>(context);
+    final crea = await DireccionesServices.create(
+      token: acountB.state.acount.accessToken,
+      direccion: direccion,
+    );
+    if (crea?.mensaje != null) {
+      return false;
+    }
+
+    final resp = await DireccionesServices.load(
+      token: acountB.state.acount.accessToken,
+    );
+
+    if (resp == null) {
+      direccionesB.add(
+        OnLoadDirecciones(
+          direcciones: DireccionesResponse(
+            direcciones: [],
+          ),
+        ),
+      );
+      return false;
+    } else {
+      direccionesB.add(
+        OnLoadDirecciones(direcciones: resp),
+      );
+      return true;
+    }
+  }
+
   /// Buy Controller
   /// Carga los items del carrito
   static Future<bool> onloadCarrito(BuildContext context) async {
@@ -352,24 +488,11 @@ class Compositor {
     return true;
   }
 
-  static Future<bool?> onBuyIntent({
+  static Future<bool?> onUserEventCreate({
     required BuildContext context,
-    required ItemEvent evento,
-    required int aproximacion,
-    required int cantidad,
+    required UserEventModel apuesta,
   }) async {
     final acountB = BlocProvider.of<AcountBloc>(context);
-    final apuesta = ApuestaModel(
-      apuestaId: evento.id ?? 0,
-      cantidad: cantidad,
-    );
-
-    apuesta.vistas = aproximacion;
-    apuesta.likes = aproximacion;
-    apuesta.comentarios = aproximacion;
-    apuesta.dislikes = aproximacion;
-    apuesta.vistas = aproximacion;
-    apuesta.vistas = aproximacion;
     final resp = await ApuestaService.crear(
       apuesta: apuesta,
       token: acountB.state.acount.accessToken,
@@ -378,6 +501,135 @@ class Compositor {
       return false;
     }
     return true;
+  }
+
+  ////////////////////////////////////////////
+  ///
+  ///Tarjetas
+
+  static Future<bool?> onLoadTarjetas(BuildContext context) async {
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    final tarjetasB = BlocProvider.of<TarjetasBloc>(context);
+
+    final resp = await TarjetaServices.load(
+      token: acountB.state.acount.accessToken,
+    );
+
+    if (resp == null) {
+      tarjetasB.add(
+        OnLoadTarjetas(
+          tarjetas: TarjetasResponse(
+            tarjetas: [],
+          ),
+        ),
+      );
+      return false;
+    } else {
+      tarjetasB.add(
+        OnLoadTarjetas(tarjetas: resp),
+      );
+      return true;
+    }
+  }
+
+  static Future<bool> onDeleteTarjetas({
+    required BuildContext context,
+    required int id,
+  }) async {
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    final tarjetasB = BlocProvider.of<TarjetasBloc>(context);
+    await TarjetaServices.remove(
+        token: acountB.state.acount.accessToken, id: id);
+
+    final resp = await TarjetaServices.load(
+      token: acountB.state.acount.accessToken,
+    );
+
+    if (resp == null) {
+      tarjetasB.add(
+        OnLoadTarjetas(
+          tarjetas: TarjetasResponse(
+            tarjetas: [],
+          ),
+        ),
+      );
+      return false;
+    } else {
+      tarjetasB.add(
+        OnLoadTarjetas(tarjetas: resp),
+      );
+      return true;
+    }
+  }
+
+  static Future<bool> onUpdateTarjetas({
+    required BuildContext context,
+    required TarjetaModel tarjeta,
+  }) async {
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    final tarjetasB = BlocProvider.of<TarjetasBloc>(context);
+    final crea = await TarjetaServices.update(
+      token: acountB.state.acount.accessToken,
+      tarjeta: tarjeta,
+    );
+    if (crea?.mensaje != null) {
+      return false;
+    }
+
+    final resp = await TarjetaServices.load(
+      token: acountB.state.acount.accessToken,
+    );
+
+    if (resp == null) {
+      tarjetasB.add(
+        OnLoadTarjetas(
+          tarjetas: TarjetasResponse(
+            tarjetas: [],
+          ),
+        ),
+      );
+      return false;
+    } else {
+      tarjetasB.add(
+        OnLoadTarjetas(tarjetas: resp),
+      );
+      return true;
+    }
+  }
+
+  static Future<bool> onCreateTarjetas({
+    required BuildContext context,
+    required TarjetaModel tarjeta,
+  }) async {
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    final tarjetasB = BlocProvider.of<TarjetasBloc>(context);
+    final crea = await TarjetaServices.create(
+      token: acountB.state.acount.accessToken,
+      tarjeta: tarjeta,
+    );
+    if (crea?.mensaje != null) {
+      return false;
+    }
+
+    final resp = await TarjetaServices.load(
+      token: acountB.state.acount.accessToken,
+    );
+
+    if (resp == null) {
+      tarjetasB.add(
+        OnLoadTarjetas(
+          tarjetas: TarjetasResponse(
+            tarjetas: [],
+          ),
+        ),
+      );
+      return false;
+    } else {
+      tarjetasB.add(
+        OnLoadTarjetas(tarjetas: resp),
+      );
+      return true;
+    }
   }
 
   ///////////////////////////////////////////////

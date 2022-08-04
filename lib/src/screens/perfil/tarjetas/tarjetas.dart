@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_credit_card/credit_card_brand.dart';
-import 'package:flutter_credit_card/flutter_credit_card.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lotto_music/src/models/tarjetas.dart';
+import 'package:lotto_music/src/models/tarjetas_response.dart';
+import 'package:lotto_music/src/screens/perfil/tarjetas/tarjetas_add.dart';
+import 'package:lotto_music/src/screens/perfil/tarjetas/tarjetas_edit.dart';
+
+import '../../../bloc/tarjetas/tarjetas_bloc.dart';
+import '../../../cores/compositor.dart';
+import '../../../helpers/variables_globales.dart';
+import '../../../widgets/text.dart';
 
 class Tarjetas extends StatefulWidget {
   static const String routeName = 'tarjetas';
@@ -11,139 +19,125 @@ class Tarjetas extends StatefulWidget {
 }
 
 class _TarjetasState extends State<Tarjetas> {
-  String cardNumber = '';
-  String expiryDate = '';
-  String cardHolderName = '';
-  String cvvCode = '';
-  bool isCvvFocused = false;
-  bool useGlassMorphism = false;
-  bool useBackgroundImage = false;
-  OutlineInputBorder? border;
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            const SizedBox(
-              height: 30,
-            ),
-            CreditCardWidget(
-              glassmorphismConfig:
-                  useGlassMorphism ? Glassmorphism.defaultConfig() : null,
-              cardNumber: cardNumber,
-              expiryDate: expiryDate,
-              cardHolderName: cardHolderName,
-              cvvCode: cvvCode,
-              showBackView: isCvvFocused,
-              obscureCardNumber: true,
-              obscureCardCvv: true,
-              isHolderNameVisible: true,
-              cardBgColor: Colors.red,
-              backgroundImage: useBackgroundImage ? 'assets/card_bg.png' : null,
-              isSwipeGestureEnabled: true,
-              onCreditCardWidgetChange: (CreditCardBrand creditCardBrand) {},
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    CreditCardForm(
-                      formKey: formKey,
-                      obscureCvv: true,
-                      obscureNumber: true,
-                      cardNumber: cardNumber,
-                      cvvCode: cvvCode,
-                      isHolderNameVisible: true,
-                      isCardNumberVisible: true,
-                      isExpiryDateVisible: true,
-                      cardHolderName: cardHolderName,
-                      expiryDate: expiryDate,
-                      themeColor: Colors.blue,
-                      textColor: Colors.white,
-                      cardNumberDecoration: InputDecoration(
-                        labelText: 'Number',
-                        hintText: 'XXXX XXXX XXXX XXXX',
-                        hintStyle: const TextStyle(color: Colors.white),
-                        labelStyle: const TextStyle(color: Colors.white),
-                        focusedBorder: border,
-                        enabledBorder: border,
-                      ),
-                      expiryDateDecoration: InputDecoration(
-                        hintStyle: const TextStyle(color: Colors.white),
-                        labelStyle: const TextStyle(color: Colors.white),
-                        focusedBorder: border,
-                        enabledBorder: border,
-                        labelText: 'Expired Date',
-                        hintText: 'XX/XX',
-                      ),
-                      cvvCodeDecoration: InputDecoration(
-                        hintStyle: const TextStyle(color: Colors.white),
-                        labelStyle: const TextStyle(color: Colors.white),
-                        focusedBorder: border,
-                        enabledBorder: border,
-                        labelText: 'CVV',
-                        hintText: 'XXX',
-                      ),
-                      cardHolderDecoration: InputDecoration(
-                        hintStyle: const TextStyle(color: Colors.white),
-                        labelStyle: const TextStyle(color: Colors.white),
-                        focusedBorder: border,
-                        enabledBorder: border,
-                        labelText: 'Card Holder',
-                      ),
-                      onCreditCardModelChange: onCreditCardModelChange,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        primary: const Color(0xff1b447b),
-                      ),
-                      child: Container(
-                        margin: const EdgeInsets.all(12),
-                        child: const Text(
-                          'Validate',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'halter',
-                            fontSize: 14,
-                            package: 'flutter_credit_card',
-                          ),
-                        ),
-                      ),
-                      onPressed: () {},
-                    ),
-                  ],
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+      ),
+      body: BlocBuilder<TarjetasBloc, TarjetasState>(
+        builder: (context, state) {
+          if (state.tarjetas == null) {
+            Compositor.onLoadTarjetas(context);
+          }
+          return Column(
+            children: [
+              const Cabezera(),
+              RefreshIndicator(
+                onRefresh: () async {
+                  Compositor.onLoadTarjetas(context);
+                },
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics(),
+                  ),
+                  child: Column(
+                    children: listaWidgets(state.tarjetas),
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
+            ],
+          );
+        },
       ),
     );
   }
 
-  void onCreditCardModelChange(CreditCardModel? creditCardModel) {
-    setState(() {
-      cardNumber = creditCardModel!.cardNumber;
-      expiryDate = creditCardModel.expiryDate;
-      cardHolderName = creditCardModel.cardHolderName;
-      cvvCode = creditCardModel.cvvCode;
-      isCvvFocused = creditCardModel.isCvvFocused;
+  List<Widget> listaWidgets(TarjetasResponse? estado) {
+    List<Widget> lista = [];
+
+    estado?.tarjetas?.forEach((element) {
+      lista.add(_Tarjeta(evento: element));
     });
+
+    if ((estado?.tarjetas?.length ?? 0) < 2) {
+      lista.add(SizedBox(
+        height: Medidas.size.height * .25,
+      ));
+    }
+    return lista;
   }
 }
+
+class _Tarjeta extends StatelessWidget {
+  final TarjetaModel evento;
+  const _Tarjeta({Key? key, required this.evento}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: IconButton(
+        icon: const Icon(
+          Icons.remove_circle,
+          color: Colors.red,
+        ),
+        onPressed: () {
+          Compositor.onDeleteTarjetas(
+            context: context,
+            id: evento.id,
+          );
+        },
+      ),
+      trailing: const Icon(Icons.arrow_forward),
+      title: Textos.parrafoMAX(texto: evento.cardNumber),
+      subtitle: Textos.parrafoMED(texto: evento.holderName),
+      onTap: () {
+        final tarjetasB = BlocProvider.of<TarjetasBloc>(context);
+        tarjetasB.add(OnSelectTarjetas(selected: evento));
+        Navigator.pushNamed(context, TarjetasEdit.routeName);
+      },
+    );
+  }
+
+  Widget espace(Widget child) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Padding(
+        padding: EdgeInsets.only(left: Medidas.size.width * .15),
+        child: child,
+      ),
+    );
+  }
+}
+
+class Cabezera extends StatelessWidget {
+  const Cabezera({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Textos.tituloMAX(texto: "Tarjetas"),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 30),
+              child: TextButton(
+                child: Textos.tituloMIN(
+                    texto: "Agrega mas", color: Colors.blueAccent),
+                onPressed: () {
+                  Navigator.pushNamed(context, TarjetasADD.routeName);
+                },
+              ),
+            )
+          ],
+        )
+      ],
+    );
+  }
+}
+
 
 // final a = [
 //   {"id": 1, "name": "Views"},

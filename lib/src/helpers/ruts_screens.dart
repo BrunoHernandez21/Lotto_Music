@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:lotto_music/src/screens/eventos/adivina/adivina.dart';
+import 'package:lotto_music/src/screens/perfil/tarjetas/tarjetas_add.dart';
+import 'package:lotto_music/src/screens/perfil/tarjetas/tarjetas_edit.dart';
 
 import '../screens/acount/login.dart';
 import '../screens/acount/recovery.dart';
@@ -12,6 +14,7 @@ import '../screens/eventos/categorias/videos_categorias.dart';
 import '../screens/pagos/carrito/verificar_compra.dart';
 import '../screens/perfil/editar_perfil/direcciones/direccion.dart';
 import '../screens/perfil/editar_perfil/direcciones/direcciones_add.dart';
+import '../screens/perfil/editar_perfil/direcciones/direcciones_edit.dart';
 import '../screens/perfil/editar_perfil/new_password.dart';
 import '../screens/perfil/editar_perfil/password_confirm.dart';
 import '../screens/provedores_video/search/search.dart';
@@ -51,10 +54,13 @@ class Ruts {
     HistorialEventos.routeName: (_) => const HistorialEventos(),
     VideosCategoria.routeName: (_) => const VideosCategoria(),
     VideoEvento.routeName: (_) => const VideoEvento(),
-    Adivina.routeName: (_) => Adivina(),
+    Adivina.routeName: (_) => const Adivina(),
     Estadisticas.routeName: (_) => const Estadisticas(),
     VerificarCompra.routeName: (_) => const VerificarCompra(),
-    DireccionADD.routeName: (_) => const DireccionADD(),
+    DireccionEdit.routeName: (_) => const DireccionEdit(),
+    DireccionAdd.routeName: (_) => const DireccionAdd(),
+    TarjetasEdit.routeName: (_) => const TarjetasEdit(),
+    TarjetasADD.routeName: (_) => const TarjetasADD(),
   };
 
   static get rutas {

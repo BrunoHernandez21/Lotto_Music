@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../widgets/text.dart';
 import '../editar_perfil.dart';
-import 'direccion.dart';
+import 'direcciones/direccion.dart';
 import 'new_password.dart';
 
 class AjustesUsuario extends StatelessWidget {
