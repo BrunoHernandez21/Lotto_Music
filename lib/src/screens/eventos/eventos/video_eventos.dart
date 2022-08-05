@@ -10,7 +10,6 @@ import '../../../helpers/variables_globales.dart';
 import '../../../models/evento_video.dart';
 import '../../../widgets/botones.dart';
 import '../../../widgets/digital_clock.dart';
-import '../../../widgets/inicia_secion.dart';
 import '../../../widgets/svg_nosignal.dart';
 import '../../../widgets/text.dart';
 import '../../utils/clock.dart';

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../helpers/variables_globales.dart';
+import '../models/estadisticvas_yt.dart';
 import '../models/youtube.dart';
 
 class YTService {
@@ -12,6 +13,7 @@ class YTService {
       URL.searchYT + "&type=video&maxResults=10&part=snippet&relatedToVideoId=";
   static const String _search =
       URL.searchYT + "&type=video&maxResults=10&part=snippet&maxResults=10&q=";
+  static const String _estadisticas = URL.estYT + "&part=statistics&id=";
 /////////////////////////////
   /// separador
   static Future<YoutubeModel?> top() async {
@@ -49,6 +51,15 @@ class YTService {
       return out;
     }
 
+    return out;
+  }
+
+  static Future<EstadisticasYt?> estadisticas({required String ytID}) async {
+    final urI = Uri.parse(_estadisticas + ytID);
+    final resp = await http.get(
+      urI,
+    );
+    final out = EstadisticasYt.fromJson(resp.body);
     return out;
   }
 }

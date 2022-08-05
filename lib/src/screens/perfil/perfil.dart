@@ -1,15 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lotto_music/src/cores/compositor.dart';
 import 'package:lotto_music/src/helpers/new_icons.dart';
-import 'package:lotto_music/src/helpers/variables_globales.dart';
 import 'package:lotto_music/src/models/cartera.dart';
 import 'package:lotto_music/src/models/login_response.dart';
-import 'package:lotto_music/src/screens/acount/login.dart';
 import 'package:flutter/material.dart';
 import 'package:lotto_music/src/screens/perfil/tarjetas/tarjetas.dart';
-import 'package:lotto_music/src/widgets/botones.dart';
-
 import '../../bloc/acount/acount_bloc.dart';
 import '../../bloc/user/user_bloc.dart';
 import '../../widgets/inicia_secion.dart';

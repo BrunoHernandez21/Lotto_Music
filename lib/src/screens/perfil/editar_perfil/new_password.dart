@@ -59,6 +59,7 @@ class _NewPasswordState extends State<NewPassword> {
                   padding: const EdgeInsets.symmetric(vertical: 5),
                   child: InputsText.classic(
                     controller: scontroller,
+                    maxLines: 1,
                     hintText: 'xxxxxxxxxx',
                     textType: TextInputType.visiblePassword,
                     obscure: true,
@@ -78,6 +79,7 @@ class _NewPasswordState extends State<NewPassword> {
                   child: InputsText.classic(
                     controller: pcontroller,
                     hintText: 'xxxxxxxxxx',
+                    maxLines: 1,
                     textType: TextInputType.visiblePassword,
                     obscure: true,
                     icon: const Icon(Icons.lock),

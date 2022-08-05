@@ -28,7 +28,7 @@ class Pagos extends StatelessWidget {
                 indicatorColor: Colors.orange,
                 tabs: <Widget>[
                   Tab(
-                    text: 'Planes',
+                    text: 'Paquetes',
                   ),
                   Tab(
                     text: 'Suscripciones',

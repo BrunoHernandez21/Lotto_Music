@@ -33,7 +33,7 @@ class _AdivinaState extends State<Adivina> {
   bool controlL = true;
   bool controlC = true;
   bool controlG = true;
-  bool controlCo = true;
+  bool controlS = true;
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +83,6 @@ class _AdivinaState extends State<Adivina> {
         const SizedBox(
           height: 10,
         ),
-        Textos.tituloMED(texto: "Vistas"),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -102,6 +101,9 @@ class _AdivinaState extends State<Adivina> {
               child: InputsText.box(
                   maxLength: 20,
                   controller: controllerV,
+                  labelText: "Vistas",
+                  hintText: "0",
+                  textAlign: TextAlign.right,
                   textType: TextInputType.number,
                   onChanged: (a) {
                     if (a.length >= 14) {
@@ -111,7 +113,6 @@ class _AdivinaState extends State<Adivina> {
             ),
           ],
         ),
-        Textos.tituloMED(texto: "Like"),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -130,6 +131,9 @@ class _AdivinaState extends State<Adivina> {
               child: InputsText.box(
                   maxLength: 20,
                   controller: controllerL,
+                  labelText: "Me gusta",
+                  hintText: "0",
+                  textAlign: TextAlign.right,
                   textType: TextInputType.number,
                   onChanged: (a) {
                     if (a.length >= 14) {
@@ -139,7 +143,6 @@ class _AdivinaState extends State<Adivina> {
             ),
           ],
         ),
-        Textos.tituloMED(texto: "comentarios"),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -158,6 +161,9 @@ class _AdivinaState extends State<Adivina> {
               child: InputsText.box(
                   maxLength: 20,
                   controller: controllerC,
+                  labelText: "Comentarios",
+                  hintText: "0",
+                  textAlign: TextAlign.right,
                   textType: TextInputType.number,
                   onChanged: (a) {
                     if (a.length >= 14) {
@@ -167,7 +173,6 @@ class _AdivinaState extends State<Adivina> {
             ),
           ],
         ),
-        Textos.tituloMED(texto: "Guardados"),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -186,6 +191,9 @@ class _AdivinaState extends State<Adivina> {
               child: InputsText.box(
                   maxLength: 20,
                   controller: controllerG,
+                  labelText: "Guardados",
+                  hintText: "0",
+                  textAlign: TextAlign.right,
                   textType: TextInputType.number,
                   onChanged: (a) {
                     if (a.length >= 14) {
@@ -195,17 +203,16 @@ class _AdivinaState extends State<Adivina> {
             ),
           ],
         ),
-        Textos.tituloMED(texto: "Compartidos"),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Checkbox(
-                value: controlCo,
+                value: controlS,
                 fillColor: MaterialStateProperty.all(const Color(0xFF10CA20)),
                 onChanged: (s) {
                   if (s != null) {
-                    controlCo = s;
+                    controlS = s;
                     setState(() {});
                   }
                 }),
@@ -214,6 +221,9 @@ class _AdivinaState extends State<Adivina> {
               child: InputsText.box(
                   maxLength: 20,
                   controller: controllerS,
+                  labelText: "Compartidos",
+                  hintText: "0",
+                  textAlign: TextAlign.right,
                   textType: TextInputType.number,
                   onChanged: (a) {}),
             ),
@@ -235,11 +245,21 @@ class _AdivinaState extends State<Adivina> {
               final apuesta = UserEventModel(
                 eventoId: evento.id ?? 0,
               );
-              apuesta.viewsCount = int.tryParse(controllerV.text) ?? 0;
-              apuesta.likeCount = int.tryParse(controllerL.text) ?? 0;
-              apuesta.commentsCount = int.tryParse(controllerC.text) ?? 0;
-              apuesta.sharedCount = int.tryParse(controllerS.text) ?? 0;
-              apuesta.savedCount = int.tryParse(controllerG.text) ?? 0;
+              if (controlV) {
+                apuesta.viewsCount = int.tryParse(controllerV.text) ?? 0;
+              }
+              if (controlL) {
+                apuesta.likeCount = int.tryParse(controllerL.text) ?? 0;
+              }
+              if (controlC) {
+                apuesta.commentsCount = int.tryParse(controllerC.text) ?? 0;
+              }
+              if (controlS) {
+                apuesta.savedCount = int.tryParse(controllerG.text) ?? 0;
+              }
+              if (controlS) {
+                apuesta.sharedCount = int.tryParse(controllerS.text) ?? 0;
+              }
 
               if (await Compositor.onUserEventCreate(
                     context: context,

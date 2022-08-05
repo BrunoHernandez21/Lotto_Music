@@ -11,6 +11,8 @@ import '../../../bloc/video_event/video_event_bloc.dart';
 import '../../../cores/compositor.dart';
 import '../../../helpers/rutinas.dart';
 import '../../../helpers/variables_globales.dart';
+import '../../../models/estadisticvas_yt.dart';
+import '../../../services/yt.dart';
 import 'appbar.dart';
 
 class VideoEvento extends StatefulWidget {
@@ -34,10 +36,17 @@ class _VideoEventoState extends State<VideoEvento> {
     super.dispose();
   }
 
+  EstadisticasYt? estadisticas;
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<VideoEventBloc, VideoEventState>(
       builder: (context, state) {
+        YTService.estadisticas(
+          ytID: state.eventoVideo.videoId ?? "dO1rMeYnOmM",
+        ).then((value) {
+          estadisticas = value;
+        });
         controller = YoutubePlayerController(
           initialVideoId: state.eventoVideo.videoId ?? "dO1rMeYnOmM",
           flags: const YoutubePlayerFlags(
@@ -90,25 +99,40 @@ class _VideoEventoState extends State<VideoEvento> {
                   subtitle:
                       Textos.parrafoMAX(texto: state.eventoVideo.artista ?? ""),
                 )),
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.only(left: 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Textos.parrafoMAX(
-                    texto: "Hora " +
-                        state.eventoVideo.fechahoraevento
-                            .toString()
-                            .substring(11, 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Textos.parrafoMAX(
+                  texto: "Vistas: " +
+                      (estadisticas?.items?.first.statistics?.viewCount ?? "")
+                          .replaceAllMapped(
+                              RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                              (Match m) => '${m[1]},'),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  margin: const EdgeInsets.only(left: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Textos.parrafoMAX(
+                        texto: "Hora " +
+                            state.eventoVideo.fechahoraevento
+                                .toString()
+                                .substring(11, 16),
+                      ),
+                      Textos.parrafoMAX(
+                        texto: Rutinas.comprobador(
+                          state.eventoVideo.fechahoraevento,
+                        ),
+                      ),
+                    ],
                   ),
-                  Textos.parrafoMAX(
-                    texto: Rutinas.comprobador(
-                      state.eventoVideo.fechahoraevento,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 15,
             ),
             Align(
               alignment: Alignment.center,

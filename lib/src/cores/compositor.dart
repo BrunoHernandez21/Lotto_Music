@@ -32,7 +32,6 @@ import '../models/cartera.dart';
 import '../models/direcciones.dart';
 import '../models/direcciones_response.dart';
 import '../models/evento_video.dart';
-import '../models/ganador.dart';
 import '../models/ganador_response.dart';
 import '../models/grupos.dart';
 import '../models/historial_compra.dart';

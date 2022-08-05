@@ -6,7 +6,6 @@ import 'package:lotto_music/src/models/ganador_response.dart';
 import '../helpers/variables_globales.dart';
 import '../models/cartera.dart';
 import '../models/evento_video.dart';
-import '../models/ganador.dart';
 
 class UtilityService {
   static const String _clock = URL.utility + "/oclock";

@@ -34,6 +34,8 @@ class InputsText {
     Widget? icon,
     int? maxLines,
     int? maxLength,
+    String? labelText,
+    TextAlign? textAlign,
     void Function(String)? onChanged,
   }) {
     return _InputTextBox(
@@ -46,6 +48,8 @@ class InputsText {
       textType: textType,
       maxLenght: maxLength,
       maxLines: maxLines = 1,
+      labelText: labelText,
+      textAlign: textAlign,
     );
   }
 }
@@ -59,6 +63,8 @@ class _InputTextBox extends StatefulWidget {
   final Widget? icon;
   final int? maxLines;
   final int? maxLenght;
+  final String? labelText;
+  final TextAlign? textAlign;
   final void Function(String)? onChanged;
 
   const _InputTextBox({
@@ -71,6 +77,8 @@ class _InputTextBox extends StatefulWidget {
     this.onChanged,
     this.maxLenght,
     this.maxLines,
+    this.textAlign,
+    this.labelText,
   });
 
   @override
@@ -96,6 +104,7 @@ class _InputTextBoxState extends State<_InputTextBox> {
       maxLength: widget.maxLenght,
       controller: widget.controller,
       keyboardType: widget.textType,
+      textAlign: widget.textAlign ?? TextAlign.start,
       decoration: InputDecoration(
         prefixIcon: widget.icon != null
             ? Container(
@@ -136,6 +145,7 @@ class _InputTextBoxState extends State<_InputTextBox> {
                   ))
             : null,
         hintText: widget.hintText,
+        labelText: widget.labelText,
         hintStyle: TextStyle(color: Colors.grey.shade400),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(3),

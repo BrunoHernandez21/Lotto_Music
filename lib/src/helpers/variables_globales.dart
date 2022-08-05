@@ -66,6 +66,7 @@ class URL {
   static const String _baseYT = "https://www.googleapis.com/youtube/v3";
   static const String _ytKey = "key=AIzaSyDJGZnO3AZ2fkYOctsTClRVuShJWRMpCt8";
   static const String searchYT = _baseYT + "/search?" + _ytKey;
+  static const String estYT = _baseYT + "/videos?" + _ytKey;
 
   static const String auth = _base + "auth";
   static const String videos = _base + "videos";
