@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_credit_card/credit_card_brand.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
-import 'package:flutter_credit_card/glassmorphism_config.dart';
 import 'package:lotto_music/src/cores/compositor.dart';
 import 'package:lotto_music/src/helpers/variables_globales.dart';
 import 'package:lotto_music/src/models/tarjetas.dart';
@@ -64,7 +63,8 @@ class _TarjetasEditState extends State<TarjetasEdit> {
         child: Column(
           children: [
             CreditCardWidget(
-              glassmorphismConfig: false ? Glassmorphism.defaultConfig() : null,
+              glassmorphismConfig:
+                  null, //false ? Glassmorphism.defaultConfig() : null,
               cardNumber: cardNumber.text,
               expiryDate: expiryDate,
               cardHolderName: cardHolderName.text,

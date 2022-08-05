@@ -73,7 +73,7 @@ class URL {
   static const String carrito = _base + "carrito";
   static const String evento = _base + "evento";
   static const String plan = _base + "plan";
-  static const String apuesta = _base + "apuesta";
+  static const String apuesta = _base + "usuario";
   static const String utility = _base + "utils";
 }
 

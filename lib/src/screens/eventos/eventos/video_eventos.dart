@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/cores/compositor.dart';
+import 'package:lotto_music/src/screens/acount/login.dart';
 
+import '../../../bloc/acount/acount_bloc.dart';
 import '../../../bloc/videos_event/videos_event_bloc.dart';
 import '../../../helpers/rutinas.dart';
 import '../../../helpers/variables_globales.dart';
 import '../../../models/evento_video.dart';
 import '../../../widgets/botones.dart';
 import '../../../widgets/digital_clock.dart';
+import '../../../widgets/inicia_secion.dart';
 import '../../../widgets/svg_nosignal.dart';
 import '../../../widgets/text.dart';
 import '../../utils/clock.dart';
@@ -53,7 +56,12 @@ class VideosEventos extends StatelessWidget {
               body: const Icon(Icons.history),
               colors: const [Color(0xffFFBBBB), Color(0xffA9F1DF)],
               onTap: () {
-                Navigator.of(context).pushNamed(HistorialEventos.routeName);
+                if (BlocProvider.of<AcountBloc>(context).state.isLogin ==
+                    false) {
+                  Navigator.of(context).pushNamed(Login.routeName);
+                } else {
+                  Navigator.of(context).pushNamed(HistorialEventos.routeName);
+                }
               },
             ),
           ),
@@ -82,7 +90,12 @@ class VideosEventos extends StatelessWidget {
                 body: const Icon(Icons.analytics),
                 colors: const [Color(0xffA9F1DF), Color(0xffFFBBBB)],
                 onTap: () {
-                  Navigator.of(context).pushNamed(Winner.routeName);
+                  if (BlocProvider.of<AcountBloc>(context).state.isLogin ==
+                      false) {
+                    Navigator.of(context).pushNamed(Login.routeName);
+                  } else {
+                    Navigator.of(context).pushNamed(Winner.routeName);
+                  }
                 }),
           ),
         ),

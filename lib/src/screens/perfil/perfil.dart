@@ -12,6 +12,7 @@ import 'package:lotto_music/src/widgets/botones.dart';
 
 import '../../bloc/acount/acount_bloc.dart';
 import '../../bloc/user/user_bloc.dart';
+import '../../widgets/inicia_secion.dart';
 import '../../widgets/text.dart';
 import 'acerda_de.dart';
 import 'ajustes/ajustes.dart';
@@ -34,7 +35,7 @@ class Perfil extends StatelessWidget {
               if (state.isLogin) {
                 return BodyLogin(acount: state.acount);
               } else {
-                return const BodyNoLogin();
+                return const BodyNoLoged();
               }
             },
           ),
@@ -170,43 +171,5 @@ class BodyLogin extends StatelessWidget {
         },
       ),
     ];
-  }
-}
-
-class BodyNoLogin extends StatelessWidget {
-  const BodyNoLogin({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 30,
-          ),
-          SizedBox(
-            width: Medidas.size.width * .8,
-            height: Medidas.size.width * .8,
-            child: SvgPicture.asset(
-              Assets.login,
-            ),
-          ),
-          const SizedBox(
-            height: 50,
-          ),
-          SizedBox(
-            width: Medidas.size.width * .5,
-            child: Botones.solidTextButton(
-                text: "Registrate",
-                onTap: () {
-                  Navigator.of(context).pushNamed(Login.routeName);
-                },
-                fontColor: Colors.white,
-                backColor: Colors.red.shade200),
-          )
-        ],
-      ),
-    );
   }
 }

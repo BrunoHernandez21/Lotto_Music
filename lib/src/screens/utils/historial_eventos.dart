@@ -16,7 +16,7 @@ class HistorialEventos extends StatefulWidget {
 
 class _HistorialEventosState extends State<HistorialEventos> {
   final ScrollController controller = ScrollController();
-  HistorialEventosUsuario? estado;
+  HistorialEventoUsuario? estado;
   bool isLoad = false;
   @override
   void initState() {
@@ -106,7 +106,7 @@ class _HistorialEventosState extends State<HistorialEventos> {
 }
 
 class _Tarjeta extends StatelessWidget {
-  final UserEventModel evento;
+  final HistorialModel evento;
   const _Tarjeta({Key? key, required this.evento}) : super(key: key);
 
   @override
@@ -135,29 +135,25 @@ class _Tarjeta extends StatelessWidget {
           evento.activo
               ? Textos.tituloMAX(texto: "Apuesta Activa")
               : Textos.tituloMAX(texto: "Apuesta inactiva"),
-          if (evento.cantidad != 0)
-            Textos.tituloMIN(
-              texto: "Cantidad: " + evento.cantidad.toString(),
-            ),
           Textos.tituloMIN(
             texto: "Tipo de apuesta",
           ),
-          if (evento.likes != 0)
+          if (evento.likeCount != 0)
             espace(
               Textos.tituloMIN(
-                texto: "likes: " + evento.likes.toString(),
+                texto: "likes: " + evento.likeCount.toString(),
               ),
             ),
-          if (evento.comentarios != 0)
+          if (evento.commentsCount != 0)
             espace(
               Textos.tituloMIN(
-                texto: "Comentarios: " + evento.comentarios.toString(),
+                texto: "Comentarios: " + evento.commentsCount.toString(),
               ),
             ),
-          if (evento.vistas != 0)
+          if (evento.viewsCount != 0)
             espace(
               Textos.tituloMIN(
-                texto: "Vistas: " + evento.vistas.toString(),
+                texto: "Vistas: " + evento.viewsCount.toString(),
               ),
             ),
           Align(

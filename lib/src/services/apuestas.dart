@@ -1,7 +1,6 @@
 // ignore: unused_import
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:lotto_music/src/bloc/user/user_bloc.dart';
 import 'package:lotto_music/src/models/userevent.dart';
 
 import '../helpers/variables_globales.dart';
@@ -10,7 +9,7 @@ import '../models/login_response.dart';
 
 class ApuestaService {
   static const String _listar = URL.apuesta + "listar";
-  static const String _apuesta = URL.apuesta + "/apuesta";
+  static const String _apuesta = URL.apuesta + "/evento";
 
   static Future<LoginResponse?> listar() async {
     try {
@@ -49,7 +48,7 @@ class ApuestaService {
     }
   }
 
-  static Future<HistorialEventosUsuario?> listarHistory({
+  static Future<HistorialEventoUsuario?> listarHistory({
     required int pag,
     required String token,
   }) async {
@@ -60,7 +59,7 @@ class ApuestaService {
         "Authorization": "Bearer " + token,
       },
     );
-    final out = HistorialEventosUsuario.fromJson(resp.body);
+    final out = HistorialEventoUsuario.fromJson(resp.body);
     return out;
   }
 }

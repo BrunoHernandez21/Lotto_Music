@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lotto_music/src/bloc/acount/acount_bloc.dart';
 import 'package:lotto_music/src/cores/compositor.dart';
 import 'package:lotto_music/src/helpers/variables_globales.dart';
 import 'package:lotto_music/src/screens/pagos/carrito/verificar_compra.dart';
@@ -8,6 +9,7 @@ import 'package:lotto_music/src/screens/pagos/carrito/verificar_compra.dart';
 import '../../../bloc/carrito/carrito_bloc.dart';
 import '../../../models/carrito_response.dart';
 import '../../../widgets/botones.dart';
+import '../../../widgets/inicia_secion.dart';
 import '../../../widgets/svg_nosignal.dart';
 import '../../../widgets/text.dart';
 
@@ -19,25 +21,32 @@ class Carrito extends StatelessWidget {
     if (BlocProvider.of<CarritoBloc>(context).state.itemsCarrito == null) {
       Compositor.onloadCarrito(context);
     }
-    return BlocBuilder<CarritoBloc, CarritoState>(
+    return BlocBuilder<AcountBloc, AcountState>(
       builder: (context, state) {
-        if (state.itemsCarrito == null) {
-          return RefreshIndicator(
+        if (BlocProvider.of<AcountBloc>(context).state.isLogin == false) {
+          return const BodyNoLoged();
+        }
+        return BlocBuilder<CarritoBloc, CarritoState>(
+          builder: (context, state) {
+            if (state.itemsCarrito == null) {
+              return RefreshIndicator(
+                  onRefresh: () async {
+                    Compositor.onloadCarrito(context);
+                  },
+                  child: const NoSignal());
+            }
+            return RefreshIndicator(
               onRefresh: () async {
                 Compositor.onloadCarrito(context);
               },
-              child: const NoSignal());
-        }
-        return RefreshIndicator(
-          onRefresh: () async {
-            Compositor.onloadCarrito(context);
+              child: state.itemsCarrito?.isEmpty ?? true
+                  ? emptyFunc()
+                  : builderBody(
+                      state.itemsCarrito!,
+                      context,
+                    ),
+            );
           },
-          child: state.itemsCarrito?.isEmpty ?? true
-              ? emptyFunc()
-              : builderBody(
-                  state.itemsCarrito!,
-                  context,
-                ),
         );
       },
     );

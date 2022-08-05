@@ -33,11 +33,12 @@ import '../models/direcciones.dart';
 import '../models/direcciones_response.dart';
 import '../models/evento_video.dart';
 import '../models/ganador.dart';
+import '../models/ganador_response.dart';
 import '../models/grupos.dart';
 import '../models/historial_compra.dart';
 import '../models/historial_event_user.dart';
 import '../models/users.dart';
-import '../services/Tarjetas.dart';
+import '../services/tarjetas.dart';
 import '../services/apuestas.dart';
 import '../services/utility.dart';
 import '../services/videos.dart';
@@ -769,7 +770,7 @@ class Compositor {
   }
 
   /////// historial de Apuestas
-  static Future<HistorialEventosUsuario?> onLoadHistorialEventos({
+  static Future<HistorialEventoUsuario?> onLoadHistorialEventos({
     required BuildContext context,
     required int pag,
   }) async {
@@ -785,7 +786,7 @@ class Compositor {
     return resp;
   }
 
-  static Future<HistorialEventosUsuario?> onIinitHistorialEventos(
+  static Future<HistorialEventoUsuario?> onIinitHistorialEventos(
       BuildContext context) async {
     final acountB = BlocProvider.of<AcountBloc>(context);
     final resp = await ApuestaService.listarHistory(
@@ -824,7 +825,7 @@ class Compositor {
   }
 
   /////// winer
-  static Future<GanadorModel?> onLoadWiner({
+  static Future<GanadorResponse?> onLoadWiner({
     required BuildContext context,
     required int pag,
   }) async {
@@ -840,7 +841,7 @@ class Compositor {
     return resp;
   }
 
-  static Future<GanadorModel?> onIinitWiner(BuildContext context) async {
+  static Future<GanadorResponse?> onIinitWiner(BuildContext context) async {
     final acountB = BlocProvider.of<AcountBloc>(context);
     final resp = await UtilityService.wins(
       pag: 1,

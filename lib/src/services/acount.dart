@@ -24,14 +24,14 @@ class AcountServices {
       final urI = Uri.parse(_login);
       final resp = await http.post(urI,
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json; charset=utf-8",
           },
           body: jsonEncode({
             "email": email,
             "password": password,
           }));
 
-      final out = LoginResponse.fromJson(resp.body);
+      final out = LoginResponse.fromJson(utf8.decode(resp.bodyBytes));
       return out;
     } catch (e) {
       return null;
@@ -48,7 +48,7 @@ class AcountServices {
     final resp = await http.post(
       urI,
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json; charset=utf-8",
       },
       body: json.encode(
         {
@@ -59,7 +59,7 @@ class AcountServices {
         },
       ),
     );
-    return UserModel.fromJson(resp.body);
+    return UserModel.fromJson(utf8.decode(resp.bodyBytes));
   }
 
   static Future<UserModel?> update({
@@ -71,13 +71,13 @@ class AcountServices {
       final resp = await http.put(
         urI,
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json; charset=utf-8",
           "Authorization": "Bearer " + token,
         },
         body: user.toJson(),
       );
 
-      return UserModel.fromJson(resp.body);
+      return UserModel.fromJson(utf8.decode(resp.bodyBytes));
     } catch (e) {
       return null;
     }
@@ -91,12 +91,12 @@ class AcountServices {
       final resp = await http.get(
         urI,
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json; charset=utf-8",
           "Authorization": "Bearer " + token,
         },
       );
 
-      return UserModel.fromJson(resp.body);
+      return UserModel.fromJson(utf8.decode(resp.bodyBytes));
     } catch (e) {
       return null;
     }
@@ -108,11 +108,11 @@ class AcountServices {
       final resp = await http.get(
         urI,
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json; charset=utf-8",
         },
       );
 
-      return resp.body;
+      return utf8.decode(resp.bodyBytes);
     } catch (e) {
       return "";
     }
@@ -126,14 +126,14 @@ class AcountServices {
       final urI = Uri.parse(_changepassword);
       final resp = await http.put(urI,
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json; charset=utf-8",
             "Authorization": "Bearer " + token,
           },
           body: json.encode({
             "password": password,
           }));
 
-      return UserModel.fromJson(resp.body);
+      return UserModel.fromJson(utf8.decode(resp.bodyBytes));
     } catch (e) {
       return null;
     }

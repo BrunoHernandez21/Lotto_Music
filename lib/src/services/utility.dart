@@ -1,6 +1,7 @@
 // ignore: unused_import
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:lotto_music/src/models/ganador_response.dart';
 
 import '../helpers/variables_globales.dart';
 import '../models/cartera.dart';
@@ -33,7 +34,7 @@ class UtilityService {
     return out;
   }
 
-  static Future<GanadorModel?> wins({
+  static Future<GanadorResponse?> wins({
     required int pag,
     required String token,
   }) async {
@@ -46,7 +47,7 @@ class UtilityService {
       },
     );
 
-    final out = GanadorModel.fromJson(resp.body);
+    final out = GanadorResponse.fromJson(resp.body);
     return out;
   }
 }

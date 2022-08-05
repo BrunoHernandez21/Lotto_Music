@@ -4,6 +4,7 @@ import 'package:lotto_music/src/helpers/variables_globales.dart';
 import 'package:lotto_music/src/widgets/text.dart';
 
 import '../../models/ganador.dart';
+import '../../models/ganador_response.dart';
 
 class Winner extends StatefulWidget {
   static const routeName = 'winner';
@@ -15,7 +16,7 @@ class Winner extends StatefulWidget {
 
 class _WinnerState extends State<Winner> {
   final ScrollController controller = ScrollController();
-  GanadorModel? estado;
+  GanadorResponse? estado;
   bool isLoad = false;
   @override
   void initState() {
@@ -103,7 +104,7 @@ class _WinnerState extends State<Winner> {
 }
 
 class _Tarjeta extends StatelessWidget {
-  final Ganador ganador;
+  final GanadorModel ganador;
   const _Tarjeta({Key? key, required this.ganador}) : super(key: key);
 
   @override
@@ -138,7 +139,7 @@ class _Tarjeta extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 20.0),
               child: Textos.parrafoMAX(
-                texto: "ID " + ganador.idGanador.toString(),
+                texto: "ID " + ganador.usuarioId.toString(),
               ),
             ),
           ),

@@ -6,10 +6,6 @@ class Rutinas {
       return "No data";
     }
     final ahora = DateTime.now();
-    // TODO: compruebo la fecha o solo la hora?
-    // if (fevent.isBefore(ahora)) {
-    //   return "Expirado";
-    // }
     if ((ahora.hour * 60 + ahora.minute) < (fevent.hour * 60 + fevent.minute)) {
       String hora = "";
       String minuto = "";
