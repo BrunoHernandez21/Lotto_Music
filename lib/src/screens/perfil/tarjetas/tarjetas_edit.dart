@@ -82,7 +82,7 @@ class _TarjetasEditState extends State<TarjetasEdit> {
                 physics: const BouncingScrollPhysics(),
                 child: Column(
                   children: [
-                    Textos.tituloMAX(texto: "Agrega una Tarjetas"),
+                    Textos.tituloMAX(texto: "Editar Tarjeta"),
                     const SizedBox(
                       height: 15,
                     ),

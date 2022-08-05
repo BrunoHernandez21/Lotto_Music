@@ -31,7 +31,7 @@ class _DireccionAddState extends State<DireccionAdd> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,
-        title: Textos.tituloMED(texto: 'direccionedit'),
+        title: Textos.tituloMED(texto: 'Dirección'),
         centerTitle: true,
       ),
       body: body(),

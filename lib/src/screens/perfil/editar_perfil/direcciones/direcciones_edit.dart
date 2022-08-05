@@ -33,7 +33,7 @@ class _DireccionEditState extends State<DireccionEdit> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,
-        title: Textos.tituloMED(texto: 'direccionedit'),
+        title: Textos.tituloMED(texto: 'Dirección'),
         centerTitle: true,
       ),
       body: BlocBuilder<DireccionesBloc, DireccionesState>(
@@ -57,7 +57,7 @@ class _DireccionEditState extends State<DireccionEdit> {
         padding: const EdgeInsets.all(8),
         child: Column(
           children: [
-            Textos.tituloMAX(texto: "Agregar tu dirección"),
+            Textos.tituloMAX(texto: "Editar dirección"),
             const SizedBox(
               height: 60,
             ),
