@@ -7,3 +7,16 @@ Tools • Dart 2.17.6 • DevTools 2.12.2
 
 
 Android emulator Android version API 33
+
+
+TODO: 
+poner fecha de nacimiento                                                       listo
+try catch cuando no hay servicio disponible                                     listo
+mostrar el cash en las                                                          listo
+acerca de                                                                       listo
+
+tema blanco poner color negro en textos                                         complejo
+estadisticas y bloc en mostrar detalle de evento y envio de apuesta             complejo
+en numeros usar la separacion de miles                                          listo
+
+historial de compra (primeto deben hacerse las compras historial de compra)

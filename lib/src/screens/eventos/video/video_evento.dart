@@ -11,6 +11,7 @@ import '../../../bloc/video_event/video_event_bloc.dart';
 import '../../../cores/compositor.dart';
 import '../../../helpers/rutinas.dart';
 import '../../../helpers/variables_globales.dart';
+import '../../../models/cartera.dart';
 import '../../../models/estadisticvas_yt.dart';
 import '../../../services/yt.dart';
 import 'appbar.dart';
@@ -36,17 +37,10 @@ class _VideoEventoState extends State<VideoEvento> {
     super.dispose();
   }
 
-  EstadisticasYt? estadisticas;
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<VideoEventBloc, VideoEventState>(
       builder: (context, state) {
-        YTService.estadisticas(
-          ytID: state.eventoVideo.videoId ?? "dO1rMeYnOmM",
-        ).then((value) {
-          estadisticas = value;
-        });
         controller = YoutubePlayerController(
           initialVideoId: state.eventoVideo.videoId ?? "dO1rMeYnOmM",
           flags: const YoutubePlayerFlags(
@@ -90,24 +84,42 @@ class _VideoEventoState extends State<VideoEvento> {
           children: [
             player,
             Align(
-                alignment: Alignment.centerLeft,
-                child: ListTile(
-                  title: Textos.tituloMED(
-                    texto: state.eventoVideo.titulo ?? "",
-                    color: const Color.fromARGB(255, 201, 174, 56),
-                  ),
-                  subtitle:
-                      Textos.parrafoMAX(texto: state.eventoVideo.artista ?? ""),
-                )),
+              alignment: Alignment.centerLeft,
+              child: ListTile(
+                title: Textos.tituloMED(
+                  texto: state.eventoVideo.titulo ?? "",
+                  color: const Color.fromARGB(255, 201, 174, 56),
+                ),
+                subtitle:
+                    Textos.parrafoMAX(texto: state.eventoVideo.artista ?? ""),
+              ),
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: FutureBuilder(
+                future: Compositor.onLoadCartera(context: context),
+                initialData: null,
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  final data = snapshot.data;
+                  int cash = 0;
+                  if (data.runtimeType == CarteraModel) {
+                    cash = snapshot.data.puntos;
+                  }
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 15.0),
+                    child: Textos.tituloMED(
+                      texto: "Tus Puntos = " + cash.toString(),
+                      color: Colors.yellow,
+                    ),
+                  );
+                },
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Textos.parrafoMAX(
-                  texto: "Vistas: " +
-                      (estadisticas?.items?.first.statistics?.viewCount ?? "")
-                          .replaceAllMapped(
-                              RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-                              (Match m) => '${m[1]},'),
+                _EstadisticasYT(
+                  videoID: state.eventoVideo.videoId ?? "dO1rMeYnOmM",
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
@@ -175,6 +187,56 @@ class _VideoEventoState extends State<VideoEvento> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _EstadisticasYT extends StatefulWidget {
+  final String videoID;
+  const _EstadisticasYT({Key? key, required this.videoID}) : super(key: key);
+
+  @override
+  State<_EstadisticasYT> createState() => __EstadisticasYTState();
+}
+
+class __EstadisticasYTState extends State<_EstadisticasYT> {
+  EstadisticasYt? estadisticas;
+
+  @override
+  void initState() {
+    YTService.estadisticas(
+      ytID: widget.videoID,
+    ).then((value) {
+      estadisticas = value;
+      setState(() {});
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Textos.parrafoMAX(
+          texto: "Vistas: " +
+              (estadisticas?.items?.first.statistics?.viewCount ?? "")
+                  .replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                      (Match m) => '${m[1]},'),
+        ),
+        Textos.parrafoMAX(
+          texto: "Me gusta: " +
+              (estadisticas?.items?.first.statistics?.likeCount ?? "")
+                  .replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                      (Match m) => '${m[1]},'),
+        ),
+        Textos.parrafoMAX(
+          texto: "Comentarios: " +
+              (estadisticas?.items?.first.statistics?.commentCount ?? "")
+                  .replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                      (Match m) => '${m[1]},'),
+        ),
+      ],
     );
   }
 }

@@ -131,7 +131,11 @@ class _Tarjeta extends StatelessWidget {
         children: [
           Textos.tituloMAX(texto: "Usted gano"),
           if (ganador.cantidad != 0)
-            Textos.tituloMED(texto: ganador.cantidad.toString() + "\$mx"),
+            Textos.tituloMED(
+                texto: ganador.cantidad.toString().replaceAllMapped(
+                        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                        (Match m) => '${m[1]},') +
+                    "\$mx"),
           if (ganador.concepto.isNotEmpty)
             Textos.tituloMED(texto: ganador.concepto),
           Align(

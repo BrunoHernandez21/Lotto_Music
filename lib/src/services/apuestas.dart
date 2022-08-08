@@ -41,7 +41,6 @@ class ApuestaService {
         },
         body: apuesta.toJson(),
       );
-      print(resp.body);
       return UserEventModel.fromJson(resp.body);
     } catch (e) {
       return null;

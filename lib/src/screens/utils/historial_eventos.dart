@@ -137,22 +137,34 @@ class _Tarjeta extends StatelessWidget {
           Textos.tituloMIN(
             texto: "Tipo de apuesta",
           ),
-          if (evento.likeCount != 0)
+          if (evento.likeCount != null)
             espace(
               Textos.tituloMIN(
                 texto: "likes: " + evento.likeCount.toString(),
               ),
             ),
-          if (evento.commentsCount != 0)
+          if (evento.commentsCount != null)
             espace(
               Textos.tituloMIN(
                 texto: "Comentarios: " + evento.commentsCount.toString(),
               ),
             ),
-          if (evento.viewsCount != 0)
+          if (evento.viewsCount != null)
             espace(
               Textos.tituloMIN(
                 texto: "Vistas: " + evento.viewsCount.toString(),
+              ),
+            ),
+          if (evento.sharedCount != null)
+            espace(
+              Textos.tituloMIN(
+                texto: "Compartidas: " + evento.sharedCount.toString(),
+              ),
+            ),
+          if (evento.savedCount != null)
+            espace(
+              Textos.tituloMIN(
+                texto: "Guardadas: " + evento.savedCount.toString(),
               ),
             ),
           Align(
@@ -160,7 +172,10 @@ class _Tarjeta extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 20.0),
               child: Textos.tituloMIN(
-                texto: "ID " + evento.id.toString(),
+                texto: "ID " +
+                    evento.id.toString() +
+                    " Fecha " +
+                    (evento.fecha?.toString() ?? ""),
               ),
             ),
           ),

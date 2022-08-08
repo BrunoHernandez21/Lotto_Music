@@ -9,6 +9,7 @@ import '../../../bloc/video_event/video_event_bloc.dart';
 import '../../../cores/compositor.dart';
 import '../../../helpers/rutinas.dart';
 import '../../../helpers/variables_globales.dart';
+import '../../../models/cartera.dart';
 import '../../../models/userevent.dart';
 import '../../../models/evento_video.dart';
 import '../../../widgets/digital_clock.dart';
@@ -29,11 +30,11 @@ class _AdivinaState extends State<Adivina> {
   final controllerG = TextEditingController();
   final controllerS = TextEditingController();
 
-  bool controlV = true;
-  bool controlL = true;
-  bool controlC = true;
-  bool controlG = true;
-  bool controlS = true;
+  bool controlV = false;
+  bool controlL = false;
+  bool controlC = false;
+  bool controlG = false;
+  bool controlS = false;
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +78,32 @@ class _AdivinaState extends State<Adivina> {
           height: 20,
         ),
         Textos.tituloMAX(texto: "Tipo de evento"),
+        Textos.tituloMAX(
+            texto: "\$" +
+                evento.acumulado.toString().replaceAllMapped(
+                    RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                    (Match m) => '${m[1]},') +
+                "MXN"),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: FutureBuilder(
+            future: Compositor.onLoadCartera(context: context),
+            initialData: null,
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              final data = snapshot.data;
+              int cash = 0;
+              if (data.runtimeType == CarteraModel) {
+                cash = snapshot.data.puntos;
+              }
+              return Center(
+                child: Textos.tituloMED(
+                  texto: "Tus Puntos = " + cash.toString(),
+                  color: Colors.yellow,
+                ),
+              );
+            },
+          ),
+        ),
         const SizedBox(
           height: 40,
         ),
@@ -99,17 +126,22 @@ class _AdivinaState extends State<Adivina> {
             SizedBox(
               width: Medidas.size.width * .6,
               child: InputsText.box(
-                  maxLength: 20,
-                  controller: controllerV,
-                  labelText: "Vistas",
-                  hintText: "0",
-                  textAlign: TextAlign.right,
-                  textType: TextInputType.number,
-                  onChanged: (a) {
-                    if (a.length >= 14) {
-                      controllerV.text = a.substring(0, 13);
-                    }
-                  }),
+                maxLength: 20,
+                controller: controllerV,
+                labelText: "Vistas",
+                hintText: "0",
+                textAlign: TextAlign.right,
+                textType: TextInputType.number,
+                onChanged: (a) async {
+                  if (a.length >= 14) {
+                    controllerV.text = a.substring(0, 13);
+                  }
+                  if (a.length == 1) {
+                    controlV = true;
+                    setState(() {});
+                  }
+                },
+              ),
             ),
           ],
         ),
@@ -129,17 +161,22 @@ class _AdivinaState extends State<Adivina> {
             SizedBox(
               width: Medidas.size.width * .6,
               child: InputsText.box(
-                  maxLength: 20,
-                  controller: controllerL,
-                  labelText: "Me gusta",
-                  hintText: "0",
-                  textAlign: TextAlign.right,
-                  textType: TextInputType.number,
-                  onChanged: (a) {
-                    if (a.length >= 14) {
-                      controllerL.text = a.substring(0, 13);
-                    }
-                  }),
+                maxLength: 20,
+                controller: controllerL,
+                labelText: "Me gusta",
+                hintText: "0",
+                textAlign: TextAlign.right,
+                textType: TextInputType.number,
+                onChanged: (a) {
+                  if (a.length >= 14) {
+                    controllerL.text = a.substring(0, 13);
+                  }
+                  if (a.length == 1) {
+                    controlL = true;
+                    setState(() {});
+                  }
+                },
+              ),
             ),
           ],
         ),
@@ -159,17 +196,22 @@ class _AdivinaState extends State<Adivina> {
             SizedBox(
               width: Medidas.size.width * .6,
               child: InputsText.box(
-                  maxLength: 20,
-                  controller: controllerC,
-                  labelText: "Comentarios",
-                  hintText: "0",
-                  textAlign: TextAlign.right,
-                  textType: TextInputType.number,
-                  onChanged: (a) {
-                    if (a.length >= 14) {
-                      controllerC.text = a.substring(0, 13);
-                    }
-                  }),
+                maxLength: 20,
+                controller: controllerC,
+                labelText: "Comentarios",
+                hintText: "0",
+                textAlign: TextAlign.right,
+                textType: TextInputType.number,
+                onChanged: (a) {
+                  if (a.length >= 14) {
+                    controllerC.text = a.substring(0, 13);
+                  }
+                  if (a.length == 1) {
+                    controlC = true;
+                    setState(() {});
+                  }
+                },
+              ),
             ),
           ],
         ),
@@ -189,17 +231,22 @@ class _AdivinaState extends State<Adivina> {
             SizedBox(
               width: Medidas.size.width * .6,
               child: InputsText.box(
-                  maxLength: 20,
-                  controller: controllerG,
-                  labelText: "Guardados",
-                  hintText: "0",
-                  textAlign: TextAlign.right,
-                  textType: TextInputType.number,
-                  onChanged: (a) {
-                    if (a.length >= 14) {
-                      controllerG.text = a.substring(0, 13);
-                    }
-                  }),
+                maxLength: 20,
+                controller: controllerG,
+                labelText: "Guardados",
+                hintText: "0",
+                textAlign: TextAlign.right,
+                textType: TextInputType.number,
+                onChanged: (a) {
+                  if (a.length >= 14) {
+                    controllerG.text = a.substring(0, 13);
+                  }
+                  if (a.length == 1) {
+                    controlG = true;
+                    setState(() {});
+                  }
+                },
+              ),
             ),
           ],
         ),
@@ -219,13 +266,22 @@ class _AdivinaState extends State<Adivina> {
             SizedBox(
               width: Medidas.size.width * .6,
               child: InputsText.box(
-                  maxLength: 20,
-                  controller: controllerS,
-                  labelText: "Compartidos",
-                  hintText: "0",
-                  textAlign: TextAlign.right,
-                  textType: TextInputType.number,
-                  onChanged: (a) {}),
+                maxLength: 20,
+                controller: controllerS,
+                labelText: "Compartidos",
+                hintText: "0",
+                textAlign: TextAlign.right,
+                textType: TextInputType.number,
+                onChanged: (a) {
+                  if (a.length >= 14) {
+                    controllerS.text = a.substring(0, 13);
+                  }
+                  if (a.length == 1) {
+                    controlS = true;
+                    setState(() {});
+                  }
+                },
+              ),
             ),
           ],
         ),
@@ -266,10 +322,11 @@ class _AdivinaState extends State<Adivina> {
                     apuesta: apuesta,
                   ) ??
                   false) {
-                DialogAlert.ok(
+                await DialogAlert.ok(
                   context: context,
                   text: "Compra realizada con exito",
                 );
+                setState(() {});
               }
             },
           ),

@@ -895,7 +895,7 @@ class Compositor {
 
 ///////////////////////////////////////////////
 ////      Cartera
-  static Future<Cartera?> onLoadCartera({
+  static Future<CarteraModel?> onLoadCartera({
     required BuildContext context,
   }) async {
     final acountB = BlocProvider.of<AcountBloc>(context);

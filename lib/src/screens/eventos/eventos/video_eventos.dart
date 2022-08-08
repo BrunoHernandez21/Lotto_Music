@@ -222,11 +222,15 @@ class _ListVideosPaginacionState extends State<ListVideosPaginacion> {
           ),
         ),
         onTap: () {
-          Compositor.onSlectVideoEvento(
-            context: context,
-            item: v,
-          );
-          Navigator.of(context).pushNamed(VideoEvento.routeName);
+          if (BlocProvider.of<AcountBloc>(context).state.isLogin == false) {
+            Navigator.of(context).pushNamed(Login.routeName);
+          } else {
+            Compositor.onSlectVideoEvento(
+              context: context,
+              item: v,
+            );
+            Navigator.of(context).pushNamed(VideoEvento.routeName);
+          }
         },
       ),
     );

@@ -28,13 +28,13 @@ class _EditarPerfilState extends State<EditarPerfil> {
 
   @override
   void initState() {
-    final estado = BlocProvider.of<UserBloc>(context).state;
-    nacimiento = estado.user?.fechaNacimiento;
+    final UserModel? user = BlocProvider.of<UserBloc>(context).state.user;
+    nacimiento = user?.fechaNacimiento;
 
-    controlNombre.text = estado.user?.nombre ?? "";
-    controlNumero.text = estado.user?.telefono ?? "";
-    controlApellidoM.text = estado.user?.apellidom ?? "";
-    controlApellidoP.text = estado.user?.apellidop ?? "";
+    controlNombre.text = user?.nombre ?? "";
+    controlNumero.text = user?.telefono ?? "";
+    controlApellidoM.text = user?.apellidom ?? "";
+    controlApellidoP.text = user?.apellidop ?? "";
     controlFecha.text = nacimiento?.toIso8601String().substring(0, 10) ?? "";
 
     super.initState();
@@ -153,6 +153,7 @@ class _EditarPerfilState extends State<EditarPerfil> {
                             temp.apellidom = controlApellidoM.text;
                             temp.apellidop = controlApellidoP.text;
                             temp.telefono = controlNumero.text;
+                            temp.fechaNacimiento = nacimiento;
                             Compositor.onUpdateUser(
                               context: context,
                               user: temp,

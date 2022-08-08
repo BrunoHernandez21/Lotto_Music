@@ -146,7 +146,11 @@ class _Tarjeta extends StatelessWidget {
             ),
           if (compra.amount != 0)
             Textos.tituloMIN(
-              texto: "Precio total: " + compra.amount.toString() + "\$Mx",
+              texto: "Precio total: " +
+                  compra.amount.toString().replaceAllMapped(
+                      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                      (Match m) => '${m[1]},') +
+                  "\$Mx",
             ),
           Align(
             alignment: Alignment.centerLeft,

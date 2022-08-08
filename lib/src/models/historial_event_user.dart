@@ -50,8 +50,10 @@ class HistorialEventoUsuario {
         pags: json["pags"] = 0,
         sizePage: json["sizePage"],
         totals: json["totals"],
-        userEvent: List<HistorialModel>.from(
-            json["userEvent"].map((x) => HistorialModel.fromMap(x))),
+        userEvent: json["userEvent"] == null
+            ? null
+            : List<HistorialModel>.from(
+                json["userEvent"].map((x) => HistorialModel.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {

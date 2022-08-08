@@ -96,7 +96,11 @@ class __TarjetaPlanesState extends State<_TarjetaPlanes> {
           ),
           Center(
             child: Textos.tituloMED(
-              texto: "\$" + widget.plan.precio.toString() + "MX c/u",
+              texto: "\$" +
+                  widget.plan.precio.toString().replaceAllMapped(
+                      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                      (Match m) => '${m[1]},') +
+                  "MX c/u",
               color: const Color(0xfffca51f),
             ),
           ),

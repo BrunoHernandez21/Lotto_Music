@@ -86,7 +86,7 @@ class BodyLogin extends StatelessWidget {
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             final data = snapshot.data;
             int cash = 0;
-            if (data.runtimeType == Cartera) {
+            if (data.runtimeType == CarteraModel) {
               cash = snapshot.data.cash;
             }
             return Column(

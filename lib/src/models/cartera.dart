@@ -4,41 +4,54 @@
 
 import 'dart:convert';
 
-class Cartera {
-  Cartera({
+class CarteraModel {
+  CarteraModel({
     this.id = 0,
-    this.mensaje,
-    this.cash = 0,
+    this.puntos = 0,
+    this.saldoMxn = 0,
+    this.saldoUsd = 0,
+    this.usuarioId = 0,
   });
 
   int id;
-  String? mensaje;
-  int cash;
+  int puntos;
+  int saldoMxn;
+  int saldoUsd;
+  int usuarioId;
 
-  Cartera copyWith({
+  CarteraModel copyWith({
     int? id,
-    String? mensaje,
-    int? cash,
+    int? puntos,
+    int? saldoMxn,
+    int? saldoUsd,
+    int? usuarioId,
   }) =>
-      Cartera(
+      CarteraModel(
         id: id ?? this.id,
-        mensaje: mensaje ?? this.mensaje,
-        cash: cash ?? this.cash,
+        puntos: puntos ?? this.puntos,
+        saldoMxn: saldoMxn ?? this.saldoMxn,
+        saldoUsd: saldoUsd ?? this.saldoUsd,
+        usuarioId: usuarioId ?? this.usuarioId,
       );
 
-  factory Cartera.fromJson(String str) => Cartera.fromMap(json.decode(str));
+  factory CarteraModel.fromJson(String str) =>
+      CarteraModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory Cartera.fromMap(Map<String, dynamic> json) => Cartera(
+  factory CarteraModel.fromMap(Map<String, dynamic> json) => CarteraModel(
         id: json["id"] ?? 0,
-        mensaje: json["mensaje"],
-        cash: json["cash"] ?? 0,
+        puntos: json["puntos"] ?? 0,
+        saldoMxn: json["saldo_mxn"] ?? 0,
+        saldoUsd: json["saldo_usd"] ?? 0,
+        usuarioId: json["usuario_id"] ?? 0,
       );
 
   Map<String, dynamic> toMap() => {
         "id": id,
-        "mensaje": mensaje,
-        "cash": cash,
+        "puntos": puntos,
+        "saldo_mxn": saldoMxn,
+        "saldo_usd": saldoUsd,
+        "usuario_id": usuarioId,
       };
 }
