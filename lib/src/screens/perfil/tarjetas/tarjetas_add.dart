@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_credit_card/credit_card_brand.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:lotto_music/src/cores/compositor.dart';
@@ -8,6 +9,7 @@ import 'package:lotto_music/src/widgets/text.dart';
 import '../../../helpers/variables_globales.dart';
 import '../../../widgets/chec_box.dart';
 import '../../../widgets/drop_list.dart';
+import '../../../widgets/inputs_text.dart';
 
 class TarjetasADD extends StatefulWidget {
   static const String routeName = 'tarjetasadd';
@@ -18,16 +20,23 @@ class TarjetasADD extends StatefulWidget {
 }
 
 class _TarjetasState extends State<TarjetasADD> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   //Cart Dates
-  String cardNumber = '';
+  final TextEditingController cardNumber = TextEditingController();
+  final TextEditingController expirymounth = TextEditingController();
+  final TextEditingController expiryyear = TextEditingController();
+  final TextEditingController cardHolderName = TextEditingController();
+  final TextEditingController cvvCode = TextEditingController();
   String expiryDate = '';
-  String cardHolderName = '';
-  String cvvCode = '';
+  String numberscardString = '';
   String selectedTipe = '';
+  int id = 0;
   bool isDefaul = false;
-  //flowcontrol
-  bool isCvvFocused = false;
-  bool useGlassMorphism = false;
+  //Flow control
   OutlineInputBorder? border;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -40,19 +49,19 @@ class _TarjetasState extends State<TarjetasADD> {
       ),
       body: SafeArea(
         child: Column(
-          children: <Widget>[
+          children: [
             CreditCardWidget(
               glassmorphismConfig:
-                  useGlassMorphism ? Glassmorphism.defaultConfig() : null,
-              cardNumber: cardNumber,
+                  null, //false ? Glassmorphism.defaultConfig() : null,
+              cardNumber: numberscardString,
               expiryDate: expiryDate,
-              cardHolderName: cardHolderName,
-              cvvCode: cvvCode,
-              showBackView: isCvvFocused,
+              cardHolderName: cardHolderName.text,
+              cvvCode: cvvCode.text,
+              showBackView: false,
               obscureCardNumber: true,
               obscureCardCvv: true,
               isHolderNameVisible: true,
-              cardBgColor: Colors.red,
+              cardBgColor: Colors.blue,
               isSwipeGestureEnabled: true,
               onCreditCardWidgetChange: (CreditCardBrand creditCardBrand) {},
             ),
@@ -61,7 +70,7 @@ class _TarjetasState extends State<TarjetasADD> {
                 physics: const BouncingScrollPhysics(),
                 child: Column(
                   children: [
-                    Textos.tituloMAX(texto: "Agrega una Tarjetas"),
+                    Textos.tituloMAX(texto: "Editar Tarjeta"),
                     const SizedBox(
                       height: 15,
                     ),
@@ -100,54 +109,113 @@ class _TarjetasState extends State<TarjetasADD> {
                         ),
                       ],
                     ),
-                    CreditCardForm(
-                      formKey: formKey,
-                      obscureCvv: true,
-                      obscureNumber: true,
-                      cardNumber: cardNumber,
-                      cvvCode: cvvCode,
-                      isHolderNameVisible: true,
-                      isCardNumberVisible: true,
-                      isExpiryDateVisible: true,
-                      cardHolderName: cardHolderName,
-                      expiryDate: expiryDate,
-                      themeColor: Colors.blue,
-                      textColor: Colors.white,
-                      cardNumberDecoration: InputDecoration(
-                        labelText: 'Numero',
-                        hintText: 'XXXX XXXX XXXX XXXX',
-                        hintStyle: const TextStyle(color: Colors.white),
-                        labelStyle: const TextStyle(color: Colors.white),
-                        focusedBorder: border,
-                        enabledBorder: border,
-                      ),
-                      expiryDateDecoration: InputDecoration(
-                        hintStyle: const TextStyle(color: Colors.white),
-                        labelStyle: const TextStyle(color: Colors.white),
-                        focusedBorder: border,
-                        enabledBorder: border,
-                        labelText: 'Fecha de expiracion',
-                        hintText: 'XX/XX',
-                      ),
-                      cvvCodeDecoration: InputDecoration(
-                        hintStyle: const TextStyle(color: Colors.white),
-                        labelStyle: const TextStyle(color: Colors.white),
-                        focusedBorder: border,
-                        enabledBorder: border,
-                        labelText: 'CVV',
-                        hintText: 'XXX',
-                      ),
-                      cardHolderDecoration: InputDecoration(
-                        hintStyle: const TextStyle(color: Colors.white),
-                        labelStyle: const TextStyle(color: Colors.white),
-                        focusedBorder: border,
-                        enabledBorder: border,
-                        labelText: 'Nombre del Propietario',
-                      ),
-                      onCreditCardModelChange: onCreditCardModelChange,
-                    ),
-                    const SizedBox(
-                      height: 20,
+                    Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Textos.parrafoMAX(texto: "Number Card"),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: InputsText.box(
+                            maxLines: 1,
+                            maxLength: 16,
+                            controller: cardNumber,
+                            hintText: "Number Card",
+                            textType: TextInputType.number,
+                            inputsFormatter: [
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
+                            onChanged: (a) {
+                              onChanged();
+                            },
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Column(
+                              children: [
+                                Textos.parrafoMAX(texto: "Expired\nmounth"),
+                                SizedBox(
+                                    width: Medidas.size.width * .2,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child: InputsText.box(
+                                        maxLines: 1,
+                                        maxLength: 2,
+                                        controller: expirymounth,
+                                        hintText: "Expired Date",
+                                        onChanged: (a) {
+                                          onChanged();
+                                        },
+                                      ),
+                                    )),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Textos.parrafoMAX(texto: "Expired\nyear"),
+                                SizedBox(
+                                    width: Medidas.size.width * .26,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child: InputsText.box(
+                                        maxLines: 1,
+                                        maxLength: 4,
+                                        controller: expiryyear,
+                                        hintText: "Expired Date",
+                                        onChanged: (a) {
+                                          onChanged();
+                                        },
+                                      ),
+                                    )),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Textos.parrafoMAX(texto: "cvv\nCode"),
+                                SizedBox(
+                                    width: Medidas.size.width * .36,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child: InputsText.box(
+                                        maxLength: 4,
+                                        maxLines: 1,
+                                        obscure: true,
+                                        controller: cvvCode,
+                                        hintText: "cvv Code",
+                                        onChanged: (a) {
+                                          onChanged();
+                                        },
+                                      ),
+                                    )),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Textos.parrafoMAX(texto: "Card Holder"),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: InputsText.box(
+                            maxLines: 1,
+                            controller: cardHolderName,
+                            hintText: "CardHolder",
+                            onChanged: (a) {
+                              onChanged();
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(
                       height: 20,
@@ -162,7 +230,7 @@ class _TarjetasState extends State<TarjetasADD> {
                       child: Container(
                         margin: const EdgeInsets.all(12),
                         child: const Text(
-                          'Guardar',
+                          'Actualizar',
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'halter',
@@ -173,19 +241,17 @@ class _TarjetasState extends State<TarjetasADD> {
                       ),
                       onPressed: () async {
                         final tarjeta = TarjetaModel(
+                          id: id,
                           activo: true,
-                          cvc: int.tryParse(cvvCode) ?? 0,
-                          expiryMonth:
-                              int.tryParse(expiryDate.substring(0, 2)) ?? 0,
-                          expiryYear:
-                              int.tryParse(expiryDate.substring(3, 5)) ?? 0,
-                          cardNumber: cardNumber,
-                          holderName: cardHolderName,
-                          defaultPayment: isDefaul,
+                          cardNumber: cardNumber.text,
+                          expiryMonth: int.tryParse(expirymounth.text) ?? 0,
+                          expiryYear: int.tryParse(expiryyear.text) ?? 0,
+                          holderName: cardHolderName.text,
+                          cvc: int.tryParse(cvvCode.text) ?? 0,
                           type: selectedTipe,
+                          defaultPayment: isDefaul,
                         );
-
-                        if (await Compositor.onCreateTarjetas(
+                        if (await Compositor.onUpdateTarjetas(
                           context: context,
                           tarjeta: tarjeta,
                         )) {
@@ -203,22 +269,11 @@ class _TarjetasState extends State<TarjetasADD> {
     );
   }
 
-  void onCreditCardModelChange(CreditCardModel? creditCardModel) {
-    setState(() {
-      cardNumber = creditCardModel!.cardNumber;
-      expiryDate = creditCardModel.expiryDate;
-      cardHolderName = creditCardModel.cardHolderName;
-      cvvCode = creditCardModel.cvvCode;
-      isCvvFocused = creditCardModel.isCvvFocused;
-    });
+  onChanged() {
+    expiryDate = expirymounth.text + "/" + expiryyear.text;
+
+    // numberscardString = cardNumber.text.replaceAllMapped(
+    //     RegExp(r'(\d{1,4})(?=(\d{4})+(?!\d))'), (Match m) => '${m[1]} ');
+    setState(() {});
   }
 }
-
-// final a = [
-//   {"id": 1, "name": "Views"},
-//   {"id": 2, "name": "Like"},
-//   {"id": 3, "name": "comments"},
-//   {"id": 4, "name": "Dislikes"},
-//   {"id": 5, "name": "Saved"},
-//   {"id": 6, "name": "Shared"}
-// ];

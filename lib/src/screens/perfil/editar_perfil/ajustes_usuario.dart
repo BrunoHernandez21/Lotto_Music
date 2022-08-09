@@ -58,6 +58,17 @@ class AjustesUsuario extends StatelessWidget {
                 },
               ),
               const Divider(color: Colors.grey, height: 10),
+              ListTile(
+                title: Textos.tituloMIN(texto: 'Cartera'),
+                trailing: const Icon(
+                  Icons.arrow_forward_ios_sharp,
+                  size: 17,
+                ),
+                onTap: () {
+                  Navigator.of(context).pushNamed(Direccion.routeName);
+                },
+              ),
+              const Divider(color: Colors.grey, height: 10),
             ],
           ),
         ),

@@ -88,8 +88,8 @@ class __TarjetaPlanesState extends State<_TarjetaPlanes> {
           const SizedBox(
             height: 30,
           ),
-          Textos.parrafoMED(
-            texto: "AproximacionBaja = " + widget.plan.puntos.toString(),
+          Textos.tituloMIN(
+            texto: "Puntos = " + widget.plan.puntos.toString(),
           ),
           const SizedBox(
             height: 30,
@@ -100,27 +100,12 @@ class __TarjetaPlanesState extends State<_TarjetaPlanes> {
                   widget.plan.precio.toString().replaceAllMapped(
                       RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
                       (Match m) => '${m[1]},') +
-                  "MX c/u",
+                  "MX al mes",
               color: const Color(0xfffca51f),
             ),
           ),
           const SizedBox(
             height: 20,
-          ),
-          contador(),
-          const SizedBox(
-            height: 10,
-          ),
-          Center(
-            child: Textos.tituloMED(
-              texto: "Total \$" +
-                  (widget.plan.precio * cantidad).toString() +
-                  "MX",
-              color: const Color(0xfffca51f),
-            ),
-          ),
-          const SizedBox(
-            height: 30,
           ),
           Center(
             child: SizedBox(

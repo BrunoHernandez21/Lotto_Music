@@ -7,12 +7,12 @@ class AcountLocalSave {
   /////////////////user/////////////////////////////////////////////////
 
   static Future<void> saveLoginResponse({required LoginResponse acount}) async {
-    Repository.saveString(BaseDeDatos.loginResponse, acount.toJson());
+    Repository.saveString(LocalStorage.loginResponse, acount.toJson());
   }
 
   static Future<LoginResponse> loadLoginResponse() async =>
       LoginResponse.fromJson(
-        await Repository.loadString(BaseDeDatos.loginResponse) ?? "{}",
+        await Repository.loadString(LocalStorage.loginResponse) ?? "{}",
       );
 
   /////////////////LOGIN/////////////////////////////////////////////////

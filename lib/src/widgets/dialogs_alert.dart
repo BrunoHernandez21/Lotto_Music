@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lotto_music/src/helpers/variables_globales.dart';
 
 import '../../generated/l10n.dart';
-import '../helpers/size_globals.dart';
 
 class DialogAlert {
   static Future<bool?> ok(
@@ -58,11 +58,11 @@ class DialogAlert {
                 ),
               ),
               SizedBox(
-                height: Screen.h * .01,
+                height: Medidas.size.height * .01,
               ),
               Image(
                 image: const AssetImage('assets/appUtils/loading2.jpg'),
-                height: Screen.h * .05,
+                height: Medidas.size.height * .05,
               ),
             ],
           ),

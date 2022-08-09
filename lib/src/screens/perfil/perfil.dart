@@ -87,7 +87,7 @@ class BodyLogin extends StatelessWidget {
             final data = snapshot.data;
             int cash = 0;
             if (data.runtimeType == CarteraModel) {
-              cash = snapshot.data.cash;
+              cash = snapshot.data.puntos;
             }
             return Column(
               children: [

@@ -11,7 +11,7 @@ import '../repository.dart';
 
 class ImageRepository {
   static Map<String, dynamic>? images;
-  static const repo = Variables.repoImage;
+  static const repo = LocalStorage.repoImage;
   static _loadInitData() async {
     final data = await Repository.loadString(repo);
     if (data == null) {

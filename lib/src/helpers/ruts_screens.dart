@@ -12,6 +12,7 @@ import '../screens/eventos/estadisticas/estadisticas.dart';
 import '../screens/eventos/video/video_evento.dart';
 import '../screens/eventos/categorias/videos_categorias.dart';
 import '../screens/pagos/carrito/verificar_compra.dart';
+import '../screens/perfil/editar_perfil/cartera.dart';
 import '../screens/perfil/editar_perfil/direcciones/direccion.dart';
 import '../screens/perfil/editar_perfil/direcciones/direcciones_add.dart';
 import '../screens/perfil/editar_perfil/direcciones/direcciones_edit.dart';
@@ -61,6 +62,7 @@ class Ruts {
     DireccionAdd.routeName: (_) => const DireccionAdd(),
     TarjetasEdit.routeName: (_) => const TarjetasEdit(),
     TarjetasADD.routeName: (_) => const TarjetasADD(),
+    Cartera.routeName: (_) => const Cartera(),
   };
 
   static get rutas {

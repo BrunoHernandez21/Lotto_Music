@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class InputsText {
   static Widget classic({
@@ -36,6 +37,7 @@ class InputsText {
     int? maxLength,
     String? labelText,
     TextAlign? textAlign,
+    List<TextInputFormatter>? inputsFormatter,
     void Function(String)? onChanged,
   }) {
     return _InputTextBox(
@@ -50,6 +52,7 @@ class InputsText {
       maxLines: maxLines = 1,
       labelText: labelText,
       textAlign: textAlign,
+      inputsFormatter: inputsFormatter,
     );
   }
 }
@@ -65,21 +68,22 @@ class _InputTextBox extends StatefulWidget {
   final int? maxLenght;
   final String? labelText;
   final TextAlign? textAlign;
+  final List<TextInputFormatter>? inputsFormatter;
   final void Function(String)? onChanged;
 
-  const _InputTextBox({
-    this.controller,
-    required this.hintText,
-    this.textType = TextInputType.text,
-    this.icon,
-    this.obscure = false,
-    this.editable = true,
-    this.onChanged,
-    this.maxLenght,
-    this.maxLines,
-    this.textAlign,
-    this.labelText,
-  });
+  const _InputTextBox(
+      {this.controller,
+      required this.hintText,
+      this.textType = TextInputType.text,
+      this.icon,
+      this.obscure = false,
+      this.editable = true,
+      this.onChanged,
+      this.maxLenght,
+      this.maxLines,
+      this.textAlign,
+      this.labelText,
+      this.inputsFormatter});
 
   @override
   State<_InputTextBox> createState() => _InputTextBoxState();
@@ -104,6 +108,7 @@ class _InputTextBoxState extends State<_InputTextBox> {
       maxLength: widget.maxLenght,
       controller: widget.controller,
       keyboardType: widget.textType,
+      inputFormatters: widget.inputsFormatter,
       textAlign: widget.textAlign ?? TextAlign.start,
       decoration: InputDecoration(
         prefixIcon: widget.icon != null
