@@ -20,6 +20,7 @@ import 'package:lotto_music/src/cores/preferences_app.dart';
 import 'package:lotto_music/src/helpers/ruts_screens.dart';
 import 'package:lotto_music/src/models/login_response.dart';
 import 'package:lotto_music/src/screens/admin.dart';
+import 'package:lotto_music/src/services/socket.dart';
 
 import 'generated/l10n.dart';
 import 'src/bloc/video/video_bloc.dart';
@@ -90,6 +91,7 @@ class Appstate extends StatelessWidget {
       ],
       child: BlocBuilder<ShaderpreferencesBloc, ShaderpreferencesState>(
         builder: (context, state) {
+          SocketService.initSocket();
           return MyApp(
             locale: state.idioma,
             theme: state.themeData,

@@ -133,21 +133,20 @@ class _Tarjeta extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Textos.tituloMAX(texto: "Compra"),
-          if (compra.fechaCompra != null)
+          if (compra.fechaEmitido != null)
             espace(
               Textos.tituloMIN(
                 texto: "Fecha de adquisicion: " +
-                    (compra.fechaCompra?.toString().substring(0, 10) ?? ""),
+                    (compra.fechaPagado?.toString().substring(0, 10) ?? ""),
               ),
             ),
-          if (compra.cantidad != 0)
-            Textos.tituloMIN(
-              texto: "Cantidad: " + compra.cantidad.toString(),
-            ),
-          if (compra.amount != 0)
+          Textos.tituloMIN(
+            texto: "Cantidad: " + compra.status.toString(),
+          ),
+          if (compra.total != 0)
             Textos.tituloMIN(
               texto: "Precio total: " +
-                  compra.amount.toString().replaceAllMapped(
+                  compra.total.toString().replaceAllMapped(
                       RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
                       (Match m) => '${m[1]},') +
                   "\$Mx",

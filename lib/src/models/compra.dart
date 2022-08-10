@@ -7,35 +7,51 @@ import 'dart:convert';
 class CompraModel {
   CompraModel({
     this.id = 0,
-    this.cantidad = 0,
-    this.amount = 0,
-    this.fechaCompra,
-    this.usuarioId = 0,
-    this.planId = 0,
+    this.fechaPagado,
+    this.stripeId,
+    this.status,
+    this.fechaEmitido,
+    this.impuesto,
+    this.subTotal,
+    this.descuentoOrden,
+    this.total = 0,
+    this.paymentMethodId = 0,
   });
 
   int id;
-  int cantidad;
-  int amount;
-  int usuarioId;
-  int planId;
-  DateTime? fechaCompra;
+  DateTime? fechaPagado;
+  String? stripeId;
+  String? status;
+  DateTime? fechaEmitido;
+  int? impuesto;
+  int? subTotal;
+  int? descuentoOrden;
+  int total;
+  int paymentMethodId;
 
   CompraModel copyWith({
     int? id,
-    int? cantidad,
-    int? amount,
-    DateTime? fechaCompra,
-    int? usuarioId,
-    int? planId,
+    DateTime? fechaPagado,
+    String? stripeId,
+    String? status,
+    DateTime? fechaEmitido,
+    int? impuesto,
+    int? subTotal,
+    int? descuentoOrden,
+    int? total,
+    int? paymentMethodId,
   }) =>
       CompraModel(
         id: id ?? this.id,
-        cantidad: cantidad ?? this.cantidad,
-        amount: amount ?? this.amount,
-        fechaCompra: fechaCompra ?? this.fechaCompra,
-        usuarioId: usuarioId ?? this.usuarioId,
-        planId: planId ?? this.planId,
+        fechaPagado: fechaPagado ?? this.fechaPagado,
+        stripeId: stripeId ?? this.stripeId,
+        status: status ?? this.status,
+        fechaEmitido: fechaEmitido ?? this.fechaEmitido,
+        impuesto: impuesto ?? this.impuesto,
+        subTotal: subTotal ?? this.subTotal,
+        descuentoOrden: descuentoOrden ?? this.descuentoOrden,
+        total: total ?? this.total,
+        paymentMethodId: paymentMethodId ?? this.paymentMethodId,
       );
 
   factory CompraModel.fromJson(String str) =>
@@ -44,20 +60,28 @@ class CompraModel {
   String toJson() => json.encode(toMap());
 
   factory CompraModel.fromMap(Map<String, dynamic> json) => CompraModel(
-        id: json["id"],
-        cantidad: json["cantidad"],
-        amount: json["amount"],
-        fechaCompra: DateTime.parse(json["fecha_compra"]),
-        usuarioId: json["usuario_id"],
-        planId: json["plan_id"],
+        id: json["id"] ?? 0,
+        fechaPagado: DateTime.parse(json["fecha_pagado"]),
+        stripeId: json["stripe_id"],
+        status: json["status"],
+        fechaEmitido: DateTime.parse(json["fecha_emitido"]),
+        impuesto: json["impuesto"],
+        subTotal: json["sub_total"],
+        descuentoOrden: json["descuento_orden"],
+        total: json["total"] ?? 0,
+        paymentMethodId: json["payment_method_id"] ?? 0,
       );
 
   Map<String, dynamic> toMap() => {
         "id": id,
-        "cantidad": cantidad,
-        "amount": amount,
-        "fecha_compra": fechaCompra?.toIso8601String(),
-        "usuario_id": usuarioId,
-        "plan_id": planId,
+        "fecha_pagado": fechaPagado?.toIso8601String(),
+        "stripe_id": stripeId,
+        "status": status,
+        "fecha_emitido": fechaEmitido?.toIso8601String(),
+        "impuesto": impuesto,
+        "sub_total": subTotal,
+        "descuento_orden": descuentoOrden,
+        "total": total,
+        "payment_method_id": paymentMethodId,
       };
 }

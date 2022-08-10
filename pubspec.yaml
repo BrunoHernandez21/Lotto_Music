@@ -33,6 +33,7 @@ dependencies:
   easy_debounce: ^2.0.2+1
   flutter_credit_card: ^3.0.1
   flutter_multi_formatter: ^2.5.8
+  web_socket_channel: ^2.2.0
 
 
 

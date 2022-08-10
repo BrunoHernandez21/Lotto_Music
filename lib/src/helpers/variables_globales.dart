@@ -39,7 +39,7 @@ class Medidas {
 }
 
 class URL {
-  static const String _base = "http://187.213.46.53:25565/api/";
+  static const String _base = "http://187.213.46.53:25566/api/v3/";
   static const String _baseYT = "https://www.googleapis.com/youtube/v3";
   static const String searchYT = _baseYT + "/search?" + PKey.ytKey;
   static const String estYT = _baseYT + "/videos?" + PKey.ytKey;
