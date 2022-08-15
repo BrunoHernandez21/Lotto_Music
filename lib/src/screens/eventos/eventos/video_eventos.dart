@@ -209,8 +209,8 @@ class _ListVideosPaginacionState extends State<ListVideosPaginacion> {
                     Textos.parrafoMIN(texto: v.artista ?? "", renglones: 1),
                     const Expanded(child: SizedBox()),
                     Textos.parrafoMED(
-                      texto: "Hora " +
-                          v.fechahoraevento.toString().substring(11, 16),
+                      texto:
+                          "Hora ${v.fechahoraevento.toString().substring(11, 16)}",
                     ),
                     Textos.parrafoMED(
                       texto: Rutinas.comprobador(v.fechahoraevento),

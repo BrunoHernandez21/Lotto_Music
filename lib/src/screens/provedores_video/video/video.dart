@@ -23,7 +23,7 @@ class _VideoState extends State<Video> {
   Widget build(BuildContext context) {
     return BlocBuilder<VideoBloc, VideoState>(
       builder: (context, state) {
-        final _controller = YoutubePlayerController(
+        final controller = YoutubePlayerController(
           initialVideoId: state.eventoVideo?.id?.videoId ?? "dO1rMeYnOmM",
           flags: const YoutubePlayerFlags(
             hideThumbnail: true,
@@ -39,7 +39,7 @@ class _VideoState extends State<Video> {
         return YoutubePlayerBuilder(
           player: YoutubePlayer(
             thumbnail: Container(),
-            controller: _controller,
+            controller: controller,
           ),
           builder: (context, player) {
             return _bodyWidget(player, state);
@@ -128,6 +128,9 @@ class __ListaVideosYTState extends State<_ListaVideosYT> {
             child: bodyTarjeta(v),
             onTap: () async {
               await Compositor.onSelectYT(context: context, item: v);
+              if (!mounted) {
+                return;
+              }
               Navigator.popAndPushNamed(context, Video.routeName);
             },
           ),

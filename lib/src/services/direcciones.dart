@@ -7,7 +7,7 @@ import '../models/direcciones.dart';
 import '../models/direcciones_response.dart';
 
 class DireccionesServices {
-  static const String _direccion = URL.auth + "/direccion";
+  static const String _direccion = "${URL.auth}/direccion";
 
   static Future<DireccionesModel?> update({
     required DireccionesModel direccion,
@@ -19,7 +19,7 @@ class DireccionesServices {
         urI,
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer " + token,
+          "Authorization": "Bearer $token",
         },
         body: direccion.toJson(),
       );
@@ -39,7 +39,7 @@ class DireccionesServices {
         urI,
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer " + token,
+          "Authorization": "Bearer $token",
         },
       );
 
@@ -59,7 +59,7 @@ class DireccionesServices {
         urI,
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer " + token,
+          "Authorization": "Bearer $token",
         },
         body: direccion.toJson(),
       );
@@ -75,12 +75,12 @@ class DireccionesServices {
     required String token,
   }) async {
     try {
-      final urI = Uri.parse(_direccion + "/" + id.toString());
+      final urI = Uri.parse("$_direccion/$id");
       final resp = await http.delete(
         urI,
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer " + token,
+          "Authorization": "Bearer $token",
         },
       );
 

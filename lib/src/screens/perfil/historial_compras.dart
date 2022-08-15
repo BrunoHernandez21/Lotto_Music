@@ -145,18 +145,15 @@ class _Tarjeta extends StatelessWidget {
           ),
           if (compra.total != 0)
             Textos.tituloMIN(
-              texto: "Precio total: " +
-                  compra.total.toString().replaceAllMapped(
-                      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-                      (Match m) => '${m[1]},') +
-                  "\$Mx",
+              texto:
+                  "Precio total:  ${compra.total.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} \$Mx",
             ),
           Align(
             alignment: Alignment.centerLeft,
             child: Padding(
               padding: const EdgeInsets.only(left: 20.0),
               child: Textos.tituloMIN(
-                texto: "ID " + compra.id.toString(),
+                texto: "ID ${compra.id}",
               ),
             ),
           ),

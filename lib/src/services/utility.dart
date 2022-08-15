@@ -8,12 +8,12 @@ import '../models/cartera.dart';
 import '../models/evento_video.dart';
 
 class UtilityService {
-  static const String _clock = URL.utility + "/oclock";
-  static const String _cartera = URL.utility + "/cartera";
-  static const String _wins = URL.utility + "/wins";
+  static const String _clock = "${URL.utility}/oclock";
+  static const String _cartera = "${URL.utility}/cartera";
+  static const String _wins = "${URL.utility}/wins";
 
   static Future<VideoEventModel?> hora({required int pag}) async {
-    final urI = Uri.parse(_clock + "/" + pag.toString() + "/10");
+    final urI = Uri.parse("$_clock/$pag/10");
     final resp = await http.get(
       urI,
     );
@@ -26,7 +26,7 @@ class UtilityService {
     final resp = await http.get(
       urI,
       headers: {
-        "Authorization": "Bearer " + token,
+        "Authorization": "Bearer $token",
       },
     );
     final out = CarteraModel.fromJson(resp.body);
@@ -37,12 +37,12 @@ class UtilityService {
     required int pag,
     required String token,
   }) async {
-    final urI = Uri.parse(_wins + "/" + pag.toString() + '/10');
+    final urI = Uri.parse('$_wins/${pag.toString()}/10');
     final resp = await http.get(
       urI,
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer " + token,
+        "Authorization": "Bearer $token",
       },
     );
 

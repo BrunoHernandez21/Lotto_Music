@@ -122,7 +122,8 @@ class _CategoriasState extends State<Categorias> {
                   context: context,
                   categoria: element,
                 );
-                Navigator.of(context).pushNamed(VideosCategoria.routeName);
+                Navigator.maybeOf(context)
+                    ?.pushNamed(VideosCategoria.routeName);
               },
               onLongPress: () {},
               child: Center(

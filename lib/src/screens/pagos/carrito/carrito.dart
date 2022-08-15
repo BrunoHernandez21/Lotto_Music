@@ -99,10 +99,7 @@ class Carrito extends StatelessWidget {
         ),
         Center(
           child: Textos.tituloMAX(
-            texto: "Total: " +
-                total.toString() +
-                " " +
-                (itemsCarrito.first.moneda ?? ""),
+            texto: "Total: $total ${itemsCarrito.first.moneda ?? ""}",
           ),
         ),
         Expanded(
@@ -151,13 +148,10 @@ class TarjetaCarrito extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
         title: carrito.suscribcion
-            ? Text("Suscribción " + carrito.nombre)
-            : Text("Plan " + carrito.nombre),
+            ? Text("Suscribción ${carrito.nombre}")
+            : Text("Plan ${carrito.nombre}"),
         subtitle: Text(
-          "Precio unitario " +
-              (carrito.precioUnitario == null
-                  ? ""
-                  : carrito.precioUnitario.toString()),
+          "Precio unitario ${carrito.precioUnitario ?? ""}",
         ),
         leading: IconButton(
           icon: const Icon(

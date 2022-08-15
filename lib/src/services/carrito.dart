@@ -7,8 +7,8 @@ import '../models/carrito.dart';
 import '../models/carrito_response.dart';
 
 class CarritoService {
-  static const String _carro = URL.carrito + "/carrito";
-  static const String _load = URL.carrito + "/carrito/plan";
+  static const String _carro = "${URL.carrito}/carrito";
+  static const String _load = "${URL.carrito}/carrito/plan";
 
   static Future<CarritoResponse?> load({
     required String token,
@@ -19,7 +19,7 @@ class CarritoService {
         urI,
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer " + token,
+          "Authorization": "Bearer $token",
         },
       );
 
@@ -38,7 +38,7 @@ class CarritoService {
       urI,
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer " + token,
+        "Authorization": "Bearer $token",
       },
       body: body,
     );
@@ -50,11 +50,11 @@ class CarritoService {
   static Future<String?> eliminar(
       {required String token, required int id}) async {
     try {
-      final urI = Uri.parse(_carro + "/" + id.toString());
+      final urI = Uri.parse("$_carro/$id");
       final resp = await http.delete(
         urI,
         headers: {
-          "Authorization": "Bearer " + token,
+          "Authorization": "Bearer $token",
         },
       );
       final deco = json.decode(resp.body);

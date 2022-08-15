@@ -7,10 +7,10 @@ import '../helpers/variables_globales.dart';
 import '../models/login_response.dart';
 
 class PlanService {
-  static const String _one = URL.plan + "/planes/one";
-  static const String _suscripcion = URL.plan + "/planes/suscripcion";
-  static const String _byid = URL.plan + "/byid/";
-  static const String _byname = URL.plan + "/byname/oci";
+  static const String _one = "${URL.plan}/planes/one";
+  static const String _suscripcion = "${URL.plan}/planes/suscripcion";
+  static const String _byid = "${URL.plan}/byid/";
+  static const String _byname = "${URL.plan}/byname/oci";
 
   static Future<PlanesResponse?> loadPlan() async {
     try {

@@ -108,7 +108,7 @@ class _VideoEventoState extends State<VideoEvento> {
                   return Padding(
                     padding: const EdgeInsets.only(left: 15.0),
                     child: Textos.tituloMED(
-                      texto: "Tus Puntos = " + cash.toString(),
+                      texto: "Tus Puntos = $cash",
                       color: Colors.yellow,
                     ),
                   );
@@ -128,10 +128,8 @@ class _VideoEventoState extends State<VideoEvento> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Textos.parrafoMAX(
-                        texto: "Hora " +
-                            state.eventoVideo.fechahoraevento
-                                .toString()
-                                .substring(11, 16),
+                        texto:
+                            "Hora ${state.eventoVideo.fechahoraevento.toString().substring(11, 16)}",
                       ),
                       Textos.parrafoMAX(
                         texto: Rutinas.comprobador(
@@ -219,22 +217,16 @@ class __EstadisticasYTState extends State<_EstadisticasYT> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Textos.parrafoMAX(
-          texto: "Vistas: " +
-              (estadisticas?.items?.first.statistics?.viewCount ?? "")
-                  .replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-                      (Match m) => '${m[1]},'),
+          texto:
+              "Vistas: ${(estadisticas?.items?.first.statistics?.viewCount ?? "").replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}",
         ),
         Textos.parrafoMAX(
-          texto: "Me gusta: " +
-              (estadisticas?.items?.first.statistics?.likeCount ?? "")
-                  .replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-                      (Match m) => '${m[1]},'),
+          texto:
+              "Me gusta: ${(estadisticas?.items?.first.statistics?.likeCount ?? "").replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}",
         ),
         Textos.parrafoMAX(
-          texto: "Comentarios: " +
-              (estadisticas?.items?.first.statistics?.commentCount ?? "")
-                  .replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-                      (Match m) => '${m[1]},'),
+          texto:
+              "Comentarios: ${(estadisticas?.items?.first.statistics?.commentCount ?? "").replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}",
         ),
       ],
     );
@@ -280,6 +272,10 @@ class _ListaVideosState extends State<_ListaVideosEvent> {
             child: bodyTarjeta(v),
             onTap: () async {
               await Compositor.onSlectVideoEvento(context: context, item: v);
+
+              if (!mounted) {
+                return;
+              }
               Navigator.popAndPushNamed(context, VideoEvento.routeName);
             },
           ),
@@ -325,7 +321,7 @@ class _ListaVideosState extends State<_ListaVideosEvent> {
                 const Expanded(child: SizedBox()),
                 Textos.parrafoMED(
                   texto:
-                      "Hora " + v.fechahoraevento.toString().substring(11, 16),
+                      "Hora ${v.fechahoraevento.toString().substring(11, 16)}",
                 ),
                 Textos.parrafoMED(
                   texto: Rutinas.comprobador(v.fechahoraevento),

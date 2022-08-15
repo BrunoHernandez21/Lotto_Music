@@ -8,8 +8,8 @@ import '../models/historial_event_user.dart';
 import '../models/login_response.dart';
 
 class ApuestaService {
-  static const String _listar = URL.apuesta + "listar";
-  static const String _apuesta = URL.apuesta + "/evento";
+  static const String _listar = "${URL.apuesta}listar";
+  static const String _apuesta = "${URL.apuesta}/evento";
 
   static Future<LoginResponse?> listar() async {
     try {
@@ -37,7 +37,7 @@ class ApuestaService {
         urI,
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer " + token,
+          "Authorization": "Bearer $token",
         },
         body: apuesta.toJson(),
       );
@@ -51,11 +51,11 @@ class ApuestaService {
     required int pag,
     required String token,
   }) async {
-    final urI = Uri.parse(_apuesta + "/" + pag.toString() + "/10");
+    final urI = Uri.parse("$_apuesta/$pag/10");
     final resp = await http.get(
       urI,
       headers: {
-        "Authorization": "Bearer " + token,
+        "Authorization": "Bearer $token",
       },
     );
     final out = HistorialEventoUsuario.fromJson(resp.body);

@@ -90,6 +90,7 @@ class Compositor {
       email: email.trim(),
       password: password.trim(),
     );
+    //TODO aqui no debe ir ningun tipo de dibujado
     Navigator.of(context).pop();
 
     if (response == null) {

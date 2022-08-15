@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 import '../models/evento_video.dart';
@@ -19,14 +17,11 @@ class SocketService {
             .enableAutoConnect() // disable auto-connection
             .build());
 
-    socket.on('mensaje', (data) {
-      final a = VideoEventModel.fromMap(data);
-      print(a);
+    socket.on('videos', (data) {
+      VideoEventModel.fromMap(data);
+      //TODO logic socket
     });
 
-    socket.onDisconnect((_) {
-      print('disconnect');
-    });
-    socket.on('fromServer', (_) => print(_));
+    socket.onDisconnect((_) {});
   }
 }

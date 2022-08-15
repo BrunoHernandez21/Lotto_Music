@@ -6,7 +6,7 @@ import 'package:lotto_music/src/models/tarjetas_response.dart';
 import '../helpers/variables_globales.dart';
 
 class TarjetaServices {
-  static const String _method = URL.compra + "/payment/method";
+  static const String _method = "${URL.compra}/payment/method";
 
   static Future<TarjetaModel?> update({
     required TarjetaModel tarjeta,
@@ -18,7 +18,7 @@ class TarjetaServices {
         urI,
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer " + token,
+          "Authorization": "Bearer $token",
         },
         body: tarjeta.toJson(),
       );
@@ -37,7 +37,7 @@ class TarjetaServices {
         urI,
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer " + token,
+          "Authorization": "Bearer $token",
         },
       );
 
@@ -57,7 +57,7 @@ class TarjetaServices {
         urI,
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer " + token,
+          "Authorization": "Bearer $token",
         },
         body: tarjeta.toJson(),
       );
@@ -72,12 +72,12 @@ class TarjetaServices {
     required String token,
   }) async {
     try {
-      final urI = Uri.parse(_method + "/" + id.toString());
+      final urI = Uri.parse("$_method/$id");
       final resp = await http.delete(
         urI,
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer " + token,
+          "Authorization": "Bearer $token",
         },
       );
 

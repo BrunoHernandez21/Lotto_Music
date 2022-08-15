@@ -7,13 +7,13 @@ import '../models/estadisticvas_yt.dart';
 import '../models/youtube.dart';
 
 class YTService {
-  static const String _tops = URL.searchYT +
-      "&type=video&part=snippet&chart=mostPopular&regionCode=MX&safeSearch=none&maxResults=10&videoEmbeddable=true";
+  static const String _tops =
+      "${URL.searchYT}&type=video&part=snippet&chart=mostPopular&regionCode=MX&safeSearch=none&maxResults=10&videoEmbeddable=true";
   static const String _relative =
-      URL.searchYT + "&type=video&maxResults=10&part=snippet&relatedToVideoId=";
+      "${URL.searchYT}&type=video&maxResults=10&part=snippet&relatedToVideoId=";
   static const String _search =
-      URL.searchYT + "&type=video&maxResults=10&part=snippet&maxResults=10&q=";
-  static const String _estadisticas = URL.estYT + "&part=statistics&id=";
+      "${URL.searchYT}&type=video&maxResults=10&part=snippet&maxResults=10&q=";
+  static const String _estadisticas = "${URL.estYT}&part=statistics&id=";
 /////////////////////////////
   /// separador
   static Future<YoutubeModel?> top() async {

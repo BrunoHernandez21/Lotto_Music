@@ -60,12 +60,8 @@ class Clock extends StatelessWidget {
                         toEvent: select?.fechahoraevento?.minute ?? 0),
                     const SizedBox(height: 15),
                     Textos.tituloMAX(
-                        texto: "\$" +
-                            (select?.premioCash.toString() ?? "")
-                                .replaceAllMapped(
-                                    RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-                                    (Match m) => '${m[1]},') +
-                            " mx"),
+                        texto:
+                            "\$ ${(select?.premioCash.toString() ?? "").replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} mx"),
                     const SizedBox(height: 15),
                     Row(
                       mainAxisSize: MainAxisSize.min,

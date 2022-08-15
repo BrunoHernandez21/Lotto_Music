@@ -34,6 +34,7 @@ dependencies:
   flutter_credit_card: ^3.0.1
   flutter_multi_formatter: ^2.5.8
   socket_io_client: ^2.0.0
+  flutter_gen: ^4.3.0
 
 
 

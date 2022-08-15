@@ -79,11 +79,8 @@ class _AdivinaState extends State<Adivina> {
         ),
         Textos.tituloMAX(texto: "Tipo de evento"),
         Textos.tituloMAX(
-            texto: "\$" +
-                evento.acumulado.toString().replaceAllMapped(
-                    RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-                    (Match m) => '${m[1]},') +
-                "MXN"),
+            texto:
+                "\$ ${evento.acumulado.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}MXN"),
         Align(
           alignment: Alignment.centerLeft,
           child: FutureBuilder(
@@ -97,7 +94,7 @@ class _AdivinaState extends State<Adivina> {
               }
               return Center(
                 child: Textos.tituloMED(
-                  texto: "Tus Puntos = " + cash.toString(),
+                  texto: "Tus Puntos = $cash",
                   color: Colors.yellow,
                 ),
               );
@@ -376,7 +373,7 @@ class _CardVideo extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Textos.tituloMED(
-                texto: "Hora " + v.fechahoraevento.toString().substring(11, 16),
+                texto: "Hora ${v.fechahoraevento.toString().substring(11, 16)}",
               ),
               Textos.tituloMED(
                 texto: Rutinas.comprobador(v.fechahoraevento),

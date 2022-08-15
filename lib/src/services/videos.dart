@@ -7,11 +7,11 @@ import '../models/evento_video.dart';
 import '../models/grupos.dart';
 
 class VideoService {
-  static const String _eventosPage = URL.videos + "/eventos/";
-  static const String _grupos = URL.videos + "/grupos";
+  static const String _eventosPage = "${URL.videos}/eventos/";
+  static const String _grupos = "${URL.videos}/grupos";
 
   static Future<VideoEventModel?> listarEventos({required int pag}) async {
-    final urI = Uri.parse(_eventosPage + pag.toString() + "/10");
+    final urI = Uri.parse("$_eventosPage$pag/10");
     try {
       final resp = await http.get(
         urI,
@@ -37,7 +37,7 @@ class VideoService {
 
   static Future<VideoEventModel?> listarVideosCategoria(
       {required int pag, required String categoria}) async {
-    final urI = Uri.parse(_grupos + "/" + pag.toString() + "/10/" + categoria);
+    final urI = Uri.parse("$_grupos/$pag/10/$categoria");
     try {
       final resp = await http.get(
         urI,

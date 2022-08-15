@@ -93,6 +93,9 @@ class _VerificarCompraState extends State<VerificarCompra> {
                   await Compositor.onBuyCarrito(
                     context: context,
                   );
+                  if (!mounted) {
+                    return;
+                  }
                   Compositor.onloadCarrito(context);
                 },
               ),
@@ -177,7 +180,7 @@ class Cabezera extends StatelessWidget {
       children: [
         Textos.tituloMAX(texto: "Compra"),
         Textos.tituloMAX(
-          texto: "Total: " + total.toString() + " " + moneda,
+          texto: "Total: $total $moneda",
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
