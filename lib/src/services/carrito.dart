@@ -14,15 +14,19 @@ class CarritoService {
     required String token,
   }) async {
     final urI = Uri.parse(_load);
-    final resp = await http.get(
-      urI,
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + token,
-      },
-    );
+    try {
+      final resp = await http.get(
+        urI,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + token,
+        },
+      );
 
-    return CarritoResponse.fromJson(resp.body);
+      return CarritoResponse.fromJson(resp.body);
+    } catch (e) {
+      return null;
+    }
   }
 
   static Future<CarritoModel?> create({

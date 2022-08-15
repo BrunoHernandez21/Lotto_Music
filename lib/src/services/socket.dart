@@ -1,5 +1,8 @@
-import 'package:web_socket_channel/io.dart';
-import 'package:web_socket_channel/status.dart' as status;
+import 'dart:convert';
+
+import 'package:socket_io_client/socket_io_client.dart' as io;
+
+import '../models/evento_video.dart';
 
 enum ServerStatus {
   online,
@@ -7,34 +10,23 @@ enum ServerStatus {
 }
 
 class SocketService {
-  static ServerStatus serverStatus = ServerStatus.offline;
-  static IOWebSocketChannel channel = IOWebSocketChannel.connect(
-    Uri.parse(
-      'ws://187.213.46.53:25567/v1/ws',
-    ),
-  );
+  static intstate() async {
+    // Dart client
+    io.Socket socket = io.io(
+        'http://187.213.134.47:25567',
+        io.OptionBuilder()
+            .setTransports(['websocket']) // for Flutter or Dart VM
+            .enableAutoConnect() // disable auto-connection
+            .build());
 
-  static Future<void> initSocket() async {
-    channel.stream.handleError((a, b) async {
-      print("se cayo");
-      await reconect();
-      await SocketService.initSocket();
-    }).listen((message) {
-      print(message.toString());
+    socket.on('mensaje', (data) {
+      final a = VideoEventModel.fromMap(data);
+      print(a);
     });
-  }
 
-  static reconect() async {
-    await Future.delayed(const Duration(seconds: 1));
-    channel = IOWebSocketChannel.connect(
-      Uri.parse(
-        'ws://187.213.46.53:25567/v1/ws',
-      ),
-    );
-  }
-
-  static closeServer() {
-    serverStatus = ServerStatus.offline;
-    channel.sink.close(status.goingAway);
+    socket.onDisconnect((_) {
+      print('disconnect');
+    });
+    socket.on('fromServer', (_) => print(_));
   }
 }

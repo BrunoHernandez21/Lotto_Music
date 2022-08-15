@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/services.dart';
 
 import 'package:flutter/material.dart';
@@ -27,10 +29,10 @@ import 'src/bloc/video/video_bloc.dart';
 import 'src/bloc/videos_categoria/videos_categoria_bloc.dart';
 
 void main() async {
+  HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
   //PushNotification.initializeApp();
   //CheckPermissos.checkAll();
-
   final theme = await PreferencesApp.theme;
   final locale = await PreferencesApp.locale;
   final acount = await AcountLocalSave.loadLoginResponse();
@@ -91,7 +93,7 @@ class Appstate extends StatelessWidget {
       ],
       child: BlocBuilder<ShaderpreferencesBloc, ShaderpreferencesState>(
         builder: (context, state) {
-          SocketService.initSocket();
+          SocketService.intstate();
           return MyApp(
             locale: state.idioma,
             theme: state.themeData,
@@ -129,5 +131,14 @@ class MyApp extends StatelessWidget {
       ],
       supportedLocales: AppLocalisations.delegate.supportedLocales,
     );
+  }
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }

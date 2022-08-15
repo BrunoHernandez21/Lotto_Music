@@ -39,19 +39,19 @@ class Medidas {
 }
 
 class URL {
-  static const String _base = "http://187.213.46.53:25566/api/v3/";
+  static const String _base = "http://187.213.68.250:25566/api/v3/";
   static const String _baseYT = "https://www.googleapis.com/youtube/v3";
-  static const String searchYT = _baseYT + "/search?" + PKey.ytKey;
-  static const String estYT = _baseYT + "/videos?" + PKey.ytKey;
+  static const String searchYT = "$_baseYT/search?${PKey.ytKey}";
+  static const String estYT = "$_baseYT/videos?${PKey.ytKey}";
 
-  static const String auth = _base + "auth";
-  static const String videos = _base + "videos";
-  static const String compra = _base + "compra";
-  static const String carrito = _base + "carrito";
-  static const String evento = _base + "evento";
-  static const String plan = _base + "plan";
-  static const String apuesta = _base + "usuario";
-  static const String utility = _base + "utils";
+  static const String auth = "${_base}auth";
+  static const String videos = "${_base}videos";
+  static const String compra = "${_base}compra";
+  static const String carrito = "${_base}carrito";
+  static const String evento = "${_base}evento";
+  static const String plan = "${_base}plan";
+  static const String apuesta = "${_base}usuario";
+  static const String utility = "${_base}utils";
 }
 
 class LocalStorage {

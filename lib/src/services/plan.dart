@@ -13,9 +13,13 @@ class PlanService {
   static const String _byname = URL.plan + "/byname/oci";
 
   static Future<PlanesResponse?> loadPlan() async {
-    final urI = Uri.parse(_one);
-    final resp = await http.get(urI);
-    return PlanesResponse.fromJson(resp.body);
+    try {
+      final urI = Uri.parse(_one);
+      final resp = await http.get(urI);
+      return PlanesResponse.fromJson(resp.body);
+    } catch (e) {
+      return null;
+    }
   }
 
   static Future<PlanesResponse?> loadSuscripcion() async {

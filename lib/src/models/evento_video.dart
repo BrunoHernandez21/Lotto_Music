@@ -69,7 +69,6 @@ class VideoEventModel {
 class ItemEvent {
   ItemEvent({
     this.id,
-    this.activo,
     this.fechahoraevento,
     this.premioCash,
     this.acumulado,
@@ -88,7 +87,6 @@ class ItemEvent {
   });
 
   int? id;
-  bool? activo;
   DateTime? fechahoraevento;
   int? premioCash;
   int? acumulado;
@@ -107,7 +105,6 @@ class ItemEvent {
 
   ItemEvent copyWith({
     int? id,
-    bool? activo,
     DateTime? fechahoraevento,
     int? premioCash,
     int? acumulado,
@@ -126,7 +123,6 @@ class ItemEvent {
   }) =>
       ItemEvent(
         id: id ?? this.id,
-        activo: activo ?? this.activo,
         fechahoraevento: fechahoraevento ?? this.fechahoraevento,
         premioCash: premioCash ?? this.premioCash,
         acumulado: acumulado ?? this.acumulado,
@@ -150,7 +146,6 @@ class ItemEvent {
 
   factory ItemEvent.fromMap(Map<String, dynamic> json) => ItemEvent(
         id: json["id"],
-        activo: json["activo"],
         fechahoraevento: DateTime.parse(json["fechahora_evento"]),
         premioCash: json["premio_cash"],
         acumulado: json["acumulado"],
@@ -170,7 +165,6 @@ class ItemEvent {
 
   Map<String, dynamic> toMap() => {
         "id": id,
-        "activo": activo,
         "fechahora_evento": fechahoraevento == null
             ? null
             : DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
