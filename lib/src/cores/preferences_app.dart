@@ -22,7 +22,7 @@ class PreferencesApp {
     if (country.isEmpty) {
       return Locale(code!);
     } else {
-      return Locale(code! + '_' + country);
+      return Locale('${code!}_$country');
     }
   }
 

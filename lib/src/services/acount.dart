@@ -7,14 +7,14 @@ import '../helpers/variables_globales.dart';
 import '../models/login_response.dart';
 
 class AcountServices {
-  static const String _login = URL.auth + "/login";
-  static const String _singup = URL.auth + "/user";
-  static const String _token = URL.auth + "/token";
-  static const String _update = URL.auth + "/user";
-  static const String _delete = URL.auth + "/user";
-  static const String _info = URL.auth + "/user";
-  static const String _changepassword = URL.auth + "/changepassword";
-  static const String _forgetpassword = URL.auth + "/forgetpassword";
+  static const String _login = "${URL.auth}/login";
+  static const String _singup = "${URL.auth}/user";
+  static const String _token = "${URL.auth}/token";
+  static const String _update = "${URL.auth}/user";
+  static const String _delete = "${URL.auth}/user";
+  static const String _info = "${URL.auth}/user";
+  static const String _changepassword = "${URL.auth}/changepassword";
+  static const String _forgetpassword = "${URL.auth}/forgetpassword";
 
   static Future<LoginResponse?> login({
     required String email,
@@ -72,7 +72,7 @@ class AcountServices {
         urI,
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          "Authorization": "Bearer " + token,
+          "Authorization": "Bearer $token",
         },
         body: user.toJson(),
       );
@@ -92,7 +92,7 @@ class AcountServices {
         urI,
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          "Authorization": "Bearer " + token,
+          "Authorization": "Bearer $token",
         },
       );
 
@@ -127,7 +127,7 @@ class AcountServices {
       final resp = await http.put(urI,
           headers: {
             "Content-Type": "application/json; charset=utf-8",
-            "Authorization": "Bearer " + token,
+            "Authorization": "Bearer $token",
           },
           body: json.encode({
             "password": password,
@@ -161,7 +161,7 @@ class AcountServices {
         urI,
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer " + token,
+          "Authorization": "Bearer $token",
         },
       );
 

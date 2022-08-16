@@ -89,7 +89,7 @@ class __TarjetaPlanesState extends State<_TarjetaPlanes> {
             height: 30,
           ),
           Textos.tituloMIN(
-            texto: "Puntos = " + widget.plan.puntos.toString(),
+            texto: "Puntos = ${widget.plan.puntos}",
           ),
           const SizedBox(
             height: 30,

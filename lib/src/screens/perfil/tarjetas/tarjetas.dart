@@ -89,7 +89,9 @@ class _Tarjeta extends StatelessWidget {
         },
       ),
       trailing: const Icon(Icons.arrow_forward),
-      title: Textos.parrafoMAX(texto: evento.cardNumber),
+      title: Textos.parrafoMAX(
+          texto: evento.cardNumber.replaceAllMapped(
+              RegExp(r'(\d{1,4})(?=(\d{4})+(?!\d))'), (Match m) => '${m[1]}-')),
       subtitle: Textos.parrafoMED(texto: evento.holderName),
       onTap: () {
         final tarjetasB = BlocProvider.of<TarjetasBloc>(context);

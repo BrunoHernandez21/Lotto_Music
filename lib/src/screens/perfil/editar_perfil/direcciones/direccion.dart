@@ -86,9 +86,9 @@ class _Tarjeta extends StatelessWidget {
       trailing: const Icon(Icons.arrow_forward),
       title: Textos.parrafoMAX(
         texto: (evento.calle ?? "") +
-            (evento.numero == null ? "" : " " + (evento.numero ?? "")) +
-            (evento.ciudad == null ? "" : ", " + (evento.ciudad ?? "")) +
-            (evento.pais == null ? "" : ", " + (evento.pais ?? "")),
+            (evento.numero == null ? "" : " ${evento.numero ?? ""}") +
+            (evento.ciudad == null ? "" : ", ${evento.ciudad ?? ""}") +
+            (evento.pais == null ? "" : ", ${evento.pais ?? ""}"),
         renglones: 2,
       ),
       subtitle: Textos.parrafoMED(texto: evento.tipo ?? ""),

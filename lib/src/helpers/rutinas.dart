@@ -16,19 +16,19 @@ class Rutinas {
         hm = 60 + hm;
       }
       if (hr == 1) {
-        hora = hr.toString() + " hora ";
+        hora = "$hr hora ";
       }
       if (hr > 1) {
-        hora = hr.toString() + " horas ";
+        hora = "$hr horas ";
       }
 
       if (hm == 1) {
-        minuto = hm.toString() + " minuto";
+        minuto = "$hm minuto";
       }
       if (hm > 1) {
-        minuto = hm.toString() + " minutos";
+        minuto = "$hm minutos";
       }
-      return "Falta " + hora + minuto;
+      return "Falta $hora$minuto";
     }
     return "Expirado";
   }

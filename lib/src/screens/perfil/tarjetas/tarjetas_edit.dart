@@ -25,9 +25,9 @@ class _TarjetasEditState extends State<TarjetasEdit> {
   void initState() {
     final tarjeta = BlocProvider.of<TarjetasBloc>(context).state.selected;
     cardNumber.text = tarjeta?.cardNumber ?? "";
-    expiryDate = (tarjeta?.expiryMonth ?? "").toString() +
-        "/" +
-        (tarjeta?.expiryYear ?? "").toString();
+    numberscardString = cardNumber.text.replaceAllMapped(
+        RegExp(r'(\d{1,4})(?=(\d{4})+(?!\d))'), (Match m) => '${m[1]} ');
+    expiryDate = "${tarjeta?.expiryMonth ?? ""}/${tarjeta?.expiryYear ?? ""}";
     expirymounth.text = (tarjeta?.expiryMonth ?? "").toString();
     expiryyear.text = (tarjeta?.expiryYear ?? "").toString();
     cvvCode.text = tarjeta?.cvc.toString() ?? "";
@@ -45,6 +45,7 @@ class _TarjetasEditState extends State<TarjetasEdit> {
   final TextEditingController cardHolderName = TextEditingController();
   final TextEditingController cvvCode = TextEditingController();
   String expiryDate = '';
+  String numberscardString = '';
   String selectedTipe = '';
   int id = 0;
   bool isDefaul = false;
@@ -65,7 +66,7 @@ class _TarjetasEditState extends State<TarjetasEdit> {
             CreditCardWidget(
               glassmorphismConfig:
                   null, //false ? Glassmorphism.defaultConfig() : null,
-              cardNumber: cardNumber.text,
+              cardNumber: numberscardString,
               expiryDate: expiryDate,
               cardHolderName: cardHolderName.text,
               cvvCode: cvvCode.text,
@@ -279,7 +280,9 @@ class _TarjetasEditState extends State<TarjetasEdit> {
   }
 
   onChanged() {
-    expiryDate = expirymounth.text + "/" + expiryyear.text;
+    expiryDate = "${expirymounth.text}/${expiryyear.text}";
+    numberscardString = cardNumber.text.replaceAllMapped(
+        RegExp(r'(\d{1,4})(?=(\d{4})+(?!\d))'), (Match m) => '${m[1]} ');
     setState(() {});
   }
 }

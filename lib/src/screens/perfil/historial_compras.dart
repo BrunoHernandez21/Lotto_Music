@@ -136,12 +136,12 @@ class _Tarjeta extends StatelessWidget {
           if (compra.fechaEmitido != null)
             espace(
               Textos.tituloMIN(
-                texto: "Fecha de adquisicion: " +
-                    (compra.fechaPagado?.toString().substring(0, 10) ?? ""),
+                texto:
+                    "Fecha de adquisicion: ${compra.fechaPagado?.toString().substring(0, 10) ?? ""}",
               ),
             ),
           Textos.tituloMIN(
-            texto: "Cantidad: " + compra.status.toString(),
+            texto: "Cantidad: ${compra.status}",
           ),
           if (compra.total != 0)
             Textos.tituloMIN(

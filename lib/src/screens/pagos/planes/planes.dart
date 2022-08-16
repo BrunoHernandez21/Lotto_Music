@@ -89,7 +89,7 @@ class __TarjetaPlanesState extends State<_TarjetaPlanes> {
             height: 30,
           ),
           Textos.parrafoMED(
-            texto: "AproximacionBaja = " + widget.plan.puntos.toString(),
+            texto: "AproximacionBaja = ${widget.plan.puntos}",
           ),
           const SizedBox(
             height: 30,

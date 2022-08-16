@@ -97,6 +97,7 @@ class _BodySearch extends StatelessWidget {
             child: bodyTarjeta(v),
             onTap: () async {
               await Compositor.onSelectYT(context: context, item: v);
+              // ignore: use_build_context_synchronously
               Navigator.popAndPushNamed(context, Video.routeName);
             },
           ),

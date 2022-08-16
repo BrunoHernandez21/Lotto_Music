@@ -251,7 +251,7 @@ class _TarjetasState extends State<TarjetasADD> {
                           type: selectedTipe,
                           defaultPayment: isDefaul,
                         );
-                        if (await Compositor.onUpdateTarjetas(
+                        if (await Compositor.onCreateTarjetas(
                           context: context,
                           tarjeta: tarjeta,
                         )) {
@@ -270,10 +270,9 @@ class _TarjetasState extends State<TarjetasADD> {
   }
 
   onChanged() {
-    expiryDate = expirymounth.text + "/" + expiryyear.text;
-
-    // numberscardString = cardNumber.text.replaceAllMapped(
-    //     RegExp(r'(\d{1,4})(?=(\d{4})+(?!\d))'), (Match m) => '${m[1]} ');
+    expiryDate = "${expirymounth.text}/${expiryyear.text}";
+    numberscardString = cardNumber.text.replaceAllMapped(
+        RegExp(r'(\d{1,4})(?=(\d{4})+(?!\d))'), (Match m) => '${m[1]} ');
     setState(() {});
   }
 }

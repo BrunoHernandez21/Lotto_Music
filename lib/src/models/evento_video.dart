@@ -75,6 +75,7 @@ class ItemEvent {
     this.premioOtros,
     this.moneda,
     this.categoriaEventoId,
+    this.vid_id,
     this.artista,
     this.canal,
     this.fechaVideo,
@@ -93,6 +94,7 @@ class ItemEvent {
   String? premioOtros;
   String? moneda;
   int? categoriaEventoId;
+  int? vid_id;
   String? artista;
   String? canal;
   DateTime? fechaVideo;
@@ -111,6 +113,7 @@ class ItemEvent {
     String? premioOtros,
     String? moneda,
     int? categoriaEventoId,
+    int? vid_id,
     String? artista,
     String? canal,
     DateTime? fechaVideo,
@@ -129,6 +132,7 @@ class ItemEvent {
         premioOtros: premioOtros ?? this.premioOtros,
         moneda: moneda ?? this.moneda,
         categoriaEventoId: categoriaEventoId ?? this.categoriaEventoId,
+        vid_id: vid_id ?? this.vid_id,
         artista: artista ?? this.artista,
         canal: canal ?? this.canal,
         fechaVideo: fechaVideo ?? this.fechaVideo,
@@ -152,6 +156,7 @@ class ItemEvent {
         premioOtros: json["premio_otros"],
         moneda: json["moneda"],
         categoriaEventoId: json["categoria_evento_id"],
+        vid_id: json["vid_id"],
         artista: json["artista"],
         canal: json["canal"],
         fechaVideo: DateTime.parse(json["fecha_video"]),
@@ -174,6 +179,7 @@ class ItemEvent {
         "premio_otros": premioOtros,
         "moneda": moneda,
         "categoria_evento_id": categoriaEventoId,
+        "vid_id": vid_id,
         "artista": artista,
         "canal": canal,
         "fecha_video": fechaVideo?.toIso8601String(),

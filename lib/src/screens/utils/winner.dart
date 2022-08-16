@@ -132,10 +132,8 @@ class _Tarjeta extends StatelessWidget {
           Textos.tituloMAX(texto: "Usted gano"),
           if (ganador.cantidad != 0)
             Textos.tituloMED(
-                texto: ganador.cantidad.toString().replaceAllMapped(
-                        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-                        (Match m) => '${m[1]},') +
-                    "\$mx"),
+                texto:
+                    "${ganador.cantidad.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}\$mx"),
           if (ganador.concepto.isNotEmpty)
             Textos.tituloMED(texto: ganador.concepto),
           Align(
@@ -143,7 +141,7 @@ class _Tarjeta extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 20.0),
               child: Textos.parrafoMAX(
-                texto: "ID " + ganador.usuarioId.toString(),
+                texto: "ID ${ganador.usuarioId}",
               ),
             ),
           ),

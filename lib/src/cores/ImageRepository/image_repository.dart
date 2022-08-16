@@ -30,6 +30,7 @@ class ImageRepository {
     if (images == null) await _loadInitData();
 
     if (images![name] == null) {
+      // ignore: use_build_context_synchronously
       final token =
           BlocProvider.of<AcountBloc>(context).state.acount.accessToken;
       final bits = await CloudService.downloadImage(token);
@@ -38,7 +39,7 @@ class ImageRepository {
       images!.addAll({name: DateTime.now().toString()});
       Repository.saveString(repo, json.encode(images));
       if (min) {
-        return await Repository.loadImage("tumb" + name);
+        return await Repository.loadImage("tumb$name");
       } else {
         return await Repository.loadImage(name);
       }
@@ -50,7 +51,7 @@ class ImageRepository {
       }
       Repository.saveString(repo, json.encode(images));
       if (min) {
-        return await Repository.loadImage("tumb" + name);
+        return await Repository.loadImage("tumb$name");
       } else {
         return await Repository.loadImage(name);
       }

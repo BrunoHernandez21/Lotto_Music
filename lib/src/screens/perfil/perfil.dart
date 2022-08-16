@@ -72,8 +72,7 @@ class BodyLogin extends StatelessWidget {
       const SizedBox(
         height: 30,
       ),
-      Textos.tituloMED(
-          texto: "Hola " + (state.user?.nombre ?? "Nuevo Usuario")),
+      Textos.tituloMED(texto: "Hola ${state.user?.nombre ?? "Nuevo Usuario"}"),
       const SizedBox(
         height: 30,
       ),
@@ -92,7 +91,7 @@ class BodyLogin extends StatelessWidget {
             return Column(
               children: [
                 Textos.tituloMIN(
-                  texto: "Cash = " + cash.toString(),
+                  texto: "Cash = $cash",
                   color: Colors.yellow,
                 )
               ],

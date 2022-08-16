@@ -1,9 +1,8 @@
 // To parse this JSON data, do
 //
 //     final userModel = userModelFromMap(jsonString);
-
-import 'dart:convert';
 import 'package:intl/intl.dart';
+import 'dart:convert';
 
 class UserModel {
   UserModel({

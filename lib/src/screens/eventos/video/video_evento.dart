@@ -7,13 +7,13 @@ import 'package:lotto_music/src/screens/eventos/estadisticas/estadisticas.dart';
 import 'package:lotto_music/src/widgets/botones.dart';
 import 'package:lotto_music/src/widgets/text.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import '../../../bloc/stadistics/estadisticas_bloc.dart';
 import '../../../bloc/video_event/video_event_bloc.dart';
 import '../../../cores/compositor.dart';
 import '../../../helpers/rutinas.dart';
 import '../../../helpers/variables_globales.dart';
 import '../../../models/cartera.dart';
-import '../../../models/estadisticvas_yt.dart';
-import '../../../services/yt.dart';
+import '../../../models/stadistics_model.dart';
 import 'appbar.dart';
 
 class VideoEvento extends StatefulWidget {
@@ -119,7 +119,7 @@ class _VideoEventoState extends State<VideoEvento> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 _EstadisticasYT(
-                  videoID: state.eventoVideo.videoId ?? "dO1rMeYnOmM",
+                  videoID: state.eventoVideo.vid_id ?? 0,
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
@@ -189,49 +189,11 @@ class _VideoEventoState extends State<VideoEvento> {
   }
 }
 
-class _EstadisticasYT extends StatefulWidget {
-  final String videoID;
-  const _EstadisticasYT({Key? key, required this.videoID}) : super(key: key);
-
-  @override
-  State<_EstadisticasYT> createState() => __EstadisticasYTState();
-}
-
-class __EstadisticasYTState extends State<_EstadisticasYT> {
-  EstadisticasYt? estadisticas;
-
-  @override
-  void initState() {
-    YTService.estadisticas(
-      ytID: widget.videoID,
-    ).then((value) {
-      estadisticas = value;
-      setState(() {});
-    });
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Textos.parrafoMAX(
-          texto:
-              "Vistas: ${(estadisticas?.items?.first.statistics?.viewCount ?? "").replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}",
-        ),
-        Textos.parrafoMAX(
-          texto:
-              "Me gusta: ${(estadisticas?.items?.first.statistics?.likeCount ?? "").replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}",
-        ),
-        Textos.parrafoMAX(
-          texto:
-              "Comentarios: ${(estadisticas?.items?.first.statistics?.commentCount ?? "").replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}",
-        ),
-      ],
-    );
-  }
-}
+/////////////////////////////////////////////
+///
+///
+///
+/// Tarjetas iterables
 
 class _ListaVideosEvent extends StatefulWidget {
   const _ListaVideosEvent({Key? key}) : super(key: key);
@@ -325,7 +287,11 @@ class _ListaVideosState extends State<_ListaVideosEvent> {
                 ),
                 Textos.parrafoMED(
                   texto: Rutinas.comprobador(v.fechahoraevento),
-                ),
+                ), /////////////////////////////////////////////
+                ///
+                ///
+                ///
+                ///Estadisticas
               ],
             ),
           )
@@ -344,6 +310,49 @@ class _ListaVideosState extends State<_ListaVideosEvent> {
         );
       },
       fit: BoxFit.cover,
+    );
+  }
+}
+
+/////////////////////////////////////////////
+///
+///
+///
+///Estadisticas
+
+class _EstadisticasYT extends StatelessWidget {
+  final int videoID;
+
+  const _EstadisticasYT({Key? key, required this.videoID}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<EstadisticasBloc, EstadisticasState>(
+      builder: (context, state) {
+        StadisticModel st = StadisticModel();
+        state.allStadistics?.stadisticModel?.forEach(((element) {
+          if (element.id == videoID) {
+            st = element;
+          }
+        }));
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Textos.parrafoMAX(
+              texto:
+                  "Vistas: ${(st.viewCount?.toString() ?? "").replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}",
+            ),
+            Textos.parrafoMAX(
+              texto:
+                  "Me gusta: ${(st.likeCount?.toString() ?? "").replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}",
+            ),
+            Textos.parrafoMAX(
+              texto:
+                  "Comentarios: ${(st.commentsCount?.toString() ?? "").replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}",
+            ),
+          ],
+        );
+      },
     );
   }
 }

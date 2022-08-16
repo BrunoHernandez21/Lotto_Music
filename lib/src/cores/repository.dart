@@ -9,12 +9,12 @@ class Repository {
 
   static Future<void> _initialicePhat() async {
     path = (await getApplicationDocumentsDirectory()).path;
-    if ((path?.endsWith('/') ?? true) == false) path = path! + '/';
+    if ((path?.endsWith('/') ?? true) == false) path = '${path!}/';
   }
 
   static Future<void> _initialiceTempPhat() async {
     temphat = (await getTemporaryDirectory()).path;
-    if ((temphat?.endsWith('/') ?? true) == false) temphat = temphat! + '/';
+    if ((temphat?.endsWith('/') ?? true) == false) temphat = '${temphat!}/';
   }
 
   ////imagenes
@@ -22,7 +22,7 @@ class Repository {
     if (path == null) await _initialicePhat();
     if (path == null) return;
     final archivo = File(path! + name);
-    final tumblari = File(path! + "tumb" + name);
+    final tumblari = File("${path!}tumb$name");
     if (await archivo.exists()) {
       archivo.deleteSync();
       tumblari.deleteSync();
@@ -52,7 +52,7 @@ class Repository {
   //// String
   static Future<String?> loadString(String name) async {
     if (path == null) await _initialicePhat();
-    final archivo = File(path! + name + '.txt');
+    final archivo = File('${path!}$name.txt');
     if (!archivo.existsSync()) {
       return null;
     }
@@ -62,7 +62,7 @@ class Repository {
   static Future<void> saveString(String name, String data) async {
     if (path == null) await _initialicePhat();
     if (path == null) return;
-    final archivo = File(path! + name + '.txt');
+    final archivo = File('${path!}$name.txt');
     if (archivo.existsSync()) archivo.deleteSync();
     archivo.createSync(recursive: true);
     archivo.writeAsStringSync(data);
@@ -72,7 +72,7 @@ class Repository {
   static Future<void> saveDouble(String name, double data) async {
     if (path == null) await _initialicePhat();
     if (path == null) return;
-    final archivo = File(path! + name + '.txt');
+    final archivo = File('${path!}$name.txt');
     if (await archivo.exists()) {
       archivo.delete();
     }
@@ -82,7 +82,7 @@ class Repository {
   static Future<double?> loadDouble(String name, double data) async {
     if (path == null) await _initialicePhat();
     if (path == null) return null;
-    final archivo = File(path! + name + '.txt');
+    final archivo = File('${path!}$name.txt');
     if (!archivo.existsSync()) {
       return null;
     }
@@ -94,7 +94,7 @@ class Repository {
   static Future<void> saveInt(String name, int data) async {
     if (path == null) await _initialicePhat();
     if (path == null) return;
-    final archivo = File(path! + name + '.txt');
+    final archivo = File('${path!}$name.txt');
     if (await archivo.exists()) {
       archivo.delete();
     }
@@ -104,7 +104,7 @@ class Repository {
   static Future<int?> loadInt(String name) async {
     if (path == null) await _initialicePhat();
     if (path == null) return null;
-    final archivo = File(path! + name + '.txt');
+    final archivo = File('${path!}$name.txt');
     if (!archivo.existsSync()) {
       return null;
     }
@@ -116,7 +116,7 @@ class Repository {
   static Future<void> saveBool(String name, bool data) async {
     if (path == null) await _initialicePhat();
     if (path == null) return;
-    final archivo = File(path! + name + '.txt');
+    final archivo = File('${path!}$name.txt');
     if (await archivo.exists()) {
       archivo.delete();
     }
@@ -125,7 +125,7 @@ class Repository {
 
   static Future<bool?> loadBool(String name) async {
     if (path == null) await _initialicePhat();
-    final archivo = File(path! + name + '.txt');
+    final archivo = File('${path!}$name.txt');
     if (!archivo.existsSync()) {
       return null;
     }
@@ -138,14 +138,8 @@ class Repository {
   ////Temporal image
   static Future<String> saveTempImage(List<int> bits) async {
     if (temphat == null) await _initialiceTempPhat();
-    final name = "temp" +
-        DateTime.now()
-            .toString()
-            .replaceAll(" ", "")
-            .replaceAll(".", "")
-            .replaceAll(":", "")
-            .replaceAll("-", "") +
-        ".jpg";
+    final name =
+        "temp${DateTime.now().toString().replaceAll(" ", "").replaceAll(".", "").replaceAll(":", "").replaceAll("-", "")}.jpg";
     final file = File(temphat! + name);
     file.writeAsBytesSync(bits);
     return name;

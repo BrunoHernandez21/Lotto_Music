@@ -11,6 +11,7 @@ import 'package:lotto_music/src/bloc/carrito/carrito_bloc.dart';
 import 'package:lotto_music/src/bloc/direcciones/direcciones_bloc.dart';
 import 'package:lotto_music/src/bloc/planes/planes_bloc.dart';
 import 'package:lotto_music/src/bloc/shaderPreferences/shaderpreferences_bloc.dart';
+import 'package:lotto_music/src/bloc/stadistics/estadisticas_bloc.dart';
 import 'package:lotto_music/src/bloc/suscripciones/suscripciones_bloc.dart';
 import 'package:lotto_music/src/bloc/tarjetas/tarjetas_bloc.dart';
 import 'package:lotto_music/src/bloc/user/user_bloc.dart';
@@ -90,10 +91,11 @@ class Appstate extends StatelessWidget {
         BlocProvider(create: (context) => VideoBloc()),
         BlocProvider(create: (context) => TarjetasBloc()),
         BlocProvider(create: (context) => DireccionesBloc()),
+        BlocProvider(create: (context) => EstadisticasBloc()),
       ],
       child: BlocBuilder<ShaderpreferencesBloc, ShaderpreferencesState>(
         builder: (context, state) {
-          SocketService.intstate();
+          SocketService.intstate(context);
           return MyApp(
             locale: state.idioma,
             theme: state.themeData,
