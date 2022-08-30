@@ -41,61 +41,49 @@ class ItemsCarrito {
   ItemsCarrito({
     this.id = 0,
     this.cantidad = 0,
-    this.totalLinea,
-    this.precioUnitario,
-    this.descuento,
+    this.totalLinea = 0,
+    this.puntosLinea = 0,
     this.fechaCarrito,
     this.planId = 0,
-    this.puntos = 0,
-    this.nombre = "",
-    this.precio = 0,
+    this.titulo,
+    this.descripcion,
     this.moneda,
-    this.duracionDias = 0,
     this.suscribcion = false,
   });
 
   int id;
   int cantidad;
-  double? totalLinea;
-  double? precioUnitario;
-  double? descuento;
+  double totalLinea;
+  int puntosLinea;
   DateTime? fechaCarrito;
   int planId;
-  int puntos;
-  String nombre;
-  double precio;
+  String? titulo;
+  String? descripcion;
   String? moneda;
-  int duracionDias;
   bool suscribcion;
 
   ItemsCarrito copyWith({
     int? id,
     int? cantidad,
     double? totalLinea,
-    double? precioUnitario,
-    double? descuento,
+    int? puntosLinea,
     DateTime? fechaCarrito,
     int? planId,
-    int? puntos,
-    String? nombre,
-    double? precio,
+    String? titulo,
+    String? descripcion,
     String? moneda,
-    int? duracionDias,
     bool? suscribcion,
   }) =>
       ItemsCarrito(
         id: id ?? this.id,
         cantidad: cantidad ?? this.cantidad,
         totalLinea: totalLinea ?? this.totalLinea,
-        precioUnitario: precioUnitario ?? this.precioUnitario,
-        descuento: descuento ?? this.descuento,
+        puntosLinea: puntosLinea ?? this.puntosLinea,
         fechaCarrito: fechaCarrito ?? this.fechaCarrito,
         planId: planId ?? this.planId,
-        puntos: puntos ?? this.puntos,
-        nombre: nombre ?? this.nombre,
-        precio: precio ?? this.precio,
+        titulo: titulo ?? this.titulo,
+        descripcion: descripcion ?? this.descripcion,
         moneda: moneda ?? this.moneda,
-        duracionDias: duracionDias ?? this.duracionDias,
         suscribcion: suscribcion ?? this.suscribcion,
       );
 
@@ -105,18 +93,15 @@ class ItemsCarrito {
   String toJson() => json.encode(toMap());
 
   factory ItemsCarrito.fromMap(Map<String, dynamic> json) => ItemsCarrito(
-        id: json["id"],
-        cantidad: json["cantidad"],
-        totalLinea: json["total_linea"]?.toDouble(),
-        precioUnitario: json["precio_unitario"]?.toDouble(),
-        descuento: json["descuento"]?.toDouble(),
+        id: json["id"]?.toInt() ?? 0,
+        cantidad: json["cantidad"]?.toInt() ?? 0,
+        totalLinea: json["total_linea"]?.toDouble() ?? 0,
+        puntosLinea: json["puntos_linea"]?.toInt() ?? 0,
         fechaCarrito: DateTime.parse(json["fecha_carrito"]),
-        planId: json["plan_id"],
-        puntos: json["puntos"],
-        nombre: json["nombre"],
-        precio: json["precio"]?.toDouble(),
-        moneda: json["moneda"],
-        duracionDias: json["duracion_dias"],
+        planId: json["plan_id"]?.toInt() ?? 0,
+        titulo: json["titulo"],
+        descripcion: json["descripcion"],
+        moneda: json["moneda"] ?? "MXN",
         suscribcion: json["suscribcion"] ?? false,
       );
 
@@ -124,17 +109,14 @@ class ItemsCarrito {
         "id": id,
         "cantidad": cantidad,
         "total_linea": totalLinea,
-        "precio_unitario": precioUnitario,
-        "descuento": descuento,
+        "puntos_linea": puntosLinea,
         "fecha_carrito": fechaCarrito == null
             ? null
             : DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(fechaCarrito!),
         "plan_id": planId,
-        "puntos": puntos,
-        "nombre": nombre,
-        "precio": precio,
+        "titulo": titulo,
+        "descripcion": descripcion,
         "moneda": moneda,
-        "duracion_dias": duracionDias,
         "suscribcion": suscribcion,
       };
 }

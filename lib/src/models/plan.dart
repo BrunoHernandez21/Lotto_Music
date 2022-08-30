@@ -3,55 +3,47 @@ import 'dart:convert';
 class PlanModel {
   PlanModel({
     this.id = 0,
-    this.activo = true,
+    this.titulo,
+    this.descripcion,
+    this.prePuntos,
     this.puntos = 0,
-    this.nombre = "",
     this.precio = 0,
     this.moneda = "MXN",
-    this.descuentoItem,
-    this.impuesto,
-    this.precioTotal = 0,
-    this.duracionDias = 365,
     this.suscribcion = false,
+    this.prePrecio,
   });
 
   int id;
-  bool activo;
+  String? titulo;
+  String? descripcion;
+  int? prePuntos;
   int puntos;
-  String nombre;
+  double? prePrecio;
   double precio;
   String moneda;
-  double? descuentoItem;
-  double? impuesto;
-  double precioTotal;
-  int duracionDias;
   bool suscribcion;
 
   PlanModel copyWith({
     int? id,
-    bool? activo,
+    String? titulo,
+    String? descripcion,
+    int? prePuntos,
     int? puntos,
-    String? nombre,
     double? precio,
     String? moneda,
-    double? descuentoItem,
-    double? impuesto,
-    double? precioTotal,
-    int? duracionDias,
     bool? suscribcion,
+    double? prePrecio,
   }) =>
       PlanModel(
         id: id ?? this.id,
-        activo: activo ?? this.activo,
+        titulo: titulo ?? this.titulo,
+        descripcion: descripcion ?? this.descripcion,
+        prePuntos: prePuntos ?? this.prePuntos,
         puntos: puntos ?? this.puntos,
-        nombre: nombre ?? this.nombre,
         precio: precio ?? this.precio,
         moneda: moneda ?? this.moneda,
-        descuentoItem: descuentoItem ?? this.descuentoItem,
-        impuesto: impuesto ?? this.impuesto,
-        precioTotal: precioTotal ?? this.precioTotal,
-        duracionDias: duracionDias ?? this.duracionDias,
         suscribcion: suscribcion ?? this.suscribcion,
+        prePrecio: prePrecio ?? this.prePrecio,
       );
 
   factory PlanModel.fromJson(String str) => PlanModel.fromMap(json.decode(str));
@@ -59,32 +51,26 @@ class PlanModel {
   String toJson() => json.encode(toMap());
 
   factory PlanModel.fromMap(Map<String, dynamic> json) => PlanModel(
-        id: json["id"] ?? 0,
-        activo: json["activo"] ?? false,
-        puntos: json["puntos"] ?? 0,
-        nombre: json["nombre"] ?? "",
-        precio: json["precio"] == null ? 0.0 : json["precio"].toDouble(),
+        id: json["id"]?.toInt() ?? 0,
+        titulo: json["titulo"],
+        descripcion: json["descripcion"],
+        prePuntos: json["Pre_puntos"]?.toInt() ?? 0,
+        puntos: json["puntos"]?.toInt() ?? 0,
+        precio: json["precio"]?.toDouble() ?? 0,
         moneda: json["moneda"] ?? "MXN",
-        descuentoItem: json["descuento_item"]?.toDouble(),
-        impuesto: json["impuesto"]?.toDouble(),
-        precioTotal: json["precio_total"] == null
-            ? 0.0
-            : json["precio_total"].toDouble(),
-        duracionDias: json["duracion_dias"] = 0,
-        suscribcion: json["suscribcion"] = false,
+        suscribcion: json["suscribcion"] ?? false,
+        prePrecio: json["pre_precio"]?.toDouble() ?? 0,
       );
 
   Map<String, dynamic> toMap() => {
         "id": id,
-        "activo": activo,
+        "titulo": titulo,
+        "descripcion": descripcion,
+        "Pre_puntos": prePuntos,
         "puntos": puntos,
-        "nombre": nombre,
         "precio": precio,
         "moneda": moneda,
-        "descuento_item": descuentoItem,
-        "impuesto": impuesto,
-        "precio_total": precioTotal,
-        "duracion_dias": duracionDias,
         "suscribcion": suscribcion,
+        "pre_precio": prePrecio,
       };
 }

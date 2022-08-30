@@ -117,13 +117,13 @@ class _CategoriasState extends State<Categorias> {
                   elevation: MaterialStateProperty.all(0),
                   backgroundColor:
                       MaterialStateProperty.all(Colors.transparent)),
-              onPressed: () async {
-                await Compositor.onCategoriaS(
+              onPressed: () {
+                Compositor.onCategoriaS(
                   context: context,
                   categoria: element,
-                );
-                Navigator.maybeOf(context)
-                    ?.pushNamed(VideosCategoria.routeName);
+                ).then((value) {
+                  Navigator.of(context).pushNamed(VideosCategoria.routeName);
+                });
               },
               onLongPress: () {},
               child: Center(

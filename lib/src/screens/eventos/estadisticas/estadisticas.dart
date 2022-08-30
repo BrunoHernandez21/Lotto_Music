@@ -25,7 +25,7 @@ class Estadisticas extends StatelessWidget {
               final List<int> save = [];
               final List<DateTime?> date = [];
               stEst.allStadistics?.stadisticModel?.forEach(((element) {
-                if (element.videoId == stEvent.eventoVideo.vid_id) {
+                if (element.videoId == stEvent.eventoVideo.vidid) {
                   view.add(element.viewCount ?? 0);
                   like.add(element.likeCount ?? 0);
                   coments.add(element.commentsCount ?? 0);

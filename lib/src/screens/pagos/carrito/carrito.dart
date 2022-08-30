@@ -84,7 +84,7 @@ class Carrito extends StatelessWidget {
     List<Widget> items = [];
     for (var i in itemsCarrito) {
       items.add(TarjetaCarrito(carrito: i));
-      total += i.totalLinea ?? 0;
+      total += i.totalLinea;
     }
     return Column(
       children: [
@@ -148,10 +148,10 @@ class TarjetaCarrito extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
         title: carrito.suscribcion
-            ? Text("Suscribción ${carrito.nombre}")
-            : Text("Plan ${carrito.nombre}"),
+            ? Text("Suscribción ${carrito.titulo ?? ""}")
+            : Text("Plan ${carrito.titulo ?? ""}"),
         subtitle: Text(
-          "Precio unitario ${carrito.precioUnitario ?? ""}",
+          "Precio Total ${carrito.totalLinea}",
         ),
         leading: IconButton(
           icon: const Icon(

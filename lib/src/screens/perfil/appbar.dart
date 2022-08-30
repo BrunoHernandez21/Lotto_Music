@@ -19,7 +19,7 @@ class AppbarMiPerfil extends StatelessWidget {
               ),
               child: IconButton(
                 onPressed: () {
-                  controller?.animateTo(0);
+                  controller?.animateTo(1);
                 },
                 icon: const Icon(
                   Icons.arrow_back_ios,

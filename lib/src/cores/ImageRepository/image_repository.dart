@@ -30,8 +30,8 @@ class ImageRepository {
     if (images == null) await _loadInitData();
 
     if (images![name] == null) {
-      // ignore: use_build_context_synchronously
       final token =
+          // ignore: use_build_context_synchronously
           BlocProvider.of<AcountBloc>(context).state.acount.accessToken;
       final bits = await CloudService.downloadImage(token);
       if (bits == null) return null;

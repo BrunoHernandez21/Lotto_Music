@@ -29,21 +29,29 @@ class VideoService {
   }
 
   static Future<GruposModel?> listarGrupos() async {
-    final urI = Uri.parse(_grupos);
-    final resp = await http.get(
-      urI,
-    );
-    final out = GruposModel.fromJson(resp.body);
-    return out;
+    try {
+      final urI = Uri.parse(_grupos);
+      final resp = await http.get(
+        urI,
+      );
+      final out = GruposModel.fromJson(resp.body);
+      return out;
+    } catch (e) {
+      return null;
+    }
   }
 
   static Future<StadisticsResponse?> estadisticas() async {
-    final urI = Uri.parse(_st);
-    final resp = await http.get(
-      urI,
-    );
-    final out = StadisticsResponse.fromJson(resp.body);
-    return out;
+    try {
+      final urI = Uri.parse(_st);
+      final resp = await http.get(
+        urI,
+      );
+      final out = StadisticsResponse.fromJson(resp.body);
+      return out;
+    } catch (e) {
+      return null;
+    }
   }
 
   static Future<VideoEventModel?> listarVideosCategoria(

@@ -575,7 +575,6 @@ class Compositor {
       tarjeta: tarjeta,
     );
     if (crea?.mensaje != null) {
-      print(crea?.mensaje);
       return false;
     }
 

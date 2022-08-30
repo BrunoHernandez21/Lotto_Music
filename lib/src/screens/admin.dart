@@ -11,6 +11,7 @@ import '../helpers/variables_globales.dart';
 import 'perfil/perfil.dart';
 import 'eventos/eventos.dart';
 
+// este widget es solo para controlar los estados de la app (ciclo de vida)
 class Admin extends StatefulWidget {
   static const routeName = 'Admin';
 
@@ -44,6 +45,7 @@ class _AdminState extends State<Admin> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    Medidas.size = MediaQuery.of(context).size;
     return const _BodyAdmin();
   }
 }
@@ -72,8 +74,6 @@ class _BodyAdminState extends State<_BodyAdmin> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    Medidas.size = MediaQuery.of(context).size;
-
     return BlocBuilder<ShaderpreferencesBloc, ShaderpreferencesState>(
       builder: (context, state) {
         return Scaffold(

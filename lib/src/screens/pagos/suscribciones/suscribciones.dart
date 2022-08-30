@@ -81,7 +81,7 @@ class __TarjetaPlanesState extends State<_TarjetaPlanes> {
         children: [
           Center(
             child: Textos.tituloMED(
-              texto: widget.plan.nombre,
+              texto: widget.plan.titulo ?? "Sin Titulo",
               color: const Color(0xff1eae98),
             ),
           ),

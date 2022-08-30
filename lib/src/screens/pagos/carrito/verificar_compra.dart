@@ -35,7 +35,7 @@ class _VerificarCompraState extends State<VerificarCompra> {
           }
           double total = 0;
           carState.itemsCarrito?.forEach((i) {
-            total += i.totalLinea ?? 0;
+            total += i.totalLinea;
           });
           return BlocBuilder<TarjetasBloc, TarjetasState>(
             builder: (context, tarState) {

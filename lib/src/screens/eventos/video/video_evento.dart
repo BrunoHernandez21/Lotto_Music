@@ -119,7 +119,7 @@ class _VideoEventoState extends State<VideoEvento> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 _EstadisticasYT(
-                  videoID: state.eventoVideo.vid_id ?? 0,
+                  videoID: state.eventoVideo.vidid ?? 0,
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
