@@ -20,3 +20,5 @@ estadisticas y bloc en mostrar detalle de evento y envio de apuesta             
 en numeros usar la separacion de miles                                          listo
 
 historial de compra (primeto deben hacerse las compras historial de compra)
+
+flutter build appbundle --release
