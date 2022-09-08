@@ -39,8 +39,12 @@ class Medidas {
 }
 
 class URL {
-  static const String socket = 'https://lotto.inclusive.com.mx';
-  static const String _base = "https://lotto.inclusive.com.mx/api/v3/";
+  //http://187.213.68.250:25567
+  //https://lotto.inclusive.com.mx/api/v3/
+  static const String socket = 'http://187.213.68.250:25567';
+  //http://187.213.68.250:25566/api/v3/
+  //https://lotto.inclusive.com.mx/api/v3/
+  static const String _base = "http://187.213.68.250:25566/api/v3/";
   static const String _baseYT = "https://www.googleapis.com/youtube/v3";
   static const String searchYT = "$_baseYT/search?${PKey.ytKey}";
   static const String estYT = "$_baseYT/videos?${PKey.ytKey}";

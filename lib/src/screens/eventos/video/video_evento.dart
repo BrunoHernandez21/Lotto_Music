@@ -330,11 +330,15 @@ class _EstadisticasYT extends StatelessWidget {
     return BlocBuilder<EstadisticasBloc, EstadisticasState>(
       builder: (context, state) {
         StadisticModel st = StadisticModel();
-        state.allStadistics?.stadisticModel?.forEach(((element) {
-          if (element.id == videoID) {
-            st = element;
+        final len = state.allStadistics?.stadisticModel?.length;
+
+        for (int i = (len ?? 0) - 1; i >= 0; i--) {
+          if (state.allStadistics?.stadisticModel?[i].videoId == videoID) {
+            st = state.allStadistics?.stadisticModel?[i] ?? StadisticModel();
+            break;
           }
-        }));
+        }
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

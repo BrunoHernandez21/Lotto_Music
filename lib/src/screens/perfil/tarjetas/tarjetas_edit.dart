@@ -235,7 +235,7 @@ class _TarjetasEditState extends State<TarjetasEdit> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
                         ),
-                        primary: const Color(0xff1b447b),
+                        backgroundColor: const Color(0xff1b447b),
                       ),
                       child: Container(
                         margin: const EdgeInsets.all(12),

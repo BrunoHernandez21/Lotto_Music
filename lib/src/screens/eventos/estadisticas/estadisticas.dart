@@ -5,6 +5,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../bloc/stadistics/estadisticas_bloc.dart';
 import '../../../bloc/video_event/video_event_bloc.dart';
+import '../../../models/stadistics_model.dart';
 
 class Estadisticas extends StatelessWidget {
   static const String routeName = "estadisticas";
@@ -13,7 +14,12 @@ class Estadisticas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Textos.tituloMED(
+          texto: "Estadisticas",
+        ),
+      ),
       body: BlocBuilder<VideoEventBloc, VideoEventState>(
         builder: (context, stEvent) {
           return BlocBuilder<EstadisticasBloc, EstadisticasState>(
@@ -24,6 +30,7 @@ class Estadisticas extends StatelessWidget {
               final List<int> shared = [];
               final List<int> save = [];
               final List<DateTime?> date = [];
+              List<StadisticModel> estadisticas = [];
               stEst.allStadistics?.stadisticModel?.forEach(((element) {
                 if (element.videoId == stEvent.eventoVideo.vidid) {
                   view.add(element.viewCount ?? 0);
@@ -32,9 +39,18 @@ class Estadisticas extends StatelessWidget {
                   shared.add(element.sharedCount ?? 0);
                   save.add(element.savedCount ?? 0);
                   date.add(element.fecha);
+                  estadisticas.add(element);
                 }
               }));
-              return bodyEstadisticas(view, coments, like, shared, save, date);
+              return bodyEstadisticas(
+                view,
+                coments,
+                like,
+                shared,
+                save,
+                date,
+                estadisticas,
+              );
             },
           );
         },
@@ -49,109 +65,194 @@ class Estadisticas extends StatelessWidget {
     List<int> shared,
     List<int> save,
     List<DateTime?> time,
+    List<StadisticModel> estadisticas,
   ) {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Column(
         children: [
+          const SizedBox(
+            height: 15,
+          ),
+          SingleChildScrollView(
+            physics: const BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
+            scrollDirection: Axis.horizontal,
+            child: Table(
+              defaultColumnWidth: const FixedColumnWidth(110.0),
+              children: [
+                TableRow(children: [
+                  Container(
+                    color: const Color.fromARGB(255, 10, 100, 110),
+                    alignment: Alignment.center,
+                    child: Textos.tituloMIN(
+                      texto: "Hora",
+                      color: Colors.white,
+                    ),
+                  ),
+                  Container(
+                    color: const Color.fromARGB(255, 10, 100, 110),
+                    alignment: Alignment.center,
+                    child: Textos.tituloMIN(
+                      texto: "Vistas",
+                      color: Colors.white,
+                    ),
+                  ),
+                  Container(
+                    color: const Color.fromARGB(255, 10, 100, 110),
+                    alignment: Alignment.center,
+                    child: Textos.tituloMIN(
+                      texto: "Comentarios",
+                      color: Colors.white,
+                    ),
+                  ),
+                  Container(
+                    color: const Color.fromARGB(255, 10, 100, 110),
+                    alignment: Alignment.center,
+                    child: Textos.tituloMIN(
+                      texto: "Like",
+                      color: Colors.white,
+                    ),
+                  ),
+                  Container(
+                    color: const Color.fromARGB(255, 10, 100, 110),
+                    alignment: Alignment.center,
+                    child: Textos.tituloMIN(
+                      texto: "Compartido",
+                      color: Colors.white,
+                    ),
+                  ),
+                  Container(
+                    color: const Color.fromARGB(255, 10, 100, 110),
+                    alignment: Alignment.center,
+                    child: Textos.tituloMIN(
+                      texto: "Guardado",
+                      color: Colors.white,
+                    ),
+                  ),
+                ]),
+                ...iterable(estadisticas)
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 60,
+          ),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            physics: const BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics(),
+            ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const SizedBox(
-                  width: 20,
+                  width: 30,
                 ),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Textos.tituloMIN(texto: "Vistas"),
-                    ...iterable(view)
-                  ],
+                GraficaLinear(
+                  items: view,
+                  date: time,
+                  title: "Vistas",
                 ),
                 const SizedBox(
-                  width: 20,
+                  width: 30,
                 ),
-                Column(
-                  children: [
-                    Textos.tituloMIN(texto: "Comentarios"),
-                    ...iterable(coments)
-                  ],
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                Column(
-                  children: [
-                    Textos.tituloMIN(texto: "Like"),
-                    ...iterable(like)
-                  ],
+                GraficaLinear(
+                  items: coments,
+                  date: time,
+                  title: "Comentarios",
                 ),
                 const SizedBox(
-                  width: 20,
+                  width: 30,
                 ),
-                Column(
-                  children: [
-                    Textos.tituloMIN(texto: "Compartido"),
-                    ...iterable(shared)
-                  ],
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                Column(
-                  children: [
-                    Textos.tituloMIN(texto: "Guardado"),
-                    ...iterable(save)
-                  ],
+                GraficaLinear(
+                  items: like,
+                  date: time,
+                  title: "Like",
                 ),
                 const SizedBox(
-                  width: 20,
+                  width: 30,
+                ),
+                GraficaLinear(
+                  items: shared,
+                  date: time,
+                  title: "compartido",
+                ),
+                const SizedBox(
+                  width: 30,
+                ),
+                GraficaLinear(
+                  items: save,
+                  date: time,
+                  title: "Guardado",
+                ),
+                const SizedBox(
+                  width: 30,
                 ),
               ],
             ),
           ),
-          GraficaLinear(
-            items: view,
-            date: time,
-            title: "Vistas",
-          ),
-          GraficaLinear(
-            items: coments,
-            date: time,
-            title: "Comentarios",
-          ),
-          GraficaLinear(
-            items: like,
-            date: time,
-            title: "Like",
-          ),
-          GraficaLinear(
-            items: shared,
-            date: time,
-            title: "compartido",
-          ),
-          GraficaLinear(
-            items: save,
-            date: time,
-            title: "Guardado",
+          const SizedBox(
+            height: 60,
           ),
         ],
       ),
     );
   }
 
-  List<Widget> iterable(List<int> iterable) {
-    final List<Widget> lista = [];
-    for (var element in iterable) {
+  List<TableRow> iterable(List<StadisticModel> estadisticas) {
+    final List<TableRow> lista = [];
+    for (var el in estadisticas) {
       lista.add(
-        Textos.parrafoMAX(texto: element.toString()),
-      );
-      lista.add(
-        const SizedBox(
-          height: 10,
-        ),
+        TableRow(children: [
+          Container(
+            color: const Color.fromARGB(255, 51, 11, 97),
+            alignment: Alignment.center,
+            child: Textos.parrafoMAX(
+              color: Colors.white,
+              texto: el.fecha.toString().substring(10, 16),
+            ),
+          ),
+          Container(
+            color: const Color.fromARGB(255, 21, 95, 52),
+            alignment: Alignment.center,
+            child: Textos.parrafoMAX(
+              color: Colors.white,
+              texto: el.viewCount.toString(),
+            ),
+          ),
+          Container(
+            color: const Color.fromARGB(255, 21, 95, 52),
+            alignment: Alignment.center,
+            child: Textos.parrafoMAX(
+              color: Colors.white,
+              texto: el.commentsCount.toString(),
+            ),
+          ),
+          Container(
+            color: const Color.fromARGB(255, 21, 95, 52),
+            alignment: Alignment.center,
+            child: Textos.parrafoMAX(
+              color: Colors.white,
+              texto: el.likeCount.toString(),
+            ),
+          ),
+          Container(
+            color: const Color.fromARGB(255, 21, 95, 52),
+            alignment: Alignment.center,
+            child: Textos.parrafoMAX(
+              color: Colors.white,
+              texto: el.sharedCount.toString(),
+            ),
+          ),
+          Container(
+            color: const Color.fromARGB(255, 21, 95, 52),
+            alignment: Alignment.center,
+            child: Textos.parrafoMAX(
+              color: Colors.white,
+              texto: el.savedCount.toString(),
+            ),
+          ),
+        ]),
       );
     }
     return lista;
@@ -173,31 +274,61 @@ class GraficaLinear extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<_Data> data = [];
     for (int i = 0; i < items.length; i++) {
-      data.add(
-          _Data((date[i]?.second.toString() ?? "null"), items[i].toDouble()));
+      data.add(_Data(date[i]?.toString().substring(10, 16) ?? "00:00",
+          items[i].toDouble()));
     }
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Textos.tituloMED(texto: title),
-        SfCartesianChart(
-            // Initialize category axis
-            primaryXAxis: CategoryAxis(),
-            series: <LineSeries<_Data, String>>[
-              LineSeries<_Data, String>(
-                  // Bind data source
-                  dataSource: data,
-                  xValueMapper: (_Data sales, _) => sales.time,
-                  yValueMapper: (_Data sales, _) => sales.value)
-            ])
-      ],
+    return SizedBox(
+      width: 400,
+      height: 400,
+      child: SfCartesianChart(
+          enableMultiSelection: true,
+          enableAxisAnimation: true,
+          title: ChartTitle(text: title),
+
+          // Initialize category axis
+          primaryXAxis: CategoryAxis(
+              title: AxisTitle(
+            text: "Tiempo",
+          )),
+          primaryYAxis: NumericAxis(
+              title: AxisTitle(
+            text: title,
+          )),
+          series: <LineSeries<_Data, String>>[
+            LineSeries<_Data, String>(
+              enableTooltip: true,
+              animationDelay: 150,
+              dataSource: data,
+              xValueMapper: (_Data sales, _) => sales.time,
+              yValueMapper: (_Data sales, _) => sales.value,
+              width: 2,
+              markerSettings: const MarkerSettings(
+                  isVisible: true,
+                  height: 5,
+                  width: 5,
+                  shape: DataMarkerType.circle,
+                  borderWidth: 3,
+                  borderColor: Colors.orange),
+              dataLabelSettings: const DataLabelSettings(
+                isVisible: true,
+                labelAlignment: ChartDataLabelAlignment.auto,
+              ),
+              animationDuration: 2000,
+              isVisible: true,
+              color: Colors.blue,
+              isVisibleInLegend: true,
+            ),
+          ]),
     );
   }
 }
 
 class _Data {
-  _Data(this.time, this.value);
+  _Data(
+    this.time,
+    this.value,
+  );
 
   final String time;
   final double value;
