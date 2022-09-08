@@ -18,7 +18,7 @@ class BodyNoLoged extends StatelessWidget {
           const SizedBox(
             height: 30,
           ),
-          Textos.tituloMAX(texto: "No Haz Iniciado Secion"),
+          Textos.tituloMAX(texto: "No Haz Iniciado Sesión"),
           const SizedBox(
             height: 30,
           ),

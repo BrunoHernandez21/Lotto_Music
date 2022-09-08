@@ -39,7 +39,8 @@ class Medidas {
 }
 
 class URL {
-  static const String _base = "http://187.213.68.250:25566/api/v3/";
+  static const String socket = 'https://lotto.inclusive.com.mx';
+  static const String _base = "https://lotto.inclusive.com.mx/api/v3/";
   static const String _baseYT = "https://www.googleapis.com/youtube/v3";
   static const String searchYT = "$_baseYT/search?${PKey.ytKey}";
   static const String estYT = "$_baseYT/videos?${PKey.ytKey}";
@@ -55,7 +56,7 @@ class URL {
 }
 
 class LocalStorage {
-  /*Direcciones internas de almacenamiento */
+  /* Direcciones internas de almacenamiento */
   static const String repoImage = "repoImage";
   static const loginResponse = "loginResponse";
 }

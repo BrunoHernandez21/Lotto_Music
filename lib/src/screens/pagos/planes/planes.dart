@@ -97,7 +97,7 @@ class __TarjetaPlanesState extends State<_TarjetaPlanes> {
           Center(
             child: Textos.tituloMED(
               texto:
-                  "\$ ${widget.plan.precio.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}MX c/u",
+                  "\$ ${widget.plan.precio.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}MXN c/u",
               color: const Color(0xfffca51f),
             ),
           ),
@@ -110,7 +110,7 @@ class __TarjetaPlanesState extends State<_TarjetaPlanes> {
           ),
           Center(
             child: Textos.tituloMED(
-              texto: "Total \$${(widget.plan.precio * cantidad)} MX",
+              texto: "Total \$${(widget.plan.precio * cantidad)} MXN",
               color: const Color(0xfffca51f),
             ),
           ),

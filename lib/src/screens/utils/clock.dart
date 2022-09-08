@@ -61,7 +61,7 @@ class Clock extends StatelessWidget {
                     const SizedBox(height: 15),
                     Textos.tituloMAX(
                         texto:
-                            "\$ ${(select?.premioCash.toString() ?? "").replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} mx"),
+                            "\$ ${(select?.premioCash.toString() ?? "").replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} MXN"),
                     const SizedBox(height: 15),
                     Row(
                       mainAxisSize: MainAxisSize.min,

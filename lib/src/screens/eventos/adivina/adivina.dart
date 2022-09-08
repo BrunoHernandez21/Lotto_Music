@@ -295,6 +295,14 @@ class _AdivinaState extends State<Adivina> {
               const Color.fromARGB(255, 69, 27, 143)
             ],
             onTap: () async {
+              final cartera = await Compositor.onLoadCartera(context: context);
+              if ((cartera?.puntos ?? 0) <= 0) {
+                await DialogAlert.ok(
+                  context: context,
+                  text: "No tienes puntos disponibles",
+                );
+                return;
+              }
               final apuesta = UserEventModel(
                 eventoId: evento.id ?? 0,
               );
@@ -314,14 +322,19 @@ class _AdivinaState extends State<Adivina> {
                 apuesta.sharedCount = int.tryParse(controllerS.text) ?? 0;
               }
 
-              if (await Compositor.onUserEventCreate(
-                    context: context,
-                    apuesta: apuesta,
-                  ) ??
-                  false) {
+              final resp = await Compositor.onUserEventCreate(
+                context: context,
+                apuesta: apuesta,
+              );
+              if (resp?.mensaje != null) {
                 await DialogAlert.ok(
                   context: context,
-                  text: "Compra realizada con exito",
+                  text: resp?.mensaje ?? "Error",
+                );
+              } else {
+                await DialogAlert.ok(
+                  context: context,
+                  text: "Envio exitoso",
                 );
                 setState(() {});
               }

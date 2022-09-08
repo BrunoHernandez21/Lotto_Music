@@ -490,7 +490,7 @@ class Compositor {
     return true;
   }
 
-  static Future<bool?> onUserEventCreate({
+  static Future<UserEventModel?> onUserEventCreate({
     required BuildContext context,
     required UserEventModel apuesta,
   }) async {
@@ -499,10 +499,7 @@ class Compositor {
       apuesta: apuesta,
       token: acountB.state.acount.accessToken,
     );
-    if (resp?.mensaje != null) {
-      return false;
-    }
-    return true;
+    return resp;
   }
 
   ////////////////////////////////////////////
