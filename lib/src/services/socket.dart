@@ -24,7 +24,9 @@ class SocketService {
             .setTransports(['websocket']) // for Flutter or Dart VM
             .enableAutoConnect() // disable auto-connection
             .build());
-
+    socket.onConnect((data) {
+      socket.emit("onInitLoad", {"usuario_id": 2});
+    });
     socket.on('estadisticas', (data) {
       final a = StadisticsResponse.fromMap(data);
       blocSt.add(OnUpdateStadistics(response: a));

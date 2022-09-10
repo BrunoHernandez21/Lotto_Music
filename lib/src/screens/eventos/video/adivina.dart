@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -5,18 +6,18 @@ import 'package:lotto_music/src/widgets/botones.dart';
 import 'package:lotto_music/src/widgets/dialogs_alert.dart';
 import 'package:lotto_music/src/widgets/inputs_text.dart';
 
+import '../../../bloc/cartera/cartera_bloc.dart';
+import '../../../bloc/ve_page_controller/videos_event_controller_bloc.dart';
 import '../../../bloc/video_event/video_event_bloc.dart';
 import '../../../cores/compositor.dart';
 import '../../../helpers/rutinas.dart';
 import '../../../helpers/variables_globales.dart';
-import '../../../models/cartera.dart';
 import '../../../models/userevent.dart';
 import '../../../models/evento_video.dart';
 import '../../../widgets/digital_clock.dart';
 import '../../../widgets/text.dart';
 
 class Adivina extends StatefulWidget {
-  static const String routeName = "adivina";
   const Adivina({Key? key}) : super(key: key);
 
   @override
@@ -38,36 +39,21 @@ class _AdivinaState extends State<Adivina> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: BlocBuilder<VideoEventBloc, VideoEventState>(
-            builder: (context, state) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(
-                    width: double.infinity,
-                  ),
-                  Textos.tituloMAX(texto: "Evento"),
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    margin: const EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        gradient: const LinearGradient(colors: [
-                          Color.fromARGB(255, 5, 222, 230),
-                          Color.fromARGB(255, 3, 199, 101),
-                        ])),
-                    child: const DefaultDigitalClock(),
-                  ),
-                  _CardVideo(v: state.eventoVideo),
-                  apuesta(evento: state.eventoVideo, context: context),
-                ],
-              );
-            },
-          )),
+    return BlocBuilder<VideoEventBloc, VideoEventState>(
+      builder: (context, state) {
+        return FadeIn(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(
+                width: double.infinity,
+              ),
+              _CardVideo(v: state.eventoVideo),
+              apuesta(evento: state.eventoVideo, context: context),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -75,6 +61,7 @@ class _AdivinaState extends State<Adivina> {
     return Column(
       children: [
         const SizedBox(
+          width: double.infinity,
           height: 20,
         ),
         Textos.tituloMAX(texto: "Tipo de evento"),
@@ -83,18 +70,11 @@ class _AdivinaState extends State<Adivina> {
                 "\$ ${evento.acumulado.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}MXN"),
         Align(
           alignment: Alignment.centerLeft,
-          child: FutureBuilder(
-            future: Compositor.onLoadCartera(context: context),
-            initialData: null,
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              final data = snapshot.data;
-              int cash = 0;
-              if (data.runtimeType == CarteraModel) {
-                cash = snapshot.data.puntos;
-              }
+          child: BlocBuilder<CarteraBloc, CarteraState>(
+            builder: (context, state) {
               return Center(
                 child: Textos.tituloMED(
-                  texto: "Tus Puntos = $cash",
+                  texto: "Tus Puntos = ${state.cartera.puntos}",
                   color: Colors.yellow,
                 ),
               );
@@ -295,8 +275,10 @@ class _AdivinaState extends State<Adivina> {
               const Color.fromARGB(255, 69, 27, 143)
             ],
             onTap: () async {
-              final cartera = await Compositor.onLoadCartera(context: context);
-              if ((cartera?.puntos ?? 0) <= 0) {
+              final cartera =
+                  BlocProvider.of<CarteraBloc>(context).state.cartera;
+
+              if ((cartera.puntos) <= 0) {
                 await DialogAlert.ok(
                   context: context,
                   text: "No tienes puntos disponibles",
@@ -326,6 +308,7 @@ class _AdivinaState extends State<Adivina> {
                 context: context,
                 apuesta: apuesta,
               );
+              await Compositor.onLoadCartera(context: context);
               if (resp?.mensaje != null) {
                 await DialogAlert.ok(
                   context: context,
@@ -361,16 +344,40 @@ class _CardVideo extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
-            width: Medidas.size.width * .640,
-            height: Medidas.size.width * .360,
-            clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: imagen(v.thumblary)),
         const SizedBox(
-          width: 6,
+          width: double.infinity,
+        ),
+        Stack(
+          children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: IconButton(
+                  onPressed: () {
+                    BlocProvider.of<VEPageControllerBloc>(context).add(
+                      OnSelectPapge(page: 1),
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back,
+                  )),
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                width: 120,
+                padding: const EdgeInsets.all(8),
+                margin: const EdgeInsets.all(15),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    gradient: const LinearGradient(colors: [
+                      Color.fromARGB(255, 5, 222, 230),
+                      Color.fromARGB(255, 3, 199, 101),
+                    ])),
+                child: const DefaultDigitalClock(),
+              ),
+            ),
+          ],
         ),
         Textos.tituloMAX(
           texto: v.titulo ?? "",

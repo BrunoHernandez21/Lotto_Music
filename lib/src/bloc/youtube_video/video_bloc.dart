@@ -6,10 +6,10 @@ import '../../models/youtube.dart';
 part 'video_event.dart';
 part 'video_state.dart';
 
-class VideoBloc extends Bloc<VideoEvent, VideoState> {
-  VideoBloc() : super(const VideoState()) {
+class YTVideoBloc extends Bloc<YTVideoEvent, YTVideoState> {
+  YTVideoBloc() : super(const YTVideoState()) {
     on<OnSelectVideoYT>((event, emit) {
-      emit(VideoState(eventoVideo: event.item));
+      emit(YTVideoState(eventoVideo: event.item));
     });
   }
 }

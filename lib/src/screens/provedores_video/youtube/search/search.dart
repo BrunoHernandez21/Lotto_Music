@@ -4,8 +4,8 @@ import 'package:lotto_music/src/cores/compositor.dart';
 import 'package:lotto_music/src/helpers/variables_globales.dart';
 import 'package:lotto_music/src/widgets/inputs_text.dart';
 
-import '../../../models/youtube.dart';
-import '../../../widgets/text.dart';
+import '../../../../models/youtube.dart';
+import '../../../../widgets/text.dart';
 import '../video/video.dart';
 import 'appbar.dart';
 

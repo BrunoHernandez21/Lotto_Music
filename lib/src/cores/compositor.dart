@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/bloc/carrito/carrito_bloc.dart';
+import 'package:lotto_music/src/bloc/cartera/cartera_bloc.dart';
 import 'package:lotto_music/src/bloc/shaderPreferences/shaderpreferences_bloc.dart';
 import 'package:lotto_music/src/bloc/suscripciones/suscripciones_bloc.dart';
 import 'package:lotto_music/src/bloc/tarjetas/tarjetas_bloc.dart';
 import 'package:lotto_music/src/bloc/user/user_bloc.dart';
 import 'package:lotto_music/src/bloc/video_event/video_event_bloc.dart';
-import 'package:lotto_music/src/bloc/videos/videos_bloc.dart';
+import 'package:lotto_music/src/bloc/youtube/youtube_bloc.dart';
 import 'package:lotto_music/src/bloc/videos_categoria/videos_categoria_bloc.dart';
 import 'package:lotto_music/src/models/userevent.dart';
 import 'package:lotto_music/src/models/login_response.dart';
@@ -24,12 +25,11 @@ import '../bloc/acount/acount_bloc.dart';
 import '../bloc/direcciones/direcciones_bloc.dart';
 import '../bloc/planes/planes_bloc.dart';
 import '../bloc/stadistics/estadisticas_bloc.dart';
-import '../bloc/video/video_bloc.dart';
+import '../bloc/youtube_video/video_bloc.dart';
 import '../bloc/videos_event/videos_event_bloc.dart';
 import '../helpers/variables_globales.dart';
 import '../models/carrito.dart';
 import '../models/carrito_response.dart';
-import '../models/cartera.dart';
 import '../models/direcciones.dart';
 import '../models/direcciones_response.dart';
 import '../models/evento_video.dart';
@@ -81,18 +81,11 @@ class Compositor {
     String password,
   ) async {
     final acountB = BlocProvider.of<AcountBloc>(context);
-    showDialog(
-      context: context,
-      builder: (context) {
-        return DialogAlert.loading(context);
-      },
-      barrierDismissible: false,
-    );
+
     final response = await AcountServices.login(
       email: email.trim(),
       password: password.trim(),
     );
-    Navigator.of(context).pop();
 
     if (response == null) {
       DialogAlert.ok(
@@ -105,7 +98,6 @@ class Compositor {
       acountB.add(OnLogin(response: response));
       AcountLocalSave.saveisLogin(true);
       AcountLocalSave.saveLoginResponse(acount: response);
-      Navigator.of(context).pop();
       return true;
     } else {
       DialogAlert.ok(
@@ -192,6 +184,10 @@ class Compositor {
       acountB.add(OnLogout());
       return false;
     }
+    acountB.add(OnLogin(
+      response: resp,
+    ));
+
     return true;
   }
 
@@ -870,7 +866,7 @@ class Compositor {
   static Future<void> onLoadPrincipalYT({
     required BuildContext context,
   }) async {
-    final ytB = BlocProvider.of<VideosBloc>(context);
+    final ytB = BlocProvider.of<YoutubeBloc>(context);
     final resp = await YTService.top();
     if (resp != null) {
       ytB.add(OnInitVideosYT(yt: resp));
@@ -904,21 +900,25 @@ class Compositor {
     required BuildContext context,
     required ItemYT item,
   }) async {
-    final ytB = BlocProvider.of<VideoBloc>(context);
+    final ytB = BlocProvider.of<YTVideoBloc>(context);
     ytB.add(OnSelectVideoYT(item: item));
     return true;
   }
 
 ///////////////////////////////////////////////
 ////      Cartera
-  static Future<CarteraModel?> onLoadCartera({
+  static Future<bool?> onLoadCartera({
     required BuildContext context,
   }) async {
     final acountB = BlocProvider.of<AcountBloc>(context);
     final resp = await UtilityService.cartera(
       token: acountB.state.acount.accessToken,
     );
-
-    return resp;
+    if (resp == null) {
+      return false;
+    }
+    // ignore: use_build_context_synchronously
+    BlocProvider.of<CarteraBloc>(context).add(OnLoadCartera(cartera: resp));
+    return true;
   }
 }

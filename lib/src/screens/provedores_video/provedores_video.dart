@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lotto_music/src/screens/provedores_video/search/search.dart';
-import 'package:lotto_music/src/widgets/text.dart';
-import 'videos/videos.dart';
+import '../../widgets/text.dart';
 import 'appbar.dart';
+import 'youtube/search/search.dart';
+import 'youtube/videos/videos.dart';
 
 class ProvedoresVideo extends StatelessWidget {
   const ProvedoresVideo({Key? key}) : super(key: key);

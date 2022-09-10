@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../../helpers/variables_globales.dart';
-import '../../../widgets/text.dart';
+import '../../../../helpers/variables_globales.dart';
+import '../../../../widgets/text.dart';
+import '../../../utils/notify.dart';
 
-class AppbarSearchYT extends StatelessWidget {
-  const AppbarSearchYT({Key? key}) : super(key: key);
+class AppbarVideos extends StatelessWidget {
+  const AppbarVideos({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,15 +14,6 @@ class AppbarSearchYT extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: const Icon(
-              Icons.arrow_back_ios,
-              size: 18,
-            ),
-          ),
           const SizedBox(
             width: 15,
           ),
@@ -29,8 +21,14 @@ class AppbarSearchYT extends StatelessWidget {
           const SizedBox(
             width: 5,
           ),
-          Textos.parrafoMED(texto: "Busquedas Youtube"),
+          Textos.parrafoMED(texto: "Lotto Music"),
           const Expanded(child: SizedBox()),
+          IconButton(
+            icon: const Icon(Icons.notifications),
+            onPressed: () {
+              Navigator.pushNamed(context, Notify.routeName);
+            },
+          ),
           const SizedBox(
             width: 10,
           ),

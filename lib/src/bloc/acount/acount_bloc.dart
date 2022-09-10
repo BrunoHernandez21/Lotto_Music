@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../../cores/acount.dart';
 import '../../models/login_response.dart';
-import '../../widgets/dialogs_alert.dart';
 
 part 'acount_event.dart';
 part 'acount_state.dart';
@@ -31,18 +30,5 @@ class AcountBloc extends Bloc<AcountEvent, AcountState> {
     AcountLocalSave.saveLoginResponse(acount: acount);
 
     return acount;
-  }
-
-  Future<bool> recovery({
-    required String email,
-    required BuildContext context,
-  }) async {
-    showDialog(
-      context: context,
-      builder: (context) => DialogAlert.loading(context),
-      barrierDismissible: false,
-    );
-    Navigator.of(context).pop();
-    return true;
   }
 }

@@ -13,40 +13,52 @@ class UtilityService {
   static const String _wins = "${URL.utility}/wins";
 
   static Future<VideoEventModel?> hora({required int pag}) async {
-    final urI = Uri.parse("$_clock/$pag/10");
-    final resp = await http.get(
-      urI,
-    );
-    final out = VideoEventModel.fromJson(resp.body);
-    return out;
+    try {
+      final urI = Uri.parse("$_clock/$pag/10");
+      final resp = await http.get(
+        urI,
+      );
+      final out = VideoEventModel.fromJson(resp.body);
+      return out;
+    } catch (e) {
+      return null;
+    }
   }
 
   static Future<CarteraModel?> cartera({required String token}) async {
-    final urI = Uri.parse(_cartera);
-    final resp = await http.get(
-      urI,
-      headers: {
-        "Authorization": "Bearer $token",
-      },
-    );
-    final out = CarteraModel.fromJson(resp.body);
-    return out;
+    try {
+      final urI = Uri.parse(_cartera);
+      final resp = await http.get(
+        urI,
+        headers: {
+          "Authorization": "Bearer $token",
+        },
+      );
+      final out = CarteraModel.fromJson(resp.body);
+      return out;
+    } catch (e) {
+      return null;
+    }
   }
 
   static Future<GanadorResponse?> wins({
     required int pag,
     required String token,
   }) async {
-    final urI = Uri.parse('$_wins/${pag.toString()}/10');
-    final resp = await http.get(
-      urI,
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $token",
-      },
-    );
+    try {
+      final urI = Uri.parse('$_wins/${pag.toString()}/10');
+      final resp = await http.get(
+        urI,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token",
+        },
+      );
 
-    final out = GanadorResponse.fromJson(resp.body);
-    return out;
+      final out = GanadorResponse.fromJson(resp.body);
+      return out;
+    } catch (e) {
+      return null;
+    }
   }
 }

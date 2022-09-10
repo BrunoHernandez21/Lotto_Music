@@ -48,7 +48,9 @@ class YoutubeModel {
         etag: json["etag"],
         nextPageToken: json["nextPageToken"],
         regionCode: json["regionCode"],
-        pageInfo: PageInfo.fromMap(json["pageInfo"]),
+        pageInfo: json["pageInfo"] == null
+            ? null
+            : PageInfo.fromMap(json["pageInfo"]),
         itemsyt: json["items"] == null
             ? null
             : List<ItemYT>.from(json["items"].map((x) => ItemYT.fromMap(x))),

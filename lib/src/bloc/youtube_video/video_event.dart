@@ -1,9 +1,9 @@
 part of 'video_bloc.dart';
 
 @immutable
-abstract class VideoEvent {}
+abstract class YTVideoEvent {}
 
-class OnSelectVideoYT extends VideoEvent {
+class OnSelectVideoYT extends YTVideoEvent {
   final ItemYT item;
   OnSelectVideoYT({
     required this.item,

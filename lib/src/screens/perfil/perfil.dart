@@ -1,11 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/cores/compositor.dart';
 import 'package:lotto_music/src/helpers/new_icons.dart';
-import 'package:lotto_music/src/models/cartera.dart';
 import 'package:lotto_music/src/models/login_response.dart';
 import 'package:flutter/material.dart';
 import 'package:lotto_music/src/screens/perfil/tarjetas/tarjetas.dart';
 import '../../bloc/acount/acount_bloc.dart';
+import '../../bloc/cartera/cartera_bloc.dart';
 import '../../bloc/user/user_bloc.dart';
 import '../../widgets/inicia_secion.dart';
 import '../../widgets/text.dart';
@@ -76,27 +76,20 @@ class BodyLogin extends StatelessWidget {
       const SizedBox(
         height: 30,
       ),
-      Container(
-        margin: const EdgeInsets.only(left: 15),
-        alignment: Alignment.centerLeft,
-        child: FutureBuilder(
-          future: Compositor.onLoadCartera(context: context),
-          initialData: null,
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            final data = snapshot.data;
-            int cash = 0;
-            if (data.runtimeType == CarteraModel) {
-              cash = snapshot.data.puntos;
-            }
-            return Column(
-              children: [
-                Textos.tituloMIN(
-                  texto: "Cash = $cash",
+      Padding(
+        padding: const EdgeInsets.only(left: 15),
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: BlocBuilder<CarteraBloc, CarteraState>(
+            builder: (context, state) {
+              return Center(
+                child: Textos.tituloMED(
+                  texto: "Tus Puntos = ${state.cartera.puntos}",
                   color: Colors.yellow,
-                )
-              ],
-            );
-          },
+                ),
+              );
+            },
+          ),
         ),
       ),
       ListTile(

@@ -1,15 +1,15 @@
-part of 'videos_bloc.dart';
+part of 'youtube_bloc.dart';
 
 @immutable
-class VideosState {
-  const VideosState({
+class YoutubeState {
+  const YoutubeState({
     this.yt,
   });
   final YoutubeModel? yt;
-  VideosState copyWith({
+  YoutubeState copyWith({
     YoutubeModel? yt,
   }) =>
-      VideosState(
+      YoutubeState(
         yt: yt ?? this.yt,
       );
 }

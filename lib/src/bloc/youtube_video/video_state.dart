@@ -1,9 +1,9 @@
 part of 'video_bloc.dart';
 
 @immutable
-class VideoState {
+class YTVideoState {
   final ItemYT? eventoVideo;
-  const VideoState({
+  const YTVideoState({
     this.eventoVideo,
   });
 }

@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lotto_music/src/widgets/text.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import '../../../bloc/video/video_bloc.dart';
-import '../../../cores/compositor.dart';
-import '../../../helpers/variables_globales.dart';
-import '../../../models/youtube.dart';
+import '../../../../bloc/youtube_video/video_bloc.dart';
+import '../../../../cores/compositor.dart';
+import '../../../../helpers/variables_globales.dart';
+import '../../../../models/youtube.dart';
 import 'appbar.dart';
 
 class Video extends StatefulWidget {
@@ -21,7 +21,7 @@ class Video extends StatefulWidget {
 class _VideoState extends State<Video> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<VideoBloc, VideoState>(
+    return BlocBuilder<YTVideoBloc, YTVideoState>(
       builder: (context, state) {
         final controller = YoutubePlayerController(
           initialVideoId: state.eventoVideo?.id?.videoId ?? "dO1rMeYnOmM",
@@ -49,7 +49,7 @@ class _VideoState extends State<Video> {
     );
   }
 
-  Scaffold _bodyWidget(Widget player, VideoState state) {
+  Scaffold _bodyWidget(Widget player, YTVideoState state) {
     return Scaffold(
       body: SafeArea(
         child: Column(

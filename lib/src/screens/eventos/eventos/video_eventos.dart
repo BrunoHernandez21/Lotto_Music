@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/cores/compositor.dart';
@@ -168,7 +169,11 @@ class _ListVideosPaginacionState extends State<ListVideosPaginacion> {
                   );
                 },
                 itemBuilder: (context, i) {
-                  return bodyTarjeta(state.listado![i]);
+                  return FadeInLeft(
+                      delay: Duration(
+                        milliseconds: (100 * i) > 500 ? 500 : 100 * i,
+                      ),
+                      child: bodyTarjeta(state.listado![i]));
                 }));
       },
     );

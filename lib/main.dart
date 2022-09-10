@@ -8,6 +8,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/bloc/acount/acount_bloc.dart';
 import 'package:lotto_music/src/bloc/carrito/carrito_bloc.dart';
+import 'package:lotto_music/src/bloc/cartera/cartera_bloc.dart';
+import 'package:lotto_music/src/bloc/dialogs_on_display/dialogs_on_display_bloc.dart';
 import 'package:lotto_music/src/bloc/direcciones/direcciones_bloc.dart';
 import 'package:lotto_music/src/bloc/planes/planes_bloc.dart';
 import 'package:lotto_music/src/bloc/shaderPreferences/shaderpreferences_bloc.dart';
@@ -15,8 +17,9 @@ import 'package:lotto_music/src/bloc/stadistics/estadisticas_bloc.dart';
 import 'package:lotto_music/src/bloc/suscripciones/suscripciones_bloc.dart';
 import 'package:lotto_music/src/bloc/tarjetas/tarjetas_bloc.dart';
 import 'package:lotto_music/src/bloc/user/user_bloc.dart';
+import 'package:lotto_music/src/bloc/ve_page_controller/videos_event_controller_bloc.dart';
 import 'package:lotto_music/src/bloc/video_event/video_event_bloc.dart';
-import 'package:lotto_music/src/bloc/videos/videos_bloc.dart';
+import 'package:lotto_music/src/bloc/youtube/youtube_bloc.dart';
 import 'package:lotto_music/src/bloc/videos_event/videos_event_bloc.dart';
 import 'package:lotto_music/src/cores/acount.dart';
 import 'package:lotto_music/src/cores/preferences_app.dart';
@@ -26,7 +29,7 @@ import 'package:lotto_music/src/screens/admin.dart';
 import 'package:lotto_music/src/services/socket.dart';
 
 import 'generated/l10n.dart';
-import 'src/bloc/video/video_bloc.dart';
+import 'src/bloc/youtube_video/video_bloc.dart';
 import 'src/bloc/videos_categoria/videos_categoria_bloc.dart';
 
 void main() async {
@@ -56,13 +59,13 @@ class Appstate extends StatelessWidget {
   final LoginResponse acount;
   final bool isLogin;
 
-  const Appstate(
-      {Key? key,
-      required this.locale,
-      required this.theme,
-      required this.acount,
-      required this.isLogin})
-      : super(key: key);
+  const Appstate({
+    Key? key,
+    required this.locale,
+    required this.theme,
+    required this.acount,
+    required this.isLogin,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -87,15 +90,20 @@ class Appstate extends StatelessWidget {
         BlocProvider(create: (context) => VideosCategoriaBloc()),
         BlocProvider(create: (context) => VideosEventBloc()),
         BlocProvider(create: (context) => VideoEventBloc()),
-        BlocProvider(create: (context) => VideosBloc()),
-        BlocProvider(create: (context) => VideoBloc()),
+        BlocProvider(create: (context) => YoutubeBloc()),
+        BlocProvider(create: (context) => YTVideoBloc()),
         BlocProvider(create: (context) => TarjetasBloc()),
         BlocProvider(create: (context) => DireccionesBloc()),
         BlocProvider(create: (context) => EstadisticasBloc()),
+        BlocProvider(create: (context) => VEPageControllerBloc()),
+        BlocProvider(create: (context) => CarteraBloc()),
+        BlocProvider(create: (context) => DialogsOnDisplayBloc()),
       ],
       child: BlocBuilder<ShaderpreferencesBloc, ShaderpreferencesState>(
         builder: (context, state) {
-          SocketService.intstate(context);
+          SocketService.intstate(
+            context,
+          );
           return MyApp(
             locale: state.idioma,
             theme: state.themeData,

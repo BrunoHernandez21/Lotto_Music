@@ -24,7 +24,9 @@ class Admin extends StatefulWidget {
 class _AdminState extends State<Admin> with WidgetsBindingObserver {
   @override
   void initState() {
+    //configuracion inicial de la app
     Compositor.checkToken(context);
+    Compositor.onLoadCartera(context: context);
     WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
@@ -50,6 +52,7 @@ class _AdminState extends State<Admin> with WidgetsBindingObserver {
   }
 }
 
+//////////////////////////
 class _BodyAdmin extends StatefulWidget {
   const _BodyAdmin({Key? key}) : super(key: key);
 

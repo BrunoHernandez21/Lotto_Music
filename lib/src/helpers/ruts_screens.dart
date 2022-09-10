@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:lotto_music/src/screens/eventos/adivina/adivina.dart';
 import 'package:lotto_music/src/screens/perfil/tarjetas/tarjetas_add.dart';
 import 'package:lotto_music/src/screens/perfil/tarjetas/tarjetas_edit.dart';
 
@@ -8,7 +7,6 @@ import '../screens/acount/recovery.dart';
 import '../screens/acount/register.dart';
 import '../screens/acount/register_confirm.dart';
 import '../screens/admin.dart';
-import '../screens/eventos/estadisticas/estadisticas.dart';
 import '../screens/eventos/video/video_evento.dart';
 import '../screens/eventos/categorias/videos_categorias.dart';
 import '../screens/pagos/carrito/verificar_compra.dart';
@@ -18,8 +16,8 @@ import '../screens/perfil/editar_perfil/direcciones/direcciones_add.dart';
 import '../screens/perfil/editar_perfil/direcciones/direcciones_edit.dart';
 import '../screens/perfil/editar_perfil/new_password.dart';
 import '../screens/perfil/editar_perfil/password_confirm.dart';
-import '../screens/provedores_video/search/search.dart';
-import '../screens/provedores_video/video/video.dart';
+import '../screens/provedores_video/youtube/search/search.dart';
+import '../screens/provedores_video/youtube/video/video.dart';
 import '../screens/utils/clock.dart';
 import '../screens/utils/historial_eventos.dart';
 import '../screens/utils/notify.dart';
@@ -55,8 +53,6 @@ class Ruts {
     HistorialEventos.routeName: (_) => const HistorialEventos(),
     VideosCategoria.routeName: (_) => const VideosCategoria(),
     VideoEvento.routeName: (_) => const VideoEvento(),
-    Adivina.routeName: (_) => const Adivina(),
-    Estadisticas.routeName: (_) => const Estadisticas(),
     VerificarCompra.routeName: (_) => const VerificarCompra(),
     DireccionEdit.routeName: (_) => const DireccionEdit(),
     DireccionAdd.routeName: (_) => const DireccionAdd(),
