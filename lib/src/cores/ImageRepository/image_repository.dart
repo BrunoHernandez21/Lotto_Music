@@ -2,11 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/acount/acount_bloc.dart';
 import '../../helpers/variables_globales.dart';
-import '../../services/cloud_service.dart';
 import '../repository.dart';
 
 class ImageRepository {
@@ -30,10 +30,12 @@ class ImageRepository {
     if (images == null) await _loadInitData();
 
     if (images![name] == null) {
+      // ignore: unused_local_variable
       final token =
           // ignore: use_build_context_synchronously
           BlocProvider.of<AcountBloc>(context).state.acount.accessToken;
-      final bits = await CloudService.downloadImage(token);
+      final bits = Uint8List(1);
+      // ignore: unnecessary_null_comparison
       if (bits == null) return null;
       await Repository.saveImage(name, bits);
       images!.addAll({name: DateTime.now().toString()});

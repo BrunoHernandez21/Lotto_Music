@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/bloc/tarjetas/tarjetas_bloc.dart';
 
 import '../../../bloc/carrito/carrito_bloc.dart';
-import '../../../cores/compositor.dart';
+import '../../../cores/orquestador/orquestador.dart';
 import '../../../helpers/variables_globales.dart';
-import '../../../models/tarjetas.dart';
-import '../../../models/tarjetas_response.dart';
+import '../../../models/user/tarjetas.dart';
+import '../../../models/user/tarjetas_response.dart';
 import '../../../widgets/botones.dart';
 import '../../../widgets/text.dart';
 import '../../perfil/tarjetas/tarjetas_add.dart';
@@ -31,7 +31,7 @@ class _VerificarCompraState extends State<VerificarCompra> {
       body: BlocBuilder<CarritoBloc, CarritoState>(
         builder: (context, carState) {
           if (carState.itemsCarrito == null) {
-            Compositor.onLoadTarjetas(context);
+            Orquestador.shopingcar.onloadCarrito(context);
           }
           double total = 0;
           carState.itemsCarrito?.forEach((i) {
@@ -40,7 +40,7 @@ class _VerificarCompraState extends State<VerificarCompra> {
           return BlocBuilder<TarjetasBloc, TarjetasState>(
             builder: (context, tarState) {
               if (tarState.tarjetas == null) {
-                Compositor.onLoadTarjetas(context);
+                Orquestador.user.onLoadTarjetas(context);
               }
 
               return bodyValidate(carState, total, context, tarState);
@@ -51,58 +51,71 @@ class _VerificarCompraState extends State<VerificarCompra> {
     );
   }
 
-  Column bodyValidate(CarritoState carState, double total, BuildContext context,
-      TarjetasState tarState) {
-    return Column(
-      children: [
-        Cabezera(
-          moneda: (carState.itemsCarrito?.isNotEmpty ?? false)
-              ? (carState.itemsCarrito!.first.moneda ?? "MXN")
-              : "MXN",
-          total: total,
-        ),
-        RefreshIndicator(
-          onRefresh: () async {
-            Compositor.onLoadTarjetas(context);
-          },
-          child: Column(
-            children: [
-              SingleChildScrollView(
-                physics: const BouncingScrollPhysics(
-                  parent: AlwaysScrollableScrollPhysics(),
-                ),
-                child: Column(
-                  children: [
-                    ...listaTarjetasWidget(tarState.tarjetas),
-                  ],
-                ),
-              ),
-            ],
+  Widget bodyValidate(
+    CarritoState carState,
+    double total,
+    BuildContext context,
+    TarjetasState tarState,
+  ) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Cabezera(
+            moneda: (carState.itemsCarrito?.isNotEmpty ?? false)
+                ? (carState.itemsCarrito!.first.moneda ?? "MXN")
+                : "MXN",
+            total: total,
           ),
-        ),
-        const Expanded(child: SizedBox()),
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: SizedBox(
-              width: Medidas.size.width * .5,
-              child: Botones.degradedTextButton(
-                text: "Comprar",
-                colors: const [Color(0xffea8d8d), Color(0xffa890fe)],
-                onTap: () async {
-                  await Compositor.onBuyCarrito(
-                    context: context,
-                  );
-                  if (!mounted) {
-                    return;
-                  }
-                  Compositor.onloadCarrito(context);
-                },
+          RefreshIndicator(
+            onRefresh: () async {
+              Orquestador.shopingcar.onloadCarrito(context);
+              Orquestador.user.onLoadTarjetas(context);
+            },
+            child: Column(
+              children: [
+                SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics(),
+                  ),
+                  child: Column(
+                    children: [
+                      ...listaTarjetasWidget(tarState.tarjetas),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 150,
+          ),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: SizedBox(
+                width: Medidas.size.width * .5,
+                child: Botones.degradedTextButton(
+                  text: "Comprar",
+                  colors: const [Color(0xffea8d8d), Color(0xffa890fe)],
+                  onTap: () async {
+                    await Orquestador.buy.onBuyCarrito(
+                      context: context,
+                      tarjeta: tarState.tarjetas?.tarjetas?[index].id ?? 0,
+                    );
+
+                    // ignore: use_build_context_synchronously
+                    await Orquestador.shopingcar.onloadCarrito(context);
+                    if (!mounted) {
+                      return;
+                    }
+                    Navigator.of(context).pop();
+                  },
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

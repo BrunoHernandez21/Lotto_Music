@@ -1,7 +1,7 @@
 import 'package:lotto_music/src/cores/repository.dart';
 
 import '../helpers/variables_globales.dart';
-import '../models/login_response.dart';
+import '../models/auth/login_response.dart';
 
 class AcountLocalSave {
   /////////////////user/////////////////////////////////////////////////

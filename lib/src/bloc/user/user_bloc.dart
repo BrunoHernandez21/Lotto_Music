@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:lotto_music/src/models/users.dart';
+import 'package:lotto_music/src/models/user/users.dart';
 import 'package:meta/meta.dart';
 
 part 'user_event.dart';

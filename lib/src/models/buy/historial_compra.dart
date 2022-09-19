@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 
-import 'package:lotto_music/src/models/compra.dart';
+import 'package:lotto_music/src/models/buy/compra.dart';
 
 class HistorialCompraModel {
   HistorialCompraModel({

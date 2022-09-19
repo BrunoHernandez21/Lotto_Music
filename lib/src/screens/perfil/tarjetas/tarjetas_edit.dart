@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_credit_card/credit_card_brand.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
-import 'package:lotto_music/src/cores/compositor.dart';
 import 'package:lotto_music/src/helpers/variables_globales.dart';
-import 'package:lotto_music/src/models/tarjetas.dart';
+import 'package:lotto_music/src/models/user/tarjetas.dart';
 import 'package:lotto_music/src/widgets/inputs_text.dart';
 
 import '../../../bloc/tarjetas/tarjetas_bloc.dart';
+import '../../../cores/orquestador/orquestador.dart';
 import '../../../widgets/chec_box.dart';
 import '../../../widgets/drop_list.dart';
 import '../../../widgets/text.dart';
@@ -261,7 +261,7 @@ class _TarjetasEditState extends State<TarjetasEdit> {
                           type: selectedTipe,
                           defaultPayment: isDefaul,
                         );
-                        if (await Compositor.onUpdateTarjetas(
+                        if (await Orquestador.user.onUpdateTarjetas(
                           context: context,
                           tarjeta: tarjeta,
                         )) {

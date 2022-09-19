@@ -1,4 +1,4 @@
-import '../models/evento_video.dart';
+import '../models/video/evento_video.dart';
 
 class Rutinas {
   static String comprobador(DateTime? fevent) {

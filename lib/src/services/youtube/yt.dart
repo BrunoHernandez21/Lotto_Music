@@ -2,9 +2,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import '../helpers/variables_globales.dart';
-import '../models/estadisticvas_yt.dart';
-import '../models/youtube.dart';
+import '../../helpers/variables_globales.dart';
+import '../../models/youtube/estadisticvas_yt.dart';
+import '../../models/youtube/youtube.dart';
 
 class YTService {
   static const String _tops =

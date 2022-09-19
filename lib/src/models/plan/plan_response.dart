@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 
-import 'package:lotto_music/src/models/plan.dart';
+import 'package:lotto_music/src/models/plan/plan.dart';
 
 class PlanesResponse {
   PlanesResponse({

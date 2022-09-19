@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../cores/compositor.dart';
+import '../../cores/orquestador/orquestador.dart';
 import '../../helpers/variables_globales.dart';
-import '../../models/compra.dart';
-import '../../models/historial_compra.dart';
+import '../../models/buy/compra.dart';
+import '../../models/buy/historial_compra.dart';
 import '../../widgets/text.dart';
 
 class HistorialCompras extends StatefulWidget {
@@ -21,7 +21,7 @@ class _HistorialComprasState extends State<HistorialCompras> {
   @override
   void initState() {
     isLoad = true;
-    Compositor.onIinitHistorialCompra(context).then((value) {
+    Orquestador.buy.onIinitHistorialCompra(context).then((value) {
       estado = value;
       isLoad = false;
       setState(() {});
@@ -41,7 +41,7 @@ class _HistorialComprasState extends State<HistorialCompras> {
               isLoad = false;
               return;
             }
-            final temp = await Compositor.onLoadHistorialCompra(
+            final temp = await Orquestador.buy.onLoadHistorialCompra(
               context: context,
               pag: copy.pag + 1,
             );
@@ -70,7 +70,7 @@ class _HistorialComprasState extends State<HistorialCompras> {
       body: RefreshIndicator(
         onRefresh: () async {
           isLoad = true;
-          Compositor.onIinitHistorialCompra(context).then((value) {
+          Orquestador.buy.onIinitHistorialCompra(context).then((value) {
             estado = value;
             isLoad = false;
             setState(() {});

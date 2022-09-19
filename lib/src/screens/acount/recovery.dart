@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lotto_music/src/cores/compositor.dart';
+import 'package:lotto_music/src/cores/orquestador/orquestador.dart';
 
 import '../../helpers/variables_globales.dart';
 import '../../widgets/botones.dart';
@@ -61,7 +61,8 @@ class Recovery extends StatelessWidget {
                 Botones.degradedTextButtonOrange(
                   text: 'Enviar',
                   onTap: () async {
-                    if (await Compositor.onRecovery(context, controller.text)) {
+                    if (await Orquestador.auth
+                        .onRecovery(context, controller.text)) {
                       Navigator.of(context).pop();
                     }
                   },

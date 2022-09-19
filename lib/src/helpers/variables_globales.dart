@@ -41,22 +41,23 @@ class Medidas {
 class URL {
   //http://187.213.68.250:25567
   //https://lotto.inclusive.com.mx/api/v3/
-  static const String socket = 'http://187.201.255.53:25567';
+  static const String socket = 'http://187.213.51.165:25567';
   //http://187.213.68.250:25566/api/v3/
   //https://lotto.inclusive.com.mx/api/v3/
-  static const String _base = "http://187.201.255.53:25566/api/v3/";
+  static const String _base = "http://187.213.51.165:25566/api/v3/";
   static const String _baseYT = "https://www.googleapis.com/youtube/v3";
   static const String searchYT = "$_baseYT/search?${PKey.ytKey}";
   static const String estYT = "$_baseYT/videos?${PKey.ytKey}";
 
   static const String auth = "${_base}auth";
-  static const String videos = "${_base}videos";
-  static const String compra = "${_base}compra";
-  static const String carrito = "${_base}carrito";
-  static const String evento = "${_base}evento";
+  static const String buy = "${_base}buy";
+  static const String event = "${_base}event";
   static const String plan = "${_base}plan";
-  static const String apuesta = "${_base}usuario";
+  static const String shoppingcar = "${_base}shoppingcar";
+  static const String user = "${_base}user";
+  static const String userEvent = "${_base}user-event";
   static const String utility = "${_base}utils";
+  static const String videos = "${_base}video";
 }
 
 class LocalStorage {

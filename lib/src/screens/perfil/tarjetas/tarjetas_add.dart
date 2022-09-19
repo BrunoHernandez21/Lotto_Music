@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_credit_card/credit_card_brand.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
-import 'package:lotto_music/src/cores/compositor.dart';
-import 'package:lotto_music/src/models/tarjetas.dart';
+import 'package:lotto_music/src/models/user/tarjetas.dart';
 import 'package:lotto_music/src/widgets/text.dart';
 
+import '../../../cores/orquestador/orquestador.dart';
 import '../../../helpers/variables_globales.dart';
 import '../../../widgets/chec_box.dart';
 import '../../../widgets/drop_list.dart';
@@ -251,7 +251,7 @@ class _TarjetasState extends State<TarjetasADD> {
                           type: selectedTipe,
                           defaultPayment: isDefaul,
                         );
-                        if (await Compositor.onCreateTarjetas(
+                        if (await Orquestador.user.onCreateTarjetas(
                           context: context,
                           tarjeta: tarjeta,
                         )) {

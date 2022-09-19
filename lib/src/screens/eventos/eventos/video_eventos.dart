@@ -1,14 +1,14 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lotto_music/src/cores/compositor.dart';
 import 'package:lotto_music/src/screens/acount/login.dart';
 
 import '../../../bloc/acount/acount_bloc.dart';
 import '../../../bloc/videos_event/videos_event_bloc.dart';
+import '../../../cores/orquestador/orquestador.dart';
 import '../../../helpers/rutinas.dart';
 import '../../../helpers/variables_globales.dart';
-import '../../../models/evento_video.dart';
+import '../../../models/video/evento_video.dart';
 import '../../../widgets/botones.dart';
 import '../../../widgets/digital_clock.dart';
 import '../../../widgets/svg_nosignal.dart';
@@ -126,13 +126,13 @@ class _ListVideosPaginacionState extends State<ListVideosPaginacion> {
         }
         if (!isLoad) {
           isLoad = true;
-          await Compositor.onLoadVideosEventos(context: context);
+          await Orquestador.video.onLoadVideosEventos(context: context);
           isLoad = false;
         }
       }
     });
     if (BlocProvider.of<VideosEventBloc>(context).state.listado == null) {
-      Compositor.onLoadInitVideosEventos(context);
+      Orquestador.video.onLoadInitVideosEventos(context);
     }
   }
 
@@ -149,14 +149,14 @@ class _ListVideosPaginacionState extends State<ListVideosPaginacion> {
         if (state.listado == null) {
           return RefreshIndicator(
             onRefresh: () async {
-              Compositor.onLoadInitVideosEventos(context);
+              Orquestador.video.onLoadInitVideosEventos(context);
             },
             child: const NoSignal(),
           );
         }
         return RefreshIndicator(
             onRefresh: () async {
-              Compositor.onLoadInitVideosEventos(context);
+              Orquestador.video.onLoadInitVideosEventos(context);
             },
             child: ListView.separated(
                 controller: controller,
@@ -230,7 +230,7 @@ class _ListVideosPaginacionState extends State<ListVideosPaginacion> {
           if (BlocProvider.of<AcountBloc>(context).state.isLogin == false) {
             Navigator.of(context).pushNamed(Login.routeName);
           } else {
-            Compositor.onSlectVideoEvento(
+            Orquestador.video.onSlectVideoEvento(
               context: context,
               item: v,
             );

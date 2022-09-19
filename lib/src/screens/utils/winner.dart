@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:lotto_music/src/cores/compositor.dart';
 import 'package:lotto_music/src/helpers/variables_globales.dart';
 import 'package:lotto_music/src/widgets/text.dart';
 
-import '../../models/ganador.dart';
-import '../../models/ganador_response.dart';
+import '../../cores/orquestador/orquestador.dart';
+import '../../models/event/ganador.dart';
+import '../../models/event/ganador_response.dart';
 
 class Winner extends StatefulWidget {
   static const routeName = 'winner';
@@ -21,7 +21,7 @@ class _WinnerState extends State<Winner> {
   @override
   void initState() {
     isLoad = true;
-    Compositor.onIinitWiner(context).then((value) {
+    Orquestador.userEvent.onIinitWiner(context).then((value) {
       estado = value;
       isLoad = false;
       setState(() {});
@@ -42,8 +42,8 @@ class _WinnerState extends State<Winner> {
               isLoad = false;
               return;
             }
-            final temp = await Compositor.onLoadWiner(
-                context: context, pag: copy.pag + 1);
+            final temp = await Orquestador.userEvent
+                .onLoadWiner(context: context, pag: copy.pag + 1);
             if (temp != null) {
               estado = temp;
             }
@@ -69,7 +69,7 @@ class _WinnerState extends State<Winner> {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          Compositor.onIinitWiner(context).then((value) {
+          Orquestador.userEvent.onIinitWiner(context).then((value) {
             estado = value;
             setState(() {});
           });

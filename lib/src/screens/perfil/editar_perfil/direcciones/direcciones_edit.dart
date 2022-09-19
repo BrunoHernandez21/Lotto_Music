@@ -5,8 +5,8 @@ import 'package:lotto_music/src/widgets/botones.dart';
 import 'package:lotto_music/src/widgets/inputs_text.dart';
 
 import '../../../../bloc/direcciones/direcciones_bloc.dart';
-import '../../../../cores/compositor.dart';
-import '../../../../models/direcciones.dart';
+import '../../../../cores/orquestador/orquestador.dart';
+import '../../../../models/user/direcciones.dart';
 import '../../../../widgets/dialogs_alert.dart';
 import '../../../../widgets/drop_list.dart';
 import '../../../../widgets/text.dart';
@@ -154,7 +154,7 @@ class _DireccionEditState extends State<DireccionEdit> {
                     id: selected?.id ?? 0,
                     usuarioId: 2,
                   );
-                  if (await Compositor.onUpdateDirecciones(
+                  if (await Orquestador.user.onUpdateDirecciones(
                     context: context,
                     direccion: direct,
                   )) {

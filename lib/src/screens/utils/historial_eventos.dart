@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../cores/compositor.dart';
+import '../../cores/orquestador/orquestador.dart';
 import '../../helpers/variables_globales.dart';
-import '../../models/historial_event_user.dart';
+import '../../models/event/historial_event_user.dart';
 import '../../widgets/text.dart';
 
 class HistorialEventos extends StatefulWidget {
@@ -20,7 +20,7 @@ class _HistorialEventosState extends State<HistorialEventos> {
   @override
   void initState() {
     isLoad = true;
-    Compositor.onIinitHistorialEventos(context).then((value) {
+    Orquestador.userEvent.onIinitHistorialEventos(context).then((value) {
       estado = value;
       isLoad = false;
       setState(() {});
@@ -40,7 +40,7 @@ class _HistorialEventosState extends State<HistorialEventos> {
               isLoad = false;
               return;
             }
-            final temp = await Compositor.onLoadHistorialEventos(
+            final temp = await Orquestador.userEvent.onLoadHistorialEventos(
               context: context,
               pag: copy.pag + 1,
             );
@@ -69,7 +69,7 @@ class _HistorialEventosState extends State<HistorialEventos> {
       body: RefreshIndicator(
         onRefresh: () async {
           isLoad = true;
-          Compositor.onIinitHistorialEventos(context).then((value) {
+          Orquestador.userEvent.onIinitHistorialEventos(context).then((value) {
             estado = value;
             isLoad = false;
             setState(() {});

@@ -2,12 +2,12 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:lotto_music/src/cores/compositor.dart';
 import 'package:lotto_music/src/widgets/text.dart';
 
 import '../../../../bloc/youtube/youtube_bloc.dart';
+import '../../../../cores/orquestador/orquestador.dart';
 import '../../../../helpers/variables_globales.dart';
-import '../../../../models/youtube.dart';
+import '../../../../models/youtube/youtube.dart';
 import '../video/video.dart';
 
 class ListVideosYT extends StatefulWidget {
@@ -23,7 +23,7 @@ class _ListVideosState extends State<ListVideosYT> {
   @override
   void initState() {
     if (BlocProvider.of<YoutubeBloc>(context).state.yt == null) {
-      Compositor.onLoadPrincipalYT(context: context);
+      Orquestador.youtube.onLoadPrincipalYT(context: context);
     }
 
     super.initState();
@@ -34,7 +34,7 @@ class _ListVideosState extends State<ListVideosYT> {
     return BlocBuilder<YoutubeBloc, YoutubeState>(builder: (context, state) {
       return RefreshIndicator(
         onRefresh: () async {
-          Compositor.onLoadPrincipalYT(context: context);
+          Orquestador.youtube.onLoadPrincipalYT(context: context);
           setState(() {});
         },
         child: ListView.separated(
@@ -65,7 +65,7 @@ class _ListVideosState extends State<ListVideosYT> {
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: () {
-          Compositor.onSelectYT(context: context, item: v);
+          Orquestador.youtube.onSelectYT(context: context, item: v);
           Navigator.pushNamed(context, Video.routeName);
         },
         child: SizedBox(

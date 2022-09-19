@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:lotto_music/src/cores/compositor.dart';
+import 'package:lotto_music/src/cores/orquestador/orquestador.dart';
 
 import '../../../helpers/variables_globales.dart';
 import '../../../widgets/text.dart';
@@ -19,7 +19,7 @@ class _CategoriasState extends State<Categorias> {
   List<String> grupos = [];
   @override
   void initState() {
-    Compositor.onLoadCategorias(context: context).then((value) {
+    Orquestador.video.onLoadCategorias(context: context).then((value) {
       grupos = value ?? [];
       setState(() {});
     });
@@ -40,7 +40,9 @@ class _CategoriasState extends State<Categorias> {
         ),
         RefreshIndicator(
           onRefresh: () async {
-            grupos = await Compositor.onLoadCategorias(context: context) ?? [];
+            grupos =
+                await Orquestador.video.onLoadCategorias(context: context) ??
+                    [];
             setState(() {});
           },
           child: SingleChildScrollView(
@@ -118,10 +120,12 @@ class _CategoriasState extends State<Categorias> {
                   backgroundColor:
                       MaterialStateProperty.all(Colors.transparent)),
               onPressed: () {
-                Compositor.onCategoriaS(
+                Orquestador.video
+                    .onCategoriaS(
                   context: context,
                   categoria: element,
-                ).then((value) {
+                )
+                    .then((value) {
                   Navigator.of(context).pushNamed(VideosCategoria.routeName);
                 });
               },

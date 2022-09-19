@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:lotto_music/src/cores/compositor.dart';
 import 'package:lotto_music/src/helpers/variables_globales.dart';
 import 'package:lotto_music/src/widgets/botones.dart';
 import 'package:lotto_music/src/widgets/dialogs_alert.dart';
 import 'package:lotto_music/src/widgets/inputs_text.dart';
 
-import '../../../../models/direcciones.dart';
+import '../../../../cores/orquestador/orquestador.dart';
+import '../../../../models/user/direcciones.dart';
 import '../../../../widgets/drop_list.dart';
 import '../../../../widgets/text.dart';
 
@@ -141,7 +141,7 @@ class _DireccionAddState extends State<DireccionAdd> {
                     tipo: selectedTipe,
                     id: 0,
                   );
-                  if (await Compositor.onCreateDirecciones(
+                  if (await Orquestador.user.onCreateDirecciones(
                     context: context,
                     direccion: direct,
                   )) {

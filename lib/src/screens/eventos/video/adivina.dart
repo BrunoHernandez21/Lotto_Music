@@ -9,11 +9,11 @@ import 'package:lotto_music/src/widgets/inputs_text.dart';
 import '../../../bloc/cartera/cartera_bloc.dart';
 import '../../../bloc/ve_page_controller/videos_event_controller_bloc.dart';
 import '../../../bloc/video_event/video_event_bloc.dart';
-import '../../../cores/compositor.dart';
+import '../../../cores/orquestador/orquestador.dart';
 import '../../../helpers/rutinas.dart';
 import '../../../helpers/variables_globales.dart';
-import '../../../models/userevent.dart';
-import '../../../models/evento_video.dart';
+import '../../../models/event/userevent.dart';
+import '../../../models/video/evento_video.dart';
 import '../../../widgets/digital_clock.dart';
 import '../../../widgets/text.dart';
 
@@ -304,11 +304,11 @@ class _AdivinaState extends State<Adivina> {
                 apuesta.sharedCount = int.tryParse(controllerS.text) ?? 0;
               }
 
-              final resp = await Compositor.onUserEventCreate(
+              final resp = await Orquestador.userEvent.onUserEventCreate(
                 context: context,
                 apuesta: apuesta,
               );
-              await Compositor.onLoadCartera(context: context);
+              await Orquestador.user.onLoadCartera(context: context);
               if (resp?.mensaje != null) {
                 await DialogAlert.ok(
                   context: context,

@@ -1,12 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lotto_music/src/cores/compositor.dart';
 import 'package:lotto_music/src/helpers/new_icons.dart';
-import 'package:lotto_music/src/models/login_response.dart';
+import 'package:lotto_music/src/models/auth/login_response.dart';
 import 'package:flutter/material.dart';
 import 'package:lotto_music/src/screens/perfil/tarjetas/tarjetas.dart';
 import '../../bloc/acount/acount_bloc.dart';
 import '../../bloc/cartera/cartera_bloc.dart';
 import '../../bloc/user/user_bloc.dart';
+import '../../cores/orquestador/orquestador.dart';
 import '../../widgets/inicia_secion.dart';
 import '../../widgets/text.dart';
 import 'acerda_de.dart';
@@ -47,13 +47,13 @@ class BodyLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (BlocProvider.of<UserBloc>(context).state.user == null) {
-      Compositor.onLoadUser(context);
+      Orquestador.user.onLoadUser(context);
     }
     return BlocBuilder<UserBloc, UserState>(
       builder: (context, state) {
         return RefreshIndicator(
           onRefresh: () async {
-            Compositor.onLoadUser(context);
+            Orquestador.user.onLoadUser(context);
           },
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(
@@ -154,7 +154,7 @@ class BodyLogin extends StatelessWidget {
         title: Textos.tituloMIN(texto: 'Cerra sesión'),
         leading: const Icon(Icons.logout),
         onTap: () {
-          Compositor.onLogOut(context);
+          Orquestador.auth.onLogOut(context);
         },
       ),
     ];

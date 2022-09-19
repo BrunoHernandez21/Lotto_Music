@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../models/evento_video.dart';
+import '../../models/video/evento_video.dart';
 
 part 'videos_categoria_event.dart';
 part 'videos_categoria_state.dart';

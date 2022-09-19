@@ -23,10 +23,10 @@ import 'package:lotto_music/src/bloc/youtube/youtube_bloc.dart';
 import 'package:lotto_music/src/bloc/videos_event/videos_event_bloc.dart';
 import 'package:lotto_music/src/cores/acount.dart';
 import 'package:lotto_music/src/cores/preferences_app.dart';
-import 'package:lotto_music/src/helpers/ruts_screens.dart';
-import 'package:lotto_music/src/models/login_response.dart';
+import 'package:lotto_music/src/screens/ruts_screens.dart';
+import 'package:lotto_music/src/models/auth/login_response.dart';
 import 'package:lotto_music/src/screens/admin.dart';
-import 'package:lotto_music/src/services/socket.dart';
+import 'package:lotto_music/src/services/websocket/socket.dart';
 
 import 'generated/l10n.dart';
 import 'src/bloc/youtube_video/video_bloc.dart';

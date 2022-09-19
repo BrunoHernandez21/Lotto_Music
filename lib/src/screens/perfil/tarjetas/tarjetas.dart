@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lotto_music/src/models/tarjetas.dart';
-import 'package:lotto_music/src/models/tarjetas_response.dart';
+import 'package:lotto_music/src/models/user/tarjetas.dart';
+import 'package:lotto_music/src/models/user/tarjetas_response.dart';
 import 'package:lotto_music/src/screens/perfil/tarjetas/tarjetas_add.dart';
 import 'package:lotto_music/src/screens/perfil/tarjetas/tarjetas_edit.dart';
 
 import '../../../bloc/tarjetas/tarjetas_bloc.dart';
-import '../../../cores/compositor.dart';
+import '../../../cores/orquestador/orquestador.dart';
 import '../../../helpers/variables_globales.dart';
 import '../../../widgets/text.dart';
 
@@ -28,14 +28,14 @@ class _TarjetasState extends State<Tarjetas> {
       body: BlocBuilder<TarjetasBloc, TarjetasState>(
         builder: (context, state) {
           if (state.tarjetas == null) {
-            Compositor.onLoadTarjetas(context);
+            Orquestador.user.onLoadTarjetas(context);
           }
           return Column(
             children: [
               const Cabezera(),
               RefreshIndicator(
                 onRefresh: () async {
-                  Compositor.onLoadTarjetas(context);
+                  Orquestador.user.onLoadTarjetas(context);
                 },
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(
@@ -82,7 +82,7 @@ class _Tarjeta extends StatelessWidget {
           color: Colors.red,
         ),
         onPressed: () {
-          Compositor.onDeleteTarjetas(
+          Orquestador.user.onDeleteTarjetas(
             context: context,
             id: evento.id,
           );

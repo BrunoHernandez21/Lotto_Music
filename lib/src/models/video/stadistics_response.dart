@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 
-import 'package:lotto_music/src/models/stadistics_model.dart';
+import 'package:lotto_music/src/models/video/stadistics_model.dart';
 
 class StadisticsResponse {
   StadisticsResponse({

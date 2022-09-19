@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lotto_music/src/cores/compositor.dart';
 
 import 'package:lotto_music/src/widgets/dialogs_alert.dart';
+import '../../../cores/orquestador/orquestador.dart';
 import '../../../helpers/variables_globales.dart';
 import '../../../widgets/botones.dart';
 import '../../../widgets/inputs_text.dart';
@@ -104,7 +104,7 @@ class _NewPasswordState extends State<NewPassword> {
                         );
                         return;
                       }
-                      if (await Compositor.onChangePassword(
+                      if (await Orquestador.user.onChangePassword(
                         context: context,
                         password: pcontroller.text,
                       )) {

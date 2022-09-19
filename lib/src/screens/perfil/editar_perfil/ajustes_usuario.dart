@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lotto_music/src/screens/perfil/editar_perfil/cartera.dart';
 
 import '../../../widgets/text.dart';
 import '../editar_perfil.dart';
@@ -65,7 +66,7 @@ class AjustesUsuario extends StatelessWidget {
                   size: 17,
                 ),
                 onTap: () {
-                  Navigator.of(context).pushNamed(Direccion.routeName);
+                  Navigator.of(context).pushNamed(Cartera.routeName);
                 },
               ),
               const Divider(color: Colors.grey, height: 10),

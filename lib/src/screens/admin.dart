@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter/material.dart';
-import 'package:lotto_music/src/cores/compositor.dart';
+import 'package:lotto_music/src/cores/orquestador/orquestador.dart';
 import 'package:lotto_music/src/screens/pagos/pagos.dart';
 import 'package:lotto_music/src/screens/provedores_video/provedores_video.dart';
 
@@ -25,8 +25,8 @@ class _AdminState extends State<Admin> with WidgetsBindingObserver {
   @override
   void initState() {
     //configuracion inicial de la app
-    Compositor.checkToken(context);
-    Compositor.onLoadCartera(context: context);
+    Orquestador.auth.checkToken(context);
+    Orquestador.user.onLoadCartera(context: context);
     WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
@@ -41,7 +41,7 @@ class _AdminState extends State<Admin> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
     if (state == AppLifecycleState.resumed) {
-      Compositor.checkToken(context);
+      Orquestador.auth.checkToken(context);
     }
   }
 

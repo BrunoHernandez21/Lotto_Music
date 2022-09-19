@@ -1,19 +1,15 @@
 // ignore: unused_import
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:lotto_music/src/models/users.dart';
+import 'package:lotto_music/src/models/user/users.dart';
 
-import '../helpers/variables_globales.dart';
-import '../models/login_response.dart';
+import '../../helpers/variables_globales.dart';
+import '../../models/auth/login_response.dart';
 
 class AcountServices {
   static const String _login = "${URL.auth}/login";
   static const String _singup = "${URL.auth}/user";
   static const String _token = "${URL.auth}/token";
-  static const String _update = "${URL.auth}/user";
-  static const String _delete = "${URL.auth}/user";
-  static const String _info = "${URL.auth}/user";
-  static const String _changepassword = "${URL.auth}/changepassword";
   static const String _forgetpassword = "${URL.auth}/forgetpassword";
 
   static Future<LoginResponse?> login({
@@ -60,83 +56,6 @@ class AcountServices {
       ),
     );
     return UserModel.fromJson(utf8.decode(resp.bodyBytes));
-  }
-
-  static Future<UserModel?> update({
-    required UserModel user,
-    required String token,
-  }) async {
-    try {
-      final urI = Uri.parse(_update);
-      final resp = await http.put(
-        urI,
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          "Authorization": "Bearer $token",
-        },
-        body: user.toJson(),
-      );
-
-      return UserModel.fromJson(utf8.decode(resp.bodyBytes));
-    } catch (e) {
-      return null;
-    }
-  }
-
-  static Future<UserModel?> info({
-    required String token,
-  }) async {
-    try {
-      final urI = Uri.parse(_info);
-      final resp = await http.get(
-        urI,
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          "Authorization": "Bearer $token",
-        },
-      );
-
-      return UserModel.fromJson(utf8.decode(resp.bodyBytes));
-    } catch (e) {
-      return null;
-    }
-  }
-
-  static Future<String> delete() async {
-    try {
-      final urI = Uri.parse(_delete);
-      final resp = await http.get(
-        urI,
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-        },
-      );
-
-      return utf8.decode(resp.bodyBytes);
-    } catch (e) {
-      return "";
-    }
-  }
-
-  static Future<UserModel?> changepassword({
-    required String password,
-    required String token,
-  }) async {
-    try {
-      final urI = Uri.parse(_changepassword);
-      final resp = await http.put(urI,
-          headers: {
-            "Content-Type": "application/json; charset=utf-8",
-            "Authorization": "Bearer $token",
-          },
-          body: json.encode({
-            "password": password,
-          }));
-
-      return UserModel.fromJson(utf8.decode(resp.bodyBytes));
-    } catch (e) {
-      return null;
-    }
   }
 
   static Future<String?> forguetpassword({

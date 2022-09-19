@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/bloc/suscripciones/suscripciones_bloc.dart';
-import 'package:lotto_music/src/cores/compositor.dart';
 import 'package:lotto_music/src/helpers/variables_globales.dart';
 import 'package:lotto_music/src/widgets/botones.dart';
 import 'package:lotto_music/src/widgets/text.dart';
 
-import '../../../models/carrito.dart';
-import '../../../models/plan.dart';
+import '../../../cores/orquestador/orquestador.dart';
+import '../../../models/carrito/carrito.dart';
+import '../../../models/plan/plan.dart';
 import '../../../widgets/svg_nosignal.dart';
 
 class Suscripciones extends StatelessWidget {
@@ -16,20 +16,20 @@ class Suscripciones extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (BlocProvider.of<SuscripcionesBloc>(context).state.planes == null) {
-      Compositor.onLoadSuscripciones(context);
+      Orquestador.plan.onLoadSuscripciones(context);
     }
     return BlocBuilder<SuscripcionesBloc, SuscripcionesState>(
       builder: (context, state) {
         if (state.planes == null) {
           return RefreshIndicator(
               onRefresh: () async {
-                Compositor.onLoadSuscripciones(context);
+                Orquestador.plan.onLoadSuscripciones(context);
               },
               child: const NoSignal());
         }
         return RefreshIndicator(
           onRefresh: () async {
-            Compositor.onLoadSuscripciones(context);
+            Orquestador.plan.onLoadSuscripciones(context);
           },
           child: ListView.builder(
               physics: const BouncingScrollPhysics(),
@@ -57,7 +57,6 @@ class __TarjetaPlanesState extends State<_TarjetaPlanes> {
     style: BorderStyle.solid,
     width: 4,
   );
-  int cantidad = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -111,11 +110,11 @@ class __TarjetaPlanesState extends State<_TarjetaPlanes> {
                 text: "Agregar al Carrito",
                 colors: const [Color(0xffff0000), Color(0xffff0000)],
                 onTap: () async {
-                  await Compositor.onAddCarrito(
+                  await Orquestador.shopingcar.onAddCarrito(
                     context: context,
                     orden: CarritoModel(
-                      totalLinea: cantidad * widget.plan.precio,
-                      cantidad: cantidad,
+                      totalLinea: 1 * widget.plan.precio,
+                      cantidad: 1,
                       fechaCarrito: DateTime.now(),
                       planId: widget.plan.id,
                     ),
@@ -126,62 +125,6 @@ class __TarjetaPlanesState extends State<_TarjetaPlanes> {
           )
         ],
       ),
-    );
-  }
-
-  Widget contador() {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        GestureDetector(
-          child: Container(
-            decoration: BoxDecoration(
-                color: Colors.black, borderRadius: BorderRadius.circular(30)),
-            height: 20,
-            width: 20,
-            child: const Icon(
-              Icons.remove,
-              color: Colors.white,
-              size: 20,
-            ),
-          ),
-          onTap: () {
-            if (cantidad > 0) {
-              cantidad -= 1;
-            }
-            setState(() {});
-          },
-        ),
-        const SizedBox(
-          width: 20,
-          height: 10,
-        ),
-        Textos.tituloMED(
-          texto: cantidad.toString(),
-          color: const Color(0xfffca51f),
-        ),
-        const SizedBox(
-          width: 20,
-          height: 10,
-        ),
-        GestureDetector(
-          child: Container(
-            decoration: BoxDecoration(
-                color: Colors.black, borderRadius: BorderRadius.circular(30)),
-            height: 20,
-            width: 20,
-            child: const Icon(
-              Icons.add,
-              color: Colors.white,
-              size: 20,
-            ),
-          ),
-          onTap: () {
-            cantidad += 1;
-            setState(() {});
-          },
-        ),
-      ],
     );
   }
 }

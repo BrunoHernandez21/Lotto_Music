@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 
-import 'package:lotto_music/src/models/tarjetas.dart';
+import 'package:lotto_music/src/models/user/tarjetas.dart';
 
 class TarjetasResponse {
   TarjetasResponse({

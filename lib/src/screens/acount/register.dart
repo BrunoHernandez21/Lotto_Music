@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lotto_music/src/cores/compositor.dart';
+import 'package:lotto_music/src/cores/orquestador/orquestador.dart';
 import 'package:lotto_music/src/screens/acount/register_confirm.dart';
 
 import '../../helpers/variables_globales.dart';
@@ -101,7 +101,7 @@ class Register extends StatelessWidget {
                   Botones.degradedTextButtonOrange(
                     text: 'Registrate',
                     onTap: () async {
-                      if (await Compositor.onRegister(
+                      if (await Orquestador.auth.onRegister(
                         context: context,
                         email: email.text,
                         password: password.text,

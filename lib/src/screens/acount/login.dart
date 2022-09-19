@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/bloc/dialogs_on_display/dialogs_on_display_bloc.dart';
 import 'package:lotto_music/src/bloc/dialogs_on_display/widget_dialog.dart';
-import 'package:lotto_music/src/cores/compositor.dart';
+import 'package:lotto_music/src/cores/orquestador/orquestador.dart';
 import 'package:lotto_music/src/screens/acount/recovery.dart';
 import 'package:lotto_music/src/screens/acount/register.dart';
 
@@ -107,11 +107,13 @@ class Login extends StatelessWidget {
                       BlocProvider.of<DialogsOnDisplayBloc>(context).add(
                         OnIsLoading(isLoading: true),
                       );
-                      Compositor.onLogin(
+                      Orquestador.auth
+                          .onLogin(
                         context,
                         email.text,
                         password.text,
-                      ).then((value) {
+                      )
+                          .then((value) {
                         BlocProvider.of<DialogsOnDisplayBloc>(context).add(
                           OnIsLoading(isLoading: false),
                         );

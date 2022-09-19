@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
 import '../../cores/acount.dart';
-import '../../models/login_response.dart';
+import '../../models/auth/login_response.dart';
 
 part 'acount_event.dart';
 part 'acount_state.dart';

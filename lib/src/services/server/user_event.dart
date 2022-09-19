@@ -1,15 +1,17 @@
 // ignore: unused_import
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:lotto_music/src/models/userevent.dart';
+import 'package:lotto_music/src/models/event/userevent.dart';
 
-import '../helpers/variables_globales.dart';
-import '../models/historial_event_user.dart';
-import '../models/login_response.dart';
+import '../../helpers/variables_globales.dart';
+import '../../models/event/ganador_response.dart';
+import '../../models/event/historial_event_user.dart';
+import '../../models/auth/login_response.dart';
 
-class ApuestaService {
-  static const String _listar = "${URL.apuesta}listar";
-  static const String _apuesta = "${URL.apuesta}/evento";
+class UserEventService {
+  static const String _listar = "${URL.userEvent}listar";
+  static const String _apuesta = "${URL.userEvent}/evento";
+  static const String _wins = "${URL.userEvent}/wins";
 
   static Future<LoginResponse?> listar() async {
     try {
@@ -60,5 +62,26 @@ class ApuestaService {
     );
     final out = HistorialEventoUsuario.fromJson(resp.body);
     return out;
+  }
+
+  static Future<GanadorResponse?> wins({
+    required int pag,
+    required String token,
+  }) async {
+    try {
+      final urI = Uri.parse('$_wins/${pag.toString()}/10');
+      final resp = await http.get(
+        urI,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token",
+        },
+      );
+
+      final out = GanadorResponse.fromJson(resp.body);
+      return out;
+    } catch (e) {
+      return null;
+    }
   }
 }

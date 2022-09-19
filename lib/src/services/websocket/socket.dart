@@ -1,11 +1,11 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lotto_music/src/cores/compositor.dart';
-import 'package:lotto_music/src/models/stadistics_response.dart';
+import 'package:lotto_music/src/models/video/stadistics_response.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
-import '../bloc/stadistics/estadisticas_bloc.dart';
-import '../helpers/variables_globales.dart';
+import '../../bloc/stadistics/estadisticas_bloc.dart';
+import '../../cores/orquestador/orquestador.dart';
+import '../../helpers/variables_globales.dart';
 
 enum ServerStatus {
   online,
@@ -15,7 +15,7 @@ enum ServerStatus {
 class SocketService {
   static intstate(BuildContext context) async {
     final blocSt = BlocProvider.of<EstadisticasBloc>(context);
-    Compositor.onLoadStadistic(context: context);
+    Orquestador.video.onLoadStadistic(context: context);
 
     // Dart client
     io.Socket socket = io.io(
