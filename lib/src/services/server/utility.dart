@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 
 import '../../helpers/globals/ruts_services.dart';
 import '../../models/utility/oclock.dart';
-import '../../models/video/evento_video.dart';
 
 class UtilityService {
   static const String _clock = "${URL.utility}/oclock";

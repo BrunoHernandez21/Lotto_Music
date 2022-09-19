@@ -9,8 +9,8 @@ import '../../models/event/historial_event_user.dart';
 import '../../models/auth/login_response.dart';
 
 class UserEventService {
-  static const String _listar = "${URL.userEvent}listar";
-  static const String _apuesta = "${URL.userEvent}/evento";
+  static const String _listar = "${URL.userEvent}/active";
+  static const String _apuesta = "${URL.userEvent}/history";
   static const String _wins = "${URL.userEvent}/wins";
 
   static Future<LoginResponse?> listar() async {

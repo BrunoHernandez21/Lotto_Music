@@ -30,11 +30,15 @@ class _Buy {
 
   Future<HistorialCompraModel?> onIinitHistorialCompra(
       BuildContext context) async {
-    final acountB = BlocProvider.of<AcountBloc>(context);
-    final resp = await BuyService.listarHistorial(
-      pag: 1,
-      token: acountB.state.acount.accessToken,
-    );
-    return resp;
+    try {
+      final acountB = BlocProvider.of<AcountBloc>(context);
+      final resp = await BuyService.listarHistorial(
+        pag: 1,
+        token: acountB.state.acount.accessToken,
+      );
+      return resp;
+    } catch (e) {
+      return null;
+    }
   }
 }
