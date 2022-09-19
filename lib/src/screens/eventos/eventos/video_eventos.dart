@@ -73,7 +73,17 @@ class VideosEventos extends StatelessWidget {
           child: SizedBox(
             width: Medidas.size.width * .4,
             child: Botones.degradedButton(
-                body: const DefaultDigitalClock(),
+                body: FutureBuilder<DateTime>(
+                  initialData: null,
+                  future: Orquestador.utils.horaServidor(),
+                  builder: (c, snap) {
+                    if (snap.data == null) {
+                      return Textos.tituloMED(
+                          texto: "-- -- : -- --", color: Colors.black);
+                    }
+                    return const DefaultDigitalClock();
+                  },
+                ),
                 colors: const [Color(0xffA9F1DF), Color(0xffA9F1DF)],
                 onTap: () {
                   Navigator.of(context).pushNamed(Clock.routeName);

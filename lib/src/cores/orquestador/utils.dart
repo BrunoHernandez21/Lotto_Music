@@ -1,7 +1,8 @@
 part of 'orquestador.dart';
 
 class _Utils {
-  horaServidor() async {
-    return DateTime.now();
+  Future<DateTime> horaServidor() async {
+    final a = UtilityService.hora();
+    return a;
   }
 }
