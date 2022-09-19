@@ -4,7 +4,7 @@ import 'package:lotto_music/src/bloc/videos_categoria/videos_categoria_bloc.dart
 import 'package:lotto_music/src/screens/eventos/video/video_evento.dart';
 
 import '../../../cores/orquestador/orquestador.dart';
-import '../../../helpers/variables_globales.dart';
+import '../../../helpers/globals/screen_size.dart';
 import '../../../models/video/evento_video.dart';
 import '../../../widgets/svg_nosignal.dart';
 import '../../../widgets/text.dart';

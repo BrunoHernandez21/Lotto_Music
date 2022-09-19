@@ -7,7 +7,7 @@ import 'package:lotto_music/src/screens/perfil/tarjetas/tarjetas_edit.dart';
 
 import '../../../bloc/tarjetas/tarjetas_bloc.dart';
 import '../../../cores/orquestador/orquestador.dart';
-import '../../../helpers/variables_globales.dart';
+import '../../../helpers/globals/screen_size.dart';
 import '../../../widgets/text.dart';
 
 class Tarjetas extends StatefulWidget {

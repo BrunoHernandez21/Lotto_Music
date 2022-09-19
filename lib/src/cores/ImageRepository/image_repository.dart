@@ -6,12 +6,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/acount/acount_bloc.dart';
-import '../../helpers/variables_globales.dart';
-import '../repository.dart';
+import '../../helpers/globals/local_storage.dart';
+import '../localStorage/file_storage.dart';
+import '../localStorage/local_storage.dart';
 
 class ImageRepository {
   static Map<String, dynamic>? images;
-  static const repo = LocalStorage.repoImage;
+  static const repo = StorageDir.repoImage;
   static _loadInitData() async {
     final data = await Repository.loadString(repo);
     if (data == null) {
@@ -37,13 +38,13 @@ class ImageRepository {
       final bits = Uint8List(1);
       // ignore: unnecessary_null_comparison
       if (bits == null) return null;
-      await Repository.saveImage(name, bits);
+      await FileRepository.saveImage(name, bits);
       images!.addAll({name: DateTime.now().toString()});
       Repository.saveString(repo, json.encode(images));
       if (min) {
-        return await Repository.loadImage("tumb$name");
+        return await FileRepository.loadImage("tumb$name");
       } else {
-        return await Repository.loadImage(name);
+        return await FileRepository.loadImage(name);
       }
     } else {
       if (images![name] == null) {
@@ -53,9 +54,9 @@ class ImageRepository {
       }
       Repository.saveString(repo, json.encode(images));
       if (min) {
-        return await Repository.loadImage("tumb$name");
+        return await FileRepository.loadImage("tumb$name");
       } else {
-        return await Repository.loadImage(name);
+        return await FileRepository.loadImage(name);
       }
     }
   }
@@ -64,9 +65,9 @@ class ImageRepository {
     required String newName,
     required String oldName,
   }) async {
-    final oldFile = await Repository.loadTempImage(oldName);
+    final oldFile = await FileRepository.loadTempImage(oldName);
     if (oldFile == null) return;
-    Repository.saveImage(newName, oldFile.readAsBytesSync());
+    FileRepository.saveImage(newName, oldFile.readAsBytesSync());
     images!.addAll({newName: DateTime.now().toString()});
     Repository.saveString(repo, json.encode(images));
   }
@@ -80,7 +81,7 @@ class ImageRepository {
       final now = DateTime.now().month * 30 + DateTime.now().day;
 
       if (now > lastView + 3) {
-        Repository.loadImage(key).then((value) {
+        FileRepository.loadImage(key).then((value) {
           value?.delete();
           images!.remove(key);
         });
@@ -92,6 +93,6 @@ class ImageRepository {
     if (images![name] != null) {
       images!.remove(name);
     }
-    Repository.deleteFromDocuments(name);
+    FileRepository.deleteFromDocuments(name);
   }
 }

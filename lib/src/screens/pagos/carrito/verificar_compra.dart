@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/bloc/tarjetas/tarjetas_bloc.dart';
-
+import 'package:lotto_music/src/widgets/dialogs_alert.dart';
 import '../../../bloc/carrito/carrito_bloc.dart';
 import '../../../cores/orquestador/orquestador.dart';
-import '../../../helpers/variables_globales.dart';
+import '../../../helpers/globals/screen_size.dart';
 import '../../../models/user/tarjetas.dart';
 import '../../../models/user/tarjetas_response.dart';
 import '../../../widgets/botones.dart';
@@ -20,8 +20,7 @@ class VerificarCompra extends StatefulWidget {
 }
 
 class _VerificarCompraState extends State<VerificarCompra> {
-  List<bool> checkListestate = [];
-  int index = 0;
+  int index = -1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +42,7 @@ class _VerificarCompraState extends State<VerificarCompra> {
                 Orquestador.user.onLoadTarjetas(context);
               }
 
-              return bodyValidate(carState, total, context, tarState);
+              return bodyValidate(carState, total, tarState);
             },
           );
         },
@@ -54,7 +53,6 @@ class _VerificarCompraState extends State<VerificarCompra> {
   Widget bodyValidate(
     CarritoState carState,
     double total,
-    BuildContext context,
     TarjetasState tarState,
   ) {
     return SingleChildScrollView(
@@ -98,13 +96,28 @@ class _VerificarCompraState extends State<VerificarCompra> {
                   text: "Comprar",
                   colors: const [Color(0xffea8d8d), Color(0xffa890fe)],
                   onTap: () async {
-                    await Orquestador.buy.onBuyCarrito(
+                    if (index == -1) {
+                      DialogAlert.ok(
+                        context: context,
+                        text: "Seleccione una tarjeta",
+                      );
+                      return;
+                    }
+                    final a = await Orquestador.buy.onBuyCarrito(
                       context: context,
                       tarjeta: tarState.tarjetas?.tarjetas?[index].id ?? 0,
                     );
 
                     // ignore: use_build_context_synchronously
                     await Orquestador.shopingcar.onloadCarrito(context);
+                    if (!mounted) {
+                      return;
+                    }
+                    await DialogAlert.ok(
+                      context: context,
+                      text: a,
+                    );
+
                     if (!mounted) {
                       return;
                     }
@@ -122,23 +135,11 @@ class _VerificarCompraState extends State<VerificarCompra> {
   List<Widget> listaTarjetasWidget(TarjetasResponse? estado) {
     List<Widget> lista = [];
     for (int i = 0; i < (estado?.tarjetas?.length ?? 0); i++) {
-      checkListestate.add(estado!.tarjetas![i].defaultPayment);
-      if (estado.tarjetas![i].defaultPayment) {
-        index = i;
-      }
-
       lista.add(_Tarjeta(
-        evento: estado.tarjetas![i],
-        isSelected: checkListestate[i],
+        evento: estado!.tarjetas![i],
+        isSelected: index == i,
         onChange: (a) {
-          for (int n = 0; n < checkListestate.length; n++) {
-            if (i == n) {
-              checkListestate[n] = true;
-              index = n;
-            } else {
-              checkListestate[n] = false;
-            }
-          }
+          index = i;
 
           setState(() {});
         },

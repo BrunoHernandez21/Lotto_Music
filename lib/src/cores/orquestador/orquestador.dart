@@ -24,6 +24,7 @@ import '../../bloc/planes/planes_bloc.dart';
 import '../../bloc/stadistics/estadisticas_bloc.dart';
 import '../../bloc/youtube_video/video_bloc.dart';
 import '../../bloc/videos_event/videos_event_bloc.dart';
+import '../../helpers/globals/local_storage.dart';
 import '../../helpers/variables_globales.dart';
 import '../../models/carrito/carrito.dart';
 import '../../models/carrito/carrito_response.dart';
@@ -42,7 +43,7 @@ import '../../services/server/plan.dart';
 import '../../services/server/user_event.dart';
 import '../../services/server/videos.dart';
 import '../../widgets/dialogs_alert.dart';
-import '../acount.dart';
+import '../localStorage/local_storage.dart';
 
 part 'buy.dart';
 part 'auth.dart';

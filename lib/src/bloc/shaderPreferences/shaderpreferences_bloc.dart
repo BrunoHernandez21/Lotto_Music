@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
-import '../../cores/preferences_app.dart';
+import '../../cores/orquestador/orquestador.dart';
 
 part 'shaderpreferences_event.dart';
 part 'shaderpreferences_state.dart';
@@ -17,12 +17,12 @@ class ShaderpreferencesBloc
         )) {
     //cambios de idioma
     on<OnChageLocale>((event, emit) {
-      PreferencesApp.saveLocale(event.idioma);
+      Orquestador.sistem.saveLocale(event.idioma);
       emit(state.copyWhit(idioma: event.idioma));
     });
     //cambios de tema
     on<OnChageTheme>((event, emit) {
-      PreferencesApp.saveTheme(event.themeData);
+      Orquestador.sistem.saveTheme(event.themeData);
       return emit(state.copyWhit(themeData: event.themeData));
     });
     //cargar todas las preferencias

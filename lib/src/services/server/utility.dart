@@ -2,7 +2,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import '../../helpers/variables_globales.dart';
+import '../../helpers/globals/ruts_services.dart';
 import '../../models/video/evento_video.dart';
 
 class UtilityService {
@@ -10,7 +10,7 @@ class UtilityService {
 
   static Future<VideoEventModel?> hora({required int pag}) async {
     try {
-      final urI = Uri.parse("$_clock/$pag/10");
+      final urI = Uri.parse(_clock);
       final resp = await http.get(
         urI,
       );

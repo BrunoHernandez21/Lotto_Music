@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:lotto_music/src/models/plan/plan_response.dart';
 
-import '../../helpers/variables_globales.dart';
+import '../../helpers/globals/ruts_services.dart';
 
 class PlanService {
   static const String _one = "${URL.plan}/plans/single-payment";

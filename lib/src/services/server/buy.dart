@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:lotto_music/src/models/buy/historial_compra.dart';
 
-import '../../helpers/variables_globales.dart';
+import '../../helpers/globals/ruts_services.dart';
 
 class BuyService {
   static const String _checkout = "${URL.buy}/orders/checkout";
@@ -28,8 +28,12 @@ class BuyService {
       },
       body: json.encode({"card_id": tarjeta}),
     );
+
     final parse = json.decode(resp.body);
-    return parse["mensaje"];
+    if (parse["mensaje"] != null) {
+      return parse["mensaje"];
+    }
+    return parse["resp"];
   }
 
   static Future<String?> cancelarCompra({

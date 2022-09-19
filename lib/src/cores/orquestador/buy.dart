@@ -1,17 +1,14 @@
 part of 'orquestador.dart';
 
 class _Buy {
-  Future<bool> onBuyCarrito(
+  Future<String> onBuyCarrito(
       {required BuildContext context, required int tarjeta}) async {
     final acountB = BlocProvider.of<AcountBloc>(context);
     final resp = await BuyService.checkout(
       token: acountB.state.acount.accessToken,
       tarjeta: tarjeta,
     );
-    if (resp == "correcto") {
-      return true;
-    }
-    return false;
+    return resp ?? "error";
   }
 
   /////// historial de compras

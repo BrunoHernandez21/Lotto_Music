@@ -3,10 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lotto_music/src/bloc/acount/acount_bloc.dart';
 import 'package:lotto_music/src/cores/orquestador/orquestador.dart';
-import 'package:lotto_music/src/helpers/variables_globales.dart';
 import 'package:lotto_music/src/screens/pagos/carrito/verificar_compra.dart';
 
 import '../../../bloc/carrito/carrito_bloc.dart';
+import '../../../helpers/globals/assets.dart';
+import '../../../helpers/globals/screen_size.dart';
 import '../../../models/carrito/carrito_response.dart';
 import '../../../widgets/botones.dart';
 import '../../../widgets/inicia_secion.dart';
@@ -124,7 +125,9 @@ class Carrito extends StatelessWidget {
               text: "Comprar",
               colors: const [Color(0xffea8d8d), Color(0xffa890fe)],
               onTap: () async {
-                Navigator.of(context).pushNamed(VerificarCompra.routeName);
+                Orquestador.user.onLoadTarjetas(context).then((value) {
+                  Navigator.of(context).pushNamed(VerificarCompra.routeName);
+                });
               },
             ),
           ),

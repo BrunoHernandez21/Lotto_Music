@@ -6,7 +6,8 @@ import 'package:lotto_music/src/models/user/tarjetas.dart';
 import 'package:lotto_music/src/widgets/text.dart';
 
 import '../../../cores/orquestador/orquestador.dart';
-import '../../../helpers/variables_globales.dart';
+import '../../../helpers/globals/const.dart';
+import '../../../helpers/globals/screen_size.dart';
 import '../../../widgets/chec_box.dart';
 import '../../../widgets/drop_list.dart';
 import '../../../widgets/inputs_text.dart';

@@ -22,8 +22,8 @@ class _Auth {
     }
     if (response.mensaje == null) {
       acountB.add(OnLogin(response: response));
-      AcountLocalSave.saveisLogin(true);
-      AcountLocalSave.saveLoginResponse(acount: response);
+      Orquestador.sistem.saveisLogin(true);
+      Orquestador.sistem.saveLoginResponse(acount: response);
       return true;
     } else {
       DialogAlert.ok(
@@ -68,8 +68,8 @@ class _Auth {
   Future<bool> onLogOut(BuildContext context) async {
     final acountB = BlocProvider.of<AcountBloc>(context);
     acountB.add(OnLogout());
-    AcountLocalSave.saveisLogin(true);
-    AcountLocalSave.saveLoginResponse(acount: LoginResponse());
+    Orquestador.sistem.saveisLogin(true);
+    Orquestador.sistem.saveLoginResponse(acount: LoginResponse());
     return true;
   }
 

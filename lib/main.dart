@@ -21,8 +21,7 @@ import 'package:lotto_music/src/bloc/ve_page_controller/videos_event_controller_
 import 'package:lotto_music/src/bloc/video_event/video_event_bloc.dart';
 import 'package:lotto_music/src/bloc/youtube/youtube_bloc.dart';
 import 'package:lotto_music/src/bloc/videos_event/videos_event_bloc.dart';
-import 'package:lotto_music/src/cores/acount.dart';
-import 'package:lotto_music/src/cores/preferences_app.dart';
+import 'package:lotto_music/src/cores/orquestador/orquestador.dart';
 import 'package:lotto_music/src/screens/ruts_screens.dart';
 import 'package:lotto_music/src/models/auth/login_response.dart';
 import 'package:lotto_music/src/screens/admin.dart';
@@ -37,10 +36,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //PushNotification.initializeApp();
   //CheckPermissos.checkAll();
-  final theme = await PreferencesApp.theme;
-  final locale = await PreferencesApp.locale;
-  final acount = await AcountLocalSave.loadLoginResponse();
-  final isLogin = await AcountLocalSave.isLogin;
+  final theme = await Orquestador.sistem.theme;
+  final locale = await Orquestador.sistem.locale;
+  final acount = await Orquestador.sistem.loadLoginResponse();
+  final isLogin = await Orquestador.sistem.isLogin;
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {

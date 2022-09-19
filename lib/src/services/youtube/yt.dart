@@ -2,7 +2,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import '../../helpers/variables_globales.dart';
+import '../../helpers/globals/ruts_services.dart';
 import '../../models/youtube/estadisticvas_yt.dart';
 import '../../models/youtube/youtube.dart';
 

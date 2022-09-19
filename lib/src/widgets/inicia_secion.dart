@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lotto_music/src/widgets/text.dart';
 
-import '../helpers/variables_globales.dart';
+import '../helpers/globals/assets.dart';
+import '../helpers/globals/screen_size.dart';
 import '../screens/acount/login.dart';
 import 'botones.dart';
 

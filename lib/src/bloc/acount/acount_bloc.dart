@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
-import '../../cores/acount.dart';
+import '../../cores/orquestador/orquestador.dart';
 import '../../models/auth/login_response.dart';
 
 part 'acount_event.dart';
@@ -24,10 +24,10 @@ class AcountBloc extends Bloc<AcountEvent, AcountState> {
   //////////////////////////////////////////////////Cerrar secion
   Future<LoginResponse> logout() async {
     add(OnLogout());
-    AcountLocalSave.saveisLogin(false);
+    Orquestador.sistem.saveisLogin(false);
     final acount =
         LoginResponse(accessToken: "", expiresIn: null, tokenType: "");
-    AcountLocalSave.saveLoginResponse(acount: acount);
+    Orquestador.sistem.saveLoginResponse(acount: acount);
 
     return acount;
   }

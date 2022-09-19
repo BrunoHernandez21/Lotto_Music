@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:lotto_music/src/models/event/userevent.dart';
 
-import '../../helpers/variables_globales.dart';
+import '../../helpers/globals/ruts_services.dart';
 import '../../models/event/ganador_response.dart';
 import '../../models/event/historial_event_user.dart';
 import '../../models/auth/login_response.dart';

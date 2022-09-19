@@ -8,7 +8,8 @@ import 'package:lotto_music/src/screens/acount/register.dart';
 
 import '../../bloc/shaderPreferences/shaderpreferences_temp.dart';
 
-import '../../helpers/variables_globales.dart';
+import '../../helpers/globals/assets.dart';
+import '../../helpers/globals/screen_size.dart';
 
 import '../../widgets/botones.dart';
 import '../../widgets/chec_box.dart';

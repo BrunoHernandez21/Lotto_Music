@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:lotto_music/src/helpers/variables_globales.dart';
 import 'package:lotto_music/src/widgets/botones.dart';
 import 'package:lotto_music/src/widgets/dialogs_alert.dart';
 import 'package:lotto_music/src/widgets/inputs_text.dart';
 
 import '../../../../cores/orquestador/orquestador.dart';
+import '../../../../helpers/globals/const.dart';
+import '../../../../helpers/globals/screen_size.dart';
 import '../../../../models/user/direcciones.dart';
 import '../../../../widgets/drop_list.dart';
 import '../../../../widgets/text.dart';

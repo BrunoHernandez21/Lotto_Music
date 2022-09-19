@@ -6,7 +6,8 @@ import 'package:lotto_music/src/widgets/text.dart';
 
 import '../../../../bloc/youtube/youtube_bloc.dart';
 import '../../../../cores/orquestador/orquestador.dart';
-import '../../../../helpers/variables_globales.dart';
+import '../../../../helpers/globals/assets.dart';
+import '../../../../helpers/globals/screen_size.dart';
 import '../../../../models/youtube/youtube.dart';
 import '../video/video.dart';
 

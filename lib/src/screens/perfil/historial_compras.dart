@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../cores/orquestador/orquestador.dart';
-import '../../helpers/variables_globales.dart';
+import '../../helpers/globals/screen_size.dart';
 import '../../models/buy/compra.dart';
 import '../../models/buy/historial_compra.dart';
 import '../../widgets/text.dart';

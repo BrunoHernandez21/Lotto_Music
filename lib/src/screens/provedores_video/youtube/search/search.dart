@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:lotto_music/src/helpers/variables_globales.dart';
 import 'package:lotto_music/src/widgets/inputs_text.dart';
 
 import '../../../../cores/orquestador/orquestador.dart';
+import '../../../../helpers/globals/assets.dart';
+import '../../../../helpers/globals/screen_size.dart';
 import '../../../../models/youtube/youtube.dart';
 import '../../../../widgets/text.dart';
 import '../video/video.dart';

@@ -6,8 +6,8 @@ import 'package:lotto_music/src/screens/pagos/pagos.dart';
 import 'package:lotto_music/src/screens/provedores_video/provedores_video.dart';
 
 import '../bloc/shaderPreferences/shaderpreferences_bloc.dart';
+import '../helpers/globals/screen_size.dart';
 import '../helpers/new_icons.dart';
-import '../helpers/variables_globales.dart';
 import 'perfil/perfil.dart';
 import 'eventos/eventos.dart';
 

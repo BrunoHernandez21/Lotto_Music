@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lotto_music/src/helpers/variables_globales.dart';
 import 'package:lotto_music/src/widgets/text.dart';
 
 import '../../cores/orquestador/orquestador.dart';
+import '../../helpers/globals/screen_size.dart';
 import '../../models/event/ganador.dart';
 import '../../models/event/ganador_response.dart';
 

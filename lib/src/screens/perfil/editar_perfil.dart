@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lotto_music/src/helpers/variables_globales.dart';
 import 'package:lotto_music/src/models/user/users.dart';
 import 'package:lotto_music/src/widgets/botones.dart';
 import 'package:lotto_music/src/widgets/inputs_text.dart';
@@ -8,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import '../../bloc/user/user_bloc.dart';
 import '../../cores/orquestador/orquestador.dart';
+import '../../helpers/globals/screen_size.dart';
 
 class EditarPerfil extends StatefulWidget {
   static const String routeName = 'editarPerfil';

@@ -1,6 +1,7 @@
-import 'package:lotto_music/src/helpers/variables_globales.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
+import '../helpers/globals/fonst.dart';
 
 class Textos {
   static Widget desvanecido({required String texto}) => _Base(

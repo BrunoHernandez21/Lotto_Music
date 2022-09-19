@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/bloc/direcciones/direcciones_bloc.dart';
 import 'package:lotto_music/src/models/user/direcciones.dart';
 import '../../../../cores/orquestador/orquestador.dart';
-import '../../../../helpers/variables_globales.dart';
+import '../../../../helpers/globals/screen_size.dart';
 import '../../../../models/user/direcciones_response.dart';
 import '../../../../widgets/text.dart';
 import 'direcciones_add.dart';

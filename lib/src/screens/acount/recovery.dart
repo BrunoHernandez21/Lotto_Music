@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lotto_music/src/cores/orquestador/orquestador.dart';
 
-import '../../helpers/variables_globales.dart';
+import '../../helpers/globals/assets.dart';
+import '../../helpers/globals/screen_size.dart';
 import '../../widgets/botones.dart';
 import '../../widgets/inputs_text.dart';
 import '../../widgets/text.dart';

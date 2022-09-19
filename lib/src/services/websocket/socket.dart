@@ -5,7 +5,7 @@ import 'package:socket_io_client/socket_io_client.dart' as io;
 
 import '../../bloc/stadistics/estadisticas_bloc.dart';
 import '../../cores/orquestador/orquestador.dart';
-import '../../helpers/variables_globales.dart';
+import '../../helpers/globals/ruts_services.dart';
 
 enum ServerStatus {
   online,

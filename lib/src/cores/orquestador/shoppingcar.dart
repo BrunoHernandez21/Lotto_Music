@@ -29,13 +29,16 @@ class _Shopingcar {
       token: acountB.state.acount.accessToken,
       body: orden.toJson(),
     );
+
     if (resp == null) {
       return "error de coneccion";
     }
-    if (resp.mensaje == null) {
-      return null;
+    if (resp.mensaje != null) {
+      return resp.mensaje;
     }
-    return resp.mensaje;
+    // ignore: use_build_context_synchronously
+    await onloadCarrito(context);
+    return "Se agrego al carrito";
   }
 
   Future<bool> onDeleteCarrito(

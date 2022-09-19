@@ -8,8 +8,9 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../../bloc/cartera/cartera_bloc.dart';
 import '../../../bloc/ve_page_controller/videos_event_controller_bloc.dart';
+import '../../../helpers/globals/assets.dart';
+import '../../../helpers/globals/screen_size.dart';
 import '../../../helpers/rutinas.dart';
-import '../../../helpers/variables_globales.dart';
 import '../../../models/video/evento_video.dart';
 import '../../../widgets/botones.dart';
 import '../../../widgets/text.dart';

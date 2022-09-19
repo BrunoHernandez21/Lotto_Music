@@ -2,7 +2,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import '../../helpers/variables_globales.dart';
+import '../../helpers/globals/ruts_services.dart';
 import '../../models/user/cartera.dart';
 import '../../models/user/direcciones.dart';
 import '../../models/user/direcciones_response.dart';
@@ -16,8 +16,6 @@ class UserServices {
   static const String _userChangepassword = "${URL.user}/changepassword";
   // propiedades
   static const String _cartera = "${URL.user}/purse";
-  static const String _subscription = "${URL.user}/subscription";
-  static const String _propiedades = "${URL.user}/properties";
   // paymentMethod
   static const String _method = "${URL.user}/payment/method";
   // Direcciones
