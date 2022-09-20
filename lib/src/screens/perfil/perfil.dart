@@ -85,7 +85,7 @@ class BodyLogin extends StatelessWidget {
               return Center(
                 child: Textos.tituloMED(
                   texto: "Tus Puntos = ${state.cartera.puntos}",
-                  color: Colors.yellow,
+                  color: Colors.grey,
                 ),
               );
             },
@@ -95,7 +95,6 @@ class BodyLogin extends StatelessWidget {
       ListTile(
         title: Textos.tituloMIN(
           texto: 'Editar perfil',
-          color: const Color(0xFFADB0B3),
         ),
         leading: const Icon(Icons.account_box),
         trailing: const Icon(

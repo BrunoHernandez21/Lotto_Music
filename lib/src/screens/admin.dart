@@ -6,6 +6,7 @@ import 'package:lotto_music/src/screens/pagos/pagos.dart';
 import 'package:lotto_music/src/screens/provedores_video/provedores_video.dart';
 
 import '../bloc/shaderPreferences/shaderpreferences_bloc.dart';
+import '../helpers/globals/const.dart';
 import '../helpers/globals/screen_size.dart';
 import '../helpers/new_icons.dart';
 import 'perfil/perfil.dart';
@@ -79,6 +80,7 @@ class _BodyAdminState extends State<_BodyAdmin> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return BlocBuilder<ShaderpreferencesBloc, ShaderpreferencesState>(
       builder: (context, state) {
+        final themeData = AppThemeData.getTheme(state.isDarkTheme);
         return Scaffold(
           extendBody: true,
           resizeToAvoidBottomInset: false,
@@ -99,10 +101,7 @@ class _BodyAdminState extends State<_BodyAdmin> with TickerProviderStateMixin {
                 ),
                 Container(
                   alignment: Alignment.center,
-                  color: BlocProvider.of<ShaderpreferencesBloc>(context)
-                      .state
-                      .themeData
-                      .backgroundColor,
+                  color: themeData.scaffoldBackgroundColor,
                   height: 35,
                   width: double.infinity,
                   child: TabBar(

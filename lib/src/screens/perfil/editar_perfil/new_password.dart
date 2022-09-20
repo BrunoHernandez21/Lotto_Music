@@ -26,9 +26,7 @@ class _NewPasswordState extends State<NewPassword> {
     Medidas.size = MediaQuery.of(context).size;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        foregroundColor: Colors.black,
-      ),
+      appBar: AppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),

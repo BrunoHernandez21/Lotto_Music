@@ -17,9 +17,7 @@ class Recovery extends StatelessWidget {
     Medidas.size = MediaQuery.of(context).size;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        foregroundColor: Colors.black,
-      ),
+      appBar: AppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),

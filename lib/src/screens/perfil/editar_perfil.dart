@@ -45,7 +45,6 @@ class _EditarPerfilState extends State<EditarPerfil> {
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          foregroundColor: Colors.black,
           centerTitle: true,
           title: Textos.tituloMIN(texto: 'Editar Perfil'),
         ),

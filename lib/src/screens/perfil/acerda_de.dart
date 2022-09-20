@@ -8,9 +8,7 @@ class AcercaDe extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        foregroundColor: const Color.fromRGBO(0, 0, 0, 1),
-      ),
+      appBar: AppBar(),
       body: Center(
           child: Textos.parrafoMED(
               texto: '''Version de la app V0.2.1 \n

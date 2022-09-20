@@ -26,7 +26,6 @@ import '../../bloc/stadistics/estadisticas_bloc.dart';
 import '../../bloc/youtube_video/video_bloc.dart';
 import '../../bloc/videos_event/videos_event_bloc.dart';
 import '../../helpers/globals/local_storage.dart';
-import '../../helpers/variables_globales.dart';
 import '../../models/carrito/carrito.dart';
 import '../../models/carrito/carrito_response.dart';
 import '../../models/user/direcciones.dart';

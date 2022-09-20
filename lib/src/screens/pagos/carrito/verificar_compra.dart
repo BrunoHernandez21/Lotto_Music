@@ -24,9 +24,7 @@ class _VerificarCompraState extends State<VerificarCompra> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-      ),
+      appBar: AppBar(),
       body: BlocBuilder<CarritoBloc, CarritoState>(
         builder: (context, carState) {
           if (carState.itemsCarrito == null) {

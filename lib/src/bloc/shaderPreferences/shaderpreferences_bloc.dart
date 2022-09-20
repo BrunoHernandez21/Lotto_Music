@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
@@ -9,24 +11,19 @@ part 'shaderpreferences_state.dart';
 class ShaderpreferencesBloc
     extends Bloc<ShaderpreferencesEvent, ShaderpreferencesState> {
   ShaderpreferencesBloc({
-    required Locale locale,
-    required ThemeData theme,
-  }) : super(ShaderpreferencesState(
-          idioma: locale,
-          themeData: theme,
-        )) {
+    required ShaderpreferencesState shaderState,
+  }) : super(shaderState) {
     //cambios de idioma
     on<OnChageLocale>((event, emit) {
-      Orquestador.sistem.saveLocale(event.idioma);
-      emit(state.copyWhit(idioma: event.idioma));
+      final estado = state.copyWith(idioma: event.idioma);
+      Orquestador.sistem.saveShaderLocale(estado);
+      emit(estado);
     });
     //cambios de tema
     on<OnChageTheme>((event, emit) {
-      Orquestador.sistem.saveTheme(event.themeData);
-      return emit(state.copyWhit(themeData: event.themeData));
+      final estado = state.copyWith(isDarkTheme: event.isDarkTheme);
+      Orquestador.sistem.saveShaderLocale(estado);
+      emit(estado);
     });
-    //cargar todas las preferencias
-    on<OnLoadShaderPreferences>((event, emit) => emit(ShaderpreferencesState(
-        idioma: event.idioma, themeData: event.themeData)));
   }
 }

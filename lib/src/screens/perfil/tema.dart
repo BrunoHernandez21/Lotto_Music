@@ -21,8 +21,7 @@ class _TemeAppState extends State<TemeApp> {
       title: Textos.tituloMIN(texto: "Dark Theme"),
       leading: const Icon(Icons.color_lens),
       trailing: Switch(
-        value: blocShader.state.themeData.backgroundColor ==
-            ThemeData.dark().backgroundColor,
+        value: blocShader.state.isDarkTheme,
         onChanged: (a) {
           Orquestador.sistem.onChagengeTheme(context);
           setState(() {});

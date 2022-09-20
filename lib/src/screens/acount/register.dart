@@ -26,9 +26,7 @@ class Register extends StatelessWidget {
       child: SafeArea(
         child: Scaffold(
           extendBodyBehindAppBar: true,
-          appBar: AppBar(
-            foregroundColor: Colors.black,
-          ),
+          appBar: AppBar(),
           body: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Padding(

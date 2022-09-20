@@ -32,8 +32,6 @@ class _DireccionEditState extends State<DireccionEdit> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
-        foregroundColor: Colors.white,
         title: Textos.tituloMED(texto: 'Dirección'),
         centerTitle: true,
       ),

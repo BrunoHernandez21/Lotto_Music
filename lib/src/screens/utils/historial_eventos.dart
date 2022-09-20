@@ -63,9 +63,7 @@ class _HistorialEventosState extends State<HistorialEventos> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-      ),
+      appBar: AppBar(),
       body: RefreshIndicator(
         onRefresh: () async {
           isLoad = true;

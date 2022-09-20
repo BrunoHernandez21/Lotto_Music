@@ -57,10 +57,7 @@ class _TarjetasEditState extends State<TarjetasEdit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        foregroundColor: Colors.white,
-      ),
+      appBar: AppBar(),
       body: SafeArea(
         child: Column(
           children: [

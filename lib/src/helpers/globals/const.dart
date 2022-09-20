@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Variables {
   static const List<String> estadosDireccion = [
@@ -15,6 +16,32 @@ class Variables {
 }
 
 class AppThemeData {
-  ThemeData darkTeam = ThemeData.dark().copyWith();
-  ThemeData darkLight = ThemeData.light().copyWith();
+  static ThemeData dark = ThemeData.dark().copyWith(
+    appBarTheme: ThemeData.dark().appBarTheme.copyWith(
+          backgroundColor: Colors.black,
+          foregroundColor: Colors.white,
+          elevation: 0,
+          systemOverlayStyle: const SystemUiOverlayStyle(
+            statusBarColor: Colors.transparent,
+            statusBarBrightness: Brightness.light,
+          ),
+        ),
+  );
+  static ThemeData light = ThemeData.light().copyWith(
+    appBarTheme: ThemeData.dark().appBarTheme.copyWith(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          elevation: 0,
+          systemOverlayStyle: const SystemUiOverlayStyle(
+            statusBarColor: Colors.transparent,
+            statusBarBrightness: Brightness.dark,
+          ),
+        ),
+  );
+  static ThemeData getTheme(bool isDark) {
+    if (isDark) {
+      return dark;
+    }
+    return light;
+  }
 }

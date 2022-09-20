@@ -16,9 +16,7 @@ class Direccion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-      ),
+      appBar: AppBar(),
       body: BlocBuilder<DireccionesBloc, DireccionesState>(
         builder: (context, state) {
           if (state.direcciones == null) {

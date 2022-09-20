@@ -22,9 +22,7 @@ class _TarjetasState extends State<Tarjetas> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-      ),
+      appBar: AppBar(),
       body: BlocBuilder<TarjetasBloc, TarjetasState>(
         builder: (context, state) {
           if (state.tarjetas == null) {

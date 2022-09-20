@@ -37,15 +37,16 @@ class Repository {
     }
   }
 
-  static Future<void> saveString(String name, String data) async {
+  static Future<bool> saveString(String name, String data) async {
     try {
       final db = await _selector(name);
-      if (db == null) return;
+      if (db == null) return false;
       await db.setItem(name, data);
       _exitArchive(name);
     } catch (e) {
-      return;
+      return false;
     }
+    return true;
   }
 
   //////////////// Double
@@ -64,15 +65,16 @@ class Repository {
     }
   }
 
-  static Future<void> saveDouble(String name, double data) async {
+  static Future<bool> saveDouble(String name, double data) async {
     final db = await _selector(name);
-    if (db == null) return;
+    if (db == null) return false;
     try {
       await db.setItem(name, data);
       _exitArchive(name);
     } catch (e) {
-      return;
+      return false;
     }
+    return true;
   }
 
   /////////////// int
@@ -91,14 +93,15 @@ class Repository {
     }
   }
 
-  static Future<void> saveInt(String name, int data) async {
+  static Future<bool> saveInt(String name, int data) async {
     final db = await _selector(name);
-    if (db == null) return;
+    if (db == null) return false;
     try {
       await db.setItem(name, data);
       _exitArchive(name);
+      return true;
     } catch (e) {
-      return;
+      return false;
     }
   }
 
@@ -118,14 +121,15 @@ class Repository {
     }
   }
 
-  static Future<void> saveBool(String name, bool data) async {
+  static Future<bool> saveBool(String name, bool data) async {
     final db = await _selector(name);
-    if (db == null) return;
+    if (db == null) return false;
     try {
       await db.setItem(name, data);
       _exitArchive(name);
+      return true;
     } catch (e) {
-      return;
+      return false;
     }
   }
 

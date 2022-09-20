@@ -16,11 +16,8 @@ class AjustesUsuario extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
         centerTitle: true,
         title: Textos.tituloMIN(texto: 'Editar Perfil'),
-        foregroundColor: Colors.black,
       ),
       body: SafeArea(
         child: SingleChildScrollView(

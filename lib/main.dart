@@ -22,8 +22,8 @@ import 'package:lotto_music/src/bloc/video_event/video_event_bloc.dart';
 import 'package:lotto_music/src/bloc/youtube/youtube_bloc.dart';
 import 'package:lotto_music/src/bloc/videos_event/videos_event_bloc.dart';
 import 'package:lotto_music/src/cores/orquestador/orquestador.dart';
+import 'package:lotto_music/src/helpers/globals/const.dart';
 import 'package:lotto_music/src/screens/ruts_screens.dart';
-import 'package:lotto_music/src/models/auth/login_response.dart';
 import 'package:lotto_music/src/screens/admin.dart';
 import 'package:lotto_music/src/services/websocket/socket.dart';
 
@@ -36,56 +36,38 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //PushNotification.initializeApp();
   //CheckPermissos.checkAll();
-  final theme = await Orquestador.sistem.theme;
-  final locale = await Orquestador.sistem.locale;
-  final acount = await Orquestador.sistem.loadLoginResponse();
-  final isLogin = await Orquestador.sistem.isLogin;
+  final stateShader = await Orquestador.sistem.loadShaderLocale();
+  final authState = await Orquestador.sistem.loadAuthLocale();
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(Appstate(
-      acount: acount,
-      locale: locale,
-      theme: theme,
-      isLogin: isLogin,
+      sAuth: authState,
+      sState: stateShader,
     ));
   });
 }
 
 class Appstate extends StatelessWidget {
-  final Locale locale;
-  final ThemeData theme;
-  final LoginResponse acount;
-  final bool isLogin;
+  final ShaderpreferencesState sState;
+  final AcountState sAuth;
 
   const Appstate({
     Key? key,
-    required this.locale,
-    required this.theme,
-    required this.acount,
-    required this.isLogin,
+    required this.sState,
+    required this.sAuth,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => AcountBloc(
-            acount: acount,
-            isLogin: isLogin,
-          ),
-        ),
-        BlocProvider(
-          create: (_) => ShaderpreferencesBloc(
-            locale: locale,
-            theme: theme,
-          ),
-        ),
+        BlocProvider(create: (context) => AcountBloc(acountState: sAuth)),
+        BlocProvider(create: (context) => UserBloc()),
+        BlocProvider(create: (_) => ShaderpreferencesBloc(shaderState: sState)),
         BlocProvider(create: (context) => CarritoBloc()),
         BlocProvider(create: (context) => PlanesBloc()),
         BlocProvider(create: (context) => SuscripcionesBloc()),
-        BlocProvider(create: (context) => UserBloc()),
         BlocProvider(create: (context) => VideosCategoriaBloc()),
         BlocProvider(create: (context) => VideosEventBloc()),
         BlocProvider(create: (context) => VideoEventBloc()),
@@ -101,11 +83,12 @@ class Appstate extends StatelessWidget {
       child: BlocBuilder<ShaderpreferencesBloc, ShaderpreferencesState>(
         builder: (context, state) {
           SocketService.intstate(
-            context,
+            context: context,
+            userId: sAuth.acount.userId,
           );
           return MyApp(
             locale: state.idioma,
-            theme: state.themeData,
+            theme: AppThemeData.getTheme(state.isDarkTheme),
           );
         },
       ),
@@ -116,7 +99,7 @@ class Appstate extends StatelessWidget {
 // asdas
 class MyApp extends StatelessWidget {
   final ThemeData theme;
-  final Locale locale;
+  final String locale;
 
   const MyApp({
     Key? key,
@@ -129,7 +112,7 @@ class MyApp extends StatelessWidget {
       title: 'Lotto Music',
       debugShowCheckedModeBanner: false,
       theme: theme,
-      locale: locale,
+      locale: Locale(locale),
       routes: Ruts.rutas,
       initialRoute: Admin.routeName,
       localizationsDelegates: const [

@@ -30,9 +30,7 @@ class Login extends StatelessWidget {
     return DialogOnDisplayWidget(
       child: Scaffold(
         extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          foregroundColor: Colors.black,
-        ),
+        appBar: AppBar(),
         body: SafeArea(
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),

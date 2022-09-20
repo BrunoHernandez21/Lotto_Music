@@ -64,9 +64,7 @@ class _WinnerState extends State<Winner> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-      ),
+      appBar: AppBar(),
       body: RefreshIndicator(
         onRefresh: () async {
           Orquestador.userEvent.onIinitWiner(context).then((value) {

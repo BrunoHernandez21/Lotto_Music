@@ -13,7 +13,7 @@ enum ServerStatus {
 }
 
 class SocketService {
-  static intstate(BuildContext context) async {
+  static intstate({required BuildContext context, required int userId}) async {
     final blocSt = BlocProvider.of<EstadisticasBloc>(context);
     Orquestador.video.onLoadStadistic(context: context);
 
@@ -25,7 +25,9 @@ class SocketService {
             .enableAutoConnect() // disable auto-connection
             .build());
     socket.onConnect((data) {
-      socket.emit("onInitLoad", {"usuario_id": 2});
+      if (userId != 0) {
+        socket.emit("onInitLoad", {"usuario_id": userId});
+      }
     });
     socket.on('estadisticas', (data) {
       final a = StadisticsResponse.fromMap(data);
