@@ -11,13 +11,10 @@ Android emulator Android version API 33
 
 TODO: 
 ```
-tema blanco poner color negro en textos                                         complejo
-Recargar carrito al agregar items  /// configuracion en el telefono             // listo 
-Al pagar consultar los medios de pagos del usuario                              // listo
-
-notificaciones de confirmacion de accion // parcial
-Al cerrar secion remover toda la data //aun no
-
+Al cerrar secion remover toda la data                                           // proceso
+agregar la respuesta directamente a la lista existente                          // proceso
+solicitar colores para la app                                                   // espera
+notificaciones de confirmacion de accion                                        // complejo
 ```
 
 

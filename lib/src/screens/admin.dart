@@ -25,9 +25,6 @@ class Admin extends StatefulWidget {
 class _AdminState extends State<Admin> with WidgetsBindingObserver {
   @override
   void initState() {
-    //configuracion inicial de la app
-    Orquestador.auth.checkToken(context);
-    Orquestador.user.onLoadCartera(context: context);
     WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
@@ -66,8 +63,11 @@ class _BodyAdminState extends State<_BodyAdmin> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    super.initState();
     controller = TabController(length: 4, initialIndex: 1, vsync: this);
+    super.initState();
+    //configuracion inicial de la app
+    Orquestador.auth.checkToken(context);
+    Orquestador.user.onLoadCartera(context: context);
   }
 
   @override
