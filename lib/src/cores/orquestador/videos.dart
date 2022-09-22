@@ -10,7 +10,7 @@ class _Videos {
     if (st == null) {
       return;
     }
-    if (st.mensaje == null) {
+    if (st.mensaje != null) {
       return;
     }
     blocSt.add(OnUpdateStadistics(response: st));

@@ -67,7 +67,7 @@ class _BodyAdminState extends State<_BodyAdmin> with TickerProviderStateMixin {
     super.initState();
     //configuracion inicial de la app
     Orquestador.auth.checkToken(context);
-    Orquestador.user.onLoadCartera(context: context);
+    Orquestador.video.onLoadStadistic(context: context);
   }
 
   @override
