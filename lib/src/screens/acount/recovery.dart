@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lotto_music/src/cores/compositor.dart';
+import 'package:lotto_music/src/cores/orquestador/orquestador.dart';
 
-import '../../helpers/variables_globales.dart';
+import '../../helpers/globals/assets.dart';
+import '../../helpers/globals/screen_size.dart';
 import '../../widgets/botones.dart';
 import '../../widgets/inputs_text.dart';
 import '../../widgets/text.dart';
@@ -16,9 +17,7 @@ class Recovery extends StatelessWidget {
     Medidas.size = MediaQuery.of(context).size;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        foregroundColor: Colors.black,
-      ),
+      appBar: AppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -61,7 +60,8 @@ class Recovery extends StatelessWidget {
                 Botones.degradedTextButtonOrange(
                   text: 'Enviar',
                   onTap: () async {
-                    if (await Compositor.onRecovery(context, controller.text)) {
+                    if (await Orquestador.auth
+                        .onRecovery(context, controller.text)) {
                       Navigator.of(context).pop();
                     }
                   },

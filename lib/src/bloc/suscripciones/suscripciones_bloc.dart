@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../models/plan.dart';
+import '../../models/plan/plan.dart';
 
 part 'suscripciones_event.dart';
 part 'suscripciones_state.dart';

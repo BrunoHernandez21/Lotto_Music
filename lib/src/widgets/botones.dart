@@ -1,7 +1,8 @@
 import 'package:lotto_music/src/widgets/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../helpers/variables_globales.dart';
+import '../helpers/globals/fonst.dart';
+import '../helpers/globals/screen_size.dart';
 
 class Botones {
   ///////////////////////////////

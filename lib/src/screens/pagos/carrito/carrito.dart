@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lotto_music/src/bloc/acount/acount_bloc.dart';
-import 'package:lotto_music/src/cores/compositor.dart';
-import 'package:lotto_music/src/helpers/variables_globales.dart';
+import 'package:lotto_music/src/cores/orquestador/orquestador.dart';
 import 'package:lotto_music/src/screens/pagos/carrito/verificar_compra.dart';
 
 import '../../../bloc/carrito/carrito_bloc.dart';
-import '../../../models/carrito_response.dart';
+import '../../../helpers/globals/assets.dart';
+import '../../../helpers/globals/screen_size.dart';
+import '../../../models/carrito/carrito_response.dart';
 import '../../../widgets/botones.dart';
 import '../../../widgets/inicia_secion.dart';
 import '../../../widgets/svg_nosignal.dart';
@@ -19,7 +20,7 @@ class Carrito extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (BlocProvider.of<CarritoBloc>(context).state.itemsCarrito == null) {
-      Compositor.onloadCarrito(context);
+      Orquestador.shopingcar.onloadCarrito(context);
     }
     return BlocBuilder<AcountBloc, AcountState>(
       builder: (context, state) {
@@ -31,13 +32,13 @@ class Carrito extends StatelessWidget {
             if (state.itemsCarrito == null) {
               return RefreshIndicator(
                   onRefresh: () async {
-                    Compositor.onloadCarrito(context);
+                    Orquestador.shopingcar.onloadCarrito(context);
                   },
                   child: const NoSignal());
             }
             return RefreshIndicator(
               onRefresh: () async {
-                Compositor.onloadCarrito(context);
+                Orquestador.shopingcar.onloadCarrito(context);
               },
               child: state.itemsCarrito?.isEmpty ?? true
                   ? emptyFunc()
@@ -124,7 +125,9 @@ class Carrito extends StatelessWidget {
               text: "Comprar",
               colors: const [Color(0xffea8d8d), Color(0xffa890fe)],
               onTap: () async {
-                Navigator.of(context).pushNamed(VerificarCompra.routeName);
+                Orquestador.user.onLoadTarjetas(context).then((value) {
+                  Navigator.of(context).pushNamed(VerificarCompra.routeName);
+                });
               },
             ),
           ),
@@ -159,7 +162,7 @@ class TarjetaCarrito extends StatelessWidget {
             color: Colors.red,
           ),
           onPressed: () {
-            Compositor.onDeleteCarrito(context, carrito);
+            Orquestador.shopingcar.onDeleteCarrito(context, carrito);
           },
         ),
         trailing: Text(

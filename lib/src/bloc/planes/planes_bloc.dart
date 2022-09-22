@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../models/plan.dart';
+import '../../models/plan/plan.dart';
 
 part 'planes_event.dart';
 part 'planes_state.dart';

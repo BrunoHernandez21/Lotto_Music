@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lotto_music/src/helpers/variables_globales.dart';
 
 import '../../generated/l10n.dart';
+import '../helpers/globals/screen_size.dart';
 
 class DialogAlert {
   static Future<bool?> ok(

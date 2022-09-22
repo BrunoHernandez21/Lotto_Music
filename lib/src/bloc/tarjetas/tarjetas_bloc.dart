@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:lotto_music/src/models/tarjetas.dart';
-import 'package:lotto_music/src/models/tarjetas_response.dart';
+import 'package:lotto_music/src/models/user/tarjetas.dart';
+import 'package:lotto_music/src/models/user/tarjetas_response.dart';
 import 'package:meta/meta.dart';
 
 part 'tarjetas_event.dart';

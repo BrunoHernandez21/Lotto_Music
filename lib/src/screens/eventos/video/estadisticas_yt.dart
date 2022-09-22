@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../bloc/stadistics/estadisticas_bloc.dart';
-import '../../../models/stadistics_model.dart';
+import '../../../models/video/stadistics_model.dart';
 import '../../../widgets/text.dart';
 
 ///Estadisticas

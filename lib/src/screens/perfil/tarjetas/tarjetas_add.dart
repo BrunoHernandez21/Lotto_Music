@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_credit_card/credit_card_brand.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
-import 'package:lotto_music/src/cores/compositor.dart';
-import 'package:lotto_music/src/models/tarjetas.dart';
+import 'package:lotto_music/src/models/user/tarjetas.dart';
 import 'package:lotto_music/src/widgets/text.dart';
 
-import '../../../helpers/variables_globales.dart';
+import '../../../cores/orquestador/orquestador.dart';
+import '../../../helpers/globals/const.dart';
+import '../../../helpers/globals/screen_size.dart';
 import '../../../widgets/chec_box.dart';
 import '../../../widgets/drop_list.dart';
 import '../../../widgets/inputs_text.dart';
@@ -43,10 +44,7 @@ class _TarjetasState extends State<TarjetasADD> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        foregroundColor: Colors.white,
-      ),
+      appBar: AppBar(),
       body: SafeArea(
         child: Column(
           children: [
@@ -251,7 +249,7 @@ class _TarjetasState extends State<TarjetasADD> {
                           type: selectedTipe,
                           defaultPayment: isDefaul,
                         );
-                        if (await Compositor.onCreateTarjetas(
+                        if (await Orquestador.user.onCreateTarjetas(
                           context: context,
                           tarjeta: tarjeta,
                         )) {

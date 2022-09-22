@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:lotto_music/src/cores/compositor.dart';
-import 'package:lotto_music/src/helpers/variables_globales.dart';
 import 'package:lotto_music/src/widgets/inputs_text.dart';
 
-import '../../../../models/youtube.dart';
+import '../../../../cores/orquestador/orquestador.dart';
+import '../../../../helpers/globals/assets.dart';
+import '../../../../helpers/globals/screen_size.dart';
+import '../../../../models/youtube/youtube.dart';
 import '../../../../widgets/text.dart';
 import '../video/video.dart';
 import 'appbar.dart';
@@ -46,7 +47,7 @@ class _SearchVideosYTState extends State<SearchVideosYT> {
                 IconButton(
                   icon: const Icon(Icons.search),
                   onPressed: () async {
-                    iterable = await Compositor.onSearchYT(
+                    iterable = await Orquestador.youtube.onSearchYT(
                       context: context,
                       busqueda: controller.text,
                     );
@@ -96,7 +97,7 @@ class _BodySearch extends StatelessWidget {
           child: GestureDetector(
             child: bodyTarjeta(v),
             onTap: () async {
-              await Compositor.onSelectYT(context: context, item: v);
+              await Orquestador.youtube.onSelectYT(context: context, item: v);
               // ignore: use_build_context_synchronously
               Navigator.popAndPushNamed(context, Video.routeName);
             },

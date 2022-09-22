@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../bloc/ve_page_controller/videos_event_controller_bloc.dart';
-import '../../../helpers/variables_globales.dart';
+import '../../../helpers/globals/assets.dart';
 import '../../../widgets/text.dart';
 
 class AppbarVideosEvento extends StatelessWidget {

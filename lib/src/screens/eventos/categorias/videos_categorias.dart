@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/bloc/videos_categoria/videos_categoria_bloc.dart';
-import 'package:lotto_music/src/cores/compositor.dart';
 import 'package:lotto_music/src/screens/eventos/video/video_evento.dart';
 
-import '../../../helpers/variables_globales.dart';
-import '../../../models/evento_video.dart';
+import '../../../cores/orquestador/orquestador.dart';
+import '../../../helpers/globals/screen_size.dart';
+import '../../../models/video/evento_video.dart';
 import '../../../widgets/svg_nosignal.dart';
 import '../../../widgets/text.dart';
 import '../appbar.dart';
@@ -53,13 +53,13 @@ class _ListVideosPaginacionState extends State<_ListVideosPaginacion> {
         }
         if (!isLoad) {
           isLoad = true;
-          await Compositor.onLoadCategorias(context: context);
+          await Orquestador.video.onLoadCategorias(context: context);
           isLoad = false;
         }
       }
     });
     if (BlocProvider.of<VideosCategoriaBloc>(context).state.listado == null) {
-      Compositor.onLoadInitVideosCategoria(context);
+      Orquestador.video.onLoadInitVideosCategoria(context);
     }
   }
 
@@ -76,14 +76,14 @@ class _ListVideosPaginacionState extends State<_ListVideosPaginacion> {
         if (state.listado == null) {
           return RefreshIndicator(
             onRefresh: () async {
-              Compositor.onLoadInitVideosCategoria(context);
+              Orquestador.video.onLoadInitVideosCategoria(context);
             },
             child: const NoSignal(),
           );
         }
         return RefreshIndicator(
             onRefresh: () async {
-              Compositor.onLoadInitVideosCategoria(context);
+              Orquestador.video.onLoadInitVideosCategoria(context);
             },
             child: ListView.separated(
                 controller: controller,
@@ -148,7 +148,7 @@ class _ListVideosPaginacionState extends State<_ListVideosPaginacion> {
         ),
       ),
       onTap: () {
-        Compositor.onSlectVideoEvento(
+        Orquestador.video.onSlectVideoEvento(
           context: context,
           item: v,
         );

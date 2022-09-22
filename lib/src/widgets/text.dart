@@ -1,10 +1,12 @@
-import 'package:lotto_music/src/helpers/variables_globales.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
+import '../helpers/globals/fonst.dart';
 
 class Textos {
   static Widget desvanecido({required String texto}) => _Base(
         text: texto,
+        fontsFamily: FontsFamily.roboto,
       );
 
   static Widget parrafoHiper({
@@ -26,6 +28,7 @@ class Textos {
         fontHiperSize: fontHiperSize,
       );
   static Widget texto({
+    FontWeight? fontWeight,
     required String texto,
     TextAlign? align,
     int? renglones,
@@ -33,55 +36,69 @@ class Textos {
     double? size,
   }) =>
       _Base(
-        color: color ?? Colors.black,
-        size: size ?? 14,
+        fontWeight: fontWeight,
+        color: color,
+        size: size ?? 18,
         text: texto,
         aling: align,
         renglones: renglones,
+        fontsFamily: FontsFamily.roboto,
       );
 
   static Widget parrafoMIN({
+    FontWeight? fontWeight,
     required String texto,
     TextAlign? align,
     int? renglones,
     Color? color,
     double? size,
+    String fontsFamily = FontsFamily.roboto,
   }) =>
       _Base(
-        color: color ?? const Color(0xFFADB0B3),
-        size: size ?? 12,
-        text: texto,
-        aling: align,
-        renglones: renglones,
-      );
-
-  static Widget parrafoMED({
-    required String texto,
-    TextAlign? align,
-    int? renglones,
-    Color? color,
-    double? size,
-  }) =>
-      _Base(
-        color: color ?? const Color(0xFFADB0B3),
+        fontWeight: fontWeight,
+        color: color,
         size: size ?? 14,
         text: texto,
         aling: align,
         renglones: renglones,
+        fontsFamily: fontsFamily,
       );
-  static Widget parrafoMAX({
+
+  static Widget parrafoMED({
+    FontWeight? fontWeight,
     required String texto,
     TextAlign? align,
     int? renglones,
     Color? color,
     double? size,
+    String fontsFamily = FontsFamily.roboto,
   }) =>
       _Base(
-        color: color ?? const Color(0xFFADB0B3),
+        fontWeight: fontWeight,
+        color: color,
         size: size ?? 16,
         text: texto,
         aling: align,
         renglones: renglones,
+        fontsFamily: fontsFamily,
+      );
+  static Widget parrafoMAX({
+    FontWeight? fontWeight,
+    required String texto,
+    TextAlign? align,
+    int? renglones,
+    Color? color,
+    double? size,
+    String fontsFamily = FontsFamily.roboto,
+  }) =>
+      _Base(
+        fontWeight: fontWeight,
+        color: color,
+        size: size ?? 18,
+        text: texto,
+        aling: align,
+        renglones: renglones,
+        fontsFamily: fontsFamily,
       );
 
   static Widget tituloMIN({
@@ -90,13 +107,17 @@ class Textos {
     int? renglones,
     Color? color,
     double? size,
+    FontWeight? fontWeight,
+    String fontsFamily = FontsFamily.roboto,
   }) =>
       _Base(
-        color: color ?? const Color(0xFFADB0B3),
-        size: size ?? 18,
+        fontWeight: fontWeight,
+        color: color,
+        size: size ?? 20,
         text: texto,
         aling: align,
         renglones: renglones,
+        fontsFamily: fontsFamily,
       );
 
   static Widget tituloMED({
@@ -105,13 +126,17 @@ class Textos {
     int? renglones,
     Color? color,
     double? size,
+    FontWeight? fontWeight,
+    String fontsFamily = FontsFamily.roboto,
   }) =>
       _Base(
-        color: color ?? const Color(0xFFADB0B3),
+        fontWeight: fontWeight,
+        color: color,
         size: size ?? 22,
         text: texto,
         aling: align,
         renglones: renglones,
+        fontsFamily: fontsFamily,
       );
 
   static Widget tituloMAX({
@@ -120,13 +145,17 @@ class Textos {
     int? renglones,
     Color? color,
     double? size,
+    FontWeight? fontWeight,
+    String fontsFamily = FontsFamily.roboto,
   }) =>
       _Base(
-        color: color ?? const Color(0xFFF2BC3F),
-        size: size ?? 24,
+        fontWeight: fontWeight,
+        color: color,
+        size: size ?? 26,
         text: texto,
         aling: align,
         renglones: renglones,
+        fontsFamily: fontsFamily,
       );
 }
 
@@ -136,12 +165,16 @@ class _Base extends StatelessWidget {
   final double? size;
   final TextAlign? aling;
   final int? renglones;
+  final String fontsFamily;
+  final FontWeight? fontWeight;
   const _Base({
-    this.size = 20,
+    this.size = 24,
     required this.text,
     this.aling = TextAlign.left,
     this.color,
     this.renglones,
+    this.fontWeight,
+    required this.fontsFamily,
     Key? key,
   }) : super(key: key);
 
@@ -154,7 +187,9 @@ class _Base extends StatelessWidget {
       style: TextStyle(
         fontSize: size,
         color: color,
-        fontFamily: FontsFamily.roboto,
+        fontFamily: fontsFamily,
+        fontWeight: fontWeight,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:lotto_music/src/helpers/variables_globales.dart';
 import 'package:lotto_music/src/widgets/text.dart';
+
+import '../helpers/globals/assets.dart';
+import '../helpers/globals/screen_size.dart';
 
 class NoSignal extends StatelessWidget {
   const NoSignal({Key? key}) : super(key: key);

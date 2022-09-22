@@ -4,21 +4,11 @@ part of 'shaderpreferences_bloc.dart';
 abstract class ShaderpreferencesEvent {}
 
 class OnChageLocale extends ShaderpreferencesEvent {
-  final Locale idioma;
+  final String idioma;
   OnChageLocale({required this.idioma});
 }
 
 class OnChageTheme extends ShaderpreferencesEvent {
-  final ThemeData themeData;
-  OnChageTheme({required this.themeData});
-}
-
-class OnLoadShaderPreferences extends ShaderpreferencesEvent {
-  final ThemeData themeData;
-  final Locale idioma;
-
-  OnLoadShaderPreferences({
-    required this.idioma,
-    required this.themeData,
-  });
+  final bool isDarkTheme;
+  OnChageTheme({required this.isDarkTheme});
 }

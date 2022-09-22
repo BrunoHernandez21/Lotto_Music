@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lotto_music/src/screens/pagos/planes/planes.dart';
-import 'package:lotto_music/src/screens/pagos/suscribciones/suscribciones.dart';
 
 import 'appbar.dart';
 import 'carrito/carrito.dart';
@@ -13,7 +12,7 @@ class Pagos extends StatelessWidget {
     return SafeArea(
       child: DefaultTabController(
         initialIndex: 0,
-        length: 3,
+        length: 2,
         child: Column(
           children: const [
             AppbarCarrito(),
@@ -30,9 +29,9 @@ class Pagos extends StatelessWidget {
                   Tab(
                     text: 'Paquetes',
                   ),
-                  Tab(
-                    text: 'Suscripciones',
-                  ),
+                  // Tab(
+                  //   text: 'Suscripciones',
+                  // ),
                   Tab(
                     text: 'Carrito',
                   ),
@@ -44,7 +43,7 @@ class Pagos extends StatelessWidget {
                 physics: BouncingScrollPhysics(),
                 children: <Widget>[
                   Planes(),
-                  Suscripciones(),
+                  // Suscripciones(),
                   Carrito(),
                 ],
               ),
