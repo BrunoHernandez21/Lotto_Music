@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../cores/orquestador/orquestador.dart';
+import '../../helpers/globals/assets.dart';
 import '../../helpers/globals/screen_size.dart';
 import '../../models/buy/compra.dart';
 import '../../models/buy/historial_compra.dart';
@@ -93,12 +95,29 @@ class _HistorialComprasState extends State<HistorialCompras> {
       estado?.compras?.forEach((element) {
         lista.add(_Tarjeta(compra: element));
       });
+    } else {
+      lista.add(
+        SizedBox(
+          height: Medidas.size.height * .6,
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                Assets.emptyCart,
+                height: Medidas.size.width * .3,
+                width: Medidas.size.width * .3,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Textos.parrafoMED(texto: "Deslice para actualizar"),
+            ],
+          ),
+        ),
+      );
     }
-    if ((estado?.compras?.length ?? 0) < 2) {
-      lista.add(SizedBox(
-        height: Medidas.size.height * .25,
-      ));
-    }
+
     return lista;
   }
 }

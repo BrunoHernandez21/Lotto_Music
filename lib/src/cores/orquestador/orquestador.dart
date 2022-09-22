@@ -11,6 +11,7 @@ import 'package:lotto_music/src/bloc/youtube/youtube_bloc.dart';
 import 'package:lotto_music/src/bloc/videos_categoria/videos_categoria_bloc.dart';
 import 'package:lotto_music/src/models/event/userevent.dart';
 import 'package:lotto_music/src/models/auth/login_response.dart';
+import 'package:lotto_music/src/models/user/cartera.dart';
 import 'package:lotto_music/src/models/user/tarjetas.dart';
 import 'package:lotto_music/src/models/user/tarjetas_response.dart';
 import 'package:lotto_music/src/models/youtube/youtube.dart';

@@ -105,7 +105,9 @@ class __ListaVideosYTState extends State<_ListaVideosYT> {
         .onLoadRelacionadosYT(context: context, relaionado: widget.videID)
         .then((value) {
       iterable = value;
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
     });
     super.initState();
   }

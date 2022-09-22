@@ -68,8 +68,19 @@ class _Auth {
   }
 
   Future<bool> onLogOut(BuildContext context) async {
+    final userB = BlocProvider.of<UserBloc>(context);
     final acountB = BlocProvider.of<AcountBloc>(context);
+    final carB = BlocProvider.of<CarritoBloc>(context);
+    final carteraB = BlocProvider.of<CarteraBloc>(context);
+    final tarjetasB = BlocProvider.of<TarjetasBloc>(context);
+    final direccionesB = BlocProvider.of<DireccionesBloc>(context);
     acountB.add(OnLogout());
+    carB.add(OnLoadCarrito(itemsCarrito: const []));
+    userB.add(OnLoadUser(user: UserModel()));
+    carteraB.add(OnLoadCartera(cartera: CarteraModel()));
+    tarjetasB.add(OnLoadTarjetas(tarjetas: TarjetasResponse()));
+    direccionesB.add(OnLoadDirecciones(direcciones: DireccionesResponse()));
+
     Orquestador.sistem.saveAuthLocale(AcountState(
       acount: LoginResponse(),
       isLogin: false,

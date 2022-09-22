@@ -1,6 +1,7 @@
 // ignore: unused_import
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'package:lotto_music/src/models/buy/historial_compra.dart';
 
 import '../../helpers/globals/ruts_services.dart';
@@ -76,16 +77,27 @@ class BuyService {
     required int pag,
     required String token,
   }) async {
+    Response resp;
     final urI = Uri.parse("$_listar/$pag/10");
-    final resp = await http.get(
-      urI,
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $token",
-      },
-    );
+    try {
+      resp = await http.get(
+        urI,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token",
+        },
+      );
+    } catch (e) {
+      return HistorialCompraModel(
+        mensjae: "error de comunicacion con el servidor",
+      );
+    }
 
-    return HistorialCompraModel.fromJson(resp.body);
+    try {
+      return HistorialCompraModel.fromJson(resp.body);
+    } catch (e) {
+      return HistorialCompraModel(mensjae: "error de interpretacion");
+    }
   }
 
   static Future<HistorialCompraModel?> historialCancelados({

@@ -106,8 +106,14 @@ class _VerificarCompraState extends State<VerificarCompra> {
                       tarjeta: tarState.tarjetas?.tarjetas?[index].id ?? 0,
                     );
 
-                    // ignore: use_build_context_synchronously
+                    if (!mounted) {
+                      return;
+                    }
                     await Orquestador.shopingcar.onloadCarrito(context);
+                    if (!mounted) {
+                      return;
+                    }
+                    await Orquestador.user.onLoadCartera(context: context);
                     if (!mounted) {
                       return;
                     }

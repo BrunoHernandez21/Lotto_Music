@@ -13,17 +13,18 @@ enum ServerStatus {
 }
 
 class SocketService {
+  // Dart client
+  static final io.Socket socket = io.io(
+      URL.socket,
+      io.OptionBuilder()
+          .setTransports(['websocket']) // for Flutter or Dart VM
+          .enableAutoConnect() // disable auto-connection
+          .build());
+
   static intstate({required BuildContext context, required int userId}) async {
     final blocSt = BlocProvider.of<EstadisticasBloc>(context);
     Orquestador.video.onLoadStadistic(context: context);
 
-    // Dart client
-    io.Socket socket = io.io(
-        URL.socket,
-        io.OptionBuilder()
-            .setTransports(['websocket']) // for Flutter or Dart VM
-            .enableAutoConnect() // disable auto-connection
-            .build());
     socket.onConnect((data) {
       if (userId != 0) {
         socket.emit("onInitLoad", {"usuario_id": userId});
