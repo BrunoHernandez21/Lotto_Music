@@ -139,6 +139,7 @@ class _AdivinaState extends State<Adivina> {
                                       () {
                                         controllerV.text =
                                             st.viewCount.toString();
+                                        controlV = true;
                                       },
                                     );
                                   }
@@ -204,6 +205,7 @@ class _AdivinaState extends State<Adivina> {
                                     setState(() {
                                       controllerL.text =
                                           st.likeCount.toString();
+                                      controlL = true;
                                     });
                                   }
                                 },
@@ -267,6 +269,7 @@ class _AdivinaState extends State<Adivina> {
                                       setState(() {
                                         controllerC.text =
                                             st.commentsCount.toString();
+                                        controlC = true;
                                       });
                                     }
                                   },
@@ -329,6 +332,7 @@ class _AdivinaState extends State<Adivina> {
                                       setState(() {
                                         controllerG.text =
                                             st.savedCount.toString();
+                                        controlG = true;
                                       });
                                     }
                                   },
@@ -391,6 +395,7 @@ class _AdivinaState extends State<Adivina> {
                                       setState(() {
                                         controllerS.text =
                                             st.sharedCount.toString();
+                                        controlS = true;
                                       });
                                     }
                                   },
