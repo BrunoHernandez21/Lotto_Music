@@ -2,15 +2,16 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lotto_music/src/cores/orquestador/orquestador.dart';
 import 'package:lotto_music/src/screens/eventos/video/video_evento.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../../bloc/cartera/cartera_bloc.dart';
 import '../../../bloc/ve_page_controller/videos_event_controller_bloc.dart';
-import '../../../cores/compositor.dart';
+import '../../../helpers/globals/assets.dart';
+import '../../../helpers/globals/screen_size.dart';
 import '../../../helpers/rutinas.dart';
-import '../../../helpers/variables_globales.dart';
-import '../../../models/evento_video.dart';
+import '../../../models/video/evento_video.dart';
 import '../../../widgets/botones.dart';
 import '../../../widgets/text.dart';
 import 'estadisticas_yt.dart';
@@ -142,7 +143,7 @@ class _ListaVideosState extends State<_ListaVideosEvent> {
 
   @override
   void initState() {
-    Compositor.onLoadEventosTemp(context: context).then((value) {
+    Orquestador.video.onLoadEventosTemp(context: context).then((value) {
       iterable = value;
       setState(() {});
     });
@@ -168,7 +169,8 @@ class _ListaVideosState extends State<_ListaVideosEvent> {
           child: GestureDetector(
             child: bodyTarjeta(v),
             onTap: () async {
-              await Compositor.onSlectVideoEvento(context: context, item: v);
+              await Orquestador.video
+                  .onSlectVideoEvento(context: context, item: v);
 
               if (!mounted) {
                 return;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lotto_music/src/screens/perfil/editar_perfil/cartera.dart';
 
 import '../../../widgets/text.dart';
 import '../editar_perfil.dart';
@@ -15,11 +16,8 @@ class AjustesUsuario extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
         centerTitle: true,
         title: Textos.tituloMIN(texto: 'Editar Perfil'),
-        foregroundColor: Colors.black,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -65,7 +63,7 @@ class AjustesUsuario extends StatelessWidget {
                   size: 17,
                 ),
                 onTap: () {
-                  Navigator.of(context).pushNamed(Direccion.routeName);
+                  Navigator.of(context).pushNamed(Cartera.routeName);
                 },
               ),
               const Divider(color: Colors.grey, height: 10),

@@ -11,13 +11,13 @@ Android emulator Android version API 33
 
 TODO: 
 ```
-
-poner fecha de nacimiento                                                       listo
-
+Al cerrar secion remover toda la data                                           // proceso
+agregar la respuesta directamente a la lista existente                          // proceso
+solicitar colores para la app                                                   // espera
+notificaciones de confirmacion de accion                                        // complejo
 ```
-tema blanco poner color negro en textos                                         complejo
-estadisticas y bloc en mostrar detalle de evento y envio de apuesta             complejo
-en numeros usar la separacion de miles                                          listo
+
+
 
 historial de compra (primeto deben hacerse las compras historial de compra)
 

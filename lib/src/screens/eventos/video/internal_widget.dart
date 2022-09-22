@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../models/stadistics_model.dart';
+import '../../../models/video/stadistics_model.dart';
 import '../../../widgets/graficas.dart';
 import '../../../widgets/text.dart';
 

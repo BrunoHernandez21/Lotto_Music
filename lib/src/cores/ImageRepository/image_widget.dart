@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import '../repository.dart';
+import '../localStorage/file_storage.dart';
 import 'image_repository.dart';
 
 class ImageP extends StatelessWidget {
@@ -22,7 +22,7 @@ class ImageP extends StatelessWidget {
 
     if (url.startsWith("temp")) {
       return FutureBuilder<File?>(
-          future: Repository.loadTempImage(url),
+          future: FileRepository.loadTempImage(url),
           initialData: null,
           builder: (context, snap) {
             if (snap.data == null) {

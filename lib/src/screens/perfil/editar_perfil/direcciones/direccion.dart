@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/bloc/direcciones/direcciones_bloc.dart';
-import 'package:lotto_music/src/models/direcciones.dart';
-
-import '../../../../cores/compositor.dart';
-import '../../../../helpers/variables_globales.dart';
-import '../../../../models/direcciones_response.dart';
+import 'package:lotto_music/src/models/user/direcciones.dart';
+import '../../../../cores/orquestador/orquestador.dart';
+import '../../../../helpers/globals/screen_size.dart';
+import '../../../../models/user/direcciones_response.dart';
 import '../../../../widgets/text.dart';
 import 'direcciones_add.dart';
 import 'direcciones_edit.dart';
@@ -17,20 +16,18 @@ class Direccion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-      ),
+      appBar: AppBar(),
       body: BlocBuilder<DireccionesBloc, DireccionesState>(
         builder: (context, state) {
           if (state.direcciones == null) {
-            Compositor.onLoadDirecciones(context);
+            Orquestador.user.onLoadDirecciones(context);
           }
           return Column(
             children: [
               const Cabezera(),
               RefreshIndicator(
                 onRefresh: () async {
-                  Compositor.onLoadDirecciones(context);
+                  Orquestador.user.onLoadDirecciones(context);
                 },
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(
@@ -77,7 +74,7 @@ class _Tarjeta extends StatelessWidget {
           color: Colors.red,
         ),
         onPressed: () {
-          Compositor.onDeleteDirecciones(
+          Orquestador.user.onDeleteDirecciones(
             context: context,
             id: evento.id,
           );

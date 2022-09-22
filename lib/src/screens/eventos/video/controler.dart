@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../../bloc/ve_page_controller/videos_event_controller_bloc.dart';
-import '../../../models/evento_video.dart';
+import '../../../models/video/evento_video.dart';
 import 'adivina.dart';
 import 'estadisticas.dart';
 import 'iterable_video.dart';

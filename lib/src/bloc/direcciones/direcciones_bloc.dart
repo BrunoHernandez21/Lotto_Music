@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:lotto_music/src/models/direcciones.dart';
-import 'package:lotto_music/src/models/direcciones_response.dart';
+import 'package:lotto_music/src/models/user/direcciones.dart';
+import 'package:lotto_music/src/models/user/direcciones_response.dart';
 import 'package:meta/meta.dart';
 
 part 'direcciones_event.dart';

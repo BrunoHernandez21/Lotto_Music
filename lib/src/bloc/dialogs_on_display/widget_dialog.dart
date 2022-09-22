@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/widgets/text.dart';
 
 import '../../../generated/l10n.dart';
-import '../../helpers/variables_globales.dart';
+import '../../helpers/globals/screen_size.dart';
 import 'dialogs_on_display_bloc.dart';
 
 class DialogOnDisplayWidget extends StatelessWidget {

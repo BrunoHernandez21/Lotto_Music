@@ -1,13 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lotto_music/src/cores/compositor.dart';
-import 'package:lotto_music/src/helpers/variables_globales.dart';
-import 'package:lotto_music/src/models/users.dart';
+import 'package:lotto_music/src/models/user/users.dart';
 import 'package:lotto_music/src/widgets/botones.dart';
 import 'package:lotto_music/src/widgets/inputs_text.dart';
 import 'package:lotto_music/src/widgets/text.dart';
 import 'package:flutter/material.dart';
 
 import '../../bloc/user/user_bloc.dart';
+import '../../cores/orquestador/orquestador.dart';
+import '../../helpers/globals/screen_size.dart';
 
 class EditarPerfil extends StatefulWidget {
   static const String routeName = 'editarPerfil';
@@ -45,7 +45,6 @@ class _EditarPerfilState extends State<EditarPerfil> {
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          foregroundColor: Colors.black,
           centerTitle: true,
           title: Textos.tituloMIN(texto: 'Editar Perfil'),
         ),
@@ -154,7 +153,7 @@ class _EditarPerfilState extends State<EditarPerfil> {
                             temp.apellidop = controlApellidoP.text;
                             temp.telefono = controlNumero.text;
                             temp.fechaNacimiento = nacimiento;
-                            Compositor.onUpdateUser(
+                            Orquestador.user.onUpdateUser(
                               context: context,
                               user: temp,
                             );

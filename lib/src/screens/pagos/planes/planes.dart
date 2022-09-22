@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lotto_music/src/cores/compositor.dart';
-import 'package:lotto_music/src/helpers/variables_globales.dart';
 import 'package:lotto_music/src/widgets/botones.dart';
+import 'package:lotto_music/src/widgets/dialogs_alert.dart';
 import 'package:lotto_music/src/widgets/text.dart';
 
 import '../../../bloc/planes/planes_bloc.dart';
-import '../../../models/carrito.dart';
-import '../../../models/plan.dart';
+import '../../../cores/orquestador/orquestador.dart';
+import '../../../helpers/globals/screen_size.dart';
+import '../../../models/carrito/carrito.dart';
+import '../../../models/plan/plan.dart';
 import '../../../widgets/svg_nosignal.dart';
 
 class Planes extends StatelessWidget {
@@ -16,20 +17,20 @@ class Planes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (BlocProvider.of<PlanesBloc>(context).state.planes == null) {
-      Compositor.onLoadPlanes(context);
+      Orquestador.plan.onLoadPlanes(context);
     }
     return BlocBuilder<PlanesBloc, PlanesState>(
       builder: (context, state) {
         if (state.planes == null) {
           return RefreshIndicator(
               onRefresh: () async {
-                Compositor.onLoadPlanes(context);
+                Orquestador.plan.onLoadPlanes(context);
               },
               child: const NoSignal());
         }
         return RefreshIndicator(
           onRefresh: () async {
-            Compositor.onLoadPlanes(context);
+            Orquestador.plan.onLoadPlanes(context);
           },
           child: ListView.builder(
               physics: const BouncingScrollPhysics(),
@@ -89,7 +90,7 @@ class __TarjetaPlanesState extends State<_TarjetaPlanes> {
             height: 30,
           ),
           Textos.parrafoMED(
-            texto: "AproximacionBaja = ${widget.plan.puntos}",
+            texto: "Puntos = ${widget.plan.puntos}",
           ),
           const SizedBox(
             height: 30,
@@ -124,7 +125,7 @@ class __TarjetaPlanesState extends State<_TarjetaPlanes> {
                 text: "Agregar al Carrito",
                 colors: const [Color(0xffff0000), Color(0xffff0000)],
                 onTap: () async {
-                  await Compositor.onAddCarrito(
+                  final resp = await Orquestador.shopingcar.onAddCarrito(
                     context: context,
                     orden: CarritoModel(
                       totalLinea: cantidad * widget.plan.precio,
@@ -133,6 +134,8 @@ class __TarjetaPlanesState extends State<_TarjetaPlanes> {
                       planId: widget.plan.id,
                     ),
                   );
+
+                  DialogAlert.ok(context: context, text: resp ?? "no se pudo");
                 },
               ),
             ),

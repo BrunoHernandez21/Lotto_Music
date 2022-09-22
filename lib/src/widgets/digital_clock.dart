@@ -23,7 +23,8 @@ class DigitalClockState extends State<DigitalClock> {
 }
 
 class DefaultDigitalClock extends StatefulWidget {
-  const DefaultDigitalClock({Key? key}) : super(key: key);
+  final DateTime? fecha;
+  const DefaultDigitalClock({Key? key, this.fecha}) : super(key: key);
 
   @override
   State<DefaultDigitalClock> createState() => _DefaultDigitalClockState();
@@ -35,7 +36,7 @@ class _DefaultDigitalClockState extends State<DefaultDigitalClock> {
   late final Timer a;
   @override
   void initState() {
-    i = DateTime.now();
+    i = widget.fecha ?? DateTime.now();
     a = Timer.periodic(const Duration(seconds: 1), (timer) {
       i = i.add(const Duration(seconds: 1));
       setState(() {});

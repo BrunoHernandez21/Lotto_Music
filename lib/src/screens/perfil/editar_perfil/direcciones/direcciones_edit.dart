@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lotto_music/src/helpers/variables_globales.dart';
 import 'package:lotto_music/src/widgets/botones.dart';
 import 'package:lotto_music/src/widgets/inputs_text.dart';
 
 import '../../../../bloc/direcciones/direcciones_bloc.dart';
-import '../../../../cores/compositor.dart';
-import '../../../../models/direcciones.dart';
+import '../../../../cores/orquestador/orquestador.dart';
+import '../../../../helpers/globals/const.dart';
+import '../../../../helpers/globals/screen_size.dart';
+import '../../../../models/user/direcciones.dart';
 import '../../../../widgets/dialogs_alert.dart';
 import '../../../../widgets/drop_list.dart';
 import '../../../../widgets/text.dart';
@@ -31,8 +32,6 @@ class _DireccionEditState extends State<DireccionEdit> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
-        foregroundColor: Colors.white,
         title: Textos.tituloMED(texto: 'Dirección'),
         centerTitle: true,
       ),
@@ -154,7 +153,7 @@ class _DireccionEditState extends State<DireccionEdit> {
                     id: selected?.id ?? 0,
                     usuarioId: 2,
                   );
-                  if (await Compositor.onUpdateDirecciones(
+                  if (await Orquestador.user.onUpdateDirecciones(
                     context: context,
                     direccion: direct,
                   )) {

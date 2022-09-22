@@ -4,9 +4,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:lotto_music/src/widgets/text.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../../../../bloc/youtube_video/video_bloc.dart';
-import '../../../../cores/compositor.dart';
-import '../../../../helpers/variables_globales.dart';
-import '../../../../models/youtube.dart';
+import '../../../../cores/orquestador/orquestador.dart';
+import '../../../../helpers/globals/assets.dart';
+import '../../../../helpers/globals/screen_size.dart';
+import '../../../../models/youtube/youtube.dart';
 import 'appbar.dart';
 
 class Video extends StatefulWidget {
@@ -100,7 +101,8 @@ class __ListaVideosYTState extends State<_ListaVideosYT> {
 
   @override
   void initState() {
-    Compositor.onLoadRelacionadosYT(context: context, relaionado: widget.videID)
+    Orquestador.youtube
+        .onLoadRelacionadosYT(context: context, relaionado: widget.videID)
         .then((value) {
       iterable = value;
       setState(() {});
@@ -127,7 +129,7 @@ class __ListaVideosYTState extends State<_ListaVideosYT> {
           child: GestureDetector(
             child: bodyTarjeta(v),
             onTap: () async {
-              await Compositor.onSelectYT(context: context, item: v);
+              await Orquestador.youtube.onSelectYT(context: context, item: v);
               if (!mounted) {
                 return;
               }

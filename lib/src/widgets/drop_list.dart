@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/shaderPreferences/shaderpreferences_bloc.dart';
+import '../helpers/globals/const.dart';
 
 class DropListButton extends StatefulWidget {
   final List<String> items;
@@ -28,8 +29,9 @@ class _MyStatefulWidgetState extends State<DropListButton> {
       inputs = drops(widget.items);
       value = widget.init;
     }
-    final themeData =
-        BlocProvider.of<ShaderpreferencesBloc>(context).state.themeData;
+    final themeData = AppThemeData.getTheme(
+      BlocProvider.of<ShaderpreferencesBloc>(context).state.isDarkTheme,
+    );
     return DropdownButton<String>(
       value: value,
       isExpanded: true,

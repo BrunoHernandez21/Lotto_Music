@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:lotto_music/src/models/stadistics_response.dart';
+import 'package:lotto_music/src/models/video/stadistics_response.dart';
 import 'package:meta/meta.dart';
 
 part 'estadisticas_event.dart';

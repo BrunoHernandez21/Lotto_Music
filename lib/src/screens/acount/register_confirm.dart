@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lotto_music/src/screens/admin.dart';
 
-import '../../helpers/variables_globales.dart';
+import '../../helpers/globals/assets.dart';
+import '../../helpers/globals/screen_size.dart';
 import '../../widgets/botones.dart';
 import '../../widgets/text.dart';
 import 'login.dart';
@@ -15,9 +16,7 @@ class RegisterConfirm extends StatelessWidget {
     Medidas.size = MediaQuery.of(context).size;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        foregroundColor: Colors.black,
-      ),
+      appBar: AppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),

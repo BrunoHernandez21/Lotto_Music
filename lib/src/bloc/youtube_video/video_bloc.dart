@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../models/youtube.dart';
+import '../../models/youtube/youtube.dart';
 
 part 'video_event.dart';
 part 'video_state.dart';

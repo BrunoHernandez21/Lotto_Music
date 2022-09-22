@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lotto_music/src/cores/compositor.dart';
+import 'package:lotto_music/src/cores/orquestador/orquestador.dart';
 import 'package:lotto_music/src/screens/acount/register_confirm.dart';
 
+import '../../helpers/globals/assets.dart';
+import '../../helpers/globals/screen_size.dart';
 import '../../helpers/variables_globales.dart';
 import '../../widgets/botones.dart';
 import '../../widgets/inputs_text.dart';
@@ -24,9 +26,7 @@ class Register extends StatelessWidget {
       child: SafeArea(
         child: Scaffold(
           extendBodyBehindAppBar: true,
-          appBar: AppBar(
-            foregroundColor: Colors.black,
-          ),
+          appBar: AppBar(),
           body: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Padding(
@@ -101,7 +101,7 @@ class Register extends StatelessWidget {
                   Botones.degradedTextButtonOrange(
                     text: 'Registrate',
                     onTap: () async {
-                      if (await Compositor.onRegister(
+                      if (await Orquestador.auth.onRegister(
                         context: context,
                         email: email.text,
                         password: password.text,
