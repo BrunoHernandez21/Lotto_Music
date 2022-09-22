@@ -17,8 +17,4 @@ solicitar colores para la app                                                   
 notificaciones de confirmacion de accion                                        // complejo
 ```
 
-
-
-historial de compra (primeto deben hacerse las compras historial de compra)
-
-flutter build appbundle --release
+Se pueden guardar los videos y ponerlos como offline para verlos como playlist    

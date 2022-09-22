@@ -66,9 +66,13 @@ class Rutinas {
       return null;
     }
     winMax.sort();
-    final exit = evProx.firstWhere((element) {
-      return element.acumulado == winMax.last;
-    });
-    return exit;
+    try {
+      final exit = evProx.firstWhere((element) {
+        return element.acumulado == winMax.last;
+      });
+      return exit;
+    } catch (e) {
+      return null;
+    }
   }
 }

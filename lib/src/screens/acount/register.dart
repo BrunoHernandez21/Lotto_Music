@@ -4,7 +4,6 @@ import 'package:lotto_music/src/screens/acount/register_confirm.dart';
 
 import '../../helpers/globals/assets.dart';
 import '../../helpers/globals/screen_size.dart';
-import '../../helpers/variables_globales.dart';
 import '../../widgets/botones.dart';
 import '../../widgets/inputs_text.dart';
 import '../../widgets/text.dart';
@@ -22,7 +21,7 @@ class Register extends StatelessWidget {
   Widget build(BuildContext context) {
     Medidas.size = MediaQuery.of(context).size;
     return Container(
-      color: Colores.background,
+      color: Colors.white,
       child: SafeArea(
         child: Scaffold(
           extendBodyBehindAppBar: true,

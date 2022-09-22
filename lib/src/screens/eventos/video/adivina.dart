@@ -7,6 +7,7 @@ import 'package:lotto_music/src/widgets/dialogs_alert.dart';
 import 'package:lotto_music/src/widgets/inputs_text.dart';
 
 import '../../../bloc/cartera/cartera_bloc.dart';
+import '../../../bloc/stadistics/estadisticas_bloc.dart';
 import '../../../bloc/ve_page_controller/videos_event_controller_bloc.dart';
 import '../../../bloc/video_event/video_event_bloc.dart';
 import '../../../cores/orquestador/orquestador.dart';
@@ -15,6 +16,7 @@ import '../../../helpers/globals/screen_size.dart';
 import '../../../helpers/rutinas.dart';
 import '../../../models/event/userevent.dart';
 import '../../../models/video/evento_video.dart';
+import '../../../models/video/stadistics_model.dart';
 import '../../../widgets/digital_clock.dart';
 import '../../../widgets/text.dart';
 
@@ -50,7 +52,7 @@ class _AdivinaState extends State<Adivina> {
                 width: double.infinity,
               ),
               _CardVideo(v: state.eventoVideo),
-              apuesta(evento: state.eventoVideo, context: context),
+              apuesta(evento: state.eventoVideo),
             ],
           ),
         );
@@ -58,17 +60,35 @@ class _AdivinaState extends State<Adivina> {
     );
   }
 
-  Widget apuesta({required ItemEvent evento, required BuildContext context}) {
+  Widget apuesta({required ItemEvent evento}) {
+    final state = BlocProvider.of<EstadisticasBloc>(context).state;
+
+    StadisticModel st = StadisticModel();
+    final len = state.allStadistics?.stadisticModel?.length;
+
+    for (int i = (len ?? 0) - 1; i >= 0; i--) {
+      if (state.allStadistics?.stadisticModel?[i].videoId == evento.vidid) {
+        st = state.allStadistics?.stadisticModel?[i] ?? StadisticModel();
+        break;
+      }
+    }
+
     return Column(
       children: [
         const SizedBox(
           width: double.infinity,
-          height: 20,
+          height: 10,
         ),
-        Textos.tituloMAX(texto: "Tipo de evento"),
-        Textos.tituloMAX(
+        Textos.tituloMAX(texto: "Participa y Gana"),
+        const SizedBox(
+          height: 10,
+        ),
+        Textos.tituloMED(
             texto:
                 "\$ ${evento.acumulado.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}MXN"),
+        const SizedBox(
+          height: 10,
+        ),
         Align(
           alignment: Alignment.centerLeft,
           child: BlocBuilder<CarteraBloc, CarteraState>(
@@ -83,186 +103,322 @@ class _AdivinaState extends State<Adivina> {
           ),
         ),
         const SizedBox(
-          height: 40,
+          height: 30,
         ),
-        const SizedBox(
-          height: 10,
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Checkbox(
-                value: controlV,
-                fillColor: MaterialStateProperty.all(const Color(0xFF10CA20)),
-                onChanged: (s) {
-                  if (s != null) {
-                    controlV = s;
-                    setState(() {});
-                  }
-                }),
-            SizedBox(
-              width: Medidas.size.width * .6,
-              child: InputsText.box(
-                maxLength: 20,
-                controller: controllerV,
-                labelText: "Vistas",
-                hintText: "0",
-                textAlign: TextAlign.right,
-                textType: TextInputType.number,
-                onChanged: (a) async {
-                  if (a.length >= 14) {
-                    controllerV.text = a.substring(0, 13);
-                  }
-                  if (a.length == 1) {
-                    controlV = true;
-                    setState(() {});
-                  }
-                },
-              ),
-            ),
-          ],
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Checkbox(
-                value: controlL,
-                fillColor: MaterialStateProperty.all(const Color(0xFF10CA20)),
-                onChanged: (s) {
-                  if (s != null) {
-                    controlL = s;
-                    setState(() {});
-                  }
-                }),
-            SizedBox(
-              width: Medidas.size.width * .6,
-              child: InputsText.box(
-                maxLength: 20,
-                controller: controllerL,
-                labelText: "Me gusta",
-                hintText: "0",
-                textAlign: TextAlign.right,
-                textType: TextInputType.number,
-                onChanged: (a) {
-                  if (a.length >= 14) {
-                    controllerL.text = a.substring(0, 13);
-                  }
-                  if (a.length == 1) {
-                    controlL = true;
-                    setState(() {});
-                  }
-                },
-              ),
-            ),
-          ],
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Checkbox(
-                value: controlC,
-                fillColor: MaterialStateProperty.all(const Color(0xFF10CA20)),
-                onChanged: (s) {
-                  if (s != null) {
-                    controlC = s;
-                    setState(() {});
-                  }
-                }),
-            SizedBox(
-              width: Medidas.size.width * .6,
-              child: InputsText.box(
-                maxLength: 20,
-                controller: controllerC,
-                labelText: "Comentarios",
-                hintText: "0",
-                textAlign: TextAlign.right,
-                textType: TextInputType.number,
-                onChanged: (a) {
-                  if (a.length >= 14) {
-                    controllerC.text = a.substring(0, 13);
-                  }
-                  if (a.length == 1) {
-                    controlC = true;
-                    setState(() {});
-                  }
-                },
-              ),
-            ),
-          ],
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Checkbox(
-                value: controlG,
-                fillColor: MaterialStateProperty.all(const Color(0xFF10CA20)),
-                onChanged: (s) {
-                  if (s != null) {
-                    controlG = s;
-                    setState(() {});
-                  }
-                }),
-            SizedBox(
-              width: Medidas.size.width * .6,
-              child: InputsText.box(
-                maxLength: 20,
-                controller: controllerG,
-                labelText: "Guardados",
-                hintText: "0",
-                textAlign: TextAlign.right,
-                textType: TextInputType.number,
-                onChanged: (a) {
-                  if (a.length >= 14) {
-                    controllerG.text = a.substring(0, 13);
-                  }
-                  if (a.length == 1) {
-                    controlG = true;
-                    setState(() {});
-                  }
-                },
-              ),
-            ),
-          ],
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Checkbox(
-                value: controlS,
-                fillColor: MaterialStateProperty.all(const Color(0xFF10CA20)),
-                onChanged: (s) {
-                  if (s != null) {
-                    controlS = s;
-                    setState(() {});
-                  }
-                }),
-            SizedBox(
-              width: Medidas.size.width * .6,
-              child: InputsText.box(
-                maxLength: 20,
-                controller: controllerS,
-                labelText: "Compartidos",
-                hintText: "0",
-                textAlign: TextAlign.right,
-                textType: TextInputType.number,
-                onChanged: (a) {
-                  if (a.length >= 14) {
-                    controllerS.text = a.substring(0, 13);
-                  }
-                  if (a.length == 1) {
-                    controlS = true;
-                    setState(() {});
-                  }
-                },
-              ),
-            ),
-          ],
-        ),
+        st.viewCount != 0
+            ? Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Checkbox(
+                      value: controlV,
+                      fillColor:
+                          MaterialStateProperty.all(const Color(0xFF10CA20)),
+                      onChanged: (s) {
+                        if (s != null) {
+                          controlV = s;
+                          setState(() {});
+                        }
+                      }),
+                  SizedBox(
+                    width: Medidas.size.width * .6,
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: Medidas.size.width * .46,
+                              child: Textos.parrafoMED(
+                                  texto: "vistas     ${st.viewCount}"),
+                            ),
+                            IconButton(
+                                onPressed: () {
+                                  if (mounted) {
+                                    setState(
+                                      () {
+                                        controllerV.text =
+                                            st.viewCount.toString();
+                                      },
+                                    );
+                                  }
+                                },
+                                icon: const Icon(Icons.paste)),
+                          ],
+                        ),
+                        InputsText.box(
+                          maxLength: 20,
+                          controller: controllerV,
+                          labelText: "Vistas",
+                          hintText: "0",
+                          textAlign: TextAlign.right,
+                          textType: TextInputType.number,
+                          onChanged: (a) async {
+                            if (a.length >= 14) {
+                              controllerV.text = a.substring(0, 13);
+                            }
+                            if (a.length == 1) {
+                              controlV = true;
+                              setState(() {});
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              )
+            : const SizedBox(),
+        st.likeCount != 0
+            ? Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Checkbox(
+                    value: controlL,
+                    fillColor:
+                        MaterialStateProperty.all(const Color(0xFF10CA20)),
+                    onChanged: (s) {
+                      if (s != null) {
+                        controlL = s;
+                        setState(() {});
+                      }
+                    },
+                  ),
+                  SizedBox(
+                    width: Medidas.size.width * .6,
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: Medidas.size.width * .46,
+                              child: Textos.parrafoMED(
+                                texto: "Me gusta    ${st.likeCount}",
+                              ),
+                            ),
+                            IconButton(
+                                onPressed: () {
+                                  if (mounted) {
+                                    setState(() {
+                                      controllerL.text =
+                                          st.likeCount.toString();
+                                    });
+                                  }
+                                },
+                                icon: const Icon(Icons.paste))
+                          ],
+                        ),
+                        InputsText.box(
+                          maxLength: 20,
+                          controller: controllerL,
+                          labelText: "Me gusta",
+                          hintText: "0",
+                          textAlign: TextAlign.right,
+                          textType: TextInputType.number,
+                          onChanged: (a) {
+                            if (a.length >= 14) {
+                              controllerL.text = a.substring(0, 13);
+                            }
+                            if (a.length == 1) {
+                              controlL = true;
+                              setState(() {});
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              )
+            : const SizedBox(),
+        st.commentsCount != 0
+            ? Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Checkbox(
+                      value: controlC,
+                      fillColor:
+                          MaterialStateProperty.all(const Color(0xFF10CA20)),
+                      onChanged: (s) {
+                        if (s != null) {
+                          controlC = s;
+                          setState(() {});
+                        }
+                      }),
+                  SizedBox(
+                    width: Medidas.size.width * .6,
+                    child: Column(
+                      children: [
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: Medidas.size.width * .46,
+                                child: Textos.parrafoMED(
+                                  texto: "Comentarios ${st.commentsCount}",
+                                ),
+                              ),
+                              IconButton(
+                                  onPressed: () {
+                                    if (mounted) {
+                                      setState(() {
+                                        controllerC.text =
+                                            st.commentsCount.toString();
+                                      });
+                                    }
+                                  },
+                                  icon: const Icon(Icons.paste))
+                            ]),
+                        InputsText.box(
+                          maxLength: 20,
+                          controller: controllerC,
+                          labelText: "Comentarios",
+                          hintText: "0",
+                          textAlign: TextAlign.right,
+                          textType: TextInputType.number,
+                          onChanged: (a) {
+                            if (a.length >= 14) {
+                              controllerC.text = a.substring(0, 13);
+                            }
+                            if (a.length == 1) {
+                              controlC = true;
+                              setState(() {});
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              )
+            : const SizedBox(),
+        st.savedCount != 0
+            ? Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Checkbox(
+                      value: controlG,
+                      fillColor:
+                          MaterialStateProperty.all(const Color(0xFF10CA20)),
+                      onChanged: (s) {
+                        if (s != null) {
+                          controlG = s;
+                          setState(() {});
+                        }
+                      }),
+                  SizedBox(
+                    width: Medidas.size.width * .6,
+                    child: Column(
+                      children: [
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: Medidas.size.width * .46,
+                                child: Textos.parrafoMED(
+                                  texto: "Guardados ${st.savedCount}",
+                                ),
+                              ),
+                              IconButton(
+                                  onPressed: () {
+                                    if (mounted) {
+                                      setState(() {
+                                        controllerG.text =
+                                            st.savedCount.toString();
+                                      });
+                                    }
+                                  },
+                                  icon: const Icon(Icons.paste))
+                            ]),
+                        InputsText.box(
+                          maxLength: 20,
+                          controller: controllerG,
+                          labelText: "Guardados",
+                          hintText: "0",
+                          textAlign: TextAlign.right,
+                          textType: TextInputType.number,
+                          onChanged: (a) {
+                            if (a.length >= 14) {
+                              controllerG.text = a.substring(0, 13);
+                            }
+                            if (a.length == 1) {
+                              controlG = true;
+                              setState(() {});
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              )
+            : const SizedBox(),
+        st.sharedCount != 0
+            ? Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Checkbox(
+                      value: controlS,
+                      fillColor:
+                          MaterialStateProperty.all(const Color(0xFF10CA20)),
+                      onChanged: (s) {
+                        if (s != null) {
+                          controlS = s;
+                          setState(() {});
+                        }
+                      }),
+                  SizedBox(
+                    width: Medidas.size.width * .6,
+                    child: Column(
+                      children: [
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: Medidas.size.width * .46,
+                                child: Textos.parrafoMED(
+                                  texto: "Compartidos ${st.sharedCount}",
+                                ),
+                              ),
+                              IconButton(
+                                  onPressed: () {
+                                    if (mounted) {
+                                      setState(() {
+                                        controllerS.text =
+                                            st.sharedCount.toString();
+                                      });
+                                    }
+                                  },
+                                  icon: const Icon(Icons.paste))
+                            ]),
+                        InputsText.box(
+                          maxLength: 20,
+                          controller: controllerS,
+                          labelText: "Compartidos",
+                          hintText: "0",
+                          textAlign: TextAlign.right,
+                          textType: TextInputType.number,
+                          onChanged: (a) {
+                            if (a.length >= 14) {
+                              controllerS.text = a.substring(0, 13);
+                            }
+                            if (a.length == 1) {
+                              controlS = true;
+                              setState(() {});
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              )
+            : const SizedBox(),
         const SizedBox(
           height: 30,
         ),
@@ -278,7 +434,7 @@ class _AdivinaState extends State<Adivina> {
             onTap: () async {
               final cartera =
                   BlocProvider.of<CarteraBloc>(context).state.cartera;
-
+              //////////////////////////////
               if ((cartera.puntos) <= 0) {
                 await DialogAlert.ok(
                   context: context,
@@ -289,20 +445,70 @@ class _AdivinaState extends State<Adivina> {
               final apuesta = UserEventModel(
                 eventoId: evento.id ?? 0,
               );
+              ////////////////////////// Control view
               if (controlV) {
                 apuesta.viewsCount = int.tryParse(controllerV.text) ?? 0;
+                if ((apuesta.viewsCount ?? 0) < (st.viewCount ?? 0)) {
+                  DialogAlert.ok(
+                    context: context,
+                    text: "Las \"vistas\" son menos que las actuales",
+                  );
+                  return;
+                }
+              } else {
+                apuesta.viewsCount = null;
               }
+              ////////////////////////// Control like
               if (controlL) {
                 apuesta.likeCount = int.tryParse(controllerL.text) ?? 0;
+                if ((apuesta.likeCount ?? 0) < (st.likeCount ?? 0)) {
+                  DialogAlert.ok(
+                    context: context,
+                    text: "Los \"me gusta\" son menos que las actuales",
+                  );
+                  return;
+                }
+              } else {
+                apuesta.likeCount = null;
               }
+              ////////////////////////// Control coments
               if (controlC) {
                 apuesta.commentsCount = int.tryParse(controllerC.text) ?? 0;
+                if ((apuesta.commentsCount ?? 0) < (st.commentsCount ?? 0)) {
+                  DialogAlert.ok(
+                    context: context,
+                    text: "Los \"comentarios\" son menos que las actuales",
+                  );
+                  return;
+                }
+              } else {
+                apuesta.commentsCount = null;
               }
+              ////////////////////////// Control shared
               if (controlS) {
                 apuesta.savedCount = int.tryParse(controllerG.text) ?? 0;
+                if ((apuesta.savedCount ?? 0) < (st.savedCount ?? 0)) {
+                  DialogAlert.ok(
+                    context: context,
+                    text: "Los \"guardado\" son menos que las actuales",
+                  );
+                  return;
+                }
+              } else {
+                apuesta.savedCount = null;
               }
+              ////////////////////////// Control saved
               if (controlS) {
                 apuesta.sharedCount = int.tryParse(controllerS.text) ?? 0;
+                if ((apuesta.sharedCount ?? 0) < (st.sharedCount ?? 0)) {
+                  DialogAlert.ok(
+                    context: context,
+                    text: "Las \"compartido\" son menos que las actuales",
+                  );
+                  return;
+                }
+              } else {
+                apuesta.sharedCount = null;
               }
 
               final resp = await Orquestador.userEvent.onUserEventCreate(
@@ -380,11 +586,11 @@ class _CardVideo extends StatelessWidget {
             ),
           ],
         ),
-        Textos.tituloMAX(
+        Textos.tituloMED(
           texto: v.titulo ?? "",
           renglones: 2,
         ),
-        Textos.tituloMED(
+        Textos.tituloMIN(
           texto: v.artista ?? "",
           renglones: 1,
         ),
@@ -393,10 +599,10 @@ class _CardVideo extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Textos.tituloMED(
+              Textos.parrafoMAX(
                 texto: "Hora ${v.fechahoraevento.toString().substring(11, 16)}",
               ),
-              Textos.tituloMED(
+              Textos.tituloMIN(
                 texto: Rutinas.comprobador(v.fechahoraevento),
               ),
             ],

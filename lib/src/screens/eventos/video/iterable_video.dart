@@ -8,6 +8,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../../bloc/cartera/cartera_bloc.dart';
 import '../../../bloc/ve_page_controller/videos_event_controller_bloc.dart';
+import '../../../bloc/videos_event/videos_event_bloc.dart';
 import '../../../helpers/globals/assets.dart';
 import '../../../helpers/globals/screen_size.dart';
 import '../../../helpers/rutinas.dart';
@@ -135,31 +136,37 @@ class _ListaVideosEvent extends StatefulWidget {
   const _ListaVideosEvent({Key? key}) : super(key: key);
 
   @override
-  State<_ListaVideosEvent> createState() => _ListaVideosState();
+  State<_ListaVideosEvent> createState() => _ListVideosPaginacionState();
 }
 
-class _ListaVideosState extends State<_ListaVideosEvent> {
-  List<ItemEvent>? iterable;
-
+class _ListVideosPaginacionState extends State<_ListaVideosEvent> {
+  bool isLoad = false;
   @override
   void initState() {
-    Orquestador.video.onLoadEventosTemp(context: context).then((value) {
-      iterable = value;
-      setState(() {});
-    });
     super.initState();
+    if (BlocProvider.of<VideosEventBloc>(context).state.listado == null) {
+      Orquestador.video.onLoadInitVideosEventos(context);
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: cuerpo(context),
+    return BlocBuilder<VideosEventBloc, VideosEventState>(
+      builder: (context, state) {
+        return Column(
+          children: cuerpo(context, state.listado ?? []),
+        );
+      },
     );
   }
 
-  List<Widget> cuerpo(BuildContext context) {
+  List<Widget> cuerpo(BuildContext context, List<ItemEvent> items) {
     List<Widget> a = [];
-    final List<ItemEvent> items = iterable ?? [];
 
     for (var v in items) {
       a.add(Padding(

@@ -95,7 +95,7 @@ class _TarjetasEditState extends State<TarjetasEdit> {
                               MyCheckBoxTitle(
                                 value: isDefaul,
                                 title:
-                                    Textos.parrafoMED(texto: "Predetarminada"),
+                                    Textos.parrafoMIN(texto: "Predeterminada"),
                                 onChnange: (a) {
                                   isDefaul = a;
                                 },
