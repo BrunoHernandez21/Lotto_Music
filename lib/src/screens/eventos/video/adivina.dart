@@ -130,7 +130,7 @@ class _AdivinaState extends State<Adivina> {
                             SizedBox(
                               width: Medidas.size.width * .46,
                               child: Textos.parrafoMED(
-                                  texto: "vistas     ${st.viewCount}"),
+                                  texto: "vistas     ${st.viewCount ?? 0}"),
                             ),
                             IconButton(
                                 onPressed: () {
@@ -139,6 +139,7 @@ class _AdivinaState extends State<Adivina> {
                                       () {
                                         controllerV.text =
                                             st.viewCount.toString();
+                                        controlV = true;
                                       },
                                     );
                                   }
@@ -195,7 +196,7 @@ class _AdivinaState extends State<Adivina> {
                             SizedBox(
                               width: Medidas.size.width * .46,
                               child: Textos.parrafoMED(
-                                texto: "Me gusta    ${st.likeCount}",
+                                texto: "Me gusta    ${st.likeCount ?? 0}",
                               ),
                             ),
                             IconButton(
@@ -204,6 +205,7 @@ class _AdivinaState extends State<Adivina> {
                                     setState(() {
                                       controllerL.text =
                                           st.likeCount.toString();
+                                      controlL = true;
                                     });
                                   }
                                 },
@@ -258,7 +260,7 @@ class _AdivinaState extends State<Adivina> {
                               SizedBox(
                                 width: Medidas.size.width * .46,
                                 child: Textos.parrafoMED(
-                                  texto: "Comentarios ${st.commentsCount}",
+                                  texto: "Comentarios ${st.commentsCount ?? 0}",
                                 ),
                               ),
                               IconButton(
@@ -267,6 +269,7 @@ class _AdivinaState extends State<Adivina> {
                                       setState(() {
                                         controllerC.text =
                                             st.commentsCount.toString();
+                                        controlC = true;
                                       });
                                     }
                                   },
@@ -320,7 +323,7 @@ class _AdivinaState extends State<Adivina> {
                               SizedBox(
                                 width: Medidas.size.width * .46,
                                 child: Textos.parrafoMED(
-                                  texto: "Guardados ${st.savedCount}",
+                                  texto: "Guardados ${st.savedCount ?? 0}",
                                 ),
                               ),
                               IconButton(
@@ -329,6 +332,7 @@ class _AdivinaState extends State<Adivina> {
                                       setState(() {
                                         controllerG.text =
                                             st.savedCount.toString();
+                                        controlG = true;
                                       });
                                     }
                                   },
@@ -382,7 +386,7 @@ class _AdivinaState extends State<Adivina> {
                               SizedBox(
                                 width: Medidas.size.width * .46,
                                 child: Textos.parrafoMED(
-                                  texto: "Compartidos ${st.sharedCount}",
+                                  texto: "Compartidos ${st.sharedCount ?? 0}",
                                 ),
                               ),
                               IconButton(
@@ -391,6 +395,7 @@ class _AdivinaState extends State<Adivina> {
                                       setState(() {
                                         controllerS.text =
                                             st.sharedCount.toString();
+                                        controlS = true;
                                       });
                                     }
                                   },

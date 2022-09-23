@@ -4,7 +4,6 @@ import 'package:lotto_music/src/models/video/stadistics_response.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 import '../../bloc/stadistics/estadisticas_bloc.dart';
-import '../../cores/orquestador/orquestador.dart';
 import '../../helpers/globals/ruts_services.dart';
 
 enum ServerStatus {
@@ -23,7 +22,6 @@ class SocketService {
 
   static intstate({required BuildContext context, required int userId}) async {
     final blocSt = BlocProvider.of<EstadisticasBloc>(context);
-    Orquestador.video.onLoadStadistic(context: context);
 
     socket.onConnect((data) {
       if (userId != 0) {

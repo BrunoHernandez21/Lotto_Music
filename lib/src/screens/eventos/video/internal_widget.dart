@@ -166,7 +166,7 @@ class TableStadistics extends StatelessWidget {
             child: Textos.parrafoMAX(
               color: Colors.white,
               renglones: 1,
-              texto: el.fecha.toString().substring(10, 16),
+              texto: el.fecha?.toString().substring(10, 16) ?? "00:00",
             ),
           ),
           Container(
@@ -175,7 +175,7 @@ class TableStadistics extends StatelessWidget {
             child: Textos.parrafoMAX(
               color: Colors.white,
               renglones: 1,
-              texto: el.viewCount.toString(),
+              texto: el.viewCount?.toString() ?? "0",
             ),
           ),
           Container(
@@ -184,7 +184,7 @@ class TableStadistics extends StatelessWidget {
             child: Textos.parrafoMAX(
               color: Colors.white,
               renglones: 1,
-              texto: el.commentsCount.toString(),
+              texto: el.commentsCount?.toString() ?? "0",
             ),
           ),
           Container(
@@ -193,7 +193,7 @@ class TableStadistics extends StatelessWidget {
             child: Textos.parrafoMAX(
               color: Colors.white,
               renglones: 1,
-              texto: el.likeCount.toString(),
+              texto: el.likeCount?.toString() ?? "0",
             ),
           ),
           Container(
@@ -202,7 +202,7 @@ class TableStadistics extends StatelessWidget {
             child: Textos.parrafoMAX(
               color: Colors.white,
               renglones: 1,
-              texto: el.sharedCount.toString(),
+              texto: el.sharedCount?.toString() ?? "0",
             ),
           ),
           Container(
@@ -211,7 +211,7 @@ class TableStadistics extends StatelessWidget {
             child: Textos.parrafoMAX(
               color: Colors.white,
               renglones: 1,
-              texto: el.savedCount.toString(),
+              texto: el.savedCount?.toString() ?? "0",
             ),
           ),
         ]),
