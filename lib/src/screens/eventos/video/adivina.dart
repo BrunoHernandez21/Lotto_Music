@@ -464,7 +464,7 @@ class _AdivinaState extends State<Adivina> {
               ////////////////////////// Control view
               if (controlV) {
                 apuesta.viewsCount = int.tryParse(controllerV.text) ?? 0;
-                if ((apuesta.viewsCount ?? 0) < (st.viewCount ?? 0)) {
+                if ((apuesta.viewsCount ?? 0) <= (st.viewCount ?? 0)) {
                   DialogAlert.ok(
                     context: context,
                     text: "Las \"vistas\" son menos que las actuales",
@@ -477,7 +477,7 @@ class _AdivinaState extends State<Adivina> {
               ////////////////////////// Control like
               if (controlL) {
                 apuesta.likeCount = int.tryParse(controllerL.text) ?? 0;
-                if ((apuesta.likeCount ?? 0) < (st.likeCount ?? 0)) {
+                if ((apuesta.likeCount ?? 0) <= (st.likeCount ?? 0)) {
                   DialogAlert.ok(
                     context: context,
                     text: "Los \"me gusta\" son menos que las actuales",
@@ -490,7 +490,7 @@ class _AdivinaState extends State<Adivina> {
               ////////////////////////// Control coments
               if (controlC) {
                 apuesta.commentsCount = int.tryParse(controllerC.text) ?? 0;
-                if ((apuesta.commentsCount ?? 0) < (st.commentsCount ?? 0)) {
+                if ((apuesta.commentsCount ?? 0) <= (st.commentsCount ?? 0)) {
                   DialogAlert.ok(
                     context: context,
                     text: "Los \"comentarios\" son menos que las actuales",
@@ -503,7 +503,7 @@ class _AdivinaState extends State<Adivina> {
               ////////////////////////// Control shared
               if (controlS) {
                 apuesta.savedCount = int.tryParse(controllerG.text) ?? 0;
-                if ((apuesta.savedCount ?? 0) < (st.savedCount ?? 0)) {
+                if ((apuesta.savedCount ?? 0) <= (st.savedCount ?? 0)) {
                   DialogAlert.ok(
                     context: context,
                     text: "Los \"guardado\" son menos que las actuales",
@@ -516,7 +516,7 @@ class _AdivinaState extends State<Adivina> {
               ////////////////////////// Control saved
               if (controlS) {
                 apuesta.sharedCount = int.tryParse(controllerS.text) ?? 0;
-                if ((apuesta.sharedCount ?? 0) < (st.sharedCount ?? 0)) {
+                if ((apuesta.sharedCount ?? 0) <= (st.sharedCount ?? 0)) {
                   DialogAlert.ok(
                     context: context,
                     text: "Las \"compartido\" son menos que las actuales",
