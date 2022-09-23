@@ -437,6 +437,17 @@ class _AdivinaState extends State<Adivina> {
               const Color.fromARGB(255, 69, 27, 143)
             ],
             onTap: () async {
+              if (!controlV &&
+                  !controlL &&
+                  !controlC &&
+                  !controlG &&
+                  !controlS) {
+                DialogAlert.ok(
+                  context: context,
+                  text: "La apuesta no puede ser vacia",
+                );
+                return;
+              }
               final cartera =
                   BlocProvider.of<CarteraBloc>(context).state.cartera;
               //////////////////////////////
