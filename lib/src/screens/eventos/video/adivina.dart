@@ -62,15 +62,22 @@ class _AdivinaState extends State<Adivina> {
 
   Widget apuesta({required ItemEvent evento}) {
     final state = BlocProvider.of<EstadisticasBloc>(context).state;
-
     StadisticModel st = StadisticModel();
-    final len = state.allStadistics?.stadisticModel?.length;
-
-    for (int i = (len ?? 0) - 1; i >= 0; i--) {
-      if (state.allStadistics?.stadisticModel?[i].videoId == evento.vidid) {
-        st = state.allStadistics?.stadisticModel?[i] ?? StadisticModel();
-        break;
-      }
+    final List<StadisticModel> estadisticas = [];
+    state.allStadistics?.stadisticModel?.forEach(
+      ((element) {
+        if (element.videoId == evento.vidid) {
+          estadisticas.add(element);
+        }
+      }),
+    );
+    estadisticas.sort(
+      (a, b) {
+        return (a.fecha ?? DateTime(2000)).compareTo(b.fecha ?? DateTime(2000));
+      },
+    );
+    if (estadisticas.isNotEmpty) {
+      st = estadisticas.last;
     }
 
     return Column(

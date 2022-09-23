@@ -19,23 +19,33 @@ class Estadisticas extends StatelessWidget {
         builder: (context, stEvent) {
           return BlocBuilder<EstadisticasBloc, EstadisticasState>(
             builder: (context, stEst) {
+              final List<StadisticModel> estadisticas = [];
+              stEst.allStadistics?.stadisticModel?.forEach(
+                ((element) {
+                  if (element.videoId == stEvent.eventoVideo.vidid) {
+                    estadisticas.add(element);
+                  }
+                }),
+              );
+              estadisticas.sort(
+                (a, b) {
+                  return (a.fecha ?? DateTime(2000))
+                      .compareTo(b.fecha ?? DateTime(2000));
+                },
+              );
               final List<int> view = [];
               final List<int> like = [];
               final List<int> coments = [];
               final List<int> shared = [];
               final List<int> save = [];
               final List<DateTime?> date = [];
-              List<StadisticModel> estadisticas = [];
-              stEst.allStadistics?.stadisticModel?.forEach(((element) {
-                if (element.videoId == stEvent.eventoVideo.vidid) {
-                  view.add(element.viewCount ?? 0);
-                  like.add(element.likeCount ?? 0);
-                  coments.add(element.commentsCount ?? 0);
-                  shared.add(element.sharedCount ?? 0);
-                  save.add(element.savedCount ?? 0);
-                  date.add(element.fecha);
-                  estadisticas.add(element);
-                }
+              estadisticas.forEach(((st) {
+                view.add(st.viewCount ?? 0);
+                like.add(st.likeCount ?? 0);
+                coments.add(st.commentsCount ?? 0);
+                shared.add(st.sharedCount ?? 0);
+                save.add(st.savedCount ?? 0);
+                date.add(st.fecha);
               }));
               return Column(
                 children: [
