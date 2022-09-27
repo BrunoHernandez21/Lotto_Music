@@ -50,8 +50,13 @@ class StadisticModel {
         sharedCount: sharedCount ?? this.sharedCount,
       );
 
-  factory StadisticModel.fromJson(String str) =>
-      StadisticModel.fromMap(json.decode(str));
+  factory StadisticModel.fromJson(String str) {
+    try {
+      return StadisticModel.fromMap(json.decode(str));
+    } catch (e) {
+      return StadisticModel();
+    }
+  }
 
   String toJson() => json.encode(toMap());
 

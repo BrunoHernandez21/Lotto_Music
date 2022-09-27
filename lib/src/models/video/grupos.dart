@@ -22,8 +22,13 @@ class GruposModel {
         mensaje: mensaje ?? this.mensaje,
       );
 
-  factory GruposModel.fromJson(String str) =>
-      GruposModel.fromMap(json.decode(str));
+  factory GruposModel.fromJson(String str) {
+    try {
+      return GruposModel.fromMap(json.decode(str));
+    } catch (e) {
+      return GruposModel(mensaje: "mensaje incomprensible");
+    }
+  }
 
   String toJson() => json.encode(toMap());
 

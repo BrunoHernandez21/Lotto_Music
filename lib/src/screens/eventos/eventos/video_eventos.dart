@@ -53,7 +53,10 @@ class VideosEventos extends StatelessWidget {
           child: SizedBox(
             width: Medidas.size.width * .2,
             child: Botones.degradedButton(
-              body: const Icon(Icons.history),
+              body: const Icon(
+                Icons.history_sharp,
+                size: 30,
+              ),
               colors: const [Color(0xffFFBBBB), Color(0xffA9F1DF)],
               onTap: () {
                 if (BlocProvider.of<AcountBloc>(context).state.isLogin ==
@@ -81,7 +84,10 @@ class VideosEventos extends StatelessWidget {
                       return Textos.tituloMED(
                           texto: "-- -- : -- --", color: Colors.black);
                     }
-                    return const DefaultDigitalClock();
+                    final a = snap.data;
+                    return DefaultDigitalClock(
+                      fecha: a?.toLocal() ?? DateTime.now(),
+                    );
                   },
                 ),
                 colors: const [Color(0xffA9F1DF), Color(0xffA9F1DF)],
@@ -97,7 +103,7 @@ class VideosEventos extends StatelessWidget {
           child: SizedBox(
             width: Medidas.size.width * .2,
             child: Botones.degradedButton(
-                body: const Icon(Icons.analytics),
+                body: const Icon(Icons.emoji_events),
                 colors: const [Color(0xffA9F1DF), Color(0xffFFBBBB)],
                 onTap: () {
                   if (BlocProvider.of<AcountBloc>(context).state.isLogin ==
@@ -180,8 +186,8 @@ class _ListVideosPaginacionState extends State<ListVideosPaginacion> {
                 },
                 itemBuilder: (context, i) {
                   return FadeInLeft(
-                      delay: Duration(
-                        milliseconds: (100 * i) > 500 ? 500 : 100 * i,
+                      delay: const Duration(
+                        milliseconds: 200,
                       ),
                       child: bodyTarjeta(state.listado![i]));
                 }));
@@ -225,10 +231,10 @@ class _ListVideosPaginacionState extends State<ListVideosPaginacion> {
                     const Expanded(child: SizedBox()),
                     Textos.parrafoMED(
                       texto:
-                          "Hora ${v.fechahoraevento.toString().substring(11, 16)}",
+                          "Hora ${v.fechahoraEvento?.toLocal().toString().substring(11, 16) ?? "00:00"}",
                     ),
                     Textos.parrafoMED(
-                      texto: Rutinas.comprobador(v.fechahoraevento),
+                      texto: Rutinas.comprobador(v.fechahoraEvento),
                     ),
                   ],
                 ),

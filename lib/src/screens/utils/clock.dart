@@ -57,7 +57,7 @@ class Clock extends StatelessWidget {
                       height: 15,
                     ),
                     _ClockController(
-                        toEvent: select?.fechahoraevento?.minute ?? 0),
+                        toEvent: select?.fechahoraEvento?.minute ?? 0),
                     const SizedBox(height: 15),
                     Textos.tituloMAX(
                         texto:

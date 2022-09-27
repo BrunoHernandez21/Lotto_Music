@@ -138,7 +138,9 @@ class _ListVideosPaginacionState extends State<_ListVideosPaginacion> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Textos.parrafoMED(
-                          texto: v.fechahoraevento.toString().substring(11, 16))
+                          texto:
+                              v.fechahoraEvento?.toString().substring(11, 16) ??
+                                  "")
                     ],
                   )
                 ],

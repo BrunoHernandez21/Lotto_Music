@@ -24,8 +24,13 @@ class TarjetasResponse {
         tarjetas: tarjetas ?? this.tarjetas,
       );
 
-  factory TarjetasResponse.fromJson(String str) =>
-      TarjetasResponse.fromMap(json.decode(str));
+  factory TarjetasResponse.fromJson(String str) {
+    try {
+      return TarjetasResponse.fromMap(json.decode(str));
+    } catch (e) {
+      return TarjetasResponse(mensaje: "mensaje incomprensible");
+    }
+  }
 
   String toJson() => json.encode(toMap());
 

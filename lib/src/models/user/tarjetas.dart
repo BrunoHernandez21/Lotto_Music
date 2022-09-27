@@ -53,8 +53,13 @@ class TarjetaModel {
         mensaje: mensaje ?? this.mensaje,
       );
 
-  factory TarjetaModel.fromJson(String str) =>
-      TarjetaModel.fromMap(json.decode(str));
+  factory TarjetaModel.fromJson(String str) {
+    try {
+      return TarjetaModel.fromMap(json.decode(str));
+    } catch (e) {
+      return TarjetaModel(mensaje: "mensaje incomprensible");
+    }
+  }
 
   String toJson() => json.encode(toMap());
 

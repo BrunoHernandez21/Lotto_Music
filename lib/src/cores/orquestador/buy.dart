@@ -8,7 +8,7 @@ class _Buy {
       token: acountB.state.acount.accessToken,
       tarjeta: tarjeta,
     );
-    return resp ?? "error";
+    return resp;
   }
 
   /////// historial de compras

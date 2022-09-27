@@ -54,8 +54,13 @@ class CarritoModel {
           usuarioId: usuarioId ?? this.usuarioId,
           mensaje: mensaje ?? this.mensaje);
 
-  factory CarritoModel.fromJson(String str) =>
-      CarritoModel.fromMap(json.decode(str));
+  factory CarritoModel.fromJson(String str) {
+    try {
+      return CarritoModel.fromMap(json.decode(str));
+    } catch (e) {
+      return CarritoModel();
+    }
+  }
 
   String toJson() => json.encode(toMap());
 

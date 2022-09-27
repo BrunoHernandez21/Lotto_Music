@@ -13,27 +13,19 @@ class _Auth {
       password: password.trim(),
     );
 
-    if (response == null) {
-      DialogAlert.ok(
-        context: context,
-        text: "Error de comunicacion con el servidor",
-      );
-      return false;
-    }
-    if (response.mensaje == null) {
-      acountB.add(OnLogin(response: response));
-      Orquestador.sistem.saveAuthLocale(AcountState(
-        acount: response,
-        isLogin: true,
-      ));
-      return true;
-    } else {
+    if (response.mensaje != null) {
       DialogAlert.ok(
         context: context,
         text: response.mensaje ?? "Contraseña o Correo Invalido",
       );
       return false;
     }
+    acountB.add(OnLogin(response: response));
+    Orquestador.sistem.saveAuthLocale(AcountState(
+      acount: response,
+      isLogin: true,
+    ));
+    return true;
   }
 
   Future<bool> onRegister({
@@ -43,19 +35,12 @@ class _Auth {
     required String phone,
     required String name,
   }) async {
-    final UserModel? user = await AcountServices.singup(
+    final UserModel user = await AcountServices.singup(
       email: email.trim(),
       password: password.trim(),
       name: name.trim(),
       phone: phone.trim(),
     );
-    if (user == null) {
-      await DialogAlert.ok(
-        context: context,
-        text: "No hay conexión con el servidor",
-      );
-      return false;
-    }
     if (user.mensaje != null) {
       DialogAlert.ok(
         context: context,
@@ -89,16 +74,9 @@ class _Auth {
   }
 
   Future<bool> onRecovery(BuildContext context, String email) async {
-    final String? resp = await AcountServices.forguetpassword(
+    final String resp = await AcountServices.forguetpassword(
       email: email.trim(),
     );
-    if (resp == null) {
-      await DialogAlert.ok(
-        context: context,
-        text: "No hay conexión con el servidor",
-      );
-      return false;
-    }
     if (resp == "Se a enviado un correo a su cuenta") {
       await DialogAlert.ok(
         context: context,
@@ -118,9 +96,6 @@ class _Auth {
     final resp = await AcountServices.updateToken(
       token: acountB.state.acount.accessToken,
     );
-    if (resp == null) {
-      return false;
-    }
     if (resp.mensaje != null) {
       acountB.add(OnLogout());
       return false;

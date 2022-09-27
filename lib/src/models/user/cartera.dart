@@ -11,6 +11,7 @@ class CarteraModel {
     this.saldoMxn = 0,
     this.saldoUsd = 0,
     this.usuarioId = 0,
+    this.mensaje,
   });
 
   int id;
@@ -18,6 +19,7 @@ class CarteraModel {
   int saldoMxn;
   int saldoUsd;
   int usuarioId;
+  String? mensaje;
 
   CarteraModel copyWith({
     int? id,
@@ -25,8 +27,10 @@ class CarteraModel {
     int? saldoMxn,
     int? saldoUsd,
     int? usuarioId,
+    String? mensaje,
   }) =>
       CarteraModel(
+        mensaje: mensaje ?? this.mensaje,
         id: id ?? this.id,
         puntos: puntos ?? this.puntos,
         saldoMxn: saldoMxn ?? this.saldoMxn,
@@ -34,8 +38,13 @@ class CarteraModel {
         usuarioId: usuarioId ?? this.usuarioId,
       );
 
-  factory CarteraModel.fromJson(String str) =>
-      CarteraModel.fromMap(json.decode(str));
+  factory CarteraModel.fromJson(String str) {
+    try {
+      return CarteraModel.fromMap(json.decode(str));
+    } catch (e) {
+      return CarteraModel();
+    }
+  }
 
   String toJson() => json.encode(toMap());
 
@@ -45,6 +54,7 @@ class CarteraModel {
         saldoMxn: json["saldo_mxn"] ?? 0,
         saldoUsd: json["saldo_usd"] ?? 0,
         usuarioId: json["usuario_id"] ?? 0,
+        mensaje: json["mensaje"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -53,5 +63,6 @@ class CarteraModel {
         "saldo_mxn": saldoMxn,
         "saldo_usd": saldoUsd,
         "usuario_id": usuarioId,
+        "mensaje": mensaje,
       };
 }

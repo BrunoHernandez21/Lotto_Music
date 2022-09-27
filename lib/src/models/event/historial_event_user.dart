@@ -38,8 +38,13 @@ class HistorialEventoUsuario {
         userEvent: userEvent ?? this.userEvent,
       );
 
-  factory HistorialEventoUsuario.fromJson(String str) =>
-      HistorialEventoUsuario.fromMap(json.decode(str));
+  factory HistorialEventoUsuario.fromJson(String str) {
+    try {
+      return HistorialEventoUsuario.fromMap(json.decode(str));
+    } catch (e) {
+      return HistorialEventoUsuario(mensaje: "mensaje incomprensible");
+    }
+  }
 
   String toJson() => json.encode(toMap());
 

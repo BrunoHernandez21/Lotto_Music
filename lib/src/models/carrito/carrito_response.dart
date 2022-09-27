@@ -18,8 +18,13 @@ class CarritoResponse {
         mensaje: mensaje ?? this.mensaje,
       );
 
-  factory CarritoResponse.fromJson(String str) =>
-      CarritoResponse.fromMap(json.decode(str));
+  factory CarritoResponse.fromJson(String str) {
+    try {
+      return CarritoResponse.fromMap(json.decode(str));
+    } catch (e) {
+      return CarritoResponse();
+    }
+  }
 
   String toJson() => json.encode(toMap());
 

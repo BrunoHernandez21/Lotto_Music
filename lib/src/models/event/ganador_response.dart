@@ -13,6 +13,7 @@ class GanadorResponse {
     this.pags = 0,
     this.sizePage,
     this.totals,
+    this.mensaje,
   });
 
   List<GanadorModel>? ganador;
@@ -20,6 +21,7 @@ class GanadorResponse {
   int pags;
   int? sizePage;
   int? totals;
+  String? mensaje;
 
   GanadorResponse copyWith({
     List<GanadorModel>? ganador,
@@ -27,6 +29,7 @@ class GanadorResponse {
     int? pags,
     int? sizePage,
     int? totals,
+    String? mensaje,
   }) =>
       GanadorResponse(
         ganador: ganador ?? this.ganador,
@@ -34,10 +37,16 @@ class GanadorResponse {
         pags: pags ?? this.pags,
         sizePage: sizePage ?? this.sizePage,
         totals: totals ?? this.totals,
+        mensaje: mensaje ?? this.mensaje,
       );
 
-  factory GanadorResponse.fromJson(String str) =>
-      GanadorResponse.fromMap(json.decode(str));
+  factory GanadorResponse.fromJson(String str) {
+    try {
+      return GanadorResponse.fromMap(json.decode(str));
+    } catch (e) {
+      return GanadorResponse();
+    }
+  }
 
   String toJson() => json.encode(toMap());
 
@@ -48,6 +57,7 @@ class GanadorResponse {
         pags: json["pags"],
         sizePage: json["sizePage"],
         totals: json["totals"],
+        mensaje: json["mensaje"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -56,5 +66,6 @@ class GanadorResponse {
         "pags": pags,
         "sizePage": sizePage,
         "totals": totals,
+        "mensaje": mensaje,
       };
 }

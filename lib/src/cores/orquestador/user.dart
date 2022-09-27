@@ -8,9 +8,7 @@ class _User {
     final resp = await UserServices.userInfo(
       token: acountB.state.acount.accessToken,
     );
-    if (resp == null) {
-      return false;
-    }
+
     if (resp.mensaje == null) {
       userB.add(OnLoadUser(
         user: resp,
@@ -28,9 +26,7 @@ class _User {
       token: acountB.state.acount.accessToken,
       password: password,
     );
-    if (resp == null) {
-      return false;
-    }
+
     if (resp.mensaje == null) {
       userB.add(OnLoadUser(
         user: resp,
@@ -48,9 +44,7 @@ class _User {
       user: user,
       token: acountB.state.acount.accessToken,
     );
-    if (resp == null) {
-      return false;
-    }
+
     if (resp.mensaje == null) {
       userB.add(OnLoadUser(
         user: resp,
@@ -70,7 +64,7 @@ class _User {
       token: acountB.state.acount.accessToken,
     );
 
-    if (resp == null) {
+    if (resp.mensaje != null) {
       direccionesB.add(
         OnLoadDirecciones(
           direcciones: DireccionesResponse(
@@ -103,7 +97,7 @@ class _User {
       token: acountB.state.acount.accessToken,
     );
 
-    if (resp == null) {
+    if (resp.mensaje != null) {
       direccionesB.add(
         OnLoadDirecciones(
           direcciones: DireccionesResponse(
@@ -130,7 +124,7 @@ class _User {
       token: acountB.state.acount.accessToken,
       direccion: direccion,
     );
-    if (crea?.mensaje != null) {
+    if (crea.mensaje != null) {
       return false;
     }
 
@@ -138,7 +132,7 @@ class _User {
       token: acountB.state.acount.accessToken,
     );
 
-    if (resp == null) {
+    if (resp.mensaje != null) {
       direccionesB.add(
         OnLoadDirecciones(
           direcciones: DireccionesResponse(
@@ -165,7 +159,7 @@ class _User {
       token: acountB.state.acount.accessToken,
       direccion: direccion,
     );
-    if (crea?.mensaje != null) {
+    if (crea.mensaje != null) {
       return false;
     }
 
@@ -173,7 +167,7 @@ class _User {
       token: acountB.state.acount.accessToken,
     );
 
-    if (resp == null) {
+    if (resp.mensaje != null) {
       direccionesB.add(
         OnLoadDirecciones(
           direcciones: DireccionesResponse(
@@ -200,7 +194,7 @@ class _User {
       token: acountB.state.acount.accessToken,
     );
 
-    if (resp == null) {
+    if (resp.mensaje != null) {
       tarjetasB.add(
         OnLoadTarjetas(
           tarjetas: TarjetasResponse(
@@ -230,7 +224,7 @@ class _User {
       token: acountB.state.acount.accessToken,
     );
 
-    if (resp == null) {
+    if (resp.mensaje != null) {
       tarjetasB.add(
         OnLoadTarjetas(
           tarjetas: TarjetasResponse(
@@ -257,7 +251,7 @@ class _User {
       token: acountB.state.acount.accessToken,
       tarjeta: tarjeta,
     );
-    if (crea?.mensaje != null) {
+    if (crea.mensaje != null) {
       return false;
     }
 
@@ -265,7 +259,7 @@ class _User {
       token: acountB.state.acount.accessToken,
     );
 
-    if (resp == null) {
+    if (resp.mensaje != null) {
       tarjetasB.add(
         OnLoadTarjetas(
           tarjetas: TarjetasResponse(
@@ -292,7 +286,7 @@ class _User {
       token: acountB.state.acount.accessToken,
       tarjeta: tarjeta,
     );
-    if (crea?.mensaje != null) {
+    if (crea.mensaje != null) {
       return false;
     }
 
@@ -300,7 +294,7 @@ class _User {
       token: acountB.state.acount.accessToken,
     );
 
-    if (resp == null) {
+    if (resp.mensaje != null) {
       tarjetasB.add(
         OnLoadTarjetas(
           tarjetas: TarjetasResponse(
@@ -326,7 +320,7 @@ class _User {
     final resp = await UserServices.cartera(
       token: acountB.state.acount.accessToken,
     );
-    if (resp == null) {
+    if (resp.mensaje != null) {
       return false;
     }
     // ignore: use_build_context_synchronously

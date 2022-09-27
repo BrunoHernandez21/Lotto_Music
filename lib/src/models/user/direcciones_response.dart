@@ -24,8 +24,13 @@ class DireccionesResponse {
         direcciones: direcciones ?? this.direcciones,
       );
 
-  factory DireccionesResponse.fromJson(String str) =>
-      DireccionesResponse.fromMap(json.decode(str));
+  factory DireccionesResponse.fromJson(String str) {
+    try {
+      return DireccionesResponse.fromMap(json.decode(str));
+    } catch (e) {
+      return DireccionesResponse(mensaje: "mensaje incomprensible");
+    }
+  }
 
   String toJson() => json.encode(toMap());
 

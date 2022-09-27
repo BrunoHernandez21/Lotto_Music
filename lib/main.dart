@@ -22,6 +22,7 @@ import 'package:lotto_music/src/bloc/video_event/video_event_bloc.dart';
 import 'package:lotto_music/src/bloc/youtube/youtube_bloc.dart';
 import 'package:lotto_music/src/bloc/videos_event/videos_event_bloc.dart';
 import 'package:lotto_music/src/cores/orquestador/orquestador.dart';
+import 'package:lotto_music/src/cores/webDart/webcontroller.dart';
 import 'package:lotto_music/src/helpers/globals/const.dart';
 import 'package:lotto_music/src/screens/ruts_screens.dart';
 import 'package:lotto_music/src/screens/admin.dart';
@@ -82,6 +83,7 @@ class Appstate extends StatelessWidget {
       ],
       child: BlocBuilder<ShaderpreferencesBloc, ShaderpreferencesState>(
         builder: (context, state) {
+          DartWeb.context = context;
           SocketService.intstate(
             context: context,
             userId: sAuth.acount.userId,

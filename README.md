@@ -11,21 +11,30 @@ Android emulator Android version API 33
 
 TODO: 
 ```
-hora de los eventos
-revisar modelos                                                                 // espera
-interceptors en flutter                                                         // espera
-Agregar el costo del evento                                                     // espera
-pedir CCV de la tarjeta y no guardarlo en el backEND                            // espera
+pedir CCV de la tarjeta y no guardarlo en el backEND                            // urgente
+Agregar el costo del evento a la peticion                                       // espera
 terminar de separar plan y suscribcion                                          // espera
 Reintentar comprar una orden y cancelarla                                       // espera
 websocket                                                                       // espera
 agregar la respuesta directamente a la lista existente                          // espera
-solicitar colores para la app                                                   // ------
-notificaciones de confirmacion de accion                                        // ------
-```
-//// apuestas que hiciste
-historial de apuestas activos       mezclar =>                                              // espera //
-historial de apuestas inactivos     mezclar <=                                              // espera
-historial de apuestas ganadas.                                                              // espera //trofeo
 
+// apuestas que hiciste
+historial de apuestas activos       mezclar =>                                              // espera
+historial de apuestas inactivos     mezclar <=                                              // espera
+historial de apuestas ganadas.                                                              // espera icono trofeo
+```
+hora de los eventos                                                             // estandarisar
+websook 
+notificaciones de confirmacion de accion                                        // ------
+
+
+
+solicitud personal
+solicitar colores para la app                                                   // ------
+
+// podria ser
 Se pueden guardar los videos y ponerlos como offline para verlos como playlist    
+<!-- Realizado -->
+revisar modelos y crear condicon en modelos                                     
+necesario interceptors en flutter                                               
+Estandarisar la peticion de estadisticas de los videos                          

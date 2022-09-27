@@ -18,8 +18,13 @@ class OclockResponse {
         mensaje: mensaje ?? this.mensaje,
       );
 
-  factory OclockResponse.fromJson(String str) =>
-      OclockResponse.fromMap(json.decode(str));
+  factory OclockResponse.fromJson(String str) {
+    try {
+      return OclockResponse.fromMap(json.decode(str));
+    } catch (e) {
+      return OclockResponse(mensaje: "mensaje incomprensible");
+    }
+  }
 
   String toJson() => json.encode(toMap());
 

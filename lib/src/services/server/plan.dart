@@ -1,8 +1,8 @@
 // ignore: unused_import
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:lotto_music/src/models/plan/plan_response.dart';
 
+import '../../cores/webDart/webcontroller.dart';
 import '../../helpers/globals/ruts_services.dart';
 
 class PlanService {
@@ -11,63 +11,41 @@ class PlanService {
   static const String _byid = "${URL.plan}/byid/";
   static const String _byname = "${URL.plan}/byname/";
 
-  static Future<PlanesResponse?> loadPlan() async {
-    try {
-      final urI = Uri.parse(_one);
-      final resp = await http.get(urI);
-      return PlanesResponse.fromJson(resp.body);
-    } catch (e) {
-      return null;
+  static Future<PlanesResponse> loadPlan() async {
+    final urI = Uri.parse(_one);
+    final resp = await DartWeb.get(url: urI);
+    if (resp == null) {
+      return PlanesResponse(mensaje: "error de comunicacion con el servidor");
     }
+    return PlanesResponse.fromJson(resp);
   }
 
-  static Future<PlanesResponse?> loadSuscripcion() async {
-    try {
-      final urI = Uri.parse(_suscripcion);
-      final resp = await http.get(
-        urI,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      );
-
-      return PlanesResponse.fromJson(resp.body);
-    } catch (e) {
-      return null;
+  static Future<PlanesResponse> loadSuscripcion() async {
+    final urI = Uri.parse(_suscripcion);
+    final resp = await DartWeb.get(url: urI);
+    if (resp == null) {
+      return PlanesResponse(mensaje: "error de comunicacion con el servidor");
     }
+    return PlanesResponse.fromJson(resp);
   }
 
-  static Future<PlanesResponse?> byid() async {
-    try {
-      final urI = Uri.parse(_byid);
-      final resp = await http.get(
-        urI,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      );
-
-      return PlanesResponse.fromJson(resp.body);
-    } catch (e) {
-      return null;
+  static Future<PlanesResponse> byid() async {
+    final urI = Uri.parse(_byid);
+    final resp = await DartWeb.get(url: urI);
+    if (resp == null) {
+      return PlanesResponse(mensaje: "error de comunicacion con el servidor");
     }
+    return PlanesResponse.fromJson(resp);
   }
 
-  static Future<PlanesResponse?> search({
+  static Future<PlanesResponse> search({
     required String name,
   }) async {
-    try {
-      final urI = Uri.parse(_byname + name);
-      final resp = await http.get(
-        urI,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      );
-
-      return PlanesResponse.fromJson(resp.body);
-    } catch (e) {
-      return null;
+    final urI = Uri.parse(_byname + name);
+    final resp = await DartWeb.get(url: urI);
+    if (resp == null) {
+      return PlanesResponse(mensaje: "error de comunicacion con el servidor");
     }
+    return PlanesResponse.fromJson(resp);
   }
 }

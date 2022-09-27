@@ -6,10 +6,8 @@ class _Videos {
     required BuildContext context,
   }) async {
     final blocSt = BlocProvider.of<EstadisticasBloc>(context);
-    final StadisticsResponse? st = await VideoService.estadisticas();
-    if (st == null) {
-      return;
-    }
+    final StadisticsResponse st = await VideoService.estadisticas();
+
     if (st.mensaje != null) {
       return;
     }
@@ -20,10 +18,7 @@ class _Videos {
   // video categoria
   Future<List<String>?> onLoadCategorias(
       {required BuildContext context}) async {
-    final GruposModel? grupos = await VideoService.listarGrupos();
-    if (grupos == null) {
-      return null;
-    }
+    final GruposModel grupos = await VideoService.listarGrupos();
     if (grupos.mensaje == null) {
       return grupos.grupos;
     }
@@ -36,17 +31,15 @@ class _Videos {
       pag: vEB.state.pag + 1,
       categoria: vEB.state.categoria,
     );
-    if (resp == null) {
+    if (resp.mensaje != null) {
       return false;
     }
-    if (resp.mensaje == null) {
-      if (vEB.state.pag > (resp.pag)) {
-        return true;
-      }
-      vEB.add(OnLoadVideosCategoria(listado: resp.items ?? [], pag: resp.pag));
+
+    if (vEB.state.pag > (resp.pag)) {
       return true;
     }
-    return false;
+    vEB.add(OnLoadVideosCategoria(listado: resp.items ?? [], pag: resp.pag));
+    return true;
   }
 
   Future<bool> onLoadInitVideosCategoria(BuildContext context) async {
@@ -56,9 +49,7 @@ class _Videos {
       pag: 1,
       categoria: vEB.state.categoria,
     );
-    if (resp == null) {
-      return false;
-    }
+
     if (resp.mensaje == null) {
       vEB.add(OnInitVideosCategoria(
         listado: resp.items ?? [],
@@ -92,9 +83,6 @@ class _Videos {
       return false;
     }
     final resp = await VideoService.listarEventos(pag: vEB.state.pag + 1);
-    if (resp == null) {
-      return false;
-    }
 
     if (resp.mensaje == null) {
       if (vEB.state.pag > resp.pag) {
@@ -115,9 +103,7 @@ class _Videos {
     final vEB = BlocProvider.of<VideosEventBloc>(context);
 
     final resp = await VideoService.listarEventos(pag: 1);
-    if (resp == null) {
-      return false;
-    }
+
     if (resp.mensaje == null) {
       vEB.add(OnInitVideosEvent(
         listado: resp.items ?? [],
@@ -134,7 +120,7 @@ class _Videos {
   Future<List<ItemEvent>?> onLoadEventosTemp(
       {required BuildContext context}) async {
     final resp = await VideoService.listarEventos(pag: 1);
-    return resp?.items;
+    return resp.items;
   }
 
 ////////////// seleccionar video para reprocir (evento) ///////

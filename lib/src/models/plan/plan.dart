@@ -46,7 +46,13 @@ class PlanModel {
         prePrecio: prePrecio ?? this.prePrecio,
       );
 
-  factory PlanModel.fromJson(String str) => PlanModel.fromMap(json.decode(str));
+  factory PlanModel.fromJson(String str) {
+    try {
+      return PlanModel.fromMap(json.decode(str));
+    } catch (e) {
+      return PlanModel();
+    }
+  }
 
   String toJson() => json.encode(toMap());
 

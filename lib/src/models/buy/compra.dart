@@ -54,8 +54,13 @@ class CompraModel {
         paymentMethodId: paymentMethodId ?? this.paymentMethodId,
       );
 
-  factory CompraModel.fromJson(String str) =>
-      CompraModel.fromMap(json.decode(str));
+  factory CompraModel.fromJson(String str) {
+    try {
+      return CompraModel.fromMap(json.decode(str));
+    } catch (e) {
+      return CompraModel();
+    }
+  }
 
   String toJson() => json.encode(toMap());
 

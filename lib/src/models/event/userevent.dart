@@ -17,6 +17,7 @@ class UserEventModel {
     this.sharedCount,
     this.usuarioId = 0,
     this.eventoId = 0,
+    this.mensaje,
   });
 
   int id;
@@ -44,6 +45,7 @@ class UserEventModel {
     int? sharedCount,
     int? usuarioId,
     int? eventoId,
+    String? mensaje,
   }) =>
       UserEventModel(
         id: id ?? this.id,
@@ -57,17 +59,23 @@ class UserEventModel {
         sharedCount: sharedCount ?? this.sharedCount,
         usuarioId: usuarioId ?? this.usuarioId,
         eventoId: eventoId ?? this.eventoId,
+        mensaje: mensaje ?? this.mensaje,
       );
 
-  factory UserEventModel.fromJson(String str) =>
-      UserEventModel.fromMap(json.decode(str));
+  factory UserEventModel.fromJson(String str) {
+    try {
+      return UserEventModel.fromMap(json.decode(str));
+    } catch (e) {
+      return UserEventModel(mensaje: "mensaje incomprensible");
+    }
+  }
 
   String toJson() => json.encode(toMap());
 
   factory UserEventModel.fromMap(Map<String, dynamic> json) => UserEventModel(
         id: json["id"] ?? 0,
         activo: json["activo"],
-        fecha: DateTime.parse(json["fecha"]),
+        fecha: json["fecha"] == null ? null : DateTime.parse(json["fecha"]),
         viewsCount: json["views_count"],
         likeCount: json["like_count"],
         commentsCount: json["comments_count"],
@@ -76,6 +84,7 @@ class UserEventModel {
         sharedCount: json["shared_count"],
         usuarioId: json["usuario_id"] ?? 0,
         eventoId: json["evento_id"] ?? 0,
+        mensaje: json["mensaje"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -90,5 +99,6 @@ class UserEventModel {
         "shared_count": sharedCount,
         "usuario_id": usuarioId,
         "evento_id": eventoId,
+        "mensaje": mensaje,
       };
 }

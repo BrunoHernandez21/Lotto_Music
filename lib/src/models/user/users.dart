@@ -54,7 +54,13 @@ class UserModel {
         mensaje: mensaje ?? this.mensaje,
       );
 
-  factory UserModel.fromJson(String str) => UserModel.fromMap(json.decode(str));
+  factory UserModel.fromJson(String str) {
+    try {
+      return UserModel.fromMap(json.decode(str));
+    } catch (e) {
+      return UserModel(mensaje: "mensaje incomprensible");
+    }
+  }
 
   String toJson() => json.encode(toMap());
 

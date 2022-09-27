@@ -5,7 +5,16 @@ class Rutinas {
     if (fevent == null) {
       return "No data";
     }
-    final ahora = DateTime.now();
+    //TODO: hora de los eventos
+    final ahora = DateTime.now().toLocal();
+    final a = fevent.subtract(
+      Duration(
+        days: ahora.day,
+        hours: ahora.hour,
+        minutes: ahora.minute,
+        seconds: ahora.second,
+      ),
+    );
     if ((ahora.hour * 60 + ahora.minute) < (fevent.hour * 60 + fevent.minute)) {
       String hora = "";
       String minuto = "";
@@ -39,7 +48,7 @@ class Rutinas {
     int absTemp = 100000;
 
     event?.forEach((item) {
-      final fevent = item.fechahoraevento;
+      final fevent = item.fechahoraEvento;
 
       if (fevent != null) {
         final ahora = DateTime.now();

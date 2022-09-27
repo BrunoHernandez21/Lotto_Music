@@ -38,8 +38,13 @@ class YoutubeModel {
         itemsyt: itemsyt ?? this.itemsyt,
       );
 
-  factory YoutubeModel.fromJson(String str) =>
-      YoutubeModel.fromMap(json.decode(str));
+  factory YoutubeModel.fromJson(String str) {
+    try {
+      return YoutubeModel.fromMap(json.decode(str));
+    } catch (e) {
+      return YoutubeModel();
+    }
+  }
 
   String toJson() => json.encode(toMap());
 

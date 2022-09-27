@@ -46,8 +46,13 @@ class EventoModel {
         videoId: videoId ?? this.videoId,
       );
 
-  factory EventoModel.fromJson(String str) =>
-      EventoModel.fromMap(json.decode(str));
+  factory EventoModel.fromJson(String str) {
+    try {
+      return EventoModel.fromMap(json.decode(str));
+    } catch (e) {
+      return EventoModel();
+    }
+  }
 
   String toJson() => json.encode(toMap());
 

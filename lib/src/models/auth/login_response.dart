@@ -28,8 +28,13 @@ class LoginResponse {
           expiresIn: expiresIn ?? this.expiresIn,
           mensaje: mensaje ?? this.mensaje);
 
-  factory LoginResponse.fromJson(String str) =>
-      LoginResponse.fromMap(json.decode(str));
+  factory LoginResponse.fromJson(String str) {
+    try {
+      return LoginResponse.fromMap(json.decode(str));
+    } catch (e) {
+      return LoginResponse(mensaje: "mensaje incomprensible");
+    }
+  }
 
   String toJson() => json.encode(toMap());
 

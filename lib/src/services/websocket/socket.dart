@@ -28,6 +28,7 @@ class SocketService {
         socket.emit("onInitLoad", {"usuario_id": userId});
       }
     });
+
     socket.on('estadisticas', (data) {
       final a = StadisticsResponse.fromMap(data);
       blocSt.add(OnUpdateStadistics(response: a));
