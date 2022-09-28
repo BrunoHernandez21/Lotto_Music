@@ -22,6 +22,7 @@ import 'package:lotto_music/src/bloc/video_event/video_event_bloc.dart';
 import 'package:lotto_music/src/bloc/youtube/youtube_bloc.dart';
 import 'package:lotto_music/src/bloc/videos_event/videos_event_bloc.dart';
 import 'package:lotto_music/src/cores/orquestador/orquestador.dart';
+import 'package:lotto_music/src/cores/push_notification.dart';
 import 'package:lotto_music/src/cores/webDart/webcontroller.dart';
 import 'package:lotto_music/src/helpers/globals/const.dart';
 import 'package:lotto_music/src/screens/ruts_screens.dart';
@@ -35,7 +36,7 @@ import 'src/bloc/videos_categoria/videos_categoria_bloc.dart';
 void main() async {
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
-  //PushNotification.initializeApp();
+  await PushNotification.initState();
   //CheckPermissos.checkAll();
   final stateShader = await Orquestador.sistem.loadShaderLocale();
   final authState = await Orquestador.sistem.loadAuthLocale();

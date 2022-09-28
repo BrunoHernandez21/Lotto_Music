@@ -17,13 +17,13 @@ class BuyService {
   /// funciones comprar
   static Future<String> checkout({
     required String token,
-    required int tarjeta,
+    required Map<String, dynamic> body,
   }) async {
     final urI = Uri.parse(_checkout);
     final resp = await DartWeb.post(
       url: urI,
       token: token,
-      body: {"card_id": tarjeta},
+      body: body,
     );
     if (resp == null) {
       return "No hay comunicacion con el servidor";

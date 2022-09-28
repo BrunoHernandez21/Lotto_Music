@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'appbar.dart';
 import 'categorias/categorias.dart';
-import 'eventos/video_eventos.dart';
+import 'eventos/videos_eventos.dart';
 
 class Eventos extends StatelessWidget {
   const Eventos({Key? key}) : super(key: key);

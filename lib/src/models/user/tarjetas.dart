@@ -6,7 +6,7 @@ class TarjetaModel {
     this.activo = false,
     this.defaultPayment = false,
     this.cardNumber = "",
-    this.cvc = 0,
+    this.cvc = '',
     this.expiryMonth = 0,
     this.expiryYear = 0,
     this.holderName = '',
@@ -19,7 +19,7 @@ class TarjetaModel {
   bool activo;
   bool defaultPayment;
   String cardNumber;
-  int cvc;
+  String cvc;
   int expiryMonth;
   int expiryYear;
   String holderName;
@@ -32,7 +32,7 @@ class TarjetaModel {
           bool? activo,
           bool? defaultPayment,
           String? cardNumber,
-          int? cvc,
+          String? cvc,
           int? expiryMonth,
           int? expiryYear,
           String? holderName,
@@ -68,7 +68,7 @@ class TarjetaModel {
         activo: json["activo"] ?? false,
         defaultPayment: json["default_payment"] ?? false,
         cardNumber: json["card_number"] ?? "",
-        cvc: json["cvc"] ?? 0,
+        cvc: json["cvc"] ?? '',
         expiryMonth: json["expiry_month"] ?? 0,
         expiryYear: json["expiry_year"] ?? 0,
         holderName: json["holder_name"] ?? "",

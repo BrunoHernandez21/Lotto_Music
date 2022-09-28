@@ -35,6 +35,8 @@ dependencies:
   syncfusion_flutter_charts: ^20.2.44
   localstorage: ^4.0.0+1
   permission_handler: ^10.0.0
+  crypto: ^3.0.2
+  flutter_local_notifications: ^11.0.1
   
 
 

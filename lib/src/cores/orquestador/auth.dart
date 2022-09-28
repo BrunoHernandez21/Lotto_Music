@@ -60,16 +60,17 @@ class _Auth {
     final tarjetasB = BlocProvider.of<TarjetasBloc>(context);
     final direccionesB = BlocProvider.of<DireccionesBloc>(context);
     acountB.add(OnLogout());
-    carB.add(OnLoadCarrito(itemsCarrito: const []));
+    carB.add(OnLoadCarrito(itemsCarrito: null));
     userB.add(OnLoadUser(user: UserModel()));
     carteraB.add(OnLoadCartera(cartera: CarteraModel()));
-    tarjetasB.add(OnLoadTarjetas(tarjetas: TarjetasResponse()));
-    direccionesB.add(OnLoadDirecciones(direcciones: DireccionesResponse()));
+    tarjetasB.add(OnLoadTarjetas(tarjetas: null));
+    direccionesB.add(OnLoadDirecciones(direcciones: null));
 
     Orquestador.sistem.saveAuthLocale(AcountState(
       acount: LoginResponse(),
       isLogin: false,
     ));
+
     return true;
   }
 

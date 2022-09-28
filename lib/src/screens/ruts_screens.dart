@@ -9,7 +9,7 @@ import 'acount/register_confirm.dart';
 import 'admin.dart';
 import 'eventos/video/video_evento.dart';
 import 'eventos/categorias/videos_categorias.dart';
-import 'pagos/carrito/verificar_compra.dart';
+import 'pagos/carrito/verificar_compra/verificar_compra.dart';
 import 'perfil/editar_perfil/cartera.dart';
 import 'perfil/editar_perfil/direcciones/direccion.dart';
 import 'perfil/editar_perfil/direcciones/direcciones_add.dart';

@@ -122,8 +122,10 @@ class DartWeb {
         return null;
       }
 
-      final out = utf8.decode(resp.data!);
+      final out = utf8.decode(resp.data ?? []);
+
       final code = resp.statusCode ?? 0;
+
       if (code > 299 || code < 200) {
         myInterceptor(out);
       }

@@ -186,7 +186,7 @@ class _User {
 
   /// Tarjetas
 
-  Future<bool?> onLoadTarjetas(BuildContext context) async {
+  Future<bool> onLoadTarjetas(BuildContext context) async {
     final acountB = BlocProvider.of<AcountBloc>(context);
     final tarjetasB = BlocProvider.of<TarjetasBloc>(context);
 

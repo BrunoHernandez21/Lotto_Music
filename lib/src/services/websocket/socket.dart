@@ -1,15 +1,8 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lotto_music/src/models/video/stadistics_response.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
-import '../../bloc/stadistics/estadisticas_bloc.dart';
+import '../../cores/push_notification.dart';
 import '../../helpers/globals/ruts_services.dart';
-
-enum ServerStatus {
-  online,
-  offline,
-}
 
 class SocketService {
   // Dart client
@@ -21,17 +14,18 @@ class SocketService {
           .build());
 
   static intstate({required BuildContext context, required int userId}) async {
-    final blocSt = BlocProvider.of<EstadisticasBloc>(context);
-
     socket.onConnect((data) {
       if (userId != 0) {
         socket.emit("onInitLoad", {"usuario_id": userId});
       }
     });
 
-    socket.on('estadisticas', (data) {
-      final a = StadisticsResponse.fromMap(data);
-      blocSt.add(OnUpdateStadistics(response: a));
+    socket.on('notificaciones', (data) {
+      PushNotification.showNotification(
+        body: data["descripcion"],
+        title: data["titulo"],
+        id: 0,
+      );
     });
 
     socket.onDisconnect((_) {});

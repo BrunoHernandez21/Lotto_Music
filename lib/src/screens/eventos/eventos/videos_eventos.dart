@@ -61,7 +61,7 @@ class VideosEventos extends StatelessWidget {
               onTap: () {
                 if (BlocProvider.of<AcountBloc>(context).state.isLogin ==
                     false) {
-                  Navigator.of(context).pushNamed(Login.routeName);
+                  Navigator.of(context).pushNamed(HistorialEventos.routeName);
                 } else {
                   Navigator.of(context).pushNamed(HistorialEventos.routeName);
                 }
