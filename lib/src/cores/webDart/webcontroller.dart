@@ -45,6 +45,7 @@ class DartWeb {
       }
 
       final out = utf8.decode(resp.data!);
+      // print(out);
       final code = resp.statusCode ?? 0;
       if (code > 299 || code < 200) {
         myInterceptor(out);
@@ -85,6 +86,7 @@ class DartWeb {
       }
 
       final out = utf8.decode(resp.data!);
+      // print(out);
       final code = resp.statusCode ?? 0;
       if (code > 299 || code < 200) {
         myInterceptor(out);
@@ -123,7 +125,6 @@ class DartWeb {
       }
 
       final out = utf8.decode(resp.data ?? []);
-
       final code = resp.statusCode ?? 0;
 
       if (code > 299 || code < 200) {
@@ -163,6 +164,7 @@ class DartWeb {
       }
 
       final out = utf8.decode(resp.data!);
+      // print(out);
       final code = resp.statusCode ?? 0;
       if (code > 299 || code < 200) {
         myInterceptor(out);

@@ -8,11 +8,11 @@ import '../../models/youtube/youtube.dart';
 
 class YTService {
   static const String _tops =
-      "${URL.searchYT}&type=video&part=snippet&chart=mostPopular&regionCode=MX&safeSearch=none&maxResults=10&videoEmbeddable=true";
+      "${URL.listItems}&part=snippet&playlistId=PLfk71Rp386qg1iKVVrU_A3xnRfHIoV_Im&maxResults=10";
   static const String _relative =
-      "${URL.searchYT}&type=video&maxResults=10&part=snippet&relatedToVideoId=";
+      "${URL.searchYT}&type=video&maxResults=5&part=snippet&relatedToVideoId=";
   static const String _search =
-      "${URL.searchYT}&type=video&maxResults=10&part=snippet&maxResults=10&q=";
+      "${URL.searchYT}&type=video&maxResults=5&part=snippet&maxResults=10&q=";
   static const String _estadisticas = "${URL.estYT}&part=statistics&id=";
 /////////////////////////////
   /// separador
@@ -21,6 +21,7 @@ class YTService {
     final resp = await DartWeb.get(
       url: urI,
     );
+
     if (resp == null) {
       return YoutubeModel();
     }

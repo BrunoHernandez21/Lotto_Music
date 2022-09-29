@@ -81,13 +81,13 @@ class ItemYT {
 
   String? kind;
   String? etag;
-  Id? id;
+  dynamic id;
   Snippet? snippet;
 
   ItemYT copyWith({
     String? kind,
     String? etag,
-    Id? id,
+    dynamic id,
     Snippet? snippet,
   }) =>
       ItemYT(
@@ -104,7 +104,7 @@ class ItemYT {
   factory ItemYT.fromMap(Map<String, dynamic> json) => ItemYT(
         kind: json["kind"],
         etag: json["etag"],
-        id: Id.fromMap(json["id"]),
+        id: json["id"],
         snippet:
             json["snippet"] == null ? null : Snippet.fromMap(json["snippet"]),
       );
@@ -112,41 +112,8 @@ class ItemYT {
   Map<String, dynamic> toMap() => {
         "kind": kind,
         "etag": etag,
-        "id": id?.toMap(),
+        "id": id,
         "snippet": snippet?.toMap(),
-      };
-}
-
-class Id {
-  Id({
-    this.kind,
-    this.videoId,
-  });
-
-  String? kind;
-  String? videoId;
-
-  Id copyWith({
-    String? kind,
-    String? videoId,
-  }) =>
-      Id(
-        kind: kind ?? this.kind,
-        videoId: videoId ?? this.videoId,
-      );
-
-  factory Id.fromJson(String str) => Id.fromMap(json.decode(str));
-
-  String toJson() => json.encode(toMap());
-
-  factory Id.fromMap(Map<String, dynamic> json) => Id(
-        kind: json["kind"],
-        videoId: json["videoId"],
-      );
-
-  Map<String, dynamic> toMap() => {
-        "kind": kind,
-        "videoId": videoId,
       };
 }
 
