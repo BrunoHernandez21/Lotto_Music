@@ -49,7 +49,12 @@ class _ListVideosState extends State<ListVideosYT> {
           },
           itemBuilder: (context, i) {
             return FadeInLeft(
-              delay: Duration(milliseconds: (100 * i) > 500 ? 500 : 100 * i),
+              delay: const Duration(
+                milliseconds: 50,
+              ),
+              duration: const Duration(
+                milliseconds: 300,
+              ),
               child: bodyTarjeta(
                 v: state.yt?.itemsyt?[i] ?? ItemYT(),
                 context: context,

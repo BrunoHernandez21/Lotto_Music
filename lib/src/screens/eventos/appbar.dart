@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../helpers/globals/assets.dart';
 import '../../widgets/text.dart';
-import '../utils/clock.dart';
+import 'eventos/clock.dart';
 
 class AppbarEventos extends StatelessWidget {
   const AppbarEventos({Key? key}) : super(key: key);

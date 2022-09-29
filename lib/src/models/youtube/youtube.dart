@@ -197,14 +197,18 @@ class Snippet {
   String toJson() => json.encode(toMap());
 
   factory Snippet.fromMap(Map<String, dynamic> json) => Snippet(
-        publishedAt: DateTime.parse(json["publishedAt"]),
+        publishedAt: json["publishedAt"] == null
+            ? null
+            : DateTime.parse(json["publishedAt"]).toLocal(),
         channelId: json["channelId"],
         title: json["title"],
         description: json["description"],
         thumbnails: Thumbnails.fromMap(json["thumbnails"]),
         channelTitle: json["channelTitle"],
         liveBroadcastContent: json["liveBroadcastContent"],
-        publishTime: DateTime.parse(json["publishTime"]),
+        publishTime: json["publishTime"] == null
+            ? null
+            : DateTime.parse(json["publishTime"]).toLocal(),
       );
 
   Map<String, dynamic> toMap() => {

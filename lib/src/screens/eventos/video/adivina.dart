@@ -389,16 +389,16 @@ class _AdivinaState extends State<Adivina> {
           } else {
             apuesta.sharedCount = null;
           }
-
           final resp = await Orquestador.userEvent.onUserEventCreate(
             context: context,
             apuesta: apuesta,
           );
+
           await Orquestador.user.onLoadCartera(context: context);
-          if (resp?.mensaje != null) {
+          if (resp.mensaje != null) {
             await DialogAlert.ok(
               context: context,
-              text: resp?.mensaje ?? "Error",
+              text: resp.mensaje ?? "error",
             );
           } else {
             await DialogAlert.ok(

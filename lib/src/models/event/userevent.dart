@@ -75,7 +75,9 @@ class UserEventModel {
   factory UserEventModel.fromMap(Map<String, dynamic> json) => UserEventModel(
         id: json["id"] ?? 0,
         activo: json["activo"],
-        fecha: json["fecha"] == null ? null : DateTime.parse(json["fecha"]),
+        fecha: json["fecha"] == null
+            ? null
+            : DateTime.parse(json["fecha"]).toLocal(),
         viewsCount: json["views_count"],
         likeCount: json["like_count"],
         commentsCount: json["comments_count"],

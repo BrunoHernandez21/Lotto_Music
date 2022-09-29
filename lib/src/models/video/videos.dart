@@ -67,7 +67,7 @@ class VideoModel {
         canal: json["canal"],
         fechaVideo: json["fecha_video"] == null
             ? null
-            : DateTime.parse(json["fecha_video"]),
+            : DateTime.parse(json["fecha_video"]).toLocal(),
         idVideo: json["id_video"],
         titulo: json["titulo"],
         urlVideo: json["url_video"],

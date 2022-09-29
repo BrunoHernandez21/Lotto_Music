@@ -39,8 +39,9 @@ class _Shopingcar {
     final acountB = BlocProvider.of<AcountBloc>(context);
     final planB = BlocProvider.of<CarritoBloc>(context);
     final resp = await ShoppingcarService.eliminar(
-        token: acountB.state.acount.accessToken, id: itemsCarrito.id);
-    //TODO
+      token: acountB.state.acount.accessToken,
+      id: itemsCarrito.id,
+    );
     if (resp == "Eliminado Satisfactoriamente") {
       final newitem = planB.state.itemsCarrito;
       try {

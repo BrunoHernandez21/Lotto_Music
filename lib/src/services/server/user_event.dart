@@ -9,11 +9,11 @@ import '../../models/event/historial_event_user.dart';
 
 class UserEventService {
   static const String _crear = "${URL.userEvent}/event";
-  static const String _listar = "${URL.userEvent}/active";
-  static const String _apuesta = "${URL.userEvent}/history";
+  static const String _activos = "${URL.userEvent}/active";
+  static const String _inactivos = "${URL.userEvent}/history";
   static const String _wins = "${URL.userEvent}/wins";
 
-  static Future<UserEventModel?> crear({
+  static Future<UserEventModel> crear({
     required String token,
     required UserEventModel apuesta,
   }) async {
@@ -29,11 +29,11 @@ class UserEventService {
     return UserEventModel.fromJson(resp);
   }
 
-  static Future<HistorialEventoUsuario?> listarHistory({
+  static Future<HistorialEventoUsuario> listarActivos({
     required int pag,
     required String token,
   }) async {
-    final urI = Uri.parse("$_apuesta/$pag/10");
+    final urI = Uri.parse("$_activos/$pag/10");
     final resp = await DartWeb.get(
       url: urI,
       token: token,
@@ -47,11 +47,11 @@ class UserEventService {
     return out;
   }
 
-  static Future<HistorialEventoUsuario?> listarHistoryActive({
+  static Future<HistorialEventoUsuario> listarInactivos({
     required int pag,
     required String token,
   }) async {
-    final urI = Uri.parse("$_listar/$pag/10");
+    final urI = Uri.parse("$_inactivos/$pag/10");
     final resp = await DartWeb.get(
       url: urI,
       token: token,
@@ -65,7 +65,7 @@ class UserEventService {
     return out;
   }
 
-  static Future<GanadorResponse?> wins({
+  static Future<GanadorResponse> wins({
     required int pag,
     required String token,
   }) async {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:lotto_music/src/bloc/tarjetas/tarjetas_bloc.dart';
 import 'package:lotto_music/src/models/user/tarjetas_response.dart';
 import '../../../../bloc/carrito/carrito_bloc.dart';
@@ -56,7 +57,7 @@ class _VerificarCompraState extends State<VerificarCompra> {
                         moneda: moneda,
                         total: total,
                         tarjetas: tarState.tarjetas ?? TarjetasResponse(),
-                        onchage: () {
+                        onchage: () async {
                           if (SCL.index == -1) {
                             DialogAlert.ok(
                               context: context,
@@ -73,7 +74,7 @@ class _VerificarCompraState extends State<VerificarCompra> {
                         visible: alertDialog,
                         child: AlertBuy(
                           controller: controller,
-                          onchage: () {
+                          onchage: () async {
                             alertDialog = false;
                             setState(() {});
                           },

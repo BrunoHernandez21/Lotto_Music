@@ -72,7 +72,7 @@ class UserModel {
         email: json["email"] ?? "",
         fechaNacimiento: json["fecha_nacimiento"] == null
             ? null
-            : DateTime.parse(json["fecha_nacimiento"]),
+            : DateTime.parse(json["fecha_nacimiento"]).toLocal(),
         nombre: json["nombre"],
         password: json["password"] ?? "",
         telefono: json["telefono"],

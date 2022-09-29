@@ -59,7 +59,9 @@ class EventoModel {
   factory EventoModel.fromMap(Map<String, dynamic> json) => EventoModel(
         id: json["id"],
         activo: json["activo"],
-        fechahoraapuesta: DateTime.parse(json["fechahoraapuesta"]),
+        fechahoraapuesta: json["fechahoraapuesta"] == null
+            ? null
+            : DateTime.parse(json["fechahoraapuesta"]).toLocal(),
         precio: json["precio"],
         acumulado: json["acumulado"],
         premio: json["premio"],

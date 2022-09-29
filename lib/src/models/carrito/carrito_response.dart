@@ -102,7 +102,9 @@ class ItemsCarrito {
         cantidad: json["cantidad"]?.toInt() ?? 0,
         totalLinea: json["total_linea"]?.toDouble() ?? 0,
         puntosLinea: json["puntos_linea"]?.toInt() ?? 0,
-        fechaCarrito: DateTime.parse(json["fecha_carrito"]),
+        fechaCarrito: json["fecha_carrito"] == null
+            ? null
+            : DateTime.parse(json["fecha_carrito"]).toLocal(),
         planId: json["plan_id"]?.toInt() ?? 0,
         titulo: json["titulo"],
         descripcion: json["descripcion"],

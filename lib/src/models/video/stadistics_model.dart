@@ -63,7 +63,9 @@ class StadisticModel {
   factory StadisticModel.fromMap(Map<String, dynamic> json) => StadisticModel(
         id: json["id"] ?? 0,
         videoId: json["video_id"],
-        fecha: DateTime.parse(json["fecha"]),
+        fecha: json["fecha"] == null
+            ? null
+            : DateTime.parse(json["fecha"]).toLocal(),
         likeCount: json["like_count"],
         viewCount: json["views_count"],
         commentsCount: json["comments_count"],

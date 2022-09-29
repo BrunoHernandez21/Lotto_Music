@@ -133,7 +133,9 @@ class HistorialModel {
   factory HistorialModel.fromMap(Map<String, dynamic> json) => HistorialModel(
         id: json["id"] ?? 0,
         activo: json["activo"] ?? false,
-        fecha: json["fecha"] == null ? null : DateTime.parse(json["fecha"]),
+        fecha: json["fecha"] == null
+            ? null
+            : DateTime.parse(json["fecha"]).toLocal(),
         viewsCount: json["views_count"],
         likeCount: json["like_count"],
         commentsCount: json["comments_count"],

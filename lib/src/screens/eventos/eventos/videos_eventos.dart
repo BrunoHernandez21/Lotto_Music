@@ -13,8 +13,8 @@ import '../../../widgets/botones.dart';
 import '../../../widgets/digital_clock.dart';
 import '../../../widgets/svg_nosignal.dart';
 import '../../../widgets/text.dart';
-import '../../utils/clock.dart';
-import '../../utils/historial_eventos.dart';
+import 'clock.dart';
+import 'history_event/historial_eventos.dart';
 import '../../utils/winner.dart';
 import '../video/video_evento.dart';
 
@@ -61,7 +61,7 @@ class VideosEventos extends StatelessWidget {
               onTap: () {
                 if (BlocProvider.of<AcountBloc>(context).state.isLogin ==
                     false) {
-                  Navigator.of(context).pushNamed(HistorialEventos.routeName);
+                  Navigator.of(context).pushNamed(Login.routeName);
                 } else {
                   Navigator.of(context).pushNamed(HistorialEventos.routeName);
                 }
@@ -86,7 +86,7 @@ class VideosEventos extends StatelessWidget {
                     }
                     final a = snap.data;
                     return DefaultDigitalClock(
-                      fecha: a?.toLocal() ?? DateTime.now(),
+                      fecha: a ?? DateTime.now(),
                     );
                   },
                 ),
@@ -174,20 +174,18 @@ class _ListVideosPaginacionState extends State<ListVideosPaginacion> {
             onRefresh: () async {
               Orquestador.video.onLoadInitVideosEventos(context);
             },
-            child: ListView.separated(
+            child: ListView.builder(
                 controller: controller,
                 physics: const BouncingScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics()),
                 itemCount: state.listado?.length ?? 0,
-                separatorBuilder: (context, index) {
-                  return const SizedBox(
-                    height: 10,
-                  );
-                },
                 itemBuilder: (context, i) {
                   return FadeInLeft(
                       delay: const Duration(
-                        milliseconds: 200,
+                        milliseconds: 50,
+                      ),
+                      duration: const Duration(
+                        milliseconds: 300,
                       ),
                       child: bodyTarjeta(state.listado![i]));
                 }));
@@ -231,7 +229,7 @@ class _ListVideosPaginacionState extends State<ListVideosPaginacion> {
                     const Expanded(child: SizedBox()),
                     Textos.parrafoMED(
                       texto:
-                          "Hora ${v.fechahoraEvento?.toLocal().toString().substring(11, 16) ?? "00:00"}",
+                          "Hora ${v.fechahoraEvento?.toString().substring(11, 16) ?? "00:00"}",
                     ),
                     Textos.parrafoMED(
                       texto: Rutinas.comprobador(v.fechahoraEvento),

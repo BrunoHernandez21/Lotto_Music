@@ -178,7 +178,9 @@ class ItemEvent {
 
   factory ItemEvent.fromMap(Map<String, dynamic> json) => ItemEvent(
         id: json["id"],
-        fechahoraEvento: DateTime.parse(json["fechahora_evento"]),
+        fechahoraEvento: json["fechahora_evento"] == null
+            ? null
+            : DateTime.parse(json["fechahora_evento"]).toLocal(),
         premioCash: json["premio_cash"],
         acumulado: json["acumulado"],
         premioOtros: json["premio_otros"],
@@ -193,7 +195,9 @@ class ItemEvent {
         vidId: json["vid_id"],
         artista: json["artista"],
         canal: json["canal"],
-        fechaVideo: DateTime.parse(json["fecha_video"]),
+        fechaVideo: json["fecha_video"] == null
+            ? null
+            : DateTime.parse(json["fecha_video"]).toLocal(),
         videoId: json["video_id"],
         thumblary: json["thumblary"],
         titulo: json["titulo"],

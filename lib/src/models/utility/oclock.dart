@@ -29,7 +29,9 @@ class OclockResponse {
   String toJson() => json.encode(toMap());
 
   factory OclockResponse.fromMap(Map<String, dynamic> json) => OclockResponse(
-        time: DateTime.parse(json["time"]),
+        time: json["time"] == null
+            ? null
+            : DateTime.parse(json["time"]).toLocal(),
         mensaje: json["mensaje"],
       );
 

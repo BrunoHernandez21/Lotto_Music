@@ -45,7 +45,7 @@ class LoginResponse {
         mensaje: json["mensaje"],
         expiresIn: json["expires_in"] == null
             ? null
-            : DateTime.parse(json["expires_in"]),
+            : DateTime.parse(json["expires_in"]).toLocal(),
       );
 
   Map<String, dynamic> toMap() => {

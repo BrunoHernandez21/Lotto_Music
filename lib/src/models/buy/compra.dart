@@ -66,10 +66,14 @@ class CompraModel {
 
   factory CompraModel.fromMap(Map<String, dynamic> json) => CompraModel(
         id: json["id"] ?? 0,
-        fechaPagado: DateTime.parse(json["fecha_pagado"]),
+        fechaPagado: json["fecha_pagado"] == null
+            ? null
+            : DateTime.parse(json["fecha_pagado"]).toLocal(),
         stripeId: json["stripe_id"],
         status: json["status"],
-        fechaEmitido: DateTime.parse(json["fecha_emitido"]),
+        fechaEmitido: json["fecha_emitido"] == null
+            ? null
+            : DateTime.parse(json["fecha_emitido"]).toLocal(),
         impuesto: json["impuesto"],
         subTotal: json["sub_total"],
         descuentoOrden: json["descuento_orden"],

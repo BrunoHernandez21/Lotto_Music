@@ -1,7 +1,7 @@
 part of 'orquestador.dart';
 
 class _UserEvent {
-  Future<UserEventModel?> onUserEventCreate({
+  Future<UserEventModel> onUserEventCreate({
     required BuildContext context,
     required UserEventModel apuesta,
   }) async {
@@ -14,30 +14,55 @@ class _UserEvent {
   }
 
   /////// historial de Apuestas
-  Future<HistorialEventoUsuario?> onLoadHistorialEventos({
-    required BuildContext context,
-    required int pag,
-  }) async {
-    final vEB = BlocProvider.of<VideosEventBloc>(context);
-    final acountB = BlocProvider.of<AcountBloc>(context);
-    if (vEB.state.pag > vEB.state.pags) {
-      return null;
-    }
-    final resp = await UserEventService.listarHistory(
-      pag: pag,
-      token: acountB.state.acount.accessToken,
-    );
-    return resp;
-  }
-
-  Future<HistorialEventoUsuario?> onIinitHistorialEventos(
+  Future<HistorialEventoUsuario> onIinitHistorialInactivos(
       BuildContext context) async {
     final acountB = BlocProvider.of<AcountBloc>(context);
-    final resp = await UserEventService.listarHistory(
+    final resp = await UserEventService.listarInactivos(
       pag: 1,
       token: acountB.state.acount.accessToken,
     );
 
+    return resp;
+  }
+
+  Future<HistorialEventoUsuario?> onLoadHistorialInactivos({
+    required BuildContext context,
+    required int pag,
+  }) async {
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    final resp = await UserEventService.listarInactivos(
+      pag: pag,
+      token: acountB.state.acount.accessToken,
+    );
+    if (pag > resp.pags) {
+      return null;
+    }
+    return resp;
+  }
+
+  Future<HistorialEventoUsuario> onIinitHistorialActivos(
+      BuildContext context) async {
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    final resp = await UserEventService.listarActivos(
+      pag: 1,
+      token: acountB.state.acount.accessToken,
+    );
+
+    return resp;
+  }
+
+  Future<HistorialEventoUsuario?> onLoadHistorialActivos({
+    required BuildContext context,
+    required int pag,
+  }) async {
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    final resp = await UserEventService.listarActivos(
+      pag: pag,
+      token: acountB.state.acount.accessToken,
+    );
+    if (pag > resp.pags) {
+      return null;
+    }
     return resp;
   }
 

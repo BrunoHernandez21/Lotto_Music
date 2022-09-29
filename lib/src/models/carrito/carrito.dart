@@ -73,7 +73,7 @@ class CarritoModel {
         descuento: json["descuento"]?.toDouble(),
         fechaCarrito: json["fecha_carrito"] == null
             ? null
-            : DateTime.parse(json["fecha_carrito"]),
+            : DateTime.parse(json["fecha_carrito"]).toLocal(),
         planId: json["plan_id"] ?? 0,
         usuarioId: json["usuario_id"] ?? 0,
         mensaje: json["mensaje"],
