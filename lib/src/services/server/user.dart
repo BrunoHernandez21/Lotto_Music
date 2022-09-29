@@ -1,6 +1,6 @@
 // ignore: unused_import
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:lotto_music/src/cores/webDart/webcontroller.dart';
 
 import '../../helpers/globals/ruts_services.dart';
 import '../../models/user/cartera.dart';
@@ -22,302 +22,231 @@ class UserServices {
   static const String _direccion = "${URL.user}/direction";
 
   /////////////// /////////////// /////////////// Payment method
-  static Future<TarjetaModel?> tarjetaUpdate({
+  static Future<TarjetaModel> tarjetaUpdate({
     required TarjetaModel tarjeta,
     required String token,
   }) async {
-    try {
-      final urI = Uri.parse(_method);
-      final resp = await http.put(
-        urI,
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer $token",
-        },
-        body: tarjeta.toJson(),
-      );
-      return TarjetaModel.fromJson(resp.body);
-    } catch (e) {
-      return null;
+    final urI = Uri.parse(_method);
+    final resp = await DartWeb.put(
+      url: urI,
+      token: token,
+      body: tarjeta.toMap(),
+    );
+    if (resp == null) {
+      return TarjetaModel(mensaje: "error de comunicacion con el servidor");
     }
+    return TarjetaModel.fromJson(resp);
   }
 
-  static Future<TarjetasResponse?> tarjetaLoad({
+  static Future<TarjetasResponse> tarjetaLoad({
     required String token,
   }) async {
-    try {
-      final urI = Uri.parse(_method);
-      final resp = await http.get(
-        urI,
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer $token",
-        },
-      );
-
-      return TarjetasResponse.fromJson(resp.body);
-    } catch (e) {
-      return null;
+    final urI = Uri.parse(_method);
+    final resp = await DartWeb.get(
+      url: urI,
+      token: token,
+    );
+    if (resp == null) {
+      return TarjetasResponse(mensaje: "error de comunicacion con el servidor");
     }
+    return TarjetasResponse.fromJson(resp);
   }
 
-  static Future<TarjetaModel?> tarjetaCreate({
+  static Future<TarjetaModel> tarjetaCreate({
     required TarjetaModel tarjeta,
     required String token,
   }) async {
-    try {
-      final urI = Uri.parse(_method);
-      final resp = await http.post(
-        urI,
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer $token",
-        },
-        body: tarjeta.toJson(),
-      );
-      return TarjetaModel.fromJson(resp.body);
-    } catch (e) {
-      return null;
+    final urI = Uri.parse(_method);
+    final resp = await DartWeb.post(
+      url: urI,
+      token: token,
+      body: tarjeta.toMap(),
+    );
+    if (resp == null) {
+      return TarjetaModel(mensaje: "error de comunicacion con el servidor");
     }
+    return TarjetaModel.fromJson(resp);
   }
 
-  static Future<String?> tarjetaRemove({
+  static Future<String> tarjetaRemove({
     required int id,
     required String token,
   }) async {
-    try {
-      final urI = Uri.parse("$_method/$id");
-      final resp = await http.delete(
-        urI,
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer $token",
-        },
-      );
-
-      return json.decode(resp.body)["resp"];
-    } catch (e) {
-      return null;
+    final urI = Uri.parse("$_method/$id");
+    final resp = await DartWeb.delete(
+      url: urI,
+      token: token,
+    );
+    if (resp == null) {
+      return "error de comunicacion con el servidor";
     }
+    return json.decode(resp)["resp"] ?? "";
   }
 
   /////////////// /////////////// /////////////// Direcciones
-  static Future<DireccionesModel?> direccionesUpdate({
+  static Future<DireccionesModel> direccionesUpdate({
     required DireccionesModel direccion,
     required String token,
   }) async {
-    try {
-      final urI = Uri.parse(_direccion);
-      final resp = await http.put(
-        urI,
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer $token",
-        },
-        body: direccion.toJson(),
-      );
-
-      return DireccionesModel.fromJson(resp.body);
-    } catch (e) {
-      return null;
+    final urI = Uri.parse(_direccion);
+    final resp = await DartWeb.put(
+      url: urI,
+      token: token,
+      body: direccion.toMap(),
+    );
+    if (resp == null) {
+      return DireccionesModel(mensaje: "error de comunicacion con el servidor");
     }
+    return DireccionesModel.fromJson(resp);
   }
 
-  static Future<DireccionesResponse?> direccionesLoad({
+  static Future<DireccionesResponse> direccionesLoad({
     required String token,
   }) async {
-    try {
-      final urI = Uri.parse(_direccion);
-      final resp = await http.get(
-        urI,
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer $token",
-        },
+    final urI = Uri.parse(_direccion);
+    final resp = await DartWeb.get(
+      url: urI,
+      token: token,
+    );
+    if (resp == null) {
+      return DireccionesResponse(
+        mensaje: "error de comunicacion con el servidor",
       );
-
-      return DireccionesResponse.fromJson(resp.body);
-    } catch (e) {
-      return null;
     }
+    return DireccionesResponse.fromJson(resp);
   }
 
-  static Future<DireccionesModel?> direccionesCreate({
+  static Future<DireccionesModel> direccionesCreate({
     required DireccionesModel direccion,
     required String token,
   }) async {
-    try {
-      final urI = Uri.parse(_direccion);
-      final resp = await http.post(
-        urI,
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer $token",
-        },
-        body: direccion.toJson(),
-      );
-
-      return DireccionesModel.fromJson(resp.body);
-    } catch (e) {
-      return null;
+    final urI = Uri.parse(_direccion);
+    final resp = await DartWeb.post(
+      url: urI,
+      token: token,
+      body: direccion.toMap(),
+    );
+    if (resp == null) {
+      return DireccionesModel(mensaje: "error de comunicacion con el servidor");
     }
+    return DireccionesModel.fromJson(resp);
   }
 
-  static Future<String?> direccionesDelete({
+  static Future<String> direccionesDelete({
     required int id,
     required String token,
   }) async {
-    try {
-      final urI = Uri.parse("$_direccion/$id");
-      final resp = await http.delete(
-        urI,
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer $token",
-        },
-      );
-
-      return json.decode(resp.body)["resp"];
-    } catch (e) {
-      return null;
+    final urI = Uri.parse("$_direccion/$id");
+    final resp = await DartWeb.delete(
+      url: urI,
+      token: token,
+    );
+    if (resp == null) {
+      return "error de comunicacion con el servidor";
     }
+    return json.decode(resp)["resp"] ?? "";
   }
 
   /////////////// /////////////// /////////////// User
 
-  static Future<UserModel?> userUpdate({
+  static Future<UserModel> userUpdate({
     required UserModel user,
     required String token,
   }) async {
-    try {
-      final urI = Uri.parse(_user);
-      final resp = await http.put(
-        urI,
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          "Authorization": "Bearer $token",
-        },
-        body: user.toJson(),
-      );
-
-      return UserModel.fromJson(utf8.decode(resp.bodyBytes));
-    } catch (e) {
-      return null;
+    final urI = Uri.parse(_user);
+    final resp = await DartWeb.put(
+      url: urI,
+      token: token,
+      body: user.toMap(),
+    );
+    if (resp == null) {
+      return UserModel(mensaje: "error de comunicacion con el servidor");
     }
+    return UserModel.fromJson(resp);
   }
 
-  static Future<UserModel?> userInfo({
+  static Future<UserModel> userInfo({
     required String token,
   }) async {
-    try {
-      final urI = Uri.parse(_user);
-      final resp = await http.get(
-        urI,
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          "Authorization": "Bearer $token",
-        },
-      );
-
-      return UserModel.fromJson(utf8.decode(resp.bodyBytes));
-    } catch (e) {
-      return null;
+    final urI = Uri.parse(_user);
+    final resp = await DartWeb.get(
+      url: urI,
+      token: token,
+    );
+    if (resp == null) {
+      return UserModel(mensaje: "error de comunicacion con el servidor");
     }
+    return UserModel.fromJson(resp);
   }
 
   static Future<String> userDelete() async {
-    try {
-      final urI = Uri.parse(_user);
-      final resp = await http.get(
-        urI,
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-        },
-      );
-
-      return utf8.decode(resp.bodyBytes);
-    } catch (e) {
-      return "";
+    final urI = Uri.parse(_user);
+    final resp = await DartWeb.get(
+      url: urI,
+    );
+    if (resp == null) {
+      return "error de comunicacion con el servidor";
     }
+    return json.decode(resp)["resp"] ?? "";
   }
 
-  static Future<UserModel?> changepassword({
+  static Future<UserModel> changepassword({
     required String password,
     required String token,
   }) async {
-    try {
-      final urI = Uri.parse(_userChangepassword);
-      final resp = await http.put(urI,
-          headers: {
-            "Content-Type": "application/json; charset=utf-8",
-            "Authorization": "Bearer $token",
-          },
-          body: json.encode({
-            "password": password,
-          }));
-
-      return UserModel.fromJson(utf8.decode(resp.bodyBytes));
-    } catch (e) {
-      return null;
+    final urI = Uri.parse(_userChangepassword);
+    final resp = await DartWeb.put(url: urI, token: token, body: {
+      "password": password,
+    });
+    if (resp == null) {
+      return UserModel(mensaje: "error de comunicacion con el servidor");
     }
+    return UserModel.fromJson(resp);
   }
 
   /////////////// /////////////// /////////////// Propiedades
-  static Future<UserModel?> propiedades({
+  static Future<UserModel> propiedades({
     required String password,
     required String token,
   }) async {
-    try {
-      final urI = Uri.parse(_userChangepassword);
-      final resp = await http.put(urI,
-          headers: {
-            "Content-Type": "application/json; charset=utf-8",
-            "Authorization": "Bearer $token",
-          },
-          body: json.encode({
-            "password": password,
-          }));
-
-      return UserModel.fromJson(utf8.decode(resp.bodyBytes));
-    } catch (e) {
-      return null;
+    final urI = Uri.parse(_userChangepassword);
+    final resp = await DartWeb.put(
+      url: urI,
+      token: token,
+      body: {
+        "password": password,
+      },
+    );
+    if (resp == null) {
+      return UserModel(mensaje: "error de comunicacion con el servidor");
     }
+    return UserModel.fromJson(resp);
   }
 
-  static Future<CarteraModel?> cartera({required String token}) async {
-    try {
-      final urI = Uri.parse(_cartera);
-      final resp = await http.get(
-        urI,
-        headers: {
-          "Authorization": "Bearer $token",
-        },
-      );
-      final out = CarteraModel.fromJson(resp.body);
-      return out;
-    } catch (e) {
-      return null;
+  static Future<CarteraModel> cartera({required String token}) async {
+    final urI = Uri.parse(_cartera);
+    final resp = await DartWeb.get(
+      url: urI,
+      token: token,
+    );
+    if (resp == null) {
+      return CarteraModel(mensaje: "error de comunicacion con el servidor");
     }
+    final out = CarteraModel.fromJson(resp);
+    return out;
   }
 
-  static Future<UserModel?> suscribcion({
+  static Future<UserModel> suscribcion({
     required String password,
     required String token,
   }) async {
-    try {
-      final urI = Uri.parse(_userChangepassword);
-      final resp = await http.put(urI,
-          headers: {
-            "Content-Type": "application/json; charset=utf-8",
-            "Authorization": "Bearer $token",
-          },
-          body: json.encode({
-            "password": password,
-          }));
-
-      return UserModel.fromJson(utf8.decode(resp.bodyBytes));
-    } catch (e) {
-      return null;
+    final urI = Uri.parse(_userChangepassword);
+    final resp = await DartWeb.put(url: urI, token: token, body: {
+      "password": password,
+    });
+    if (resp == null) {
+      return UserModel(mensaje: "error de comunicacion con el servidor");
     }
+    return UserModel.fromJson(resp);
   }
 }

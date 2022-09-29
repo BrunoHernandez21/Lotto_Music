@@ -24,8 +24,13 @@ class PlanesResponse {
         mensaje: mensaje ?? this.mensaje,
       );
 
-  factory PlanesResponse.fromJson(String str) =>
-      PlanesResponse.fromMap(json.decode(str));
+  factory PlanesResponse.fromJson(String str) {
+    try {
+      return PlanesResponse.fromMap(json.decode(str));
+    } catch (e) {
+      return PlanesResponse(mensaje: "mensaje incomprensible");
+    }
+  }
 
   String toJson() => json.encode(toMap());
 

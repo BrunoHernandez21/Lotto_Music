@@ -54,8 +54,13 @@ class CarritoModel {
           usuarioId: usuarioId ?? this.usuarioId,
           mensaje: mensaje ?? this.mensaje);
 
-  factory CarritoModel.fromJson(String str) =>
-      CarritoModel.fromMap(json.decode(str));
+  factory CarritoModel.fromJson(String str) {
+    try {
+      return CarritoModel.fromMap(json.decode(str));
+    } catch (e) {
+      return CarritoModel();
+    }
+  }
 
   String toJson() => json.encode(toMap());
 
@@ -68,7 +73,7 @@ class CarritoModel {
         descuento: json["descuento"]?.toDouble(),
         fechaCarrito: json["fecha_carrito"] == null
             ? null
-            : DateTime.parse(json["fecha_carrito"]),
+            : DateTime.parse(json["fecha_carrito"]).toLocal(),
         planId: json["plan_id"] ?? 0,
         usuarioId: json["usuario_id"] ?? 0,
         mensaje: json["mensaje"],

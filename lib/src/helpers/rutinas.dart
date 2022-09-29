@@ -6,31 +6,27 @@ class Rutinas {
       return "No data";
     }
     final ahora = DateTime.now();
-    if ((ahora.hour * 60 + ahora.minute) < (fevent.hour * 60 + fevent.minute)) {
-      String hora = "";
-      String minuto = "";
-      int hr = fevent.hour - ahora.hour;
-      int hm = fevent.minute - ahora.minute;
-      if (hm < 0) {
-        hr -= 1;
-        hm = 60 + hm;
-      }
-      if (hr == 1) {
-        hora = "$hr hora ";
-      }
-      if (hr > 1) {
-        hora = "$hr horas ";
-      }
+    final a = fevent.difference(ahora);
+    final minu = a.inMinutes;
 
-      if (hm == 1) {
-        minuto = "$hm minuto";
-      }
-      if (hm > 1) {
-        minuto = "$hm minutos";
-      }
-      return "Falta $hora$minuto";
+    if (minu < 0) {
+      return "Expirado";
     }
-    return "Expirado";
+    final hour = minu ~/ 60;
+    final minuto = minu % 60;
+    String textminute = '';
+    String texthour = '';
+    if (minuto < 10) {
+      textminute = '0$minuto';
+    } else {
+      textminute = minuto.toString();
+    }
+    if (hour < 10) {
+      texthour = '0$hour';
+    } else {
+      texthour = hour.toString();
+    }
+    return "Falta $texthour:$textminute";
   }
 
   static ItemEvent? firstWhere(List<ItemEvent>? event) {
@@ -39,7 +35,7 @@ class Rutinas {
     int absTemp = 100000;
 
     event?.forEach((item) {
-      final fevent = item.fechahoraevento;
+      final fevent = item.fechahoraEvento;
 
       if (fevent != null) {
         final ahora = DateTime.now();

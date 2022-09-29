@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../helpers/globals/assets.dart';
 import '../../widgets/text.dart';
-import '../utils/clock.dart';
+import '../eventos/eventos/clock.dart';
 
 class AppbarInicio extends StatelessWidget {
   const AppbarInicio({Key? key}) : super(key: key);

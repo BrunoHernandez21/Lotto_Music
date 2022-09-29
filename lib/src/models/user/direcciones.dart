@@ -46,8 +46,13 @@ class DireccionesModel {
         mensaje: mensaje ?? this.mensaje,
       );
 
-  factory DireccionesModel.fromJson(String str) =>
-      DireccionesModel.fromMap(json.decode(str));
+  factory DireccionesModel.fromJson(String str) {
+    try {
+      return DireccionesModel.fromMap(json.decode(str));
+    } catch (e) {
+      return DireccionesModel(mensaje: "mensaje incomprensible");
+    }
+  }
 
   String toJson() => json.encode(toMap());
 

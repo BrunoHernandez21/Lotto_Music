@@ -50,8 +50,13 @@ class VideoModel {
         genero: genero ?? this.genero,
       );
 
-  factory VideoModel.fromJson(String str) =>
-      VideoModel.fromMap(json.decode(str));
+  factory VideoModel.fromJson(String str) {
+    try {
+      return VideoModel.fromMap(json.decode(str));
+    } catch (e) {
+      return VideoModel();
+    }
+  }
 
   String toJson() => json.encode(toMap());
 
@@ -62,7 +67,7 @@ class VideoModel {
         canal: json["canal"],
         fechaVideo: json["fecha_video"] == null
             ? null
-            : DateTime.parse(json["fecha_video"]),
+            : DateTime.parse(json["fecha_video"]).toLocal(),
         idVideo: json["id_video"],
         titulo: json["titulo"],
         urlVideo: json["url_video"],

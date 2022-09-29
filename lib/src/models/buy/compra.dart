@@ -54,17 +54,26 @@ class CompraModel {
         paymentMethodId: paymentMethodId ?? this.paymentMethodId,
       );
 
-  factory CompraModel.fromJson(String str) =>
-      CompraModel.fromMap(json.decode(str));
+  factory CompraModel.fromJson(String str) {
+    try {
+      return CompraModel.fromMap(json.decode(str));
+    } catch (e) {
+      return CompraModel();
+    }
+  }
 
   String toJson() => json.encode(toMap());
 
   factory CompraModel.fromMap(Map<String, dynamic> json) => CompraModel(
         id: json["id"] ?? 0,
-        fechaPagado: DateTime.parse(json["fecha_pagado"]),
+        fechaPagado: json["fecha_pagado"] == null
+            ? null
+            : DateTime.parse(json["fecha_pagado"]).toLocal(),
         stripeId: json["stripe_id"],
         status: json["status"],
-        fechaEmitido: DateTime.parse(json["fecha_emitido"]),
+        fechaEmitido: json["fecha_emitido"] == null
+            ? null
+            : DateTime.parse(json["fecha_emitido"]).toLocal(),
         impuesto: json["impuesto"],
         subTotal: json["sub_total"],
         descuentoOrden: json["descuento_orden"],

@@ -24,8 +24,13 @@ class StadisticsResponse {
         stadisticModel: stadisticModel ?? this.stadisticModel,
       );
 
-  factory StadisticsResponse.fromJson(String str) =>
-      StadisticsResponse.fromMap(json.decode(str));
+  factory StadisticsResponse.fromJson(String str) {
+    try {
+      return StadisticsResponse.fromMap(json.decode(str));
+    } catch (e) {
+      return StadisticsResponse(mensaje: "mensaje incomprensible");
+    }
+  }
 
   String toJson() => json.encode(toMap());
 

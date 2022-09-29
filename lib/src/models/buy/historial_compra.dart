@@ -40,8 +40,13 @@ class HistorialCompraModel {
         mensjae: mensjae ?? this.mensjae,
       );
 
-  factory HistorialCompraModel.fromJson(String str) =>
-      HistorialCompraModel.fromMap(json.decode(str));
+  factory HistorialCompraModel.fromJson(String str) {
+    try {
+      return HistorialCompraModel.fromMap(json.decode(str));
+    } catch (e) {
+      return HistorialCompraModel(mensjae: "respuesta incomprensible");
+    }
+  }
 
   String toJson() => json.encode(toMap());
 

@@ -60,7 +60,7 @@ class IterableVideo extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               EstadisticasYT(
-                videoID: eventoVideo.vidid ?? 0,
+                videoID: eventoVideo.vidId ?? 0,
               ),
               Container(
                 alignment: Alignment.centerLeft,
@@ -70,11 +70,11 @@ class IterableVideo extends StatelessWidget {
                   children: [
                     Textos.parrafoMAX(
                       texto:
-                          "Hora ${eventoVideo.fechahoraevento.toString().substring(11, 16)}",
+                          "Hora ${eventoVideo.fechahoraEvento.toString().substring(11, 16)}",
                     ),
                     Textos.parrafoMAX(
                       texto: Rutinas.comprobador(
-                        eventoVideo.fechahoraevento,
+                        eventoVideo.fechahoraEvento,
                       ),
                     ),
                   ],
@@ -227,15 +227,11 @@ class _ListVideosPaginacionState extends State<_ListaVideosEvent> {
                 const Expanded(child: SizedBox()),
                 Textos.parrafoMED(
                   texto:
-                      "Hora ${v.fechahoraevento.toString().substring(11, 16)}",
+                      "Hora ${v.fechahoraEvento.toString().substring(11, 16)}",
                 ),
                 Textos.parrafoMED(
-                  texto: Rutinas.comprobador(v.fechahoraevento),
-                ), /////////////////////////////////////////////
-                ///
-                ///
-                ///
-                ///Estadisticas
+                  texto: Rutinas.comprobador(v.fechahoraEvento),
+                ),
               ],
             ),
           )

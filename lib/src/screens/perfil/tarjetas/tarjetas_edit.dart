@@ -1,4 +1,8 @@
+import 'dart:convert';
+
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_credit_card/credit_card_brand.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
@@ -31,7 +35,6 @@ class _TarjetasEditState extends State<TarjetasEdit> {
     expiryDate = "${tarjeta?.expiryMonth ?? ""}/${tarjeta?.expiryYear ?? ""}";
     expirymounth.text = (tarjeta?.expiryMonth ?? "").toString();
     expiryyear.text = (tarjeta?.expiryYear ?? "").toString();
-    cvvCode.text = tarjeta?.cvc.toString() ?? "";
     cardHolderName.text = tarjeta?.holderName ?? "";
     selectedTipe = tarjeta?.type ?? "";
     isDefaul = tarjeta?.defaultPayment ?? false;
@@ -135,6 +138,9 @@ class _TarjetasEditState extends State<TarjetasEdit> {
                             maxLines: 1,
                             maxLength: 16,
                             controller: cardNumber,
+                            inputsFormatter: [
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
                             hintText: "Number Card",
                             textType: TextInputType.number,
                             onChanged: (a) {
@@ -156,6 +162,9 @@ class _TarjetasEditState extends State<TarjetasEdit> {
                                         maxLines: 1,
                                         maxLength: 2,
                                         controller: expirymounth,
+                                        inputsFormatter: [
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
                                         hintText: "Expired Date",
                                         onChanged: (a) {
                                           onChanged();
@@ -175,6 +184,9 @@ class _TarjetasEditState extends State<TarjetasEdit> {
                                         maxLines: 1,
                                         maxLength: 4,
                                         controller: expiryyear,
+                                        inputsFormatter: [
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
                                         hintText: "Expired Date",
                                         onChanged: (a) {
                                           onChanged();
@@ -192,6 +204,9 @@ class _TarjetasEditState extends State<TarjetasEdit> {
                                       padding: const EdgeInsets.all(15.0),
                                       child: InputsText.box(
                                         maxLength: 4,
+                                        inputsFormatter: [
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
                                         maxLines: 1,
                                         obscure: true,
                                         controller: cvvCode,
@@ -228,44 +243,49 @@ class _TarjetasEditState extends State<TarjetasEdit> {
                     const SizedBox(
                       height: 20,
                     ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 40.0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          backgroundColor: const Color(0xff1b447b),
                         ),
-                        backgroundColor: const Color(0xff1b447b),
-                      ),
-                      child: Container(
-                        margin: const EdgeInsets.all(12),
-                        child: const Text(
-                          'Actualizar',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'halter',
-                            fontSize: 14,
-                            package: 'flutter_credit_card',
+                        child: Container(
+                          margin: const EdgeInsets.all(12),
+                          child: const Text(
+                            'Actualizar',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'halter',
+                              fontSize: 14,
+                              package: 'flutter_credit_card',
+                            ),
                           ),
                         ),
+                        onPressed: () async {
+                          final appleInBytes = utf8.encode(cvvCode.text);
+                          final value = sha256.convert(appleInBytes);
+                          final tarjeta = TarjetaModel(
+                            id: id,
+                            activo: true,
+                            cardNumber: cardNumber.text,
+                            expiryMonth: int.tryParse(expirymounth.text) ?? 0,
+                            expiryYear: int.tryParse(expiryyear.text) ?? 0,
+                            holderName: cardHolderName.text,
+                            cvc: value.toString(),
+                            type: selectedTipe,
+                            defaultPayment: isDefaul,
+                          );
+                          if (await Orquestador.user.onUpdateTarjetas(
+                            context: context,
+                            tarjeta: tarjeta,
+                          )) {
+                            Navigator.pop(context);
+                          }
+                        },
                       ),
-                      onPressed: () async {
-                        final tarjeta = TarjetaModel(
-                          id: id,
-                          activo: true,
-                          cardNumber: cardNumber.text,
-                          expiryMonth: int.tryParse(expirymounth.text) ?? 0,
-                          expiryYear: int.tryParse(expiryyear.text) ?? 0,
-                          holderName: cardHolderName.text,
-                          cvc: int.tryParse(cvvCode.text) ?? 0,
-                          type: selectedTipe,
-                          defaultPayment: isDefaul,
-                        );
-                        if (await Orquestador.user.onUpdateTarjetas(
-                          context: context,
-                          tarjeta: tarjeta,
-                        )) {
-                          Navigator.pop(context);
-                        }
-                      },
                     ),
                   ],
                 ),

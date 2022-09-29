@@ -1,11 +1,11 @@
 class URL {
   static const String ytKey = "key=AIzaSyDJGZnO3AZ2fkYOctsTClRVuShJWRMpCt8";
-  //http://187.213.51.165:25567
+  //http://187.213.26.255:25567
   //https://lotto.inclusive.com.mx
-  static const String socket = 'https://lotto.inclusive.com.mx';
-  //http://187.213.51.165:25566/api/v3/
+  static const String socket = 'http://187.213.26.255:25567';
+  //http://187.213.26.255:25566/api/v3/
   //https://lotto.inclusive.com.mx/api/v3/
-  static const String _base = "https://lotto.inclusive.com.mx/api/v3/";
+  static const String _base = "http://187.213.26.255:25566/api/v3/";
   static const String _baseYT = "https://www.googleapis.com/youtube/v3";
   static const String searchYT = "$_baseYT/search?$ytKey";
   static const String estYT = "$_baseYT/videos?$ytKey";

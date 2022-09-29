@@ -8,16 +8,12 @@ class _Shopingcar {
       token: acountB.state.acount.accessToken,
     );
 
-    if (response == null) {
-      planB.add(OnLoadCarrito(itemsCarrito: const <ItemsCarrito>[]));
-      return false;
-    }
     if (response.mensaje == null) {
       planB.add(OnLoadCarrito(itemsCarrito: response.itemsCarrito));
       return true;
     }
 
-    return true;
+    return false;
   }
 
   Future<String?> onAddCarrito({
@@ -25,14 +21,11 @@ class _Shopingcar {
     required CarritoModel orden,
   }) async {
     final acountB = BlocProvider.of<AcountBloc>(context);
-    final CarritoModel? resp = await ShoppingcarService.create(
+    final CarritoModel resp = await ShoppingcarService.create(
       token: acountB.state.acount.accessToken,
-      body: orden.toJson(),
+      body: orden.toMap(),
     );
 
-    if (resp == null) {
-      return "error de coneccion";
-    }
     if (resp.mensaje != null) {
       return resp.mensaje;
     }
@@ -46,23 +39,22 @@ class _Shopingcar {
     final acountB = BlocProvider.of<AcountBloc>(context);
     final planB = BlocProvider.of<CarritoBloc>(context);
     final resp = await ShoppingcarService.eliminar(
-        token: acountB.state.acount.accessToken, id: itemsCarrito.id);
-    if (resp == null) {
+      token: acountB.state.acount.accessToken,
+      id: itemsCarrito.id,
+    );
+    if (resp == "Eliminado Satisfactoriamente") {
+      final newitem = planB.state.itemsCarrito;
+      try {
+        newitem!.remove(itemsCarrito);
+      } catch (e) {
+        newitem;
+      }
+      planB.add(OnLoadCarrito(itemsCarrito: newitem));
+    } else {
       DialogAlert.ok(
         context: context,
-        text: "Error de conexion",
+        text: resp,
       );
-      return false;
-    }
-    if (resp == "Eliminado Satisfactoriamente") {
-      try {
-        final newitem = planB.state.itemsCarrito;
-        newitem!.remove(itemsCarrito);
-        planB.add(OnLoadCarrito(itemsCarrito: newitem));
-        return true;
-      } catch (e) {
-        return false;
-      }
     }
 
     return true;

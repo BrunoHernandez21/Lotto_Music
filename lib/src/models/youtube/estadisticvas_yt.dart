@@ -30,8 +30,13 @@ class EstadisticasYt {
         pageInfo: pageInfo ?? this.pageInfo,
       );
 
-  factory EstadisticasYt.fromJson(String str) =>
-      EstadisticasYt.fromMap(json.decode(str));
+  factory EstadisticasYt.fromJson(String str) {
+    try {
+      return EstadisticasYt.fromMap(json.decode(str));
+    } catch (e) {
+      return EstadisticasYt();
+    }
+  }
 
   String toJson() => json.encode(toMap());
 

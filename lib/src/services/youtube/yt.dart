@@ -1,6 +1,6 @@
 // ignore: unused_import
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:lotto_music/src/cores/webDart/webcontroller.dart';
 
 import '../../helpers/globals/ruts_services.dart';
 import '../../models/youtube/estadisticvas_yt.dart';
@@ -16,34 +16,35 @@ class YTService {
   static const String _estadisticas = "${URL.estYT}&part=statistics&id=";
 /////////////////////////////
   /// separador
-  static Future<YoutubeModel?> top() async {
-    try {
-      final urI = Uri.parse(_tops);
-      final resp = await http.get(
-        urI,
-      );
-      final out = YoutubeModel.fromJson(resp.body);
-      return out;
-    } catch (e) {
-      return null;
+  static Future<YoutubeModel> top() async {
+    final urI = Uri.parse(_tops);
+    final resp = await DartWeb.get(
+      url: urI,
+    );
+    if (resp == null) {
+      return YoutubeModel();
     }
+    final out = YoutubeModel.fromJson(resp);
+    return out;
   }
 
   static Future<YoutubeModel?> busqueda({required String query}) async {
     final urI = Uri.parse(_search + query.replaceAll(" ", "+"));
-    final resp = await http.get(
-      urI,
-    );
-    final out = YoutubeModel.fromJson(resp.body);
+    final resp = await DartWeb.get(url: urI);
+    if (resp == null) {
+      return YoutubeModel();
+    }
+    final out = YoutubeModel.fromJson(resp);
     return out;
   }
 
-  static Future<YoutubeModel?> relative({required String ytID}) async {
+  static Future<YoutubeModel> relative({required String ytID}) async {
     final urI = Uri.parse(_relative + ytID);
-    final resp = await http.get(
-      urI,
-    );
-    final out = YoutubeModel.fromJson(resp.body);
+    final resp = await DartWeb.get(url: urI);
+    if (resp == null) {
+      return YoutubeModel();
+    }
+    final out = YoutubeModel.fromJson(resp);
     if (out.itemsyt?.isNotEmpty ?? false) {
       List<ItemYT> corrector = [];
       out.itemsyt?.forEach((element) {
@@ -54,16 +55,16 @@ class YTService {
       out.itemsyt = corrector;
       return out;
     }
-
     return out;
   }
 
   static Future<EstadisticasYt?> estadisticas({required String ytID}) async {
     final urI = Uri.parse(_estadisticas + ytID);
-    final resp = await http.get(
-      urI,
-    );
-    final out = EstadisticasYt.fromJson(resp.body);
+    final resp = await DartWeb.get(url: urI);
+    if (resp == null) {
+      return EstadisticasYt();
+    }
+    final out = EstadisticasYt.fromJson(resp);
     return out;
   }
 }

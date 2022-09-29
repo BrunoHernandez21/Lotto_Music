@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_credit_card/credit_card_brand.dart';
@@ -145,6 +148,9 @@ class _TarjetasState extends State<TarjetasADD> {
                                       child: InputsText.box(
                                         maxLines: 1,
                                         maxLength: 2,
+                                        inputsFormatter: [
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
                                         controller: expirymounth,
                                         hintText: "Expired Date",
                                         onChanged: (a) {
@@ -164,6 +170,9 @@ class _TarjetasState extends State<TarjetasADD> {
                                       child: InputsText.box(
                                         maxLines: 1,
                                         maxLength: 4,
+                                        inputsFormatter: [
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
                                         controller: expiryyear,
                                         hintText: "Expired Date",
                                         onChanged: (a) {
@@ -184,6 +193,9 @@ class _TarjetasState extends State<TarjetasADD> {
                                         maxLength: 4,
                                         maxLines: 1,
                                         obscure: true,
+                                        inputsFormatter: [
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
                                         controller: cvvCode,
                                         hintText: "cvv Code",
                                         onChanged: (a) {
@@ -238,6 +250,8 @@ class _TarjetasState extends State<TarjetasADD> {
                         ),
                       ),
                       onPressed: () async {
+                        final appleInBytes = utf8.encode(cvvCode.text);
+                        final value = sha256.convert(appleInBytes);
                         final tarjeta = TarjetaModel(
                           id: id,
                           activo: true,
@@ -245,7 +259,7 @@ class _TarjetasState extends State<TarjetasADD> {
                           expiryMonth: int.tryParse(expirymounth.text) ?? 0,
                           expiryYear: int.tryParse(expiryyear.text) ?? 0,
                           holderName: cardHolderName.text,
-                          cvc: int.tryParse(cvvCode.text) ?? 0,
+                          cvc: value.toString(),
                           type: selectedTipe,
                           defaultPayment: isDefaul,
                         );

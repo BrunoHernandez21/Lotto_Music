@@ -8,9 +8,9 @@ class _Youtube {
   }) async {
     final ytB = BlocProvider.of<YoutubeBloc>(context);
     final resp = await YTService.top();
-    if (resp != null) {
-      ytB.add(OnInitVideosYT(yt: resp));
-    }
+
+    ytB.add(OnInitVideosYT(yt: resp));
+
     return;
   }
 
@@ -20,12 +20,12 @@ class _Youtube {
   }) async {
     if (relaionado == null) {
       final resp = await YTService.top();
-      return resp?.itemsyt;
+      return resp.itemsyt;
     }
     final resp = await YTService.relative(
       ytID: relaionado,
     );
-    return resp?.itemsyt;
+    return resp.itemsyt;
   }
 
   Future<List<ItemYT>?> onSearchYT(

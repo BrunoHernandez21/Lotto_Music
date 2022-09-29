@@ -50,15 +50,22 @@ class StadisticModel {
         sharedCount: sharedCount ?? this.sharedCount,
       );
 
-  factory StadisticModel.fromJson(String str) =>
-      StadisticModel.fromMap(json.decode(str));
+  factory StadisticModel.fromJson(String str) {
+    try {
+      return StadisticModel.fromMap(json.decode(str));
+    } catch (e) {
+      return StadisticModel();
+    }
+  }
 
   String toJson() => json.encode(toMap());
 
   factory StadisticModel.fromMap(Map<String, dynamic> json) => StadisticModel(
         id: json["id"] ?? 0,
         videoId: json["video_id"],
-        fecha: DateTime.parse(json["fecha"]),
+        fecha: json["fecha"] == null
+            ? null
+            : DateTime.parse(json["fecha"]).toLocal(),
         likeCount: json["like_count"],
         viewCount: json["views_count"],
         commentsCount: json["comments_count"],

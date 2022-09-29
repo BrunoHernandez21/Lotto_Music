@@ -38,8 +38,13 @@ class GanadorModel {
         eventoUsuarioId: eventoUsuarioId ?? this.eventoUsuarioId,
       );
 
-  factory GanadorModel.fromJson(String str) =>
-      GanadorModel.fromMap(json.decode(str));
+  factory GanadorModel.fromJson(String str) {
+    try {
+      return GanadorModel.fromMap(json.decode(str));
+    } catch (e) {
+      return GanadorModel();
+    }
+  }
 
   String toJson() => json.encode(toMap());
 

@@ -22,7 +22,7 @@ class Estadisticas extends StatelessWidget {
               final List<StadisticModel> estadisticas = [];
               stEst.allStadistics?.stadisticModel?.forEach(
                 ((element) {
-                  if (element.videoId == stEvent.eventoVideo.vidid) {
+                  if (element.videoId == stEvent.eventoVideo.vidId) {
                     estadisticas.add(element);
                   }
                 }),

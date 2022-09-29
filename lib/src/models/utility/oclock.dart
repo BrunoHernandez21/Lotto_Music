@@ -18,13 +18,20 @@ class OclockResponse {
         mensaje: mensaje ?? this.mensaje,
       );
 
-  factory OclockResponse.fromJson(String str) =>
-      OclockResponse.fromMap(json.decode(str));
+  factory OclockResponse.fromJson(String str) {
+    try {
+      return OclockResponse.fromMap(json.decode(str));
+    } catch (e) {
+      return OclockResponse(mensaje: "mensaje incomprensible");
+    }
+  }
 
   String toJson() => json.encode(toMap());
 
   factory OclockResponse.fromMap(Map<String, dynamic> json) => OclockResponse(
-        time: DateTime.parse(json["time"]),
+        time: json["time"] == null
+            ? null
+            : DateTime.parse(json["time"]).toLocal(),
         mensaje: json["mensaje"],
       );
 
