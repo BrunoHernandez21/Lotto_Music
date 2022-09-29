@@ -1,40 +1,27 @@
 # lotto_music
-
-Flutter 3.0.5 • channel stable • https://github.com/flutter/flutter.git
-Framework • revision f1875d570e (hace 13 días) • 2022-07-13 11:24:16 -0700
-Engine • revision e85ea0e79c
-Tools • Dart 2.17.6 • DevTools 2.12.2
+Flutter 3.3.3 • channel stable • https://github.com/flutter/flutter.git
+Framework • revision 18a827f393 (hace 22 horas) • 2022-09-28 10:03:14 -0700
+Engine • revision 5c984c26eb
+Tools • Dart 2.18.2 • DevTools 2.15.0
 
 
 Android emulator Android version API 33
 
-
 TODO: 
 ```
-pedir CCV de la tarjeta y no guardarlo en el backEND                            // urgente
-Agregar el costo del evento a la peticion                                       // espera
-terminar de separar plan y suscribcion                                          // espera
-Reintentar comprar una orden y cancelarla                                       // espera
-websocket                                                                       // espera
-agregar la respuesta directamente a la lista existente                          // espera
-
-// apuestas que hiciste
-historial de apuestas activos       mezclar =>                                              // espera
-historial de apuestas inactivos     mezclar <=                                              // espera
-historial de apuestas ganadas.                                                              // espera icono trofeo
+Propiedades usuario                             // espera
+terminar de separar plan y suscribcion          // espera
+notificaciones de confirmacion de accion        // creado no implementado (websocket)
+Reintentar comprar una orden y cancelarla       // espera
 ```
-hora de los eventos                                                             // estandarisar
-websook 
-notificaciones de confirmacion de accion                                        // ------
 
+TODO: solicitud personal 
+```
+solicitar colores para la app                   // ------
+```
 
-
-solicitud personal
-solicitar colores para la app                                                   // ------
-
-// podria ser
-Se pueden guardar los videos y ponerlos como offline para verlos como playlist    
-<!-- Realizado -->
-revisar modelos y crear condicon en modelos                                     
-necesario interceptors en flutter                                               
-Estandarisar la peticion de estadisticas de los videos                          
+TODO: podria ser 
+```
+Se pueden guardar los videos y ponerlos 
+como offline para verlos como playlist    
+```

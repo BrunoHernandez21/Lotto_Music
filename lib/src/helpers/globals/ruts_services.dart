@@ -8,6 +8,7 @@ class URL {
   static const String _base = "https://lotto.inclusive.com.mx/api/v3/";
   static const String _baseYT = "https://www.googleapis.com/youtube/v3";
   static const String searchYT = "$_baseYT/search?$ytKey";
+  static const String listItems = "$_baseYT/playlistItems?$ytKey";
   static const String estYT = "$_baseYT/videos?$ytKey";
 
   static const String auth = "${_base}auth";

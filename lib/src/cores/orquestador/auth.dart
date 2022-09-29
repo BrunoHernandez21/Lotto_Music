@@ -61,7 +61,7 @@ class _Auth {
     final direccionesB = BlocProvider.of<DireccionesBloc>(context);
     acountB.add(OnLogout());
     carB.add(OnLoadCarrito(itemsCarrito: null));
-    userB.add(OnLoadUser(user: UserModel()));
+    userB.add(OnLoadUser(user: null));
     carteraB.add(OnLoadCartera(cartera: CarteraModel()));
     tarjetasB.add(OnLoadTarjetas(tarjetas: null));
     direccionesB.add(OnLoadDirecciones(direcciones: null));
