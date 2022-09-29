@@ -56,7 +56,18 @@ class _ListVideosState extends State<ListVideosYT> {
                 milliseconds: 300,
               ),
               child: bodyTarjeta(
-                v: state.yt?.itemsyt?[i] ?? ItemYT(),
+                v: state.yt?.itemsyt?[i] ??
+                    ItemYT(
+                        resourceId: ResourceId(),
+                        snippet: SnippetYT(
+                          channelTitle: "",
+                          description: "",
+                          title: "",
+                          thumbnails: Thumbnails(
+                            medium: Thumbnail(),
+                            thumbnailsDefault: Thumbnail(),
+                          ),
+                        )),
                 context: context,
               ),
             );
@@ -86,7 +97,7 @@ class _ListVideosState extends State<ListVideosYT> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: imagen(v.snippet?.thumbnails?.thumbnailsDefault?.url)),
+                  child: imagen(v.snippet.thumbnails.thumbnailsDefault.url)),
               const SizedBox(
                 width: 6,
               ),
@@ -97,10 +108,9 @@ class _ListVideosState extends State<ListVideosYT> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Textos.tituloMIN(
-                        texto: v.snippet?.title ?? "", renglones: 2),
+                    Textos.tituloMIN(texto: v.snippet.title, renglones: 2),
                     Textos.parrafoMED(
-                        texto: v.snippet?.channelTitle ?? "", renglones: 1),
+                        texto: v.snippet.channelTitle, renglones: 1),
                   ],
                 ),
               )

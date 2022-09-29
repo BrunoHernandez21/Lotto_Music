@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:lotto_music/src/models/video/stadistics_response.dart';
 
 import '../../cores/webDart/webcontroller.dart';
-import '../../helpers/globals/ruts_services.dart';
+import '../../helpers/globals/routes_services.dart';
 import '../../models/video/evento_video.dart';
 import '../../models/video/grupos.dart';
 

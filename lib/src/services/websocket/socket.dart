@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 import '../../cores/push_notification.dart';
-import '../../helpers/globals/ruts_services.dart';
+import '../../helpers/globals/routes_services.dart';
 
 class SocketService {
   // Dart client

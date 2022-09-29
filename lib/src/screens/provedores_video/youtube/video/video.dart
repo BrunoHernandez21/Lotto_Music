@@ -25,7 +25,8 @@ class _VideoState extends State<Video> {
     return BlocBuilder<YTVideoBloc, YTVideoState>(
       builder: (context, state) {
         final controller = YoutubePlayerController(
-          initialVideoId: state.eventoVideo?.id?.videoId ?? "dO1rMeYnOmM",
+          initialVideoId:
+              state.eventoVideo?.resourceId.videoId ?? "dO1rMeYnOmM",
           flags: const YoutubePlayerFlags(
             hideThumbnail: true,
             mute: false,
@@ -66,16 +67,16 @@ class _VideoState extends State<Video> {
                         alignment: Alignment.centerLeft,
                         child: ListTile(
                           title: Textos.tituloMIN(
-                            texto: state.eventoVideo?.snippet?.title ?? "",
+                            texto: state.eventoVideo?.snippet.title ?? "",
                             color: Colors.black,
                           ),
                           subtitle: Textos.parrafoMED(
                             texto:
-                                state.eventoVideo?.snippet?.channelTitle ?? "",
+                                state.eventoVideo?.snippet.channelTitle ?? "",
                           ),
                         )),
                     _ListaVideosYT(
-                      videID: state.eventoVideo?.id?.videoId,
+                      videID: state.eventoVideo?.resourceId.videoId,
                     ),
                   ],
                 ),
@@ -158,7 +159,7 @@ class __ListaVideosYTState extends State<_ListaVideosYT> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: imagen(v.snippet?.thumbnails?.thumbnailsDefault?.url)),
+              child: imagen(v.snippet.thumbnails.thumbnailsDefault.url)),
           const SizedBox(
             width: 6,
           ),
@@ -170,11 +171,11 @@ class __ListaVideosYTState extends State<_ListaVideosYT> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Textos.parrafoMED(
-                  texto: v.snippet?.title ?? "",
+                  texto: v.snippet.title,
                   renglones: 2,
                 ),
                 Textos.parrafoMIN(
-                  texto: v.snippet?.channelTitle ?? "",
+                  texto: v.snippet.channelTitle,
                   renglones: 1,
                 ),
               ],

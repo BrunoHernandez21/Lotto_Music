@@ -25,7 +25,7 @@ import 'package:lotto_music/src/cores/orquestador/orquestador.dart';
 import 'package:lotto_music/src/cores/push_notification.dart';
 import 'package:lotto_music/src/cores/webDart/webcontroller.dart';
 import 'package:lotto_music/src/helpers/globals/const.dart';
-import 'package:lotto_music/src/screens/ruts_screens.dart';
+import 'package:lotto_music/src/screens/routes_screens.dart';
 import 'package:lotto_music/src/screens/admin.dart';
 import 'package:lotto_music/src/services/websocket/socket.dart';
 

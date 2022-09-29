@@ -6,35 +6,14 @@ import 'dart:convert';
 
 class YoutubeModel {
   YoutubeModel({
-    this.kind,
-    this.etag,
-    this.nextPageToken,
-    this.regionCode,
-    this.pageInfo,
     this.itemsyt,
   });
 
-  String? kind;
-  String? etag;
-  String? nextPageToken;
-  String? regionCode;
-  PageInfo? pageInfo;
   List<ItemYT>? itemsyt;
-
   YoutubeModel copyWith({
-    String? kind,
-    String? etag,
-    String? nextPageToken,
-    String? regionCode,
-    PageInfo? pageInfo,
     List<ItemYT>? itemsyt,
   }) =>
       YoutubeModel(
-        kind: kind ?? this.kind,
-        etag: etag ?? this.etag,
-        nextPageToken: nextPageToken ?? this.nextPageToken,
-        regionCode: regionCode ?? this.regionCode,
-        pageInfo: pageInfo ?? this.pageInfo,
         itemsyt: itemsyt ?? this.itemsyt,
       );
 
@@ -49,51 +28,31 @@ class YoutubeModel {
   String toJson() => json.encode(toMap());
 
   factory YoutubeModel.fromMap(Map<String, dynamic> json) => YoutubeModel(
-        kind: json["kind"],
-        etag: json["etag"],
-        nextPageToken: json["nextPageToken"],
-        regionCode: json["regionCode"],
-        pageInfo: json["pageInfo"] == null
-            ? null
-            : PageInfo.fromMap(json["pageInfo"]),
         itemsyt: json["items"] == null
             ? null
             : List<ItemYT>.from(json["items"].map((x) => ItemYT.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
-        "kind": kind,
-        "etag": etag,
-        "nextPageToken": nextPageToken,
-        "regionCode": regionCode,
-        "pageInfo": pageInfo?.toMap(),
         "items": List<dynamic>.from(itemsyt?.map((x) => x.toMap()) ?? []),
       };
 }
 
 class ItemYT {
   ItemYT({
-    this.kind,
-    this.etag,
-    this.id,
-    this.snippet,
+    required this.resourceId,
+    required this.snippet,
   });
 
-  String? kind;
-  String? etag;
-  dynamic id;
-  Snippet? snippet;
+  ResourceId resourceId;
+  SnippetYT snippet;
 
   ItemYT copyWith({
-    String? kind,
-    String? etag,
-    dynamic id,
-    Snippet? snippet,
+    ResourceId? resourceId,
+    SnippetYT? snippet,
   }) =>
       ItemYT(
-        kind: kind ?? this.kind,
-        etag: etag ?? this.etag,
-        id: id ?? this.id,
+        resourceId: resourceId ?? this.resourceId,
         snippet: snippet ?? this.snippet,
       );
 
@@ -102,68 +61,67 @@ class ItemYT {
   String toJson() => json.encode(toMap());
 
   factory ItemYT.fromMap(Map<String, dynamic> json) => ItemYT(
-        kind: json["kind"],
-        etag: json["etag"],
-        id: json["id"],
-        snippet:
-            json["snippet"] == null ? null : Snippet.fromMap(json["snippet"]),
+        resourceId: json["resourceId"],
+        snippet: json["snippet"] == null
+            ? SnippetYT(
+                channelTitle: "",
+                description: "",
+                title: "",
+                thumbnails: Thumbnails(
+                  high: Thumbnail(),
+                  medium: Thumbnail(),
+                  standard: Thumbnail(),
+                  thumbnailsDefault: Thumbnail(),
+                ),
+              )
+            : SnippetYT.fromMap(json["snippet"]),
       );
 
   Map<String, dynamic> toMap() => {
-        "kind": kind,
-        "etag": etag,
-        "id": id,
-        "snippet": snippet?.toMap(),
+        "resourceId": resourceId,
+        "snippet": snippet.toMap(),
       };
 }
 
-class Snippet {
-  Snippet({
+class SnippetYT {
+  SnippetYT({
     this.publishedAt,
     this.channelId,
-    this.title,
-    this.description,
-    this.thumbnails,
-    this.channelTitle,
-    this.liveBroadcastContent,
-    this.publishTime,
+    required this.title,
+    required this.description,
+    required this.thumbnails,
+    required this.channelTitle,
   });
 
   DateTime? publishedAt;
   String? channelId;
-  String? title;
-  String? description;
-  Thumbnails? thumbnails;
-  String? channelTitle;
-  String? liveBroadcastContent;
-  DateTime? publishTime;
+  String title;
+  String description;
+  Thumbnails thumbnails;
+  String channelTitle;
 
-  Snippet copyWith({
+  SnippetYT copyWith({
     DateTime? publishedAt,
     String? channelId,
     String? title,
     String? description,
     Thumbnails? thumbnails,
     String? channelTitle,
-    String? liveBroadcastContent,
-    DateTime? publishTime,
   }) =>
-      Snippet(
+      SnippetYT(
         publishedAt: publishedAt ?? this.publishedAt,
         channelId: channelId ?? this.channelId,
         title: title ?? this.title,
         description: description ?? this.description,
         thumbnails: thumbnails ?? this.thumbnails,
         channelTitle: channelTitle ?? this.channelTitle,
-        liveBroadcastContent: liveBroadcastContent ?? this.liveBroadcastContent,
-        publishTime: publishTime ?? this.publishTime,
       );
 
-  factory Snippet.fromJson(String str) => Snippet.fromMap(json.decode(str));
+  factory SnippetYT.fromJson(String str) => SnippetYT.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory Snippet.fromMap(Map<String, dynamic> json) => Snippet(
+  factory SnippetYT.fromMap(Map<String, dynamic> json) => SnippetYT(
         publishedAt: json["publishedAt"] == null
             ? null
             : DateTime.parse(json["publishedAt"]).toLocal(),
@@ -172,10 +130,6 @@ class Snippet {
         description: json["description"],
         thumbnails: Thumbnails.fromMap(json["thumbnails"]),
         channelTitle: json["channelTitle"],
-        liveBroadcastContent: json["liveBroadcastContent"],
-        publishTime: json["publishTime"] == null
-            ? null
-            : DateTime.parse(json["publishTime"]).toLocal(),
       );
 
   Map<String, dynamic> toMap() => {
@@ -183,33 +137,39 @@ class Snippet {
         "channelId": channelId,
         "title": title,
         "description": description,
-        "thumbnails": thumbnails?.toMap(),
+        "thumbnails": thumbnails.toMap(),
         "channelTitle": channelTitle,
-        "liveBroadcastContent": liveBroadcastContent,
-        "publishTime": publishTime?.toIso8601String(),
       };
 }
 
 class Thumbnails {
   Thumbnails({
-    this.thumbnailsDefault,
-    this.medium,
+    required this.thumbnailsDefault,
+    required this.medium,
     this.high,
+    this.standard,
+    this.maxres,
   });
 
-  Default? thumbnailsDefault;
-  Default? medium;
-  Default? high;
+  final Thumbnail thumbnailsDefault;
+  final Thumbnail medium;
+  final Thumbnail? high;
+  final Thumbnail? standard;
+  final Thumbnail? maxres;
 
   Thumbnails copyWith({
-    Default? thumbnailsDefault,
-    Default? medium,
-    Default? high,
+    Thumbnail? thumbnailsDefault,
+    Thumbnail? medium,
+    Thumbnail? high,
+    Thumbnail? standard,
+    Thumbnail? maxres,
   }) =>
       Thumbnails(
         thumbnailsDefault: thumbnailsDefault ?? this.thumbnailsDefault,
         medium: medium ?? this.medium,
         high: high ?? this.high,
+        standard: standard ?? this.standard,
+        maxres: maxres ?? this.maxres,
       );
 
   factory Thumbnails.fromJson(String str) =>
@@ -218,48 +178,61 @@ class Thumbnails {
   String toJson() => json.encode(toMap());
 
   factory Thumbnails.fromMap(Map<String, dynamic> json) => Thumbnails(
-        thumbnailsDefault: Default.fromMap(json["default"]),
-        medium: Default.fromMap(json["medium"]),
-        high: Default.fromMap(json["high"]),
+        thumbnailsDefault: json["default"] == null
+            ? Thumbnail()
+            : Thumbnail.fromMap(json["default"]),
+        medium: json["medium"] == null
+            ? Thumbnail()
+            : Thumbnail.fromMap(json["medium"]),
+        high: json["high"] == null
+            ? Thumbnail()
+            : Thumbnail.fromMap(json["high"]),
+        standard: json["standard"] == null
+            ? Thumbnail()
+            : Thumbnail.fromMap(json["standard"]),
+        maxres:
+            json["maxres"] == null ? null : Thumbnail.fromMap(json["maxres"]),
       );
 
   Map<String, dynamic> toMap() => {
-        "default": thumbnailsDefault?.toMap(),
-        "medium": medium?.toMap(),
+        "default": thumbnailsDefault.toMap(),
+        "medium": medium.toMap(),
         "high": high?.toMap(),
+        "standard": standard?.toMap(),
+        "maxres": maxres?.toMap(),
       };
 }
 
-class Default {
-  Default({
-    this.url,
-    this.width,
-    this.height,
+class Thumbnail {
+  Thumbnail({
+    this.url = "",
+    this.width = 0,
+    this.height = 0,
   });
 
-  String? url;
-  int? width;
-  int? height;
+  final String url;
+  final int width;
+  final int height;
 
-  Default copyWith({
+  Thumbnail copyWith({
     String? url,
     int? width,
     int? height,
   }) =>
-      Default(
+      Thumbnail(
         url: url ?? this.url,
         width: width ?? this.width,
         height: height ?? this.height,
       );
 
-  factory Default.fromJson(String str) => Default.fromMap(json.decode(str));
+  factory Thumbnail.fromJson(String str) => Thumbnail.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory Default.fromMap(Map<String, dynamic> json) => Default(
-        url: json["url"],
-        width: json["width"],
-        height: json["height"],
+  factory Thumbnail.fromMap(Map<String, dynamic> json) => Thumbnail(
+        url: json["url"] ?? "",
+        width: json["width"] ?? 0,
+        height: json["height"] ?? 0,
       );
 
   Map<String, dynamic> toMap() => {
@@ -299,5 +272,39 @@ class PageInfo {
   Map<String, dynamic> toMap() => {
         "totalResults": totalResults,
         "resultsPerPage": resultsPerPage,
+      };
+}
+
+class ResourceId {
+  ResourceId({
+    this.kind = "",
+    this.videoId = "",
+  });
+
+  final String kind;
+  final String videoId;
+
+  ResourceId copyWith({
+    String? kind,
+    String? videoId,
+  }) =>
+      ResourceId(
+        kind: kind ?? this.kind,
+        videoId: videoId ?? this.videoId,
+      );
+
+  factory ResourceId.fromJson(String str) =>
+      ResourceId.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory ResourceId.fromMap(Map<String, dynamic> json) => ResourceId(
+        kind: json["kind"] ?? "",
+        videoId: json["videoId"] ?? "",
+      );
+
+  Map<String, dynamic> toMap() => {
+        "kind": kind,
+        "videoId": videoId,
       };
 }

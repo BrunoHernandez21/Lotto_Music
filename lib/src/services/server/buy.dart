@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:lotto_music/src/cores/webDart/webcontroller.dart';
 import 'package:lotto_music/src/models/buy/historial_compra.dart';
 
-import '../../helpers/globals/ruts_services.dart';
+import '../../helpers/globals/routes_services.dart';
 
 class BuyService {
   static const String _checkout = "${URL.buy}/orders/checkout";
