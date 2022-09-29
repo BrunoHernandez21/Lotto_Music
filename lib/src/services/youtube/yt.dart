@@ -1,9 +1,11 @@
 // ignore: unused_import
 import 'dart:convert';
 import 'package:lotto_music/src/cores/webDart/webcontroller.dart';
+import 'package:lotto_music/src/models/youtube/tops_yt.dart';
 
-import '../../helpers/globals/ruts_services.dart';
+import '../../helpers/globals/routes_services.dart';
 import '../../models/youtube/estadisticvas_yt.dart';
+import '../../models/youtube/search_yt.dart';
 import '../../models/youtube/youtube.dart';
 
 class YTService {
@@ -25,18 +27,18 @@ class YTService {
     if (resp == null) {
       return YoutubeModel();
     }
-    final out = YoutubeModel.fromJson(resp);
-    return out;
+    final out = TopYoutube.fromJson(resp);
+    return out.toYouModel();
   }
 
-  static Future<YoutubeModel?> busqueda({required String query}) async {
+  static Future<YoutubeModel> busqueda({required String query}) async {
     final urI = Uri.parse(_search + query.replaceAll(" ", "+"));
     final resp = await DartWeb.get(url: urI);
     if (resp == null) {
       return YoutubeModel();
     }
-    final out = YoutubeModel.fromJson(resp);
-    return out;
+    final out = SearchYoutube.fromJson(resp);
+    return out.toYouModel();
   }
 
   static Future<YoutubeModel> relative({required String ytID}) async {
@@ -45,18 +47,8 @@ class YTService {
     if (resp == null) {
       return YoutubeModel();
     }
-    final out = YoutubeModel.fromJson(resp);
-    if (out.itemsyt?.isNotEmpty ?? false) {
-      List<ItemYT> corrector = [];
-      out.itemsyt?.forEach((element) {
-        if (element.snippet != null) {
-          corrector.add(element);
-        }
-      });
-      out.itemsyt = corrector;
-      return out;
-    }
-    return out;
+    final out = SearchYoutube.fromJson(resp);
+    return out.toYouModel();
   }
 
   static Future<EstadisticasYt?> estadisticas({required String ytID}) async {

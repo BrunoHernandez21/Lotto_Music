@@ -122,7 +122,7 @@ class _BodySearch extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: imagen(v.snippet?.thumbnails?.thumbnailsDefault?.url)),
+              child: imagen(v.snippet.thumbnails.thumbnailsDefault.url)),
           const SizedBox(
             width: 6,
           ),
@@ -134,11 +134,11 @@ class _BodySearch extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Textos.parrafoMED(
-                  texto: v.snippet?.title ?? "",
+                  texto: v.snippet.title,
                   renglones: 2,
                 ),
                 Textos.parrafoMIN(
-                  texto: v.snippet?.channelTitle ?? "",
+                  texto: v.snippet.channelTitle,
                   renglones: 1,
                 ),
               ],

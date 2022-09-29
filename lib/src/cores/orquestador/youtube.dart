@@ -19,8 +19,7 @@ class _Youtube {
     required String? relaionado,
   }) async {
     if (relaionado == null) {
-      final resp = await YTService.top();
-      return resp.itemsyt;
+      return null;
     }
     final resp = await YTService.relative(
       ytID: relaionado,
@@ -33,7 +32,7 @@ class _Youtube {
     final resp = await YTService.busqueda(
       query: busqueda,
     );
-    return resp?.itemsyt;
+    return resp.itemsyt;
   }
 
   Future<bool> onSelectYT({
