@@ -40,7 +40,6 @@ void main() async {
   //CheckPermissos.checkAll();
   final stateShader = await Orquestador.sistem.loadShaderLocale();
   final authState = await Orquestador.sistem.loadAuthLocale();
-
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(Appstate(
@@ -48,6 +47,7 @@ void main() async {
       sState: stateShader,
     ));
   });
+  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive).then((value) {});
 }
 
 class Appstate extends StatelessWidget {

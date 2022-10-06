@@ -72,8 +72,10 @@ class TarjetaHistory extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 20.0),
               child: Textos.tituloMIN(
+                renglones: 2,
+                align: TextAlign.left,
                 texto:
-                    "ID ${evento.id} Fecha ${(evento.fecha?.toString() ?? "")}",
+                    "ID ${evento.id}\nFecha ${(evento.fecha?.toString() ?? "")}",
               ),
             ),
           ),

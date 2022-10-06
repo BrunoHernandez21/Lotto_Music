@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lotto_music/src/helpers/rutinas.dart';
 import 'package:lotto_music/src/widgets/text.dart';
 
 import '../../../bloc/videos_event/videos_event_bloc.dart';
 import '../../../helpers/globals/screen_size.dart';
+import '../../../models/video/evento_video.dart';
 import '../../../widgets/digital_clock.dart';
 import '../../../widgets/oclock.dart';
 
@@ -22,7 +22,10 @@ class Clock extends StatelessWidget {
       body: Stack(children: [
         BlocBuilder<VideosEventBloc, VideosEventState>(
           builder: (context, state) {
-            final select = Rutinas.firstWhere(state.listado);
+            ItemEvent? select;
+            if (state.listado?.isNotEmpty ?? false) {
+              select = state.listado?.first ?? ItemEvent();
+            }
             return SafeArea(
               child: SingleChildScrollView(
                 child: Column(
@@ -137,7 +140,8 @@ class __ClockControllerState extends State<_ClockController> {
         DigitalClock(tiempo: i),
         const SizedBox(height: 15),
         CustomPaint(
-          painter: ShapesPainter(time: i, isPaint: false, minuto: 30),
+          painter:
+              ShapesPainter(time: i, isPaint: false, minuto: widget.toEvent),
           child: SizedBox(
             height: Medidas.size.width * .6,
             width: Medidas.size.width * .6,
