@@ -1,0 +1,34 @@
+{
+  "provider": "google_pay",
+  "data": {
+    "environment": "TEST",
+    "apiVersion": 2,
+    "apiVersionMinor": 0,
+    "allowedPaymentMethods": [
+      {
+        "type": "CARD",
+        "tokenizationSpecification": {
+          "type": "PAYMENT_GATEWAY",
+          "parameters": {
+            "gateway": "stripe",
+            "stripe:version": "2020-08-27",
+            "stripe:publishableKey": "pk_test_51LhOYXA95JRQPIgUsOVOdMKCgGo5ZaqkvR3P7eYqkJQUBPes2vBaWZSzbR8WwKZQJYv5vh8f7gD3lgwrlFwSo1zL00vRbg0I3q"
+          }
+        },
+        "parameters": {
+          "allowedCardNetworks": ["AMEX", "DISCOVER", "INTERAC", "JCB", "MASTERCARD", "MIR", "VISA"],
+          "allowedAuthMethods": ["PAN_ONLY", "CRYPTOGRAM_3DS"],
+          "billingAddressRequired": false,
+          "billingAddressParameters": {
+            "format": "FULL",
+            "phoneNumberRequired": true
+          }
+        }
+      }
+    ],
+    "transactionInfo": {
+      "countryCode": "MX",
+      "currencyCode": "MXN"
+    }
+  }
+}

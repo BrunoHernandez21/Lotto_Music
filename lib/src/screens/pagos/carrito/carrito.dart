@@ -124,10 +124,9 @@ class Carrito extends StatelessWidget {
             child: Botones.degradedTextButton(
               text: "Comprar",
               colors: const [Color(0xffea8d8d), Color(0xffa890fe)],
-              onTap: () async {
-                Orquestador.user.onLoadTarjetas(context).then((value) {
-                  Navigator.of(context).pushNamed(VerificarCompra.routeName);
-                });
+              onTap: () {
+                Orquestador.buy.craeteOrden(context: context);
+                Navigator.of(context).pushNamed(VerificarCompra.routeName);
               },
             ),
           ),

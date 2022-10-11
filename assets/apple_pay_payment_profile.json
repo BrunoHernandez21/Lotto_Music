@@ -1,0 +1,16 @@
+{
+  "provider": "apple_pay",
+  "data": {
+    "merchantIdentifier": "merchant.flutter.stripe.test",
+    "displayName": "Lotto Music",
+    "countryCode": "MX",
+    "currencyCode": "MXN",
+    "merchantCapabilities": ["3DS", "debit", "credit"],
+    "supportedNetworks": [
+      "amex",
+      "visa",
+      "discover",
+      "masterCard"
+    ]
+  }
+}

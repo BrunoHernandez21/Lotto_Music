@@ -64,9 +64,13 @@ class TopYoutube {
         kind: json["kind"],
         etag: json["etag"],
         nextPageToken: json["nextPageToken"],
-        items:
-            List<ItemTops>.from(json["items"].map((x) => ItemTops.fromMap(x))),
-        pageInfo: PageInfo.fromMap(json["pageInfo"]),
+        items: json["items"] == null
+            ? null
+            : List<ItemTops>.from(
+                json["items"].map((x) => ItemTops.fromMap(x))),
+        pageInfo: json["pageInfo"] == null
+            ? null
+            : PageInfo.fromMap(json["pageInfo"]),
       );
 
   Map<String, dynamic> toMap() => {

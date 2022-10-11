@@ -43,4 +43,28 @@ class _Buy {
       return null;
     }
   }
+
+  Future<String?> craeteOrden({
+    required BuildContext context,
+  }) async {
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    final resp = await BuyService.createOrden(
+      token: acountB.state.acount.accessToken,
+    );
+    // ignore: use_build_context_synchronously
+    BlocProvider.of<BuyBloc>(context).add(OnloadOrden(orden: resp));
+    return resp.mensaje;
+  }
+
+  Future<PaymentIntentResponse> createPaymentIntent({
+    required BuildContext context,
+    required int orden,
+  }) async {
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    final resp = await BuyService.crearIntento(
+      token: acountB.state.acount.accessToken,
+      ordenId: orden,
+    );
+    return resp;
+  }
 }

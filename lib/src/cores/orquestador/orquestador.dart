@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lotto_music/src/bloc/buy/buy_bloc.dart';
 import 'package:lotto_music/src/bloc/carrito/carrito_bloc.dart';
 import 'package:lotto_music/src/bloc/cartera/cartera_bloc.dart';
 import 'package:lotto_music/src/bloc/shaderPreferences/shaderpreferences_bloc.dart';
@@ -27,6 +28,7 @@ import '../../bloc/stadistics/estadisticas_bloc.dart';
 import '../../bloc/youtube_video/video_bloc.dart';
 import '../../bloc/videos_event/videos_event_bloc.dart';
 import '../../helpers/globals/local_storage.dart';
+import '../../models/buy/payment_intent_response.dart';
 import '../../models/carrito/carrito.dart';
 import '../../models/carrito/carrito_response.dart';
 import '../../models/user/direcciones.dart';

@@ -7,6 +7,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/bloc/acount/acount_bloc.dart';
+import 'package:lotto_music/src/bloc/buy/buy_bloc.dart';
 import 'package:lotto_music/src/bloc/carrito/carrito_bloc.dart';
 import 'package:lotto_music/src/bloc/cartera/cartera_bloc.dart';
 import 'package:lotto_music/src/bloc/dialogs_on_display/dialogs_on_display_bloc.dart';
@@ -27,6 +28,7 @@ import 'package:lotto_music/src/cores/webDart/webcontroller.dart';
 import 'package:lotto_music/src/helpers/globals/const.dart';
 import 'package:lotto_music/src/screens/routes_screens.dart';
 import 'package:lotto_music/src/screens/admin.dart';
+import 'package:lotto_music/src/services/stripe/stripe_api.dart';
 import 'package:lotto_music/src/services/websocket/socket.dart';
 
 import 'generated/l10n.dart';
@@ -36,6 +38,8 @@ import 'src/bloc/videos_categoria/videos_categoria_bloc.dart';
 void main() async {
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
+  StripeApi().initState();
+
   await PushNotification.initState();
   //CheckPermissos.checkAll();
   final stateShader = await Orquestador.sistem.loadShaderLocale();
@@ -64,23 +68,24 @@ class Appstate extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => AcountBloc(acountState: sAuth)),
-        BlocProvider(create: (context) => UserBloc()),
+        BlocProvider(create: (_) => AcountBloc(acountState: sAuth)),
+        BlocProvider(create: (_) => UserBloc()),
         BlocProvider(create: (_) => ShaderpreferencesBloc(shaderState: sState)),
-        BlocProvider(create: (context) => CarritoBloc()),
-        BlocProvider(create: (context) => PlanesBloc()),
-        BlocProvider(create: (context) => SuscripcionesBloc()),
-        BlocProvider(create: (context) => VideosCategoriaBloc()),
-        BlocProvider(create: (context) => VideosEventBloc()),
-        BlocProvider(create: (context) => VideoEventBloc()),
-        BlocProvider(create: (context) => YoutubeBloc()),
-        BlocProvider(create: (context) => YTVideoBloc()),
-        BlocProvider(create: (context) => TarjetasBloc()),
-        BlocProvider(create: (context) => DireccionesBloc()),
-        BlocProvider(create: (context) => EstadisticasBloc()),
-        BlocProvider(create: (context) => VEPageControllerBloc()),
-        BlocProvider(create: (context) => CarteraBloc()),
-        BlocProvider(create: (context) => DialogsOnDisplayBloc()),
+        BlocProvider(create: (_) => CarritoBloc()),
+        BlocProvider(create: (_) => PlanesBloc()),
+        BlocProvider(create: (_) => SuscripcionesBloc()),
+        BlocProvider(create: (_) => VideosCategoriaBloc()),
+        BlocProvider(create: (_) => VideosEventBloc()),
+        BlocProvider(create: (_) => VideoEventBloc()),
+        BlocProvider(create: (_) => YoutubeBloc()),
+        BlocProvider(create: (_) => YTVideoBloc()),
+        BlocProvider(create: (_) => TarjetasBloc()),
+        BlocProvider(create: (_) => DireccionesBloc()),
+        BlocProvider(create: (_) => EstadisticasBloc()),
+        BlocProvider(create: (_) => VEPageControllerBloc()),
+        BlocProvider(create: (_) => CarteraBloc()),
+        BlocProvider(create: (_) => DialogsOnDisplayBloc()),
+        BlocProvider(create: (_) => BuyBloc()),
       ],
       child: BlocBuilder<ShaderpreferencesBloc, ShaderpreferencesState>(
         builder: (context, state) {
