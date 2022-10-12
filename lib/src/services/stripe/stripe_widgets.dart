@@ -219,10 +219,10 @@ class LoadingButton extends StatefulWidget {
       : super(key: key);
 
   @override
-  _LoadingButtonState createState() => _LoadingButtonState();
+  LoadingButtonState createState() => LoadingButtonState();
 }
 
-class _LoadingButtonState extends State<LoadingButton> {
+class LoadingButtonState extends State<LoadingButton> {
   bool _isLoading = false;
 
   @override

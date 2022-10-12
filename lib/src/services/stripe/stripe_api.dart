@@ -53,33 +53,32 @@ class StripeApi {
     required BuildContext context,
   }) async {
     try {
-      print(paymentResult);
+      // Se obtiene un intento de pago del servidor;
+      final intento = await Orquestador.buy.createPaymentIntent(
+        context: context,
+        orden: order,
+      );
+      if (intento.mensaje != null) {
+        return false;
+      }
       // se obtiene un token reconozible para stripe
       final tokenJson = Map.castFrom(
         json.decode(
           paymentResult['paymentMethodData']['tokenizationData']['token'],
         ),
       );
-
-      // Se obtiene un intento de pago del servidor;
-      final intento = await Orquestador.buy.createPaymentIntent(
-        context: context,
-        orden: order,
-      );
-
+      final token = tokenJson['id'];
       // se crea un metodo de pago con el anterior token
       final params = PaymentMethodParams.cardFromToken(
         paymentMethodData: PaymentMethodDataCardFromToken(
-          token: tokenJson['id'],
+          token: token,
         ),
       );
-
       //Se compra (las compras llegan el webhook)
       await Stripe.instance.confirmPayment(
         intento.clientSecret,
         params,
       );
-
       return true;
     } catch (e) {
       return false;
@@ -94,9 +93,7 @@ class StripeApi {
       const params = PaymentMethodParams.card(
         paymentMethodData: PaymentMethodData(),
       );
-      final paymentMethod = await Stripe.instance.createPaymentMethod(params);
-
-      print(json.encode(paymentMethod.id));
+      // Stripe.instance.createPaymentMethod(params);
       // Se obtiene un intento de pago del servidor;
       final intento = await Orquestador.buy.createPaymentIntent(
         context: context,
