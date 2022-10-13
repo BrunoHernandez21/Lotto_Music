@@ -9,7 +9,6 @@ import 'package:lotto_music/src/widgets/inputs_text.dart';
 
 import '../../../bloc/cartera/cartera_bloc.dart';
 import '../../../bloc/stadistics/estadisticas_bloc.dart';
-import '../../../bloc/ve_page_controller/videos_event_controller_bloc.dart';
 import '../../../bloc/video_event/video_event_bloc.dart';
 import '../../../cores/orquestador/orquestador.dart';
 import '../../../helpers/globals/assets.dart';
@@ -22,7 +21,11 @@ import '../../../widgets/digital_clock.dart';
 import '../../../widgets/text.dart';
 
 class Adivina extends StatefulWidget {
-  const Adivina({Key? key}) : super(key: key);
+  final void Function() onBack;
+  const Adivina({
+    Key? key,
+    required this.onBack,
+  }) : super(key: key);
 
   @override
   State<Adivina> createState() => _AdivinaState();
@@ -71,7 +74,10 @@ class _AdivinaState extends State<Adivina> {
               const SizedBox(
                 width: double.infinity,
               ),
-              _CardVideo(v: state.eventoVideo),
+              _CardVideo(
+                v: state.eventoVideo,
+                onBack: widget.onBack,
+              ),
               apuesta(evento: state.eventoVideo, st: st),
             ],
           ),
@@ -473,10 +479,12 @@ class _AdivinaState extends State<Adivina> {
 }
 
 class _CardVideo extends StatelessWidget {
+  final void Function() onBack;
   final ItemEvent v;
   const _CardVideo({
     Key? key,
     required this.v,
+    required this.onBack,
   }) : super(key: key);
 
   @override
@@ -492,11 +500,7 @@ class _CardVideo extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: IconButton(
-                  onPressed: () {
-                    BlocProvider.of<VEPageControllerBloc>(context).add(
-                      OnSelectPapge(page: 1),
-                    );
-                  },
+                  onPressed: onBack,
                   icon: const Icon(
                     Icons.arrow_back,
                   )),

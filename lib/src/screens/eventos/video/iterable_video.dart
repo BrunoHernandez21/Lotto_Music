@@ -7,7 +7,6 @@ import 'package:lotto_music/src/screens/eventos/video/video_evento.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../../bloc/cartera/cartera_bloc.dart';
-import '../../../bloc/ve_page_controller/videos_event_controller_bloc.dart';
 import '../../../bloc/videos_event/videos_event_bloc.dart';
 import '../../../helpers/globals/assets.dart';
 import '../../../helpers/globals/screen_size.dart';
@@ -20,10 +19,14 @@ import 'estadisticas_yt.dart';
 class IterableVideo extends StatelessWidget {
   final ItemEvent eventoVideo;
   final YoutubePlayerController controller;
+  final void Function() onPage2;
+  final void Function() onPage3;
   const IterableVideo({
     Key? key,
     required this.controller,
     required this.eventoVideo,
+    required this.onPage2,
+    required this.onPage3,
   }) : super(key: key);
 
   @override
@@ -97,11 +100,7 @@ class IterableVideo extends StatelessWidget {
                     width: 150,
                     child: Botones.solidTextButton(
                       text: "Participa",
-                      onTap: () {
-                        BlocProvider.of<VEPageControllerBloc>(context).add(
-                          OnSelectPapge(page: 2),
-                        );
-                      },
+                      onTap: onPage2,
                       fontColor: const Color.fromARGB(255, 255, 255, 255),
                       backColor: const Color.fromARGB(255, 46, 161, 50),
                     ),
@@ -112,11 +111,7 @@ class IterableVideo extends StatelessWidget {
                       text: "Estadisticas",
                       fontColor: const Color.fromARGB(255, 255, 255, 255),
                       backColor: const Color.fromARGB(255, 196, 30, 18),
-                      onTap: () async {
-                        BlocProvider.of<VEPageControllerBloc>(context).add(
-                          OnSelectPapge(page: 3),
-                        );
-                      },
+                      onTap: onPage3,
                     ),
                   )
                 ],

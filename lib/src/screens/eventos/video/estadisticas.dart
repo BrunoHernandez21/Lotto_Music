@@ -4,13 +4,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/widgets/text.dart';
 
 import '../../../bloc/stadistics/estadisticas_bloc.dart';
-import '../../../bloc/ve_page_controller/videos_event_controller_bloc.dart';
 import '../../../bloc/video_event/video_event_bloc.dart';
 import '../../../models/video/stadistics_model.dart';
 import 'internal_widget.dart';
 
 class Estadisticas extends StatelessWidget {
-  const Estadisticas({Key? key}) : super(key: key);
+  final void Function() onBack;
+  const Estadisticas({
+    Key? key,
+    required this.onBack,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -58,11 +61,7 @@ class Estadisticas extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                         child: IconButton(
                           icon: const Icon(Icons.arrow_back_ios_new),
-                          onPressed: () {
-                            BlocProvider.of<VEPageControllerBloc>(context).add(
-                              OnSelectPapge(page: 1),
-                            );
-                          },
+                          onPressed: onBack,
                         ),
                       ),
                       Align(

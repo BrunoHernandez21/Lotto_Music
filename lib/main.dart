@@ -18,7 +18,6 @@ import 'package:lotto_music/src/bloc/stadistics/estadisticas_bloc.dart';
 import 'package:lotto_music/src/bloc/suscripciones/suscripciones_bloc.dart';
 import 'package:lotto_music/src/bloc/tarjetas/tarjetas_bloc.dart';
 import 'package:lotto_music/src/bloc/user/user_bloc.dart';
-import 'package:lotto_music/src/bloc/ve_page_controller/videos_event_controller_bloc.dart';
 import 'package:lotto_music/src/bloc/video_event/video_event_bloc.dart';
 import 'package:lotto_music/src/bloc/youtube/youtube_bloc.dart';
 import 'package:lotto_music/src/bloc/videos_event/videos_event_bloc.dart';
@@ -82,7 +81,6 @@ class Appstate extends StatelessWidget {
         BlocProvider(create: (_) => TarjetasBloc()),
         BlocProvider(create: (_) => DireccionesBloc()),
         BlocProvider(create: (_) => EstadisticasBloc()),
-        BlocProvider(create: (_) => VEPageControllerBloc()),
         BlocProvider(create: (_) => CarteraBloc()),
         BlocProvider(create: (_) => DialogsOnDisplayBloc()),
         BlocProvider(create: (_) => BuyBloc()),

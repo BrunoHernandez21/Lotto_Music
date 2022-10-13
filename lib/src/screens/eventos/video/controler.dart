@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-import '../../../bloc/ve_page_controller/videos_event_controller_bloc.dart';
 import '../../../cores/orquestador/orquestador.dart';
 import '../../../models/video/evento_video.dart';
 import 'adivina.dart';
@@ -27,20 +25,31 @@ class _BodyControllerState extends State<BodyController> {
     super.initState();
   }
 
+  int page = 0;
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<VEPageControllerBloc, VEPageControllerState>(
-      builder: (context, pstate) {
-        if (pstate.page == 2) {
-          return const Adivina();
-        }
-        if (pstate.page == 3) {
-          return const Estadisticas();
-        }
-        return IterableVideo(
-          controller: widget.controller,
-          eventoVideo: widget.eventoVideo,
-        );
+    if (page == 2) {
+      return Adivina(onBack: () {
+        page = 1;
+        setState(() {});
+      });
+    }
+    if (page == 3) {
+      return Estadisticas(onBack: () {
+        page = 1;
+        setState(() {});
+      });
+    }
+    return IterableVideo(
+      controller: widget.controller,
+      eventoVideo: widget.eventoVideo,
+      onPage2: () {
+        page = 2;
+        setState(() {});
+      },
+      onPage3: () {
+        page = 3;
+        setState(() {});
       },
     );
   }

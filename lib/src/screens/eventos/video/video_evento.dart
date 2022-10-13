@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/services/websocket/socket.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../../../bloc/stadistics/estadisticas_bloc.dart';
-import '../../../bloc/ve_page_controller/videos_event_controller_bloc.dart';
 import '../../../bloc/video_event/video_event_bloc.dart';
 import '../../../models/video/stadistics_response.dart';
 import 'appbar.dart';
@@ -44,9 +43,6 @@ class _VideoEventoState extends State<VideoEvento> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: (() async {
-        BlocProvider.of<VEPageControllerBloc>(context).add(
-          OnSelectPapge(page: 1),
-        );
         return true;
       }),
       child: BlocBuilder<VideoEventBloc, VideoEventState>(
