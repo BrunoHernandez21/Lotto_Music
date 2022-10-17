@@ -6,11 +6,13 @@ import 'package:lotto_music/src/models/buy/order_response.dart';
 
 import '../../helpers/globals/routes_services.dart';
 import '../../models/buy/payment_intent_response.dart';
+import '../../models/resp/resp.dart';
 
 class BuyService {
   static const String _checkout = "${URL.buy}/orders/checkout";
   static const String _createOrden = "${URL.buy}/orders/order";
   static const String _createIntent = "${URL.buy}/orders/payment-intent";
+  static const String _payIntent = "${URL.buy}/orders/checkout";
   static const String _cancel = "${URL.buy}/orders/cancel";
   static const String _retry = "${URL.buy}/orders/rentry";
   // history
@@ -146,17 +148,37 @@ class BuyService {
 
   static Future<PaymentIntentResponse> crearIntento({
     required String token,
-    required int ordenId,
+    required Map<String, dynamic> body,
   }) async {
     final urI = Uri.parse(_createIntent);
-    final resp = await DartWeb.post(url: urI, token: token, body: {
-      "orden_id": ordenId,
-    });
+    final resp = await DartWeb.post(
+      url: urI,
+      token: token,
+      body: body,
+    );
     if (resp == null) {
       return PaymentIntentResponse(
         mensaje: "error de comunicacion con el servidor",
       );
     }
     return PaymentIntentResponse.fromJson(resp);
+  }
+
+  static Future<SimpleResponse> payIntento({
+    required String token,
+    required Map<String, dynamic> body,
+  }) async {
+    final urI = Uri.parse(_payIntent);
+    final resp = await DartWeb.post(
+      url: urI,
+      token: token,
+      body: body,
+    );
+    if (resp == null) {
+      return SimpleResponse(
+        mensaje: "error de comunicacion con el servidor",
+      );
+    }
+    return SimpleResponse.fromJson(resp);
   }
 }

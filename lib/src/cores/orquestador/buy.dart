@@ -61,9 +61,29 @@ class _Buy {
     required int orden,
   }) async {
     final acountB = BlocProvider.of<AcountBloc>(context);
+    final body = {
+      "orden_id": orden,
+    };
     final resp = await BuyService.crearIntento(
       token: acountB.state.acount.accessToken,
-      ordenId: orden,
+      body: body,
+    );
+    return resp;
+  }
+
+  Future<SimpleResponse> payIntent({
+    required BuildContext context,
+    required int orden,
+    required String paymentId,
+  }) async {
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    final body = {
+      "orden_id": orden,
+      "stripe_payment": paymentId,
+    };
+    final resp = await BuyService.payIntento(
+      token: acountB.state.acount.accessToken,
+      body: body,
     );
     return resp;
   }

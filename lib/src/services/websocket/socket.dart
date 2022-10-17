@@ -2,12 +2,12 @@ import 'package:flutter/widgets.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 import '../../cores/push_notification.dart';
-import '../../helpers/globals/routes_services.dart';
+import '../../helpers/globals/enviroments.dart';
 
 class SocketService {
   // Dart client
   static final io.Socket socket = io.io(
-      URL.socket,
+      ENV.socket,
       io.OptionBuilder()
           .setTransports(['websocket']) // for Flutter or Dart VM
           .enableAutoConnect() // disable auto-connection

@@ -31,6 +31,7 @@ import '../../helpers/globals/local_storage.dart';
 import '../../models/buy/payment_intent_response.dart';
 import '../../models/carrito/carrito.dart';
 import '../../models/carrito/carrito_response.dart';
+import '../../models/resp/resp.dart';
 import '../../models/user/direcciones.dart';
 import '../../models/user/direcciones_response.dart';
 import '../../models/video/evento_video.dart';

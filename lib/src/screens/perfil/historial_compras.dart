@@ -170,7 +170,7 @@ class _Tarjeta extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 20.0),
               child: Textos.tituloMIN(
-                texto: "ID ${compra.id}",
+                texto: "Orden ${compra.id} \n${compra.fechaPagado}",
               ),
             ),
           ),
