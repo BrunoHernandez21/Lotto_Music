@@ -337,7 +337,6 @@ class _User {
     final resp = await UserServices.suscribcion(
       token: acountB.state.acount.accessToken,
     );
-    print(resp.toJson());
     // ignore: use_build_context_synchronously
     BlocProvider.of<UsersusBloc>(context).add(OnLoadSuscribcion(
       suscribcion: resp.suscripcion ??
