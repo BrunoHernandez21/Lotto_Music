@@ -4,6 +4,7 @@ import 'package:lotto_music/src/bloc/suscripciones/suscripciones_bloc.dart';
 import 'package:lotto_music/src/bloc/usersus/usersus_bloc.dart';
 import 'package:lotto_music/src/screens/pagos/carrito/verificar_compra/verificar_compra.dart';
 import 'package:lotto_music/src/widgets/botones.dart';
+import 'package:lotto_music/src/widgets/dialogs_alert.dart';
 import 'package:lotto_music/src/widgets/text.dart';
 
 import '../../../cores/orquestador/orquestador.dart';
@@ -34,6 +35,7 @@ class Suscripciones extends StatelessWidget {
         }
         return RefreshIndicator(
           onRefresh: () async {
+            Orquestador.user.onLoadSuscribcion(context: context);
             Orquestador.plan.onLoadSuscripciones(context);
           },
           child: ListView.builder(
@@ -108,24 +110,51 @@ class __TarjetaPlanesState extends State<_TarjetaPlanes> {
           const SizedBox(
             height: 20,
           ),
-          Center(
-            child: SizedBox(
-              width: Medidas.size.width * .5,
-              child: Botones.degradedTextButton(
-                text: "Comprar suscripción",
-                colors: const [Color(0xffff0000), Color(0xffff0000)],
-                onTap: () {
-                  Orquestador.buy.craeteOrdenSuscripcion(
-                    context: context,
-                    planID: widget.plan.id,
-                  );
-                  Navigator.of(context).pushNamed(VerificarCompra.routeName);
-                },
-              ),
-            ),
-          )
+          boton(),
         ],
       ),
+    );
+  }
+
+  Widget boton() {
+    return BlocBuilder<UsersusBloc, UsersusState>(
+      builder: (context, state) {
+        return Center(
+          child: SizedBox(
+            width: Medidas.size.width * .5,
+            child: Botones.degradedTextButton(
+              text: "Comprar suscripción",
+              colors: const [Color(0xffff0000), Color(0xffff0000)],
+              onTap: () async {
+                final sta = state.suscribcion;
+
+                if (sta == null) {
+                  return;
+                }
+                if (sta.usuarioId == 0) {
+                  return;
+                }
+                if (sta.stripeSuscription != null) {
+                  final a = await DialogAlert.confirm(
+                    context: context,
+                    text:
+                        "Realizar esta accion borrara la anterior suscripción",
+                  );
+                  if (a != true) {
+                    return;
+                  }
+                }
+                Orquestador.buy.craeteOrdenSuscripcion(
+                  context: context,
+                  planID: widget.plan.id,
+                );
+                // ignore: use_build_context_synchronously
+                Navigator.of(context).pushNamed(VerificarCompra.routeName);
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 }

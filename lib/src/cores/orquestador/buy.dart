@@ -53,10 +53,35 @@ class _Buy {
       token: acountB.state.acount.accessToken,
       body: {"plan_id": planID},
     );
-    print(resp.toJson());
     // ignore: use_build_context_synchronously
     BlocProvider.of<BuyBloc>(context).add(OnloadOrden(orden: resp));
     return resp.mensaje;
+  }
+
+  Future<SimpleResponse> paySuscripcion({
+    required BuildContext context,
+    required int orden,
+    required String paymentId,
+  }) async {
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    final resp = await BuyService.checkoutSusc(
+      token: acountB.state.acount.accessToken,
+      body: {
+        "orden_id": orden,
+        "stripe_payment": paymentId,
+      },
+    );
+    return resp;
+  }
+
+  Future<SimpleResponse> finishSuscripcion({
+    required BuildContext context,
+  }) async {
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    final resp = await BuyService.deleteSus(
+      token: acountB.state.acount.accessToken,
+    );
+    return resp;
   }
 
   Future<PaymentIntentResponse> createPaymentIntent({
@@ -64,6 +89,7 @@ class _Buy {
     required int orden,
   }) async {
     final acountB = BlocProvider.of<AcountBloc>(context);
+
     final body = {
       "orden_id": orden,
     };

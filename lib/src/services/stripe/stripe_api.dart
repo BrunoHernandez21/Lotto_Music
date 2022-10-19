@@ -4,6 +4,7 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:lotto_music/src/cores/orquestador/orquestador.dart';
 
 import '../../helpers/globals/enviroments.dart';
+import '../../models/resp/resp.dart';
 
 class StripeApi {
   // Singleton
@@ -20,6 +21,7 @@ class StripeApi {
   Future<bool> onApplePayResult({
     required Map<String, dynamic> paymentResult,
     required int order,
+    required bool issuscription,
     required BuildContext context,
   }) async {
     try {
@@ -33,11 +35,20 @@ class StripeApi {
       );
       final paymentmethod = await Stripe.instance.createPaymentMethod(params);
       // se paga
-      final resp = await Orquestador.buy.payIntent(
-        context: context,
-        orden: order,
-        paymentId: paymentmethod.id,
-      );
+      SimpleResponse resp = SimpleResponse();
+      if (issuscription) {
+        resp = await Orquestador.buy.paySuscripcion(
+          context: context,
+          orden: order,
+          paymentId: paymentmethod.id,
+        );
+      } else {
+        resp = await Orquestador.buy.payIntent(
+          context: context,
+          orden: order,
+          paymentId: paymentmethod.id,
+        );
+      }
       if (resp.mensaje != null) {
         return false;
       }
@@ -50,6 +61,7 @@ class StripeApi {
   Future<bool> onGooglePayResult({
     required Map<String, dynamic> paymentResult,
     required int order,
+    required bool issuscription,
     required BuildContext context,
   }) async {
     try {
@@ -68,11 +80,20 @@ class StripeApi {
       );
       final paymentmethod = await Stripe.instance.createPaymentMethod(params);
       // se paga
-      final resp = await Orquestador.buy.payIntent(
-        context: context,
-        orden: order,
-        paymentId: paymentmethod.id,
-      );
+      SimpleResponse resp = SimpleResponse();
+      if (issuscription) {
+        resp = await Orquestador.buy.paySuscripcion(
+          context: context,
+          orden: order,
+          paymentId: paymentmethod.id,
+        );
+      } else {
+        resp = await Orquestador.buy.payIntent(
+          context: context,
+          orden: order,
+          paymentId: paymentmethod.id,
+        );
+      }
       if (resp.mensaje != null) {
         return false;
       }
@@ -84,6 +105,7 @@ class StripeApi {
 
   Future<bool> onCreditCartCreate({
     required int order,
+    required bool issuscription,
     required BuildContext context,
     required CardEditController controller,
   }) async {
@@ -95,11 +117,21 @@ class StripeApi {
     );
     final paymentmethod = await Stripe.instance.createPaymentMethod(params);
     // Se obtiene un intento de pago del servidor;
-    final resp = await Orquestador.buy.payIntent(
-      context: context,
-      orden: order,
-      paymentId: paymentmethod.id,
-    );
+    SimpleResponse resp = SimpleResponse();
+    if (issuscription) {
+      resp = await Orquestador.buy.paySuscripcion(
+        context: context,
+        orden: order,
+        paymentId: paymentmethod.id,
+      );
+    } else {
+      resp = await Orquestador.buy.payIntent(
+        context: context,
+        orden: order,
+        paymentId: paymentmethod.id,
+      );
+    }
+
     if (resp.mensaje != null) {
       return false;
     }

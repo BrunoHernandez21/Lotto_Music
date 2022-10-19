@@ -36,6 +36,7 @@ class PayButtonState extends State<MyPayButton> {
                 context: context,
                 order: widget.orden.id,
                 paymentResult: a,
+                issuscription: widget.orden.isSuscription,
               );
               if (resp) {
                 // ignore: use_build_context_synchronously
@@ -87,6 +88,7 @@ class PayButtonState extends State<MyPayButton> {
                 context: context,
                 order: widget.orden.id,
                 paymentResult: a,
+                issuscription: widget.orden.isSuscription,
               );
               if (resp) {
                 // ignore: use_build_context_synchronously
@@ -174,6 +176,7 @@ class RequestCardState extends State<RequestCard> {
                       order: widget.orden.id,
                       context: context,
                       controller: controller,
+                      issuscription: widget.orden.isSuscription,
                     );
                     if (a) {
                       // ignore: use_build_context_synchronously

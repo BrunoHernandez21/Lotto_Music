@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:lotto_music/src/screens/pagos/carrito/carrito.dart';
+import 'package:lotto_music/src/screens/perfil/suscripcion.dart';
 import 'package:lotto_music/src/screens/perfil/tarjetas/tarjetas_add.dart';
 import 'package:lotto_music/src/screens/perfil/tarjetas/tarjetas_edit.dart';
 
@@ -61,6 +62,7 @@ class Ruts {
     TarjetasADD.routeName: (_) => const TarjetasADD(),
     Cartera.routeName: (_) => const Cartera(),
     Carrito.routeName: (_) => const Carrito(),
+    SuscribcionPage.routeName: (_) => const SuscribcionPage(),
   };
 
   static get rutas {
