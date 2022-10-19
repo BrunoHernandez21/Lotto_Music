@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lotto_music/src/screens/pagos/planes/planes.dart';
+import 'package:lotto_music/src/screens/pagos/suscribciones/suscribciones.dart';
 
 import 'appbar.dart';
-import 'carrito/carrito.dart';
 
 class Pagos extends StatelessWidget {
   const Pagos({Key? key}) : super(key: key);
@@ -29,11 +29,8 @@ class Pagos extends StatelessWidget {
                   Tab(
                     text: 'Paquetes',
                   ),
-                  // Tab(
-                  //   text: 'Suscripciones',
-                  // ),
                   Tab(
-                    text: 'Carrito',
+                    text: 'Suscripciones',
                   ),
                 ],
               ),
@@ -43,8 +40,7 @@ class Pagos extends StatelessWidget {
                 physics: BouncingScrollPhysics(),
                 children: <Widget>[
                   Planes(),
-                  // Suscripciones(),
-                  Carrito(),
+                  Suscripciones(),
                 ],
               ),
             ),

@@ -122,7 +122,7 @@ class _Items extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Textos.parrafoMAX(texto: "Plan ${item.planId}"),
+      title: Textos.parrafoMAX(texto: "Plan ${item.titulo}"),
       subtitle:
           Textos.parrafoMED(texto: "Subtotal ${item.totalLinea}${item.moneda}"),
     );

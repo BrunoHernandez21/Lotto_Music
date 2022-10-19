@@ -15,6 +15,7 @@ import '../../../widgets/svg_nosignal.dart';
 import '../../../widgets/text.dart';
 
 class Carrito extends StatelessWidget {
+  static const routeName = "carrito";
   const Carrito({Key? key}) : super(key: key);
 
   @override
@@ -22,34 +23,37 @@ class Carrito extends StatelessWidget {
     if (BlocProvider.of<CarritoBloc>(context).state.itemsCarrito == null) {
       Orquestador.shopingcar.onloadCarrito(context);
     }
-    return BlocBuilder<AcountBloc, AcountState>(
-      builder: (context, state) {
-        if (BlocProvider.of<AcountBloc>(context).state.isLogin == false) {
-          return const BodyNoLoged();
-        }
-        return BlocBuilder<CarritoBloc, CarritoState>(
-          builder: (context, state) {
-            if (state.itemsCarrito == null) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: BlocBuilder<AcountBloc, AcountState>(
+        builder: (context, state) {
+          if (BlocProvider.of<AcountBloc>(context).state.isLogin == false) {
+            return const BodyNoLoged();
+          }
+          return BlocBuilder<CarritoBloc, CarritoState>(
+            builder: (context, state) {
+              if (state.itemsCarrito == null) {
+                return RefreshIndicator(
+                    onRefresh: () async {
+                      Orquestador.shopingcar.onloadCarrito(context);
+                    },
+                    child: const NoSignal());
+              }
               return RefreshIndicator(
-                  onRefresh: () async {
-                    Orquestador.shopingcar.onloadCarrito(context);
-                  },
-                  child: const NoSignal());
-            }
-            return RefreshIndicator(
-              onRefresh: () async {
-                Orquestador.shopingcar.onloadCarrito(context);
-              },
-              child: state.itemsCarrito?.isEmpty ?? true
-                  ? emptyFunc()
-                  : builderBody(
-                      state.itemsCarrito!,
-                      context,
-                    ),
-            );
-          },
-        );
-      },
+                onRefresh: () async {
+                  Orquestador.shopingcar.onloadCarrito(context);
+                },
+                child: state.itemsCarrito?.isEmpty ?? true
+                    ? emptyFunc()
+                    : builderBody(
+                        state.itemsCarrito!,
+                        context,
+                      ),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 

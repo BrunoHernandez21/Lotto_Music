@@ -6,6 +6,7 @@ import '../../helpers/globals/routes_services.dart';
 import '../../models/user/cartera.dart';
 import '../../models/user/direcciones.dart';
 import '../../models/user/direcciones_response.dart';
+import '../../models/user/suscripcion.dart';
 import '../../models/user/tarjetas.dart';
 import '../../models/user/tarjetas_response.dart';
 import '../../models/user/users.dart';
@@ -20,6 +21,8 @@ class UserServices {
   static const String _method = "${URL.user}/payment/method";
   // Direcciones
   static const String _direccion = "${URL.user}/direction";
+  //suscribcion
+  static const String _usersusc = "${URL.user}/subscription";
 
   /////////////// /////////////// /////////////// Payment method
   static Future<TarjetaModel> tarjetaUpdate({
@@ -236,17 +239,19 @@ class UserServices {
     return out;
   }
 
-  static Future<UserModel> suscribcion({
-    required String password,
+  static Future<SuscripcionResponse> suscribcion({
     required String token,
   }) async {
-    final urI = Uri.parse(_userChangepassword);
-    final resp = await DartWeb.put(url: urI, token: token, body: {
-      "password": password,
-    });
+    final urI = Uri.parse(_usersusc);
+    final resp = await DartWeb.get(
+      url: urI,
+      token: token,
+    );
     if (resp == null) {
-      return UserModel(mensaje: "error de comunicacion con el servidor");
+      return SuscripcionResponse(
+        mensaje: "error de comunicacion con el servidor",
+      );
     }
-    return UserModel.fromJson(resp);
+    return SuscripcionResponse.fromJson(resp);
   }
 }

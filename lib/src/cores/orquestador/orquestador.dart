@@ -7,6 +7,7 @@ import 'package:lotto_music/src/bloc/shaderPreferences/shaderpreferences_bloc.da
 import 'package:lotto_music/src/bloc/suscripciones/suscripciones_bloc.dart';
 import 'package:lotto_music/src/bloc/tarjetas/tarjetas_bloc.dart';
 import 'package:lotto_music/src/bloc/user/user_bloc.dart';
+import 'package:lotto_music/src/bloc/usersus/usersus_bloc.dart';
 import 'package:lotto_music/src/bloc/video_event/video_event_bloc.dart';
 import 'package:lotto_music/src/bloc/youtube/youtube_bloc.dart';
 import 'package:lotto_music/src/bloc/videos_categoria/videos_categoria_bloc.dart';
@@ -34,6 +35,7 @@ import '../../models/carrito/carrito_response.dart';
 import '../../models/resp/resp.dart';
 import '../../models/user/direcciones.dart';
 import '../../models/user/direcciones_response.dart';
+import '../../models/user/suscripcion.dart';
 import '../../models/video/evento_video.dart';
 import '../../models/event/ganador_response.dart';
 import '../../models/video/grupos.dart';

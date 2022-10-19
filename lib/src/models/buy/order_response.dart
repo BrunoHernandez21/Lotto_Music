@@ -55,6 +55,7 @@ class ItemsOrden {
     this.ordenId = 0,
     this.planId = 0,
     this.moneda = "MXN",
+    this.titulo,
   });
 
   final int cantidad;
@@ -63,6 +64,7 @@ class ItemsOrden {
   final int ordenId;
   final int planId;
   final String moneda;
+  final String? titulo;
 
   ItemsOrden copyWith({
     int? cantidad,
@@ -71,6 +73,7 @@ class ItemsOrden {
     int? ordenId,
     int? planId,
     String? moneda,
+    String? titulo,
   }) =>
       ItemsOrden(
         cantidad: cantidad ?? this.cantidad,
@@ -79,6 +82,7 @@ class ItemsOrden {
         ordenId: ordenId ?? this.ordenId,
         planId: planId ?? this.planId,
         moneda: moneda ?? this.moneda,
+        titulo: titulo ?? this.titulo,
       );
 
   factory ItemsOrden.fromJson(String str) =>
@@ -93,6 +97,7 @@ class ItemsOrden {
         ordenId: json["orden_id"] ?? 0,
         planId: json["plan_id"] ?? 0,
         moneda: json["moneda"] ?? "MXN",
+        titulo: json["titulo"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -102,6 +107,7 @@ class ItemsOrden {
         "orden_id": ordenId,
         "plan_id": planId,
         "moneda": moneda,
+        "titulo": titulo,
       };
 }
 

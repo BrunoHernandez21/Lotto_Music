@@ -11,6 +11,9 @@ import '../../models/resp/resp.dart';
 class BuyService {
   static const String _checkout = "${URL.buy}/orders/checkout";
   static const String _createOrden = "${URL.buy}/orders/order";
+  static const String _createOrdenSus = "${URL.buy}/orders/subscription/orden";
+  static const String _comprarOrdenSus =
+      "${URL.buy}/orders/subscription/checkout";
   static const String _createIntent = "${URL.buy}/orders/payment-intent";
   static const String _payIntent = "${URL.buy}/orders/checkout";
   static const String _cancel = "${URL.buy}/orders/cancel";
@@ -26,6 +29,27 @@ class BuyService {
     required Map<String, dynamic> body,
   }) async {
     final urI = Uri.parse(_checkout);
+    final resp = await DartWeb.post(
+      url: urI,
+      token: token,
+      body: body,
+    );
+    if (resp == null) {
+      return "No hay comunicacion con el servidor";
+    }
+    final parse = json.decode(resp);
+    if (parse["mensaje"] != null) {
+      return parse["mensaje"];
+    }
+    return parse["resp"] ?? "";
+  }
+
+  /// funciones comprar
+  static Future<String> checkoutSusc({
+    required String token,
+    required Map<String, dynamic> body,
+  }) async {
+    final urI = Uri.parse(_comprarOrdenSus);
     final resp = await DartWeb.post(
       url: urI,
       token: token,
@@ -136,6 +160,25 @@ class BuyService {
     final resp = await DartWeb.post(
       url: urI,
       token: token,
+    );
+    if (resp == null) {
+      return OrdenResponse(
+        mensaje: "error de comunicacion con el servidor",
+        itemsOrden: [],
+      );
+    }
+    return OrdenResponse.fromJson(resp);
+  }
+
+  static Future<OrdenResponse> createOrdenSuscripcion({
+    required String token,
+    required Map<String, dynamic> body,
+  }) async {
+    final urI = Uri.parse(_createOrdenSus);
+    final resp = await DartWeb.post(
+      url: urI,
+      token: token,
+      body: body,
     );
     if (resp == null) {
       return OrdenResponse(

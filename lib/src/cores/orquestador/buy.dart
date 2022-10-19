@@ -1,18 +1,6 @@
 part of 'orquestador.dart';
 
 class _Buy {
-  Future<String> onBuyCarrito({
-    required BuildContext context,
-    required TarjetaModel tarjeta,
-  }) async {
-    final acountB = BlocProvider.of<AcountBloc>(context);
-    final resp = await BuyService.checkout(
-      token: acountB.state.acount.accessToken,
-      body: {"card_id": tarjeta.id, "cvc": tarjeta.cvc},
-    );
-    return resp;
-  }
-
   /////// historial de compras
   Future<HistorialCompraModel?> onLoadHistorialCompra({
     required BuildContext context,
@@ -51,6 +39,21 @@ class _Buy {
     final resp = await BuyService.createOrden(
       token: acountB.state.acount.accessToken,
     );
+    // ignore: use_build_context_synchronously
+    BlocProvider.of<BuyBloc>(context).add(OnloadOrden(orden: resp));
+    return resp.mensaje;
+  }
+
+  Future<String?> craeteOrdenSuscripcion({
+    required BuildContext context,
+    required int planID,
+  }) async {
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    final resp = await BuyService.createOrdenSuscripcion(
+      token: acountB.state.acount.accessToken,
+      body: {"plan_id": planID},
+    );
+    print(resp.toJson());
     // ignore: use_build_context_synchronously
     BlocProvider.of<BuyBloc>(context).add(OnloadOrden(orden: resp));
     return resp.mensaje;

@@ -69,6 +69,7 @@ class _BodyAdminState extends State<_BodyAdmin> with TickerProviderStateMixin {
     Orquestador.auth.checkToken(context);
     Orquestador.video.onLoadStadistic(context: context);
     Orquestador.user.onLoadCartera(context: context);
+    Orquestador.user.onLoadSuscribcion(context: context);
   }
 
   @override

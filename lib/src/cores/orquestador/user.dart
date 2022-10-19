@@ -327,4 +327,27 @@ class _User {
     BlocProvider.of<CarteraBloc>(context).add(OnLoadCartera(cartera: resp));
     return true;
   }
+
+  ///////////////////////////////////////////////
+////      suscribcion
+  Future<bool?> onLoadSuscribcion({
+    required BuildContext context,
+  }) async {
+    final acountB = BlocProvider.of<AcountBloc>(context);
+    final resp = await UserServices.suscribcion(
+      token: acountB.state.acount.accessToken,
+    );
+    if (resp.mensaje != null) {
+      return false;
+    }
+    // ignore: use_build_context_synchronously
+    BlocProvider.of<UsersusBloc>(context).add(OnLoadSuscribcion(
+      suscribcion: resp.suscripcion ??
+          Suscripcion(
+            montoMensual: 0,
+            usuarioId: 0,
+          ),
+    ));
+    return true;
+  }
 }

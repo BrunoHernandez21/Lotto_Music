@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../bloc/carrito/carrito_bloc.dart';
 import '../../helpers/globals/assets.dart';
 import '../../widgets/text.dart';
-import '../utils/notify.dart';
+import 'carrito/carrito.dart';
 
 class AppbarCarrito extends StatelessWidget {
   const AppbarCarrito({Key? key}) : super(key: key);
@@ -23,10 +25,48 @@ class AppbarCarrito extends StatelessWidget {
           ),
           Textos.parrafoMED(texto: "Lotto Music"),
           const Expanded(child: SizedBox()),
-          IconButton(
-            icon: const Icon(Icons.notifications),
-            onPressed: () {
-              Navigator.pushNamed(context, Notify.routeName);
+          BlocBuilder<CarritoBloc, CarritoState>(
+            builder: (context, state) {
+              final num = state.itemsCarrito?.length ?? 0;
+              return GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, Carrito.routeName);
+                },
+                child: SizedBox(
+                  child: Stack(
+                    children: [
+                      const SizedBox(
+                        height: 40,
+                        width: 50,
+                        child: Icon(Icons.shopping_cart_checkout),
+                      ),
+                      SizedBox(
+                        height: 40,
+                        width: 50,
+                        child: Align(
+                          alignment: Alignment.topRight,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 5,
+                              vertical: 2,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.yellow,
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Text(
+                              num.toString(),
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.black),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
             },
           ),
           const SizedBox(

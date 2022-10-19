@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/bloc/suscripciones/suscripciones_bloc.dart';
+import 'package:lotto_music/src/bloc/usersus/usersus_bloc.dart';
+import 'package:lotto_music/src/screens/pagos/carrito/verificar_compra/verificar_compra.dart';
 import 'package:lotto_music/src/widgets/botones.dart';
 import 'package:lotto_music/src/widgets/text.dart';
 
 import '../../../cores/orquestador/orquestador.dart';
 import '../../../helpers/globals/screen_size.dart';
-import '../../../models/carrito/carrito.dart';
 import '../../../models/plan/plan.dart';
 import '../../../widgets/svg_nosignal.dart';
 
@@ -18,12 +19,16 @@ class Suscripciones extends StatelessWidget {
     if (BlocProvider.of<SuscripcionesBloc>(context).state.planes == null) {
       Orquestador.plan.onLoadSuscripciones(context);
     }
+    if (BlocProvider.of<UsersusBloc>(context).state.suscribcion == null) {
+      Orquestador.user.onLoadSuscribcion(context: context);
+    }
     return BlocBuilder<SuscripcionesBloc, SuscripcionesState>(
       builder: (context, state) {
         if (state.planes == null) {
           return RefreshIndicator(
               onRefresh: () async {
                 Orquestador.plan.onLoadSuscripciones(context);
+                Orquestador.user.onLoadSuscribcion(context: context);
               },
               child: const NoSignal());
         }
@@ -96,7 +101,7 @@ class __TarjetaPlanesState extends State<_TarjetaPlanes> {
           Center(
             child: Textos.tituloMED(
               texto:
-                  "\$ ${widget.plan.precio.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} MXN al mes",
+                  "\$ ${widget.plan.precio.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} MXN/mes",
               color: const Color(0xfffca51f),
             ),
           ),
@@ -107,18 +112,14 @@ class __TarjetaPlanesState extends State<_TarjetaPlanes> {
             child: SizedBox(
               width: Medidas.size.width * .5,
               child: Botones.degradedTextButton(
-                text: "Agregar al Carrito",
+                text: "Comprar suscripción",
                 colors: const [Color(0xffff0000), Color(0xffff0000)],
-                onTap: () async {
-                  await Orquestador.shopingcar.onAddCarrito(
+                onTap: () {
+                  Orquestador.buy.craeteOrdenSuscripcion(
                     context: context,
-                    orden: CarritoModel(
-                      totalLinea: 1 * widget.plan.precio,
-                      cantidad: 1,
-                      fechaCarrito: DateTime.now(),
-                      planId: widget.plan.id,
-                    ),
+                    planID: widget.plan.id,
                   );
+                  Navigator.of(context).pushNamed(VerificarCompra.routeName);
                 },
               ),
             ),
