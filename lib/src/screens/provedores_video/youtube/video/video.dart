@@ -191,7 +191,7 @@ class __ListaVideosYTState extends State<_ListaVideosYT> {
       url ?? "",
       errorBuilder: (context, error, stackTrace) {
         return SvgPicture.asset(
-          Assets.svgvideo,
+          Assets.svgVideo,
           fit: BoxFit.cover,
         );
       },

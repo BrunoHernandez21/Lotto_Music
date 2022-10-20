@@ -154,7 +154,7 @@ class _BodySearch extends StatelessWidget {
       url ?? "",
       errorBuilder: (context, error, stackTrace) {
         return SvgPicture.asset(
-          Assets.svgvideo,
+          Assets.svgVideo,
           fit: BoxFit.cover,
         );
       },

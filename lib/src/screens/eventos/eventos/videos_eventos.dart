@@ -194,17 +194,22 @@ class _ListVideosPaginacionState extends State<ListVideosPaginacion> {
   }
 
   Widget bodyTarjeta(ItemEvent v) {
-    return Padding(
+    return Container(
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(10),
+      ),
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         child: SizedBox(
-          height: Medidas.size.width * .240,
+          height: Medidas.size.width * .250,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 width: Medidas.size.width * .360,
-                height: Medidas.size.width * .240,
+                height: Medidas.size.width * .250,
                 clipBehavior: Clip.antiAlias,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
@@ -218,7 +223,7 @@ class _ListVideosPaginacionState extends State<ListVideosPaginacion> {
                 width: 6,
               ),
               SizedBox(
-                height: Medidas.size.width * .240,
+                height: Medidas.size.width * .250,
                 width: Medidas.size.width * .55,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

@@ -35,7 +35,7 @@ class Register extends StatelessWidget {
               child: Column(
                 children: [
                   Image.asset(
-                    Assets.logo2,
+                    Assets.pngLogo2,
                     height: Medidas.size.height * .2,
                   ),
                   Padding(

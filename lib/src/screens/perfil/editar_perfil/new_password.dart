@@ -37,7 +37,7 @@ class _NewPasswordState extends State<NewPassword> {
             child: Column(
               children: [
                 Image.asset(
-                  Assets.logo2,
+                  Assets.pngLogo,
                   height: Medidas.size.height * .2,
                 ),
                 Padding(

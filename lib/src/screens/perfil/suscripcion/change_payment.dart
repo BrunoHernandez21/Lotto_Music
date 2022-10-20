@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
-import 'package:lotto_music/src/models/resp/resp.dart';
 
 import '../../../bloc/usersus/usersus_bloc.dart';
 import '../../../cores/orquestador/orquestador.dart';
@@ -75,7 +74,7 @@ class _ChangePaymentSusState extends State<ChangePaymentSus> {
         Textos.tituloMAX(
           texto: "Cambiar metodo de pago",
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Expanded(
@@ -187,13 +186,15 @@ class _ChangePaymentSusState extends State<ChangePaymentSus> {
     );
   }
 
-  Future<void> myPay(String? payID, Suscripcion orden) async {
+  Future<void> myPay(String? payID, Suscripcion susc) async {
     if (payID == null) {
       return;
     }
-    // Paga la suscripcion o el pago
-    SimpleResponse resp = SimpleResponse();
-
+    // Cambiar el metodo de pago
+    final resp = await Orquestador.buy.changeSuscripcionPayment(
+      context: context,
+      paymentID: payID,
+    );
     // Imprime un mensaje conforme a la respuesta
     if (resp.mensaje != null) {
       // ignore: use_build_context_synchronously
@@ -202,9 +203,6 @@ class _ChangePaymentSusState extends State<ChangePaymentSus> {
         text: "Compra realizada con exito",
       );
       Orquestador.user.onLoadCartera(context: context);
-
-      // ignore: use_build_context_synchronously
-      Navigator.of(context).pop();
       return;
     }
     // ignore: use_build_context_synchronously

@@ -130,7 +130,7 @@ class _AdivinaState extends State<Adivina> {
           height: 30,
         ),
         isGoing(
-          count: st.viewCount?.toDouble() ?? 0,
+          count: st.viewCount ?? 0,
           hintText: "0",
           isVisible: (st.viewCount ?? 0) != 0,
           labelText: "Vistas",
@@ -162,7 +162,7 @@ class _AdivinaState extends State<Adivina> {
           },
         ),
         isGoing(
-          count: st.likeCount?.toDouble() ?? 0,
+          count: st.likeCount ?? 0,
           hintText: "0",
           isVisible: (st.likeCount ?? 0) != 0,
           labelText: "Me gusta",
@@ -194,7 +194,7 @@ class _AdivinaState extends State<Adivina> {
           },
         ),
         isGoing(
-          count: st.commentsCount?.toDouble() ?? 0,
+          count: st.commentsCount ?? 0,
           hintText: "0",
           isVisible: (st.commentsCount ?? 0) != 0,
           labelText: "Comentarios",
@@ -226,7 +226,7 @@ class _AdivinaState extends State<Adivina> {
           },
         ),
         isGoing(
-          count: st.sharedCount?.toDouble() ?? 0,
+          count: st.sharedCount ?? 0,
           hintText: "0",
           isVisible: (st.sharedCount ?? 0) != 0,
           labelText: "Compartidos",
@@ -258,7 +258,7 @@ class _AdivinaState extends State<Adivina> {
           },
         ),
         isGoing(
-          count: st.savedCount?.toDouble() ?? 0,
+          count: st.savedCount ?? 0,
           hintText: "0",
           isVisible: (st.savedCount ?? 0) != 0,
           labelText: "Guardados",
@@ -420,7 +420,7 @@ class _AdivinaState extends State<Adivina> {
 
   Widget isGoing({
     required bool isVisible,
-    required double count,
+    required int count,
     required String labelText,
     required String hintText,
     required TextEditingController controller,
@@ -554,7 +554,7 @@ class _CardVideo extends StatelessWidget {
       url ?? "",
       errorBuilder: (context, error, stackTrace) {
         return SvgPicture.asset(
-          Assets.svgvideo,
+          Assets.svgVideo,
           fit: BoxFit.cover,
         );
       },

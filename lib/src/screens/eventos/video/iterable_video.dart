@@ -240,7 +240,7 @@ class _ListVideosPaginacionState extends State<_ListaVideosEvent> {
       url ?? "",
       errorBuilder: (context, error, stackTrace) {
         return SvgPicture.asset(
-          Assets.svgvideo,
+          Assets.pngLogo,
           fit: BoxFit.cover,
         );
       },

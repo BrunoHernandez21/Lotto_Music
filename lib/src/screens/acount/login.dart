@@ -41,7 +41,7 @@ class Login extends StatelessWidget {
               child: Column(
                 children: [
                   Image.asset(
-                    Assets.logo2,
+                    Assets.pngLogo2,
                     height: Medidas.size.height * .2,
                   ),
                   Padding(
@@ -123,41 +123,47 @@ class Login extends StatelessWidget {
                       });
                     },
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Row(
-                      children: [
-                        const Expanded(
-                          child: Divider(
-                            color: Colors.grey,
-                            height: 20,
-                            indent: 10,
-                            endIndent: 10,
-                          ),
-                        ),
-                        Textos.parrafoMED(texto: 'O Continúa con'),
-                        const Expanded(
-                          child: Divider(
-                            color: Colors.grey,
-                            height: 20,
-                            indent: 10,
-                            endIndent: 10,
-                          ),
-                        ),
-                      ],
-                    ),
+                  const Divider(
+                    color: Colors.black,
+                    height: 60,
+                    endIndent: 60,
+                    indent: 60,
+                    thickness: 1.5,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5),
-                    child: Textos.parrafoHiper(
-                      texto: '¿No tienes cuenta?  ',
-                      hipertext: 'Registrate',
-                      fontSize: 16,
-                      fontHiperSize: 18,
-                      onTap: () {
-                        Navigator.of(context).pushNamed(Register.routeName);
-                      },
-                    ),
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(vertical: 10),
+                  //   child: Row(
+                  //     children: [
+                  //       const Expanded(
+                  //         child: Divider(
+                  //           color: Colors.grey,
+                  //           height: 20,
+                  //           indent: 10,
+                  //           endIndent: 10,
+                  //         ),
+                  //       ),
+                  //       Textos.parrafoMED(texto: 'O Continúa con'),
+                  //       const Expanded(
+                  //         child: Divider(
+                  //           color: Colors.grey,
+                  //           height: 20,
+                  //           indent: 10,
+                  //           endIndent: 10,
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  Textos.parrafoHiper(
+                    texto: '¿No tienes cuenta?  ',
+                    hipertext: 'Registrate',
+                    fontSize: 16,
+                    fontHiperSize: 18,
+                    colorTexto: Theme.of(context).textTheme.bodyText1?.color ??
+                        Colors.black,
+                    onTap: () {
+                      Navigator.of(context).pushNamed(Register.routeName);
+                    },
                   ),
                   const SizedBox(
                     height: 20,

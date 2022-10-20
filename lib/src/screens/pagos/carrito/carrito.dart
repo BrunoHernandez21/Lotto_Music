@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lotto_music/src/bloc/acount/acount_bloc.dart';
+import 'package:lotto_music/src/bloc/shaderPreferences/shaderpreferences_bloc.dart';
 import 'package:lotto_music/src/cores/orquestador/orquestador.dart';
 import 'package:lotto_music/src/screens/pagos/carrito/verificar_compra/verificar_compra.dart';
 
@@ -21,7 +22,7 @@ class Carrito extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (BlocProvider.of<CarritoBloc>(context).state.itemsCarrito == null) {
-      Orquestador.shopingcar.onloadCarrito(context);
+      Orquestador.shopingcar.onloadCarrito(context: context);
     }
     return Scaffold(
       appBar: AppBar(),
@@ -35,16 +36,16 @@ class Carrito extends StatelessWidget {
               if (state.itemsCarrito == null) {
                 return RefreshIndicator(
                     onRefresh: () async {
-                      Orquestador.shopingcar.onloadCarrito(context);
+                      Orquestador.shopingcar.onloadCarrito(context: context);
                     },
                     child: const NoSignal());
               }
               return RefreshIndicator(
                 onRefresh: () async {
-                  Orquestador.shopingcar.onloadCarrito(context);
+                  Orquestador.shopingcar.onloadCarrito(context: context);
                 },
                 child: state.itemsCarrito?.isEmpty ?? true
-                    ? emptyFunc()
+                    ? emptyFunc(context: context)
                     : builderBody(
                         state.itemsCarrito!,
                         context,
@@ -57,30 +58,74 @@ class Carrito extends StatelessWidget {
     );
   }
 
-  Widget emptyFunc() {
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(
-        parent: AlwaysScrollableScrollPhysics(),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const SizedBox(
-            height: 15,
-            width: double.infinity,
+  Widget emptyFunc({required BuildContext context}) {
+    final isBlack =
+        BlocProvider.of<ShaderpreferencesBloc>(context).state.isDarkTheme;
+    return Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics(),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  height: 15,
+                  width: double.infinity,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Textos.tituloMAX(
+                    texto: "Parece que tu carrito esta vacio",
+                    renglones: 2,
+                    align: TextAlign.center,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Textos.tituloMIN(
+                  texto: 'Agrega items al carrito',
+                  renglones: 2,
+                  align: TextAlign.center,
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+                SvgPicture.asset(
+                  isBlack ? Assets.svgSolAlPaso : Assets.svgEmptycart,
+                  height: Medidas.size.height * .2,
+                  width: double.infinity,
+                ),
+                const SizedBox(
+                  height: 60,
+                ),
+                const Divider(
+                  color: Colors.black,
+                  height: 40,
+                  thickness: 2,
+                  endIndent: 80,
+                  indent: 80,
+                ),
+                const SizedBox(
+                  height: 70,
+                ),
+                Textos.tituloMIN(texto: 'Deliza para actualizar'),
+                const SizedBox(
+                  height: 20,
+                ),
+                Icon(
+                  Icons.keyboard_double_arrow_down,
+                  color: Theme.of(context).iconTheme.color,
+                  size: Medidas.size.height * .1,
+                ),
+              ],
+            ),
           ),
-          Textos.tituloMAX(texto: "Parece que tu carrito esta vacio"),
-          Textos.tituloMIN(texto: 'agrega items al carrito'),
-          SizedBox(
-            height: Medidas.size.height * .1,
-          ),
-          SvgPicture.asset(
-            Assets.emptyCart,
-            height: Medidas.size.height * .4,
-            width: double.infinity,
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

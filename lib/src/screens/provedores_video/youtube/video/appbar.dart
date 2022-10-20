@@ -21,7 +21,7 @@ class AppbarVideosYT extends StatelessWidget {
             size: 20,
           ),
         ),
-        Image.asset(Assets.logo, height: 30),
+        Image.asset(Assets.pngLogo, height: 30),
         const SizedBox(
           width: 5,
         ),

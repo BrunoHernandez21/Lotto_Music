@@ -27,7 +27,7 @@ class BodyNoLoged extends StatelessWidget {
             width: Medidas.size.width * .8,
             height: Medidas.size.width * .8,
             child: SvgPicture.asset(
-              Assets.login,
+              Assets.svgWelcomCats,
             ),
           ),
           const SizedBox(

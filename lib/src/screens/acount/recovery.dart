@@ -28,7 +28,7 @@ class Recovery extends StatelessWidget {
             child: Column(
               children: [
                 Image.asset(
-                  Assets.logo2,
+                  Assets.pngLogo2,
                   height: Medidas.size.height * .2,
                 ),
                 Padding(
@@ -44,7 +44,7 @@ class Recovery extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  padding: const EdgeInsets.symmetric(vertical: 20),
                   child: InputsText.classic(
                     controller: controller,
                     hintText: 'example@example.com',
@@ -54,8 +54,13 @@ class Recovery extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5),
                   child: Textos.parrafoMED(
+                      renglones: 2,
+                      align: TextAlign.center,
                       texto:
                           'Te enviaremos un correo para con tu nueva contraseña'),
+                ),
+                const SizedBox(
+                  height: 20,
                 ),
                 Botones.degradedTextButtonOrange(
                   text: 'Enviar',

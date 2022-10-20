@@ -17,21 +17,43 @@ class NoSignal extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(
-            height: Medidas.size.height * .1,
+          const SizedBox(
+            height: 30,
             width: double.infinity,
           ),
           Textos.tituloMAX(texto: "Sin conexión al Servidor"),
           const SizedBox(
             height: 10,
           ),
-          Textos.tituloMIN(texto: "Deslice para actualizar"),
-          SizedBox(
-            height: Medidas.size.height * .1,
+          const SizedBox(
+            height: 30,
           ),
           SvgPicture.asset(
-            Assets.refresh,
-            height: Medidas.size.height * .5,
+            Assets.svgPaisaje,
+            height: Medidas.size.height * .2,
+            width: double.infinity,
+          ),
+          const SizedBox(
+            height: 60,
+          ),
+          const Divider(
+            color: Colors.grey,
+            height: 40,
+            thickness: 2,
+            endIndent: 80,
+            indent: 80,
+          ),
+          const SizedBox(
+            height: 50,
+          ),
+          Textos.tituloMIN(texto: 'Deslice para actualizar'),
+          const SizedBox(
+            height: 20,
+          ),
+          Icon(
+            Icons.keyboard_double_arrow_down,
+            color: Theme.of(context).iconTheme.color,
+            size: Medidas.size.height * .1,
           ),
         ],
       ),

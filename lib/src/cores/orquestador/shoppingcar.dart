@@ -1,7 +1,7 @@
 part of 'orquestador.dart';
 
 class _Shopingcar {
-  Future<bool> onloadCarrito(BuildContext context) async {
+  Future<bool> onloadCarrito({required BuildContext context}) async {
     final acountB = BlocProvider.of<AcountBloc>(context);
     final planB = BlocProvider.of<CarritoBloc>(context);
     final response = await ShoppingcarService.load(
@@ -30,7 +30,7 @@ class _Shopingcar {
       return resp.mensaje;
     }
     // ignore: use_build_context_synchronously
-    await onloadCarrito(context);
+    await onloadCarrito(context: context);
     return "Se agrego al carrito";
   }
 

@@ -19,7 +19,7 @@ class AppbarCarrito extends StatelessWidget {
           const SizedBox(
             width: 15,
           ),
-          Image.asset(Assets.logo, height: 30),
+          Image.asset(Assets.pngLogo, height: 30),
           const SizedBox(
             width: 5,
           ),
@@ -40,25 +40,28 @@ class AppbarCarrito extends StatelessWidget {
                         width: 50,
                         child: Icon(Icons.shopping_cart_checkout),
                       ),
-                      SizedBox(
-                        height: 40,
-                        width: 50,
-                        child: Align(
-                          alignment: Alignment.topRight,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 5,
-                              vertical: 2,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.yellow,
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            child: Text(
-                              num.toString(),
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.black),
+                      Visibility(
+                        visible: num > 0,
+                        child: SizedBox(
+                          height: 40,
+                          width: 50,
+                          child: Align(
+                            alignment: Alignment.topRight,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 5,
+                                vertical: 2,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.yellow,
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              child: Text(
+                                num.toString(),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black),
+                              ),
                             ),
                           ),
                         ),

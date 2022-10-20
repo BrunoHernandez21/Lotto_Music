@@ -55,35 +55,38 @@ class SuscribcionPage extends StatelessWidget {
                   ),
                 ),
               ),
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 30),
-                    child: GestureDetector(
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          children: [
-                            const Icon(Icons.payment, color: Colors.white),
-                            const SizedBox(width: 5),
-                            Textos.parrafoMED(
-                              texto: "Cambiar Tarjeta",
-                              color: Colors.white,
-                            ),
-                          ],
+              Visibility(
+                visible: (state.suscribcion?.stripeSuscription ?? "") != "",
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 30),
+                      child: GestureDetector(
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.payment, color: Colors.white),
+                              const SizedBox(width: 5),
+                              Textos.parrafoMED(
+                                texto: "Cambiar Tarjeta",
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
                         ),
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                            ChangePaymentSus.routeName,
+                          );
+                        },
                       ),
-                      onTap: () {
-                        Navigator.of(context).pushNamed(
-                          ChangePaymentSus.routeName,
-                        );
-                      },
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               const SizedBox(
                 height: 10,
@@ -97,13 +100,13 @@ class SuscribcionPage extends StatelessWidget {
                     child: SizedBox(
                       width: 200,
                       child: Botones.solidTextButton(
-                        text: "Terminar Suscribcion",
+                        text: "Terminar suscrpcion",
                         backColor: Colors.red,
                         fontColor: Colors.black,
                         onTap: () async {
                           final a = await DialogAlert.confirm(
                             context: context,
-                            text: "Decea terminar la suscipcion?",
+                            text: "Desea terminar la suscipción?",
                           );
                           if (a != true) {
                             return;
@@ -121,6 +124,9 @@ class SuscribcionPage extends StatelessWidget {
                             DialogAlert.ok(
                               context: context,
                               text: b.resp ?? "",
+                            );
+                            Orquestador.user.onLoadSuscribcion(
+                              context: context,
                             );
                           }
                         },

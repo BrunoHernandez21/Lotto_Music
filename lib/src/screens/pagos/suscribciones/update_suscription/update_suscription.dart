@@ -112,7 +112,7 @@ class _UpdateSucriptionState extends State<UpdateSucription> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Textos.parrafoMIN(
-            texto: "Esto puede ocaccionar cargos adicionales",
+            texto: "Esto puede ocasionar cargos adicionales",
           ),
         ),
         Row(

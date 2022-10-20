@@ -144,7 +144,7 @@ class _VerificarCompraState extends State<VerificarCompra> {
       );
     }
     // Imprime un mensaje conforme a la respuesta
-    if (resp.mensaje != null) {
+    if ((resp.mensaje ?? "") == "") {
       // ignore: use_build_context_synchronously
       await DialogAlert.ok(
         context: context,
@@ -154,7 +154,7 @@ class _VerificarCompraState extends State<VerificarCompra> {
         Orquestador.user.onLoadSuscribcion(context: context);
       }
       Orquestador.user.onLoadCartera(context: context);
-
+      Orquestador.shopingcar.onloadCarrito(context: context);
       // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
       return;

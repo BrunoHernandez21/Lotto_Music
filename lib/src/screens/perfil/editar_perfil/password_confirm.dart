@@ -25,7 +25,7 @@ class PasswordConfirm extends StatelessWidget {
             child: Column(
               children: [
                 Image.asset(
-                  Assets.logo2,
+                  Assets.pngLogo,
                   height: Medidas.size.height * .3,
                 ),
                 Padding(

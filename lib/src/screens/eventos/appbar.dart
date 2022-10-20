@@ -18,7 +18,7 @@ class AppbarEventos extends StatelessWidget {
             width: 15,
           ),
           Image.asset(
-            Assets.logo,
+            Assets.pngLogo,
             height: 30,
           ),
           const SizedBox(

@@ -137,7 +137,14 @@ class RequestCardState extends State<RequestCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).backgroundColor,
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+        border: Border.all(color: Colors.black, width: 3),
+      ),
       height: Medidas.size.height * .3,
       child: Column(
         children: [
@@ -145,21 +152,26 @@ class RequestCardState extends State<RequestCard> {
           Align(
             alignment: Alignment.centerLeft,
             child: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new),
+              icon: const Icon(
+                Icons.arrow_back_ios_new,
+              ),
               onPressed: widget.onBack,
             ),
           ),
           // ignore: avoid_unnecessary_containers
           Container(
-            child: str.CardField(
-              controller: controller,
+            child: SizedBox(
+              width: Medidas.size.width * .9,
+              child: str.CardField(
+                controller: controller,
+              ),
             ),
           ),
           const SizedBox(height: 20),
           SizedBox(
             width: 200,
             child: LoadingButton(
-              text: 'Pay',
+              text: 'Pagar',
               onPressed: () async {
                 if (!controller.complete) {
                   // ignore: use_build_context_synchronously

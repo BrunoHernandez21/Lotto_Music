@@ -30,25 +30,28 @@ class _HistorialComprasState extends State<HistorialCompras> {
     });
     controller.addListener(
       () async {
-        final copy = estado;
+        if (estado == null) {
+          isLoad = false;
+          return;
+        }
         if (controller.position.pixels >
             controller.position.maxScrollExtent * .8) {
           if (!isLoad) {
             isLoad = true;
-            if (copy == null) {
+            if ((estado?.pag ?? 0) >= (estado?.pags ?? 0)) {
               isLoad = false;
               return;
             }
-            if (copy.pag >= copy.pags) {
-              isLoad = false;
-              return;
-            }
+
             final temp = await Orquestador.buy.onLoadHistorialCompra(
               context: context,
-              pag: copy.pag + 1,
+              pag: (estado?.pag ?? 0) + 1,
             );
-            if (temp != null) {
-              estado = temp;
+
+            if (temp?.compras != null) {
+              estado?.compras?.addAll(temp?.compras ?? []);
+              estado?.pag = (estado?.pag ?? 0) + 1;
+              setState(() {});
             }
             isLoad = false;
           }
@@ -104,7 +107,7 @@ class _HistorialComprasState extends State<HistorialCompras> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SvgPicture.asset(
-                Assets.emptyCart,
+                Assets.svgEmptycart,
                 height: Medidas.size.width * .3,
                 width: Medidas.size.width * .3,
               ),
@@ -134,7 +137,7 @@ class _Tarjeta extends StatelessWidget {
       width: 4,
     );
     return Container(
-      height: Medidas.size.height * .3,
+      height: Medidas.size.height * .19,
       width: double.infinity,
       margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -149,26 +152,36 @@ class _Tarjeta extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Textos.tituloMAX(texto: "Compra"),
-          if (compra.fechaEmitido != null)
-            espace(
-              Textos.tituloMIN(
-                texto:
-                    "Fecha de adquisicion: ${compra.fechaPagado?.toString().substring(0, 10) ?? ""}",
-              ),
+          Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const SizedBox(
+                  width: 20,
+                ),
+                Textos.tituloMAX(texto: "Compra"),
+                compra.status == "pagado"
+                    ? const Icon(
+                        Icons.verified,
+                        color: Colors.green,
+                      )
+                    : const Icon(
+                        Icons.error,
+                        color: Colors.red,
+                      ),
+              ],
             ),
-          Textos.tituloMIN(
-            texto: "Cantidad: ${compra.status}",
           ),
-          if (compra.total != 0)
+          if ((compra.precioTotal ?? 0) != 0)
             Textos.tituloMIN(
               texto:
-                  "Precio total:  ${compra.total.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} \$Mx",
+                  "Precio total:  \$${(compra.precioTotal ?? 0).toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} MXN",
             ),
           Align(
             alignment: Alignment.centerLeft,
             child: Padding(
-              padding: const EdgeInsets.only(left: 20.0),
+              padding: const EdgeInsets.only(left: 20.0, bottom: 5),
               child: Textos.tituloMIN(
                 texto: "Orden ${compra.id} \n${compra.fechaPagado}",
               ),

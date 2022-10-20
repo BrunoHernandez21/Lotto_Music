@@ -10,6 +10,7 @@ import '../../../helpers/globals/screen_size.dart';
 import '../../../models/carrito/carrito.dart';
 import '../../../models/plan/plan.dart';
 import '../../../widgets/svg_nosignal.dart';
+import '../../acount/login.dart';
 
 class Planes extends StatelessWidget {
   const Planes({Key? key}) : super(key: key);
@@ -23,10 +24,11 @@ class Planes extends StatelessWidget {
       builder: (context, state) {
         if (state.planes == null) {
           return RefreshIndicator(
-              onRefresh: () async {
-                Orquestador.plan.onLoadPlanes(context);
-              },
-              child: const NoSignal());
+            onRefresh: () async {
+              Orquestador.plan.onLoadPlanes(context);
+            },
+            child: const NoSignal(),
+          );
         }
         return RefreshIndicator(
           onRefresh: () async {
@@ -134,7 +136,11 @@ class __TarjetaPlanesState extends State<_TarjetaPlanes> {
                       planId: widget.plan.id,
                     ),
                   );
-
+                  if (resp == "Token invalido") {
+                    // ignore: use_build_context_synchronously
+                    Navigator.of(context).pushNamed(Login.routeName);
+                    return;
+                  }
                   DialogAlert.ok(context: context, text: resp ?? "no se pudo");
                 },
               ),

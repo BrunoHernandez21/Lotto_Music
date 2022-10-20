@@ -12,6 +12,7 @@ import '../../../cores/orquestador/orquestador.dart';
 import '../../../helpers/globals/screen_size.dart';
 import '../../../models/plan/plan.dart';
 import '../../../widgets/svg_nosignal.dart';
+import '../../acount/login.dart';
 
 class Suscripciones extends StatelessWidget {
   const Suscripciones({Key? key}) : super(key: key);
@@ -142,23 +143,33 @@ class __TarjetaPlanesState extends State<_TarjetaPlanes> {
                 if ((state.suscribcion?.stripeSuscription ?? "") != "") {
                   final a = await DialogAlert.confirm(
                     context: context,
-                    text: "Usted posee una suscripcion decea continuar?",
+                    text: "Usted posee una suscripcion desea continuar?",
                   );
                   if (a != true) {
                     return;
                   }
-                  Orquestador.buy.craeteOrdenSuscripcion(
+                  final resp = await Orquestador.buy.craeteOrdenSuscripcion(
                     context: context,
                     planID: widget.plan.id,
                   );
+                  if (resp == "Token invalido") {
+                    // ignore: use_build_context_synchronously
+                    Navigator.of(context).pushNamed(Login.routeName);
+                    return;
+                  }
                   // ignore: use_build_context_synchronously
                   Navigator.of(context).pushNamed(UpdateSucription.routeName);
                   return;
                 }
-                Orquestador.buy.craeteOrdenSuscripcion(
+                final resp = await Orquestador.buy.craeteOrdenSuscripcion(
                   context: context,
                   planID: widget.plan.id,
                 );
+                if (resp == "Token invalido") {
+                  // ignore: use_build_context_synchronously
+                  Navigator.of(context).pushNamed(Login.routeName);
+                  return;
+                }
                 // ignore: use_build_context_synchronously
                 Navigator.of(context).pushNamed(VerificarCompra.routeName);
               },

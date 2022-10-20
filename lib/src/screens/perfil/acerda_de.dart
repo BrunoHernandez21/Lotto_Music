@@ -9,11 +9,23 @@ class AcercaDe extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Center(
-          child: Textos.parrafoMED(
-              texto: '''Version de la app V0.2.1 \n
-      creado por el equipo de inclusive 2022 agosto''',
-              align: TextAlign.center)),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const SizedBox(
+            width: double.infinity,
+          ),
+          Textos.parrafoMED(
+            texto: "Version de la app v1.0.1",
+            align: TextAlign.center,
+          ),
+          Textos.parrafoMED(
+            texto: "creado por el equipo de inclusive 20 de oct. 2022",
+            align: TextAlign.center,
+          ),
+        ],
+      ),
     );
   }
 }
