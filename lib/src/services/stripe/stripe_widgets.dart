@@ -4,12 +4,16 @@ import 'package:lotto_music/src/helpers/globals/screen_size.dart';
 import 'package:lotto_music/src/services/stripe/stripe_api.dart';
 import 'package:pay/pay.dart';
 
-import '../../models/buy/order_response.dart';
 import '../../widgets/text.dart';
 
 class MyPayButton extends StatefulWidget {
-  final Orden orden;
-  const MyPayButton({Key? key, required this.orden}) : super(key: key);
+  final String amount;
+  final Future<void> Function(String?) onPayIDResult;
+  const MyPayButton({
+    Key? key,
+    required this.amount,
+    required this.onPayIDResult,
+  }) : super(key: key);
 
   @override
   State<MyPayButton> createState() => PayButtonState();
@@ -25,26 +29,17 @@ class PayButtonState extends State<MyPayButton> {
             paymentConfigurationAsset: 'apple_pay_payment_profile.json',
             paymentItems: <PaymentItem>[
               PaymentItem(
-                amount: widget.orden.precioTotal.toString(),
+                amount: widget.amount,
                 label: "Lotto Music Buy",
                 status: PaymentItemStatus.final_price,
               ),
             ],
             margin: const EdgeInsets.only(top: 15),
             onPaymentResult: (a) async {
-              final resp = await StripeApi().onApplePayResult(
-                context: context,
-                order: widget.orden.id,
+              final payID = await StripeApi().createApplePaymentToken(
                 paymentResult: a,
-                issuscription: widget.orden.isSuscription,
               );
-              if (resp) {
-                // ignore: use_build_context_synchronously
-                ScaffoldMessenger.of(context).showSnackBar(exito);
-              } else {
-                // ignore: use_build_context_synchronously
-                ScaffoldMessenger.of(context).showSnackBar(exitont);
-              }
+              widget.onPayIDResult(payID);
             },
             loadingIndicator: const Center(
               child: CircularProgressIndicator(),
@@ -77,26 +72,17 @@ class PayButtonState extends State<MyPayButton> {
             paymentConfigurationAsset: 'google_pay_payment_profile.json',
             paymentItems: <PaymentItem>[
               PaymentItem(
-                amount: widget.orden.precioTotal.toString(),
+                amount: widget.amount,
                 label: "Lotto Music Buy",
                 status: PaymentItemStatus.final_price,
               ),
             ],
             margin: const EdgeInsets.only(top: 15),
             onPaymentResult: (a) async {
-              final resp = await StripeApi().onGooglePayResult(
-                context: context,
-                order: widget.orden.id,
+              final payID = await StripeApi().createGooglePaymentToken(
                 paymentResult: a,
-                issuscription: widget.orden.isSuscription,
               );
-              if (resp) {
-                // ignore: use_build_context_synchronously
-                ScaffoldMessenger.of(context).showSnackBar(exito);
-              } else {
-                // ignore: use_build_context_synchronously
-                ScaffoldMessenger.of(context).showSnackBar(exitont);
-              }
+              widget.onPayIDResult(payID);
             },
             loadingIndicator: const Center(
               child: CircularProgressIndicator(),
@@ -130,12 +116,14 @@ class PayButtonState extends State<MyPayButton> {
 }
 
 class RequestCard extends StatefulWidget {
-  final Orden orden;
+  final Future<void> Function(String?) onPayIDResult;
+  final String amount;
   final void Function() onBack;
   const RequestCard({
     Key? key,
-    required this.orden,
+    required this.amount,
     required this.onBack,
+    required this.onPayIDResult,
   }) : super(key: key);
 
   @override
@@ -143,11 +131,13 @@ class RequestCard extends StatefulWidget {
 }
 
 class RequestCardState extends State<RequestCard> {
+  final exito = const SnackBar(content: Text('Terminado de manera exitosa'));
+  final exitont = const SnackBar(content: Text('Error al generar compra'));
   final controller = str.CardEditController();
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: Theme.of(context).backgroundColor,
       height: Medidas.size.height * .3,
       child: Column(
         children: [
@@ -169,44 +159,19 @@ class RequestCardState extends State<RequestCard> {
           SizedBox(
             width: 200,
             child: LoadingButton(
-                text: 'Pay',
-                onPressed: () async {
-                  if (controller.complete) {
-                    final a = await StripeApi().onCreditCartCreate(
-                      order: widget.orden.id,
-                      context: context,
-                      controller: controller,
-                      issuscription: widget.orden.isSuscription,
-                    );
-                    if (a) {
-                      // ignore: use_build_context_synchronously
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                            'Logrado',
-                          ),
-                        ),
-                      );
-                    } else {
-                      // ignore: use_build_context_synchronously
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                            'Fallido',
-                          ),
-                        ),
-                      );
-                    }
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'Termine de ingresar los datos',
-                        ),
-                      ),
-                    );
-                  }
-                }),
+              text: 'Pay',
+              onPressed: () async {
+                if (!controller.complete) {
+                  // ignore: use_build_context_synchronously
+                  ScaffoldMessenger.of(context).showSnackBar(exitont);
+                  return;
+                }
+                final payID = await StripeApi().createCreditCartToken(
+                  controller: controller,
+                );
+                widget.onPayIDResult(payID);
+              },
+            ),
           ),
         ],
       ),

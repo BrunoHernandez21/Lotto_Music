@@ -14,7 +14,7 @@ class Textos {
     required String hipertext,
     double fontSize = 15,
     double fontHiperSize = 15,
-    Color colorTexto = const Color(0xFFADB0B3),
+    Color? colorTexto,
     Color colorHiperTexto = const Color(0xFFFB8853),
     required void Function() onTap,
   }) =>
@@ -197,7 +197,7 @@ class _Base extends StatelessWidget {
 
 class _TextWhitHipertext extends StatelessWidget {
   final String text;
-  final Color colorText;
+  final Color? colorText;
   final String hipertxt;
   final Color colorHipertext;
   final void Function() onTap;
@@ -218,6 +218,7 @@ class _TextWhitHipertext extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RichText(
+      textAlign: TextAlign.center,
       text: TextSpan(
         text: text,
         style: TextStyle(

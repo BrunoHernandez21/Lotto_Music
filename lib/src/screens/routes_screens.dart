@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:lotto_music/src/screens/pagos/carrito/carrito.dart';
-import 'package:lotto_music/src/screens/perfil/suscripcion.dart';
+import 'package:lotto_music/src/screens/pagos/suscribciones/update_suscription/update_suscription.dart';
+import 'package:lotto_music/src/screens/perfil/suscripcion/change_payment.dart';
+import 'package:lotto_music/src/screens/perfil/suscripcion/suscripcion.dart';
 import 'package:lotto_music/src/screens/perfil/tarjetas/tarjetas_add.dart';
 import 'package:lotto_music/src/screens/perfil/tarjetas/tarjetas_edit.dart';
 
@@ -63,6 +65,8 @@ class Ruts {
     Cartera.routeName: (_) => const Cartera(),
     Carrito.routeName: (_) => const Carrito(),
     SuscribcionPage.routeName: (_) => const SuscribcionPage(),
+    UpdateSucription.routeName: (_) => const UpdateSucription(),
+    ChangePaymentSus.routeName: (_) => const ChangePaymentSus(),
   };
 
   static get rutas {

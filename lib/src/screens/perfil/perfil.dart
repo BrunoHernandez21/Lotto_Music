@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/helpers/new_icons.dart';
 import 'package:lotto_music/src/models/auth/login_response.dart';
 import 'package:flutter/material.dart';
-import 'package:lotto_music/src/screens/perfil/suscripcion.dart';
+import 'package:lotto_music/src/screens/perfil/suscripcion/suscripcion.dart';
 import 'package:lotto_music/src/screens/perfil/tarjetas/tarjetas.dart';
 import 'package:lotto_music/src/widgets/dialogs_alert.dart';
 import '../../bloc/acount/acount_bloc.dart';

@@ -30,6 +30,7 @@ import '../../bloc/youtube_video/video_bloc.dart';
 import '../../bloc/videos_event/videos_event_bloc.dart';
 import '../../helpers/globals/local_storage.dart';
 import '../../models/buy/payment_intent_response.dart';
+import '../../models/buy/simplecard.dart';
 import '../../models/carrito/carrito.dart';
 import '../../models/carrito/carrito_response.dart';
 import '../../models/resp/resp.dart';

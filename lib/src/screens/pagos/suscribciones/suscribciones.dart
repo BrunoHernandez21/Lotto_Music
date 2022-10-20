@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/bloc/suscripciones/suscripciones_bloc.dart';
 import 'package:lotto_music/src/bloc/usersus/usersus_bloc.dart';
 import 'package:lotto_music/src/screens/pagos/carrito/verificar_compra/verificar_compra.dart';
+import 'package:lotto_music/src/screens/pagos/suscribciones/update_suscription/update_suscription.dart';
 import 'package:lotto_music/src/widgets/botones.dart';
 import 'package:lotto_music/src/widgets/dialogs_alert.dart';
 import 'package:lotto_music/src/widgets/text.dart';
@@ -132,17 +133,27 @@ class __TarjetaPlanesState extends State<_TarjetaPlanes> {
                   return;
                 }
                 if (sta.usuarioId == 0) {
+                  await DialogAlert.ok(
+                    context: context,
+                    text: "No ha iniciado sesión",
+                  );
                   return;
                 }
-                if (sta.stripeSuscription != null) {
+                if ((state.suscribcion?.stripeSuscription ?? "") != "") {
                   final a = await DialogAlert.confirm(
                     context: context,
-                    text:
-                        "Realizar esta accion borrara la anterior suscripción",
+                    text: "Usted posee una suscripcion decea continuar?",
                   );
                   if (a != true) {
                     return;
                   }
+                  Orquestador.buy.craeteOrdenSuscripcion(
+                    context: context,
+                    planID: widget.plan.id,
+                  );
+                  // ignore: use_build_context_synchronously
+                  Navigator.of(context).pushNamed(UpdateSucription.routeName);
+                  return;
                 }
                 Orquestador.buy.craeteOrdenSuscripcion(
                   context: context,

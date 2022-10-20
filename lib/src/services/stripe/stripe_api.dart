@@ -1,10 +1,7 @@
 import 'dart:convert';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:lotto_music/src/cores/orquestador/orquestador.dart';
 
 import '../../helpers/globals/enviroments.dart';
-import '../../models/resp/resp.dart';
 
 class StripeApi {
   // Singleton
@@ -18,11 +15,8 @@ class StripeApi {
     await Stripe.instance.applySettings();
   }
 
-  Future<bool> onApplePayResult({
+  Future<String?> createApplePaymentToken({
     required Map<String, dynamic> paymentResult,
-    required int order,
-    required bool issuscription,
-    required BuildContext context,
   }) async {
     try {
       // Se crea un token reconocible para stripe
@@ -34,35 +28,14 @@ class StripeApi {
         ),
       );
       final paymentmethod = await Stripe.instance.createPaymentMethod(params);
-      // se paga
-      SimpleResponse resp = SimpleResponse();
-      if (issuscription) {
-        resp = await Orquestador.buy.paySuscripcion(
-          context: context,
-          orden: order,
-          paymentId: paymentmethod.id,
-        );
-      } else {
-        resp = await Orquestador.buy.payIntent(
-          context: context,
-          orden: order,
-          paymentId: paymentmethod.id,
-        );
-      }
-      if (resp.mensaje != null) {
-        return false;
-      }
-      return true;
+      return paymentmethod.id;
     } catch (e) {
-      return false;
+      return null;
     }
   }
 
-  Future<bool> onGooglePayResult({
+  Future<String?> createGooglePaymentToken({
     required Map<String, dynamic> paymentResult,
-    required int order,
-    required bool issuscription,
-    required BuildContext context,
   }) async {
     try {
       // se obtiene un token(google) reconozible para stripe
@@ -79,62 +52,22 @@ class StripeApi {
         ),
       );
       final paymentmethod = await Stripe.instance.createPaymentMethod(params);
-      // se paga
-      SimpleResponse resp = SimpleResponse();
-      if (issuscription) {
-        resp = await Orquestador.buy.paySuscripcion(
-          context: context,
-          orden: order,
-          paymentId: paymentmethod.id,
-        );
-      } else {
-        resp = await Orquestador.buy.payIntent(
-          context: context,
-          orden: order,
-          paymentId: paymentmethod.id,
-        );
-      }
-      if (resp.mensaje != null) {
-        return false;
-      }
-      return true;
+      return paymentmethod.id;
     } catch (e) {
-      return false;
+      return null;
     }
   }
 
-  Future<bool> onCreditCartCreate({
-    required int order,
-    required bool issuscription,
-    required BuildContext context,
+  Future<String?> createCreditCartToken({
     required CardEditController controller,
   }) async {
     if (!controller.complete) {
-      return false;
+      return null;
     }
     const params = PaymentMethodParams.card(
       paymentMethodData: PaymentMethodData(),
     );
     final paymentmethod = await Stripe.instance.createPaymentMethod(params);
-    // Se obtiene un intento de pago del servidor;
-    SimpleResponse resp = SimpleResponse();
-    if (issuscription) {
-      resp = await Orquestador.buy.paySuscripcion(
-        context: context,
-        orden: order,
-        paymentId: paymentmethod.id,
-      );
-    } else {
-      resp = await Orquestador.buy.payIntent(
-        context: context,
-        orden: order,
-        paymentId: paymentmethod.id,
-      );
-    }
-
-    if (resp.mensaje != null) {
-      return false;
-    }
-    return true;
+    return paymentmethod.id;
   }
 }

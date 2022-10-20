@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/bloc/buy/buy_bloc.dart';
+import 'package:lotto_music/src/cores/orquestador/orquestador.dart';
+import 'package:lotto_music/src/models/resp/resp.dart';
+import 'package:lotto_music/src/widgets/dialogs_alert.dart';
 import '../../../../bloc/dialogs_on_display/widget_dialog.dart';
 import '../../../../models/buy/order_response.dart';
 import '../../../../services/stripe/stripe_widgets.dart';
@@ -34,19 +37,25 @@ class _VerificarCompraState extends State<VerificarCompra> {
                   child: CircularProgressIndicator(),
                 );
               }
+              final orden = (state.orden.orden ?? Orden());
               return Stack(
                 children: [
-                  bodyBuy(state),
+                  bodyBuy(state.orden),
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Visibility(
-                        visible: alertDialog,
-                        child: RequestCard(
-                            orden: state.orden.orden ?? Orden(),
-                            onBack: () {
-                              alertDialog = false;
-                              setState(() {});
-                            })),
+                      visible: alertDialog,
+                      child: RequestCard(
+                        amount: orden.precioTotal.toString(),
+                        onBack: () {
+                          alertDialog = false;
+                          setState(() {});
+                        },
+                        onPayIDResult: (payID) async {
+                          myPay(payID, orden);
+                        },
+                      ),
+                    ),
                   )
                 ],
               );
@@ -55,7 +64,8 @@ class _VerificarCompraState extends State<VerificarCompra> {
     );
   }
 
-  Widget bodyBuy(BuyState state) {
+  Widget bodyBuy(OrdenResponse state) {
+    final orden = (state.orden ?? Orden());
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -65,14 +75,14 @@ class _VerificarCompraState extends State<VerificarCompra> {
         Textos.tituloMAX(texto: "Compra"),
         Textos.tituloMAX(
           texto:
-              "Total: ${state.orden.orden?.precioTotal ?? 0} ${state.orden.orden?.moneda ?? ""}",
+              "Total: ${state.orden?.precioTotal ?? 0} ${state.orden?.moneda ?? ""}",
         ),
         Flexible(
           child: ListView.builder(
-            itemCount: state.orden.itemsOrden.length,
+            itemCount: state.itemsOrden.length,
             itemBuilder: (BuildContext context, int i) {
               return _Items(
-                item: state.orden.itemsOrden[i],
+                item: state.itemsOrden[i],
               );
             },
           ),
@@ -90,7 +100,10 @@ class _VerificarCompraState extends State<VerificarCompra> {
                 width: 150,
                 height: 60,
                 child: MyPayButton(
-                  orden: state.orden.orden ?? Orden(),
+                  amount: orden.precioTotal.toString(),
+                  onPayIDResult: (payID) async {
+                    myPay(payID, orden);
+                  },
                 ),
               ),
             ),
@@ -108,6 +121,48 @@ class _VerificarCompraState extends State<VerificarCompra> {
           ],
         ),
       ],
+    );
+  }
+
+  Future<void> myPay(String? payID, Orden orden) async {
+    if (payID == null) {
+      return;
+    }
+    // Paga la suscripcion o el pago
+    SimpleResponse resp = SimpleResponse();
+    if (orden.isSuscription) {
+      resp = await Orquestador.buy.paySuscripcion(
+        context: context,
+        orden: orden.id,
+        paymentId: payID,
+      );
+    } else {
+      resp = await Orquestador.buy.payIntent(
+        context: context,
+        orden: orden.id,
+        paymentId: payID,
+      );
+    }
+    // Imprime un mensaje conforme a la respuesta
+    if (resp.mensaje != null) {
+      // ignore: use_build_context_synchronously
+      await DialogAlert.ok(
+        context: context,
+        text: "Compra realizada con exito",
+      );
+      if (orden.isSuscription) {
+        Orquestador.user.onLoadSuscribcion(context: context);
+      }
+      Orquestador.user.onLoadCartera(context: context);
+
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).pop();
+      return;
+    }
+    // ignore: use_build_context_synchronously
+    await DialogAlert.ok(
+      context: context,
+      text: "Error al comprar",
     );
   }
 }
