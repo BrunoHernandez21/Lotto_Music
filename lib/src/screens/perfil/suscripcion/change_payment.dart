@@ -53,7 +53,7 @@ class _ChangePaymentSusState extends State<ChangePaymentSus> {
                         setState(() {});
                       },
                       onPayIDResult: (payID) async {
-                        myPay(payID, susc);
+                        await myPay(payID, susc);
                       },
                     ),
                   ),

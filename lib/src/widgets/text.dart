@@ -12,14 +12,16 @@ class Textos {
   static Widget parrafoHiper({
     required String texto,
     required String hipertext,
+    required void Function() onTap,
+    TextAlign aling = TextAlign.center,
     double fontSize = 15,
     double fontHiperSize = 15,
     Color? colorTexto,
     Color colorHiperTexto = const Color(0xFFFB8853),
-    required void Function() onTap,
   }) =>
       _TextWhitHipertext(
         onTap: onTap,
+        align: aling,
         colorHipertext: colorHiperTexto,
         hipertxt: hipertext,
         colorText: colorTexto,
@@ -203,6 +205,7 @@ class _TextWhitHipertext extends StatelessWidget {
   final void Function() onTap;
   final double fontSize;
   final double fontHiperSize;
+  final TextAlign align;
 
   const _TextWhitHipertext(
       {required this.text,
@@ -212,13 +215,14 @@ class _TextWhitHipertext extends StatelessWidget {
       required this.onTap,
       required this.fontSize,
       required this.fontHiperSize,
+      required this.align,
       Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return RichText(
-      textAlign: TextAlign.center,
+      textAlign: align,
       text: TextSpan(
         text: text,
         style: TextStyle(

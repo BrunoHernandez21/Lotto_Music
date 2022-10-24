@@ -181,7 +181,7 @@ class RequestCardState extends State<RequestCard> {
                 final payID = await StripeApi().createCreditCartToken(
                   controller: controller,
                 );
-                widget.onPayIDResult(payID);
+                await widget.onPayIDResult(payID);
               },
             ),
           ),

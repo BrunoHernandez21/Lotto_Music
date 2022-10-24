@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lotto_music/src/bloc/buy/buy_bloc.dart';
 import 'package:lotto_music/src/cores/orquestador/orquestador.dart';
 import 'package:lotto_music/src/widgets/botones.dart';
+import 'package:lotto_music/src/widgets/dialogs_alert.dart';
 import '../../../../bloc/dialogs_on_display/widget_dialog.dart';
 import '../../../../models/buy/order_response.dart';
 import '../../../../widgets/text.dart';
@@ -129,11 +130,31 @@ class _UpdateSucriptionState extends State<UpdateSucription> {
                   height: 40,
                   child: Botones.solidTextButton(
                     text: "Cambiar ahora",
-                    onTap: () {
-                      Orquestador.buy.changeSuscripcionNow(
+                    onTap: () async {
+                      final a = await DialogAlert.confirm(
                         context: context,
-                        orden: state.orden.orden?.id ?? 0,
+                        text: "Esto ocacionara un cargo a su tarjeta",
                       );
+                      final morden = state.orden.orden?.id ?? 0;
+                      if (morden == 0) {
+                        DialogAlert.ok(
+                          context: context,
+                          text: "Orden no puede ser 0",
+                        );
+                        return;
+                      }
+                      if (a == true) {
+                        final resp = await Orquestador.buy.changeSuscripcionNow(
+                          context: context,
+                          orden: state.orden.orden?.id ?? 0,
+                        );
+                        String text = "Cambiado con exito";
+                        if (resp.mensaje != null) {
+                          text = resp.mensaje ?? "Error interno";
+                        }
+                        await DialogAlert.ok(context: context, text: text);
+                        return;
+                      }
                     },
                     fontColor: Colors.white,
                     backColor: Colors.black,
@@ -149,11 +170,24 @@ class _UpdateSucriptionState extends State<UpdateSucription> {
                   height: 40,
                   child: Botones.solidTextButton(
                     text: "Actualizar",
-                    onTap: () {
-                      Orquestador.buy.changeSuscripcionProration(
+                    onTap: () async {
+                      final a = await DialogAlert.confirm(
                         context: context,
-                        orden: state.orden.orden?.id ?? 0,
+                        text: "Esto cambiara tu suscripcion",
                       );
+                      if (a == true) {
+                        final resp =
+                            await Orquestador.buy.changeSuscripcionProration(
+                          context: context,
+                          orden: state.orden.orden?.id ?? 0,
+                        );
+                        String text = "Cambiado con exito";
+                        if (resp.mensaje != null) {
+                          text = resp.mensaje ?? "Error interno";
+                        }
+                        await DialogAlert.ok(context: context, text: text);
+                        return;
+                      }
                     },
                     fontColor: Colors.white,
                     backColor: Colors.black,

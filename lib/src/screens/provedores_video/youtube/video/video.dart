@@ -21,6 +21,11 @@ class Video extends StatefulWidget {
 
 class _VideoState extends State<Video> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<YTVideoBloc, YTVideoState>(
       builder: (context, state) {
@@ -36,12 +41,20 @@ class _VideoState extends State<Video> {
             isLive: false,
             forceHD: false,
             enableCaption: true,
+            controlsVisibleAtStart: true,
+            showLiveFullscreenButton: false,
           ),
         );
         return YoutubePlayerBuilder(
           player: YoutubePlayer(
+            progressIndicatorColor: Colors.transparent,
             thumbnail: Container(),
             controller: controller,
+            onEnded: (metaData) {
+              controller.reload();
+              controller.play();
+              controller.pause();
+            },
           ),
           builder: (context, player) {
             return _bodyWidget(player, state);
@@ -136,7 +149,7 @@ class __ListaVideosYTState extends State<_ListaVideosYT> {
               if (!mounted) {
                 return;
               }
-              Navigator.popAndPushNamed(context, Video.routeName);
+              Navigator.pushReplacementNamed(context, Video.routeName);
             },
           ),
         ),

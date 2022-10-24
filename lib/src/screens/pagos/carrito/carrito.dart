@@ -174,7 +174,9 @@ class Carrito extends StatelessWidget {
               text: "Comprar",
               colors: const [Color(0xffea8d8d), Color(0xffa890fe)],
               onTap: () {
-                Orquestador.buy.craeteOrden(context: context);
+                Orquestador.buy.craeteOrden(context: context).then((value) {
+                  Orquestador.shopingcar.onloadCarrito(context: context);
+                });
                 Navigator.of(context).pushNamed(VerificarCompra.routeName);
               },
             ),

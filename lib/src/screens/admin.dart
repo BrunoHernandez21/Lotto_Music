@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lotto_music/src/cores/orquestador/orquestador.dart';
 import 'package:lotto_music/src/screens/pagos/pagos.dart';
 import 'package:lotto_music/src/screens/provedores_video/provedores_video.dart';
+import 'package:lotto_music/src/screens/utils/initstate.dart';
 
 import '../bloc/shaderPreferences/shaderpreferences_bloc.dart';
 import '../helpers/globals/const.dart';
@@ -66,10 +67,7 @@ class _BodyAdminState extends State<_BodyAdmin> with TickerProviderStateMixin {
     controller = TabController(length: 4, initialIndex: 1, vsync: this);
     super.initState();
     //configuracion inicial de la app
-    Orquestador.auth.checkToken(context);
-    Orquestador.video.onLoadStadistic(context: context);
-    Orquestador.user.onLoadCartera(context: context);
-    Orquestador.user.onLoadSuscribcion(context: context);
+    MyInitState.onInitState(context);
   }
 
   @override

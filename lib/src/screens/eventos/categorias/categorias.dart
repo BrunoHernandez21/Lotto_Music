@@ -56,8 +56,15 @@ class _CategoriasState extends State<Categorias> {
                         height: Medidas.size.height * .90,
                         alignment: Alignment.center,
                         color: Colors.black45,
-                        child: Textos.tituloMAX(
-                          texto: "Deslize para actualizar",
+                        child: Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Textos.tituloMAX(
+                            texto: "Deslize para actualizar",
+                          ),
                         ),
                       )
                     ],

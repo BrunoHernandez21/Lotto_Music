@@ -3,6 +3,7 @@ import 'package:socket_io_client/socket_io_client.dart' as io;
 
 import '../../cores/push_notification.dart';
 import '../../helpers/globals/enviroments.dart';
+import '../../screens/utils/initstate.dart';
 
 class SocketService {
   // Dart client
@@ -17,6 +18,10 @@ class SocketService {
     socket.onConnect((data) {
       if (userId != 0) {
         socket.emit("onInitLoad", {"usuario_id": userId});
+      } else {
+        MyInitState.onInitState(context).then((value) {}).then((value) {
+          socket.emit("onInitLoad", {"usuario_id": userId});
+        });
       }
     });
 

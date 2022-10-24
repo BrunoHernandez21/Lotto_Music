@@ -29,7 +29,7 @@ class Perfil extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Column(children: [
-        AppbarMiPerfil(controller: controller),
+        const AppbarMiPerfil(),
         Expanded(
           child: BlocBuilder<AcountBloc, AcountState>(
             builder: (context, state) {

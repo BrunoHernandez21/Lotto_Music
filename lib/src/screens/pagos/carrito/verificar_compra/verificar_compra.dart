@@ -52,7 +52,7 @@ class _VerificarCompraState extends State<VerificarCompra> {
                           setState(() {});
                         },
                         onPayIDResult: (payID) async {
-                          myPay(payID, orden);
+                          await myPay(payID, orden);
                         },
                       ),
                     ),
@@ -66,19 +66,60 @@ class _VerificarCompraState extends State<VerificarCompra> {
 
   Widget bodyBuy(OrdenResponse state) {
     final orden = (state.orden ?? Orden());
+    final isSus = orden.isSuscription;
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(
           width: double.infinity,
         ),
-        Textos.tituloMAX(texto: "Compra"),
-        Textos.tituloMAX(
-          texto:
-              "Total: ${state.orden?.precioTotal ?? 0} ${state.orden?.moneda ?? ""}",
+        Align(
+          alignment: Alignment.center,
+          child: Visibility(
+            visible: !isSus,
+            child: Textos.tituloMAX(
+              texto: "Listado de compra",
+            ),
+          ),
+        ),
+        Align(
+          alignment: Alignment.center,
+          child: Visibility(
+            visible: isSus,
+            child: Textos.tituloMAX(texto: "Suscripcion a comprar"),
+          ),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Visibility(
+          visible: !isSus,
+          child: Align(
+            alignment: Alignment.center,
+            child: Textos.tituloMAX(
+              texto:
+                  "Total: ${state.orden?.precioTotal ?? 0} ${state.orden?.moneda ?? ""}",
+            ),
+          ),
+        ),
+        Visibility(
+          visible: isSus,
+          child: Align(
+            alignment: Alignment.center,
+            child: Textos.tituloMAX(
+              texto:
+                  "Total: ${state.orden?.precioTotal ?? 0} ${state.orden?.moneda ?? ""}/mes",
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 20,
         ),
         Flexible(
           child: ListView.builder(
+            physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics(),
+            ),
             itemCount: state.itemsOrden.length,
             itemBuilder: (BuildContext context, int i) {
               return _Items(
@@ -86,6 +127,62 @@ class _VerificarCompraState extends State<VerificarCompra> {
               );
             },
           ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Textos.parrafoMIN(
+            renglones: 3,
+            align: TextAlign.left,
+            texto: "1.- Pagar con GPay o ApplePay:",
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Textos.parrafoMIN(
+            renglones: 3,
+            align: TextAlign.justify,
+            texto:
+                "Pagos protegidos por Stripe y su provedor de servicio de tarjetas",
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Visibility(
+          visible: !isSus,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Textos.parrafoHiper(
+              texto:
+                  "Usted esta comprando puntos de lotto music, al hacer esto usted acepta nuestros ",
+              hipertext: "terminos y condiciones",
+              colorTexto:
+                  Theme.of(context).textTheme.bodyText1?.color ?? Colors.black,
+              onTap: () {},
+            ),
+          ),
+        ),
+        Visibility(
+          visible: isSus,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Textos.parrafoHiper(
+              texto:
+                  "Usted esta comprando una suscripción de puntos con cargo mensual, al hacer esto acepta nuestros ",
+              hipertext: "terminos y condiciones",
+              colorTexto:
+                  Theme.of(context).textTheme.bodyText1?.color ?? Colors.black,
+              aling: TextAlign.justify,
+              onTap: () {},
+            ),
+          ),
+        ),
+        const Divider(
+          color: Colors.black,
+          height: 40,
+          thickness: 2,
+          endIndent: 50,
+          indent: 50,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
