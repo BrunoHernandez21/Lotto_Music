@@ -21,9 +21,21 @@ import 'editar_perfil/ajustes_usuario.dart';
 import 'appbar.dart';
 import 'historial_compras.dart';
 
-class Perfil extends StatelessWidget {
+class Perfil extends StatefulWidget {
   final TabController? controller;
   const Perfil({Key? key, required this.controller}) : super(key: key);
+
+  @override
+  State<Perfil> createState() => _PerfilState();
+}
+
+class _PerfilState extends State<Perfil> {
+  @override
+  void initState() {
+    super.initState();
+    Orquestador.user.onLoadUser(context);
+    Orquestador.user.onLoadCartera(context: context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +76,7 @@ class BodyLogin extends StatelessWidget {
         return RefreshIndicator(
           onRefresh: () async {
             Orquestador.user.onLoadUser(context);
+            Orquestador.user.onLoadCartera(context: context);
           },
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(
